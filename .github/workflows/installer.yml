@@ -1,11 +1,12 @@
 name: Installer
 
-# Builds a Windows installer you can download and run, without needing the updater
-# signing key. Start it from the Actions tab, or it runs on a push to main.
+# Builds the Windows installer on every push to main and publishes it to one permanent
+# link, the "latest" release.
 #
-# The result is unsigned, so Windows shows "Windows protected your PC" on first run:
-# choose More info, then Run anyway. It also cannot update itself. Once the signing key
-# exists, the Release workflow builds a signed installer that can. See docs/releasing.md.
+# If the updater signing secrets are set, the build is signed and a latest.json is
+# published alongside it, which is what lets an installed copy update itself. If they
+# are not set, the build still happens without the updater, so an installer always
+# exists. See docs/releasing.md for generating the key.
 
 on:
   workflow_dispatch:
@@ -48,10 +49,24 @@ jobs:
       - name: Build the Bible database
         run: npm run data:build
 
-      # Packaging an updater artifact needs the private signing key, which is
-      # deliberately not in the repository. This build drops that, so an installer can
-      # be produced before the key exists.
-      - name: Build without the updater
+      - name: Is the signing key available?
+        id: signing
+        shell: bash
+        env:
+          KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        run: |
+          if [ -n "$KEY" ]; then
+            echo "signed=true" >> "$GITHUB_OUTPUT"
+            echo "Signing key found. The build will be signed and can update itself."
+          else
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            echo "No signing key. Building without the updater."
+          fi
+
+      # Packaging an updater artifact needs the private key. Without it the build would
+      # fail outright, so the updater is dropped rather than losing the installer too.
+      - name: Drop the updater when unsigned
+        if: steps.signing.outputs.signed == 'false'
         shell: bash
         run: |
           node -e "
@@ -61,39 +76,74 @@ jobs:
             config.bundle.createUpdaterArtifacts = false;
             delete config.plugins.updater;
             fs.writeFileSync(path, JSON.stringify(config, null, 2));
-            console.log('Updater packaging disabled for this build.');
           "
 
       - name: Build the installer
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: npm run build
 
-      - name: Collect the installer
+      # latest.json is the file an installed copy reads to learn a newer version exists.
+      # It carries the signature, which the app checks against the public key built into
+      # it, so a tampered download is refused before it is written to disk.
+      - name: Collect the installer and write latest.json
         shell: bash
         run: |
           mkdir -p out
           find app/src-tauri/target/release/bundle -name '*-setup.exe' -exec cp {} out/ \;
+          find app/src-tauri/target/release/bundle -name '*-setup.exe.sig' -exec cp {} out/ \;
           ls -la out
+
+          if [ "${{ steps.signing.outputs.signed }}" = "true" ]; then
+            node -e "
+              const fs = require('fs');
+              const exe = fs.readdirSync('out').find((f) => f.endsWith('-setup.exe'));
+              const sig = fs.readdirSync('out').find((f) => f.endsWith('.sig'));
+              if (!exe || !sig) throw new Error('No signed installer was produced.');
+              const version = require('./app/src-tauri/tauri.conf.json').version;
+              fs.writeFileSync('out/latest.json', JSON.stringify({
+                version,
+                notes: 'The newest build of Rhema.',
+                pub_date: new Date().toISOString(),
+                platforms: {
+                  'windows-x86_64': {
+                    signature: fs.readFileSync('out/' + sig, 'utf8').trim(),
+                    url: 'https://github.com/${{ github.repository }}/releases/download/latest/' + exe,
+                  },
+                },
+              }, null, 2));
+              console.log('latest.json written for version ' + version);
+            "
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
           name: rhema-windows-installer
-          path: out/*.exe
+          path: out/*
           if-no-files-found: error
           retention-days: 30
 
-      # A release gives one permanent link that always holds the newest build, rather
-      # than a workflow artifact that expires and has to be unzipped.
+      # One permanent link that always holds the newest build, rather than a workflow
+      # artifact that expires and has to be unzipped.
       - name: Publish it to the latest-build release
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SIGNED: ${{ steps.signing.outputs.signed }}
         run: |
+          if [ "$SIGNED" = "true" ]; then
+            UPDATES="This build is signed, so an installed copy will offer the update itself."
+          else
+            UPDATES="This build cannot update itself: no signing key is set. See docs/releasing.md."
+          fi
+
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest out/*.exe \
+          gh release create latest out/* \
             --prerelease \
             --title "Rhema — latest build" \
             --notes "The newest build of Rhema, from commit ${GITHUB_SHA:0:7}.
 
-          Download the .exe below and run it. Windows will say \"Windows protected your PC\" because this build is not code-signed: choose **More info**, then **Run anyway**.
+          Download the .exe below and run it. Windows will say \"Windows protected your PC\" because the installer is not code-signed, which is a separate thing from the update signing above: choose **More info**, then **Run anyway**.
 
-          This build cannot update itself. Signed builds that can will come from the Release workflow once the signing key exists; see docs/releasing.md."
+          $UPDATES"
