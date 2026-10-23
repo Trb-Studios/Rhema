@@ -3,9 +3,10 @@ import type { Book } from '../lib/bible';
 import { referenceOf, useSaved } from '../lib/saved';
 import { useNotes } from '../lib/notes';
 import { spring, transition } from '../lib/motion';
-import { BookmarkIcon, CloseIcon, NoteIcon } from './Icons';
+import { BookmarkIcon, CloseIcon, LinkIcon, NoteIcon } from './Icons';
+import { CrossRefs } from './CrossRefs';
 
-export type PanelTab = 'notes' | 'saved';
+export type PanelTab = 'notes' | 'saved' | 'refs';
 
 /**
  * The panel beside the text: what you have written, and what you have kept.
@@ -19,7 +20,9 @@ export function SidePanel({
   onTab,
   onClose,
   book,
+  books,
   chapter,
+  verse,
   onOpenVerse,
 }: {
   open: boolean;
@@ -27,7 +30,10 @@ export function SidePanel({
   onTab: (tab: PanelTab) => void;
   onClose: () => void;
   book: Book;
+  books: Book[];
   chapter: number;
+  /** The verse selected in the reader, which the references follow. */
+  verse: number | null;
   onOpenVerse: (bookId: number, chapter: number) => void;
 }) {
   const notes = useNotes(book.id, chapter);
@@ -71,6 +77,7 @@ export function SidePanel({
                 {(
                   [
                     ['notes', 'Notes', NoteIcon],
+                    ['refs', 'Links', LinkIcon],
                     ['saved', 'Saved', BookmarkIcon],
                   ] as const
                 ).map(([id, label, Icon]) => (
@@ -134,7 +141,15 @@ export function SidePanel({
               </button>
             </div>
 
-            {tab === 'notes' ? (
+            {tab === 'refs' ? (
+              <CrossRefs
+                book={book}
+                books={books}
+                chapter={chapter}
+                verse={verse}
+                onOpenVerse={onOpenVerse}
+              />
+            ) : tab === 'notes' ? (
               <>
                 <div
                   style={{

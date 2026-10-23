@@ -161,12 +161,24 @@ CREATE INDEX IF NOT EXISTS mentions_by_subject ON mentions (subject_id);
 
 -- ------------------------------------------------- Study helps
 
+-- Where else Scripture says this. Ranked by how many readers thought each link was a
+-- good one, so the strongest connections come first.
+-- Source: openbible.info, CC BY, built on the Treasury of Scripture Knowledge.
 CREATE TABLE IF NOT EXISTS cross_references (
-  from_verse_id INTEGER NOT NULL REFERENCES verses(id),
-  to_verse_id   INTEGER NOT NULL REFERENCES verses(id),
-  weight        INTEGER NOT NULL DEFAULT 0,
-  PRIMARY KEY (from_verse_id, to_verse_id)
+  from_book    INTEGER NOT NULL REFERENCES books(id),
+  from_chapter INTEGER NOT NULL,
+  from_verse   INTEGER NOT NULL,
+  to_book      INTEGER NOT NULL REFERENCES books(id),
+  to_chapter   INTEGER NOT NULL,
+  to_verse     INTEGER NOT NULL,
+  -- The last verse of the passage pointed at, equal to to_verse for a single verse.
+  to_last      INTEGER NOT NULL,
+  votes        INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (from_book, from_chapter, from_verse, to_book, to_chapter, to_verse)
 );
+
+CREATE INDEX IF NOT EXISTS cross_references_by_chapter
+  ON cross_references (from_book, from_chapter);
 
 CREATE TABLE IF NOT EXISTS topics (
   id     INTEGER PRIMARY KEY,

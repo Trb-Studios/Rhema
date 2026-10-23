@@ -36,6 +36,12 @@ const CREDITS = [
     terms: 'Creative Commons Attribution 4.0',
     note: 'From Tyndale House Cambridge.',
   },
+  {
+    name: 'OpenBible cross-references',
+    what: 'Where else Scripture says this',
+    terms: 'Creative Commons Attribution 4.0',
+    note: 'Built on the Treasury of Scripture Knowledge, ranked by reader votes.',
+  },
 ];
 
 export function About() {

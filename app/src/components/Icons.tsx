@@ -267,3 +267,13 @@ export function TargetIcon(props: IconProps) {
     </Svg>
   );
 }
+
+export function LinkIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M9.8 14.2 14.2 9.8l1.6 1.6-4.4 4.4z" {...tintOf(props.tint)} />
+      <path d="M10.3 13.7a3.6 3.6 0 0 0 5.1 0l3.1-3.1a3.6 3.6 0 1 0-5.1-5.1l-1.2 1.2" {...line} />
+      <path d="M13.7 10.3a3.6 3.6 0 0 0-5.1 0l-3.1 3.1a3.6 3.6 0 1 0 5.1 5.1l1.2-1.2" {...line} />
+    </Svg>
+  );
+}

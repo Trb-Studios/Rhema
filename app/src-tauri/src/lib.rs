@@ -50,6 +50,15 @@ fn subjects(
     state.subjects().map_err(|e| e.to_string())
 }
 
+/// Where else Scripture says this, for one book.
+#[tauri::command]
+fn cross_references(
+    book_id: u32,
+    state: tauri::State<db::Library>,
+) -> Result<std::collections::HashMap<String, Vec<Vec<u32>>>, String> {
+    state.cross_references(book_id).map_err(|e| e.to_string())
+}
+
 /// Searches one edition of the whole Bible.
 #[tauri::command]
 fn search(
@@ -125,6 +134,7 @@ pub fn run() {
             search,
             mentions,
             subjects,
+            cross_references,
             save_backup,
             open_backup
         ])

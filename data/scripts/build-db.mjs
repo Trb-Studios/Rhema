@@ -27,6 +27,7 @@ import {
 } from './originals.mjs';
 import { GREEK_LEXICON, HEBREW_LEXICON, foldWord, hebrewKey, parseLexicon } from './lexicon.mjs';
 import { TIPNR, parseNames } from './names.mjs';
+import { CROSS_REFERENCES, parseCrossRefs } from './crossrefs.mjs';
 import { createWriteStream } from 'node:fs';
 import { mkdir, readFile, writeFile, copyFile, stat, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -231,6 +232,9 @@ async function main() {
   // 5. Who and where
   await loadNames(db);
 
+  // 6. Where else Scripture says this
+  await loadCrossRefs(db);
+
   // Everything is loaded, so compact the file and let go of it.
   db.exec('PRAGMA journal_mode = DELETE');
   db.exec('VACUUM');
@@ -238,7 +242,7 @@ async function main() {
 
   // 5. Still to come. Each gets a loader here as its dataset is added.
   say('\nNot loaded yet (see data/sources.json)');
-  for (const pending of ['Cross-references and topics']) {
+  for (const pending of ['Topics and themes']) {
     say(`  · ${pending}`);
   }
 
@@ -465,6 +469,51 @@ async function loadNames(db) {
   }
 }
 
+/**
+ * Cross-references.
+ *
+ * The dataset holds 344,000 links, many with a single vote or a negative score. Only
+ * those readers voted up are kept, and at most eight for any one verse: a verse
+ * offering forty references is less useful than one offering eight, because the reader
+ * has to judge them all.
+ */
+async function loadCrossRefs(db) {
+  say('\nCross-references');
+
+  const file = await fetchOnce(CROSS_REFERENCES, join(RAW, 'cross-references.txt'));
+  const links = parseCrossRefs(await readFile(file, 'utf8'));
+
+  const insert = db.prepare(
+    `INSERT OR REPLACE INTO cross_references
+       (from_book, from_chapter, from_verse, to_book, to_chapter, to_verse, to_last, votes)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+  );
+
+  db.exec('BEGIN');
+  for (const link of links) {
+    insert.run(
+      link.from.bookId,
+      link.from.chapter,
+      link.from.verse,
+      link.to.bookId,
+      link.to.chapter,
+      link.to.verse,
+      link.to.last,
+      link.votes,
+    );
+  }
+  db.exec('COMMIT');
+
+  const covered = db
+    .prepare('SELECT COUNT(*) AS n FROM (SELECT DISTINCT from_book, from_chapter, from_verse FROM cross_references)')
+    .get().n;
+  say(`  ${links.length.toLocaleString()} references across ${covered.toLocaleString()} verses`);
+
+  if (links.length < 100_000) {
+    throw new Error(`Only ${links.length} cross-references; something is wrong with the parse.`);
+  }
+}
+
 async function loadLexicons(db) {
   say('\nLexicons');
 
@@ -555,6 +604,12 @@ async function exportForWeb() {
   const relationRows = db
     .prepare('SELECT subject_id, related_id, relation, note FROM relations ORDER BY subject_id')
     .all();
+  const crossRefRows = db
+    .prepare(
+      `SELECT from_book, from_chapter, from_verse, to_book, to_chapter, to_verse, to_last
+         FROM cross_references ORDER BY from_book, from_chapter, from_verse, votes DESC`,
+    )
+    .all();
   const mentionRows = db
     .prepare(
       'SELECT book_id, chapter, verse, subject_id, form FROM mentions ORDER BY book_id, chapter, verse',
@@ -621,6 +676,7 @@ async function exportForWeb() {
   );
 
   await exportNames(subjectRows, relationRows, mentionRows);
+  await exportCrossRefs(crossRefRows);
 
   await writeFile(
     join(WEB, 'index.json'),
@@ -638,6 +694,33 @@ async function exportForWeb() {
   );
 
   say(`  wrote ${books.length} books to app/public/bible`);
+}
+
+/**
+ * Cross-references, one file per book so a chapter opens without fetching the rest.
+ *
+ * Each entry is [book, chapter, verse, last], with the last verse left off where the
+ * reference points at a single verse, which is most of them.
+ */
+async function exportCrossRefs(rows) {
+  const byBook = new Map();
+
+  for (const row of rows) {
+    const book = byBook.get(row.from_book) ?? {};
+    const key = `${row.from_chapter}:${row.from_verse}`;
+    const target =
+      row.to_last > row.to_verse
+        ? [row.to_book, row.to_chapter, row.to_verse, row.to_last]
+        : [row.to_book, row.to_chapter, row.to_verse];
+    (book[key] ??= []).push(target);
+    byBook.set(row.from_book, book);
+  }
+
+  for (const [bookId, book] of byBook) {
+    await writeFile(join(WEB, `refs-${bookId}.json`), JSON.stringify(book));
+  }
+
+  say(`  wrote ${rows.length.toLocaleString()} cross-references across ${byBook.size} books`);
 }
 
 /**

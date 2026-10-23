@@ -40,6 +40,7 @@ import {
   HighlightIcon,
   InfoIcon,
   NoteIcon,
+  LinkIcon,
   SearchIcon,
   ScrollIcon,
   TargetIcon,
@@ -373,6 +374,13 @@ export function Read() {
           <NoteIcon size={18} />
         </Round>
         <Round
+          label="Cross-references"
+          active={panel === 'refs'}
+          onClick={() => setPanel(panel === 'refs' ? null : 'refs')}
+        >
+          <LinkIcon size={18} />
+        </Round>
+        <Round
           label="Saved verses"
           active={panel === 'saved'}
           onClick={() => setPanel(panel === 'saved' ? null : 'saved')}
@@ -574,7 +582,9 @@ export function Read() {
           onTab={setPanel}
           onClose={() => setPanel(null)}
           book={book}
+          books={all}
           chapter={number}
+          verse={selected}
           onOpenVerse={(bookId, chapterNumber) => {
             const target = all.find((candidate) => candidate.id === bookId);
             if (target) goTo({ book: target, chapter: chapterNumber });

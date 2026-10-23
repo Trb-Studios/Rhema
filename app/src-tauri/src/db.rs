@@ -306,6 +306,49 @@ impl Library {
         Ok(out)
     }
 
+    /// Where else Scripture says this, for one book: "chapter:verse" to a list of
+    /// [book, chapter, verse] or [book, chapter, verse, last] for a passage. Strongest
+    /// first, as the votes ranked them.
+    pub fn cross_references(
+        &self,
+        book_id: u32,
+    ) -> rusqlite::Result<HashMap<String, Vec<Vec<u32>>>> {
+        let guard = self.connection.lock().expect("database lock poisoned");
+        let Some(connection) = guard.as_ref() else {
+            return Ok(HashMap::new());
+        };
+
+        let mut statement = connection.prepare(
+            "SELECT from_chapter, from_verse, to_book, to_chapter, to_verse, to_last
+               FROM cross_references
+              WHERE from_book = ?1
+           ORDER BY from_chapter, from_verse, votes DESC",
+        )?;
+
+        let mut out: HashMap<String, Vec<Vec<u32>>> = HashMap::new();
+        for row in statement.query_map([book_id], |row| {
+            Ok((
+                row.get::<_, u32>(0)?,
+                row.get::<_, u32>(1)?,
+                row.get::<_, u32>(2)?,
+                row.get::<_, u32>(3)?,
+                row.get::<_, u32>(4)?,
+                row.get::<_, u32>(5)?,
+            ))
+        })? {
+            let (chapter, verse, to_book, to_chapter, to_verse, to_last) = row?;
+            let mut target = vec![to_book, to_chapter, to_verse];
+            if to_last > to_verse {
+                target.push(to_last);
+            }
+            out.entry(format!("{chapter}:{verse}"))
+                .or_default()
+                .push(target);
+        }
+
+        Ok(out)
+    }
+
     /// A chapter in Hebrew or Greek. Empty where that edition does not cover the book.
     pub fn original(
         &self,

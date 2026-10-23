@@ -15,6 +15,8 @@ behind a button so nothing competes with the text.
   SBL Greek New Testament, each numbered as its own tradition numbers it.
 - **An introduction to every book** — time, author, place and background — giving the
   traditional view and the main scholarly alternative without choosing between them.
+- **Cross-references**: 193,436 of them across 29,324 verses, strongest first, each
+  shown with its own words beside the passage rather than as an address to look up.
 - **Search** across any edition, ignoring vowel points and accents so Hebrew and Greek
   can be searched as typed.
 - Arrow keys turn chapters, crossing from one book into the next.
@@ -98,9 +100,9 @@ behind a button so nothing competes with the text.
 
 ## Tests
 
-`npm test` runs 129 tests over the logic where a wrong number would be invisible in the
+`npm test` runs 142 tests over the logic where a wrong number would be invisible in the
 interface: the plan scheduling, the review intervals, the streak, the dates, the
-backup merge rules, the names parser and the quiz generator. The plan tests schedule the real 789,634-word text rather than a
+backup merge rules, the names parser, the cross-references and the quiz generator. The plan tests schedule the real 789,634-word text rather than a
 fixture, because the whole argument for scheduling by words is how uneven the real
 chapters are.
 
@@ -108,13 +110,10 @@ chapters are.
 
 1. Pictures for the people, which needs a fetch at runtime on a machine that can reach
    Wikimedia. Nothing in this container can.
-2. Cross-references. The obvious dataset is AGPL, which conflicts with this project's
-   licence, and openbible.info could not be reached from here. Needs a source settled
-   before any code.
-3. Sign-in, so notes and highlights follow the person between machines, with 2FA by
+2. Sign-in, so notes and highlights follow the person between machines, with 2FA by
    email and Google as an option.
-4. AI chapter overviews, once there is a server to hold the key.
-5. Other translations. Only the KJV is public domain; NIV, ESV, NLT, NKJV and CSB each
+3. AI chapter overviews, once there is a server to hold the key.
+4. Other translations. Only the KJV is public domain; NIV, ESV, NLT, NKJV and CSB each
    need permission from their publisher. See `docs/data-licenses.md`.
 
 ## Known gaps

@@ -56,11 +56,12 @@
     },
     {
       "id": "tsk",
-      "name": "Treasury of Scripture Knowledge",
-      "provides": "Roughly 500,000 cross-references between verses",
-      "licence": "Public domain (1830s)",
-      "status": "planned",
-      "homepage": "https://www.openbible.info/labs/cross-references/"
+      "name": "OpenBible cross-references (Treasury of Scripture Knowledge)",
+      "provides": "Where else Scripture says this: 193,436 references across 29,324 verses, ranked by how many readers thought each link a good one",
+      "licence": "CC BY 4.0",
+      "status": "ready",
+      "homepage": "https://www.openbible.info/labs/cross-references/",
+      "notes": "Built on the Treasury of Scripture Knowledge, which is public domain, and ranked by reader votes. Attribution required and credited in the app. openbible.info cannot be reached from the build, so the data is downloaded from scrollmapper/bible_databases, an MIT-licensed collection that carries it unchanged. Of 344,799 links, only those readers voted up are kept, and at most eight for any one verse: a verse offering forty references is less useful than one offering eight, because the reader has to weigh them all."
     },
     {
       "id": "naves",
