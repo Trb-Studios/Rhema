@@ -26,6 +26,7 @@ import {
   parseHebrew,
 } from './originals.mjs';
 import { GREEK_LEXICON, HEBREW_LEXICON, foldWord, hebrewKey, parseLexicon } from './lexicon.mjs';
+import { TIPNR, parseNames } from './names.mjs';
 import { createWriteStream } from 'node:fs';
 import { mkdir, readFile, writeFile, copyFile, stat, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -227,6 +228,9 @@ async function main() {
   // 4. What the words mean
   await loadLexicons(db);
 
+  // 5. Who and where
+  await loadNames(db);
+
   // Everything is loaded, so compact the file and let go of it.
   db.exec('PRAGMA journal_mode = DELETE');
   db.exec('VACUUM');
@@ -234,7 +238,7 @@ async function main() {
 
   // 5. Still to come. Each gets a loader here as its dataset is added.
   say('\nNot loaded yet (see data/sources.json)');
-  for (const pending of ['People, families, and places', 'Cross-references and topics']) {
+  for (const pending of ['Cross-references and topics']) {
     say(`  · ${pending}`);
   }
 
@@ -312,6 +316,152 @@ async function loadOriginals(db) {
  * ignored. Entries that do not match are left out rather than guessed at; most of those
  * are proper names, which a lexicon has little to say about anyway.
  */
+/**
+ * The people and places, as individuals.
+ *
+ * Every claim is checked against the text already loaded: a name is only recorded where
+ * one of its spellings is actually printed in that verse. About one claim in eighty is
+ * dropped that way, nearly all of them places the King James spells differently from
+ * modern versions and a handful of verses where the versions differ outright. The point
+ * is that the reader never sees a mark on a word that is not there.
+ */
+async function loadNames(db) {
+  say('\nPeople and places');
+
+  const file = await fetchOnce(TIPNR, join(RAW, 'tipnr.txt'));
+  const { subjects, marks } = parseNames(await readFile(file, 'utf8'));
+  say(`  read ${subjects.size.toLocaleString()} individuals`);
+
+  // The text as it was actually loaded, to check every claim against.
+  const verses = new Map();
+  for (const row of db
+    .prepare('SELECT book_id, chapter, verse, text FROM verses')
+    .all()) {
+    verses.set(`${row.book_id}:${row.chapter}:${row.verse}`, row.text);
+  }
+
+  const escape = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  /**
+   * Whether a verse really prints this name, as a name.
+   *
+   * Some names are also ordinary words — the Negev is "South", and there is a place
+   * called "Mount". Matching without regard to case marked the word "south" in "toward
+   * the south", which is not a place at all. This translation capitalises proper names,
+   * so an occurrence only counts when the text has it capitalised.
+   */
+  const printedAsAName = (text, form) => {
+    const pattern = new RegExp(`\\b${escape(form)}`, 'gi');
+    let match = pattern.exec(text);
+    while (match) {
+      const after = text[match.index + match[0].length] ?? '';
+      if (/[A-Z]/.test(match[0][0]) && !/[A-Za-z]/.test(after)) return true;
+      match = pattern.exec(text);
+    }
+    return false;
+  };
+
+  const found = new Map();
+  const verified = [];
+  let dropped = 0;
+
+  for (const [bookId, book] of marks) {
+    for (const [key, list] of book) {
+      const [chapter, verse] = key.split(':').map(Number);
+      const text = verses.get(`${bookId}:${chapter}:${verse}`);
+      if (!text) {
+        dropped += list.length;
+        continue;
+      }
+
+      // One individual can be offered under several spellings; keep the spellings
+      // this translation really uses here, and drop the rest.
+      const bySubject = new Map();
+      for (const [form, id] of list) {
+        const forms = bySubject.get(id) ?? [];
+        forms.push(form);
+        bySubject.set(id, forms);
+      }
+
+      for (const [id, forms] of bySubject) {
+        const matching = forms.filter((form) => printedAsAName(text, form));
+        if (matching.length === 0) {
+          dropped += 1;
+          continue;
+        }
+        // The longest spelling present wins, so Bethlehemjudah is marked whole rather
+        // than as Bethlehem followed by stray letters.
+        const best = matching.sort((a, b) => b.length - a.length)[0];
+        verified.push([bookId, chapter, verse, id, best]);
+        found.set(id, (found.get(id) ?? 0) + 1);
+      }
+    }
+  }
+
+  // Subjects go in first: a mention points at one, and an individual nobody can reach
+  // in this translation is not worth carrying.
+  const insertSubject = db.prepare(
+    `INSERT OR REPLACE INTO subjects (id, name, kind, type, summary, tribe, area, near, forms)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+  );
+  const insertRelation = db.prepare(
+    'INSERT OR REPLACE INTO relations (subject_id, related_id, relation) VALUES (?, ?, ?)',
+  );
+
+  db.exec('BEGIN');
+  let people = 0;
+  let places = 0;
+  for (const subject of subjects.values()) {
+    if (!found.has(subject.id)) continue;
+
+    insertSubject.run(
+      subject.id,
+      subject.name,
+      subject.kind,
+      subject.type || null,
+      subject.summary || null,
+      subject.tribe || null,
+      subject.area || null,
+      subject.near || null,
+      JSON.stringify([...subject.forms]),
+    );
+    if (subject.kind === 'person') people += 1;
+    if (subject.kind === 'place') places += 1;
+
+    for (const [relation, list] of [
+      ['parent', subject.parents],
+      ['sibling', subject.siblings],
+      ['partner', subject.partners],
+      ['child', subject.children],
+    ]) {
+      for (const related of list) insertRelation.run(subject.id, related, relation);
+    }
+  }
+  db.exec('COMMIT');
+
+  const insertMention = db.prepare(
+    `INSERT OR REPLACE INTO mentions (book_id, chapter, verse, subject_id, form)
+     VALUES (?, ?, ?, ?, ?)`,
+  );
+
+  db.exec('BEGIN');
+  let kept = 0;
+  for (const row of verified) {
+    insertMention.run(...row);
+    kept += 1;
+  }
+  db.exec('COMMIT');
+
+  const percent = ((kept / (kept + dropped)) * 100).toFixed(1);
+  say(`  ${people.toLocaleString()} people, ${places.toLocaleString()} places`);
+  say(`  ${kept.toLocaleString()} mentions checked against the text (${percent}% of claims)`);
+  say(`  ${dropped.toLocaleString()} dropped: spelled differently here, or not in this text`);
+
+  if (kept < 25_000) {
+    throw new Error(`Only ${kept} mentions verified; something is wrong with the parse.`);
+  }
+}
+
 async function loadLexicons(db) {
   say('\nLexicons');
 
@@ -396,6 +546,17 @@ async function exportForWeb() {
   const lexiconRows = db
     .prepare('SELECT edition, entry, headword, translit, gloss, definition FROM lexicon')
     .all();
+  const subjectRows = db
+    .prepare('SELECT id, name, kind, type, summary, tribe, area, near FROM subjects')
+    .all();
+  const relationRows = db
+    .prepare('SELECT subject_id, related_id, relation FROM relations ORDER BY subject_id')
+    .all();
+  const mentionRows = db
+    .prepare(
+      'SELECT book_id, chapter, verse, subject_id, form FROM mentions ORDER BY book_id, chapter, verse',
+    )
+    .all();
   db.close();
 
   await mkdir(WEB, { recursive: true });
@@ -456,6 +617,8 @@ async function exportForWeb() {
       `${Object.keys(lexicon.greek).length.toLocaleString()} Greek entries`,
   );
 
+  await exportNames(subjectRows, relationRows, mentionRows);
+
   await writeFile(
     join(WEB, 'index.json'),
     JSON.stringify(
@@ -472,6 +635,76 @@ async function exportForWeb() {
   );
 
   say(`  wrote ${books.length} books to app/public/bible`);
+}
+
+/**
+ * The people and places, for the web build.
+ *
+ * Split in two because the two are needed at different moments. The marks for a book
+ * are needed the instant it is opened, so they are per book and small. The details of
+ * an individual — who their parents were, every other verse they appear in — are only
+ * needed once a name is tapped, so they are one file fetched lazily.
+ */
+async function exportNames(subjects, relations, mentions) {
+  const kindById = new Map(subjects.map((row) => [row.id, row.kind]));
+  const byBook = new Map();
+  const appearsIn = new Map();
+
+  for (const row of mentions) {
+    const book = byBook.get(row.book_id) ?? {};
+    const key = `${row.chapter}:${row.verse}`;
+    // A third element marks a place, so the reader can colour a name before the full
+    // records have been fetched. People are the common case and carry nothing.
+    const kind = kindById.get(row.subject_id);
+    (book[key] ??= []).push(
+      kind === 'person' ? [row.form, row.subject_id] : [row.form, row.subject_id, kind],
+    );
+    byBook.set(row.book_id, book);
+
+    const where = appearsIn.get(row.subject_id) ?? [];
+    where.push([row.book_id, row.chapter, row.verse]);
+    appearsIn.set(row.subject_id, where);
+  }
+
+  for (const [bookId, book] of byBook) {
+    await writeFile(join(WEB, `names-${bookId}.json`), JSON.stringify(book));
+  }
+
+  const related = new Map();
+  for (const row of relations) {
+    const entry = related.get(row.subject_id) ?? { parent: [], sibling: [], partner: [], child: [] };
+    entry[row.relation].push(row.related_id);
+    related.set(row.subject_id, entry);
+  }
+
+  const people = {};
+  for (const row of subjects) {
+    const links = related.get(row.id) ?? { parent: [], sibling: [], partner: [], child: [] };
+    const where = appearsIn.get(row.id) ?? [];
+    people[row.id] = {
+      n: row.name,
+      k: row.kind,
+      t: row.type ?? '',
+      s: row.summary ?? '',
+      ...(row.tribe ? { tribe: row.tribe } : {}),
+      ...(row.area ? { area: row.area } : {}),
+      ...(row.near ? { near: row.near } : {}),
+      ...(links.parent.length ? { p: links.parent } : {}),
+      ...(links.sibling.length ? { b: links.sibling } : {}),
+      ...(links.partner.length ? { m: links.partner } : {}),
+      ...(links.child.length ? { c: links.child } : {}),
+      // Where they appear, capped: a card listing 2,000 verses helps nobody, and the
+      // count is what a reader actually wants alongside the first few.
+      w: where.slice(0, 60),
+      total: where.length,
+    };
+  }
+
+  await writeFile(join(WEB, 'names.json'), JSON.stringify(people));
+  say(
+    `  wrote ${Object.keys(people).length.toLocaleString()} individuals and ` +
+      `${mentions.length.toLocaleString()} marks across ${byBook.size} books`,
+  );
 }
 
 /**

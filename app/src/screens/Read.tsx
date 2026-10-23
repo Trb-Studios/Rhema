@@ -9,7 +9,8 @@ import {
 import type { Book, Verse } from '../lib/bible';
 import type { EditionId } from '../lib/editions';
 import { editionById, editionsFor } from '../lib/editions';
-import { markUp } from '../lib/marks';
+import { markUp, marksFor } from '../lib/marks';
+import type { BookMarks } from '../lib/marks';
 import { useProgress } from '../lib/progress';
 import { useSaved } from '../lib/saved';
 import { useSettings } from '../lib/settings';
@@ -80,6 +81,8 @@ export function Read() {
   const [wordAnchor, setWordAnchor] = useState<WordAnchor | null>(null);
   // The words of the chapter on screen, when an original edition is open.
   const [chapterWords, setChapterWords] = useState<Record<string, Word[]> | null>(null);
+  // Which individuals are named in each verse of this book, from the build.
+  const [bookMarks, setBookMarks] = useState<BookMarks>({});
   const [panel, setPanel] = useState<PanelTab | null>('notes');
   const [showIntro, setShowIntro] = useState(true);
   const [error, setError] = useState('');
@@ -105,6 +108,18 @@ export function Read() {
   useEffect(() => {
     syncReview(saved.map((verse) => `${verse.bookId}:${verse.chapter}:${verse.verse}`));
   }, [saved, syncReview]);
+
+  useEffect(() => {
+    if (!book) return;
+    let current = true;
+    setBookMarks({});
+    void marksFor(book.id).then((found) => {
+      if (current) setBookMarks(found);
+    });
+    return () => {
+      current = false;
+    };
+  }, [book]);
 
   const available = useMemo(() => (book ? editionsFor(book.testament) : []), [book]);
 
@@ -306,36 +321,50 @@ export function Read() {
           <CheckIcon size={15} />
         </Pill>
 
-        <motion.button
-          whileTap={{ scale: 0.96 }}
-          transition={spring.snappy}
-          onClick={() => setReviewing(true)}
-          aria-label={dueCount > 0 ? `Review, ${dueCount} due` : 'Review'}
+        {/* The three ways of going over what has been read, kept together so they read
+            as one group rather than three unrelated buttons. */}
+        <div
+          role="group"
+          aria-label="Go over what you have read"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 6,
-            padding: '6px 13px',
-            borderRadius: 999,
-            fontWeight: 600,
-            fontSize: 13,
+            gap: 2,
+            padding: 3,
             marginRight: 4,
-            background: dueCount > 0 ? 'var(--main-fill)' : 'transparent',
-            color: dueCount > 0 ? 'var(--main-on)' : 'var(--text-secondary)',
-            border: `1px solid ${dueCount > 0 ? 'var(--main-fill)' : 'var(--line-default)'}`,
+            borderRadius: 11,
+            background: 'var(--bg-sunken)',
           }}
         >
-          <ScrollIcon size={15} />
-          Review
-          {dueCount > 0 && <span className="tabular">{dueCount}</span>}
-        </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            transition={spring.snappy}
+            onClick={() => setReviewing(true)}
+            aria-label={dueCount > 0 ? `Review, ${dueCount} due` : 'Review'}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              height: 30,
+              padding: dueCount > 0 ? '0 11px' : '0 9px',
+              borderRadius: 8,
+              fontWeight: 600,
+              fontSize: 13,
+              background: dueCount > 0 ? 'var(--main-fill)' : 'transparent',
+              color: dueCount > 0 ? 'var(--main-on)' : 'var(--text-secondary)',
+            }}
+          >
+            <ScrollIcon size={17} />
+            {dueCount > 0 && <span className="tabular">{dueCount}</span>}
+          </motion.button>
 
-        <Round label="Reading plan" active={planning} onClick={() => setPlanning(true)}>
-          <CalendarIcon size={18} />
-        </Round>
-        <Round label="Quiz" active={quizzing} onClick={() => setQuizzing(true)}>
-          <TargetIcon size={18} />
-        </Round>
+          <Grouped label="Reading plan" active={planning} onClick={() => setPlanning(true)}>
+            <CalendarIcon size={17} />
+          </Grouped>
+          <Grouped label="Quiz" active={quizzing} onClick={() => setQuizzing(true)}>
+            <TargetIcon size={17} />
+          </Grouped>
+        </div>
         <Round
           label="Notes"
           active={panel === 'notes'}
@@ -496,35 +525,36 @@ export function Read() {
                                   ),
                                 )
                               : edition === 'kjv'
-                                ? markUp(verse.text).map((piece, index) =>
-                                    piece.type === 'text' ? (
-                                      <span key={index}>{piece.text}</span>
-                                    ) : (
-                                      <button
-                                        key={index}
-                                        onClick={(event) => {
-                                          const box = event.currentTarget.getBoundingClientRect();
-                                          setAnchored({
-                                            subject: piece.subject,
-                                            at: { book: book.name, chapter: number },
-                                            x: box.left + box.width / 2,
-                                            y: box.bottom,
-                                          });
-                                        }}
-                                        style={{
-                                          font: 'inherit',
-                                          color:
-                                            piece.subject.kind === 'person'
-                                              ? 'var(--mark-name)'
-                                              : 'var(--mark-place)',
-                                          borderBottom:
-                                            '1.5px solid color-mix(in srgb, currentColor 40%, transparent)',
-                                          borderRadius: 2,
-                                        }}
-                                      >
-                                        {piece.text}
-                                      </button>
-                                    ),
+                                ? markUp(verse.text, bookMarks[`${number}:${verse.number}`]).map(
+                                    (piece, index) =>
+                                      piece.type === 'text' ? (
+                                        <span key={index}>{piece.text}</span>
+                                      ) : (
+                                        <button
+                                          key={index}
+                                          onClick={(event) => {
+                                            const box = event.currentTarget.getBoundingClientRect();
+                                            setAnchored({
+                                              id: piece.id,
+                                              text: piece.text,
+                                              x: box.left + box.width / 2,
+                                              y: box.bottom,
+                                            });
+                                          }}
+                                          style={{
+                                            font: 'inherit',
+                                            color:
+                                              piece.kind === 'place'
+                                                ? 'var(--mark-place)'
+                                                : 'var(--mark-name)',
+                                            borderBottom:
+                                              '1.5px solid color-mix(in srgb, currentColor 40%, transparent)',
+                                            borderRadius: 2,
+                                          }}
+                                        >
+                                          {piece.text}
+                                        </button>
+                                      ),
                                   )
                                 : verse.text}{' '}
                           </span>
@@ -706,7 +736,15 @@ export function Read() {
         }}
       />
 
-      <MarkPopover anchored={anchored} onClose={() => setAnchored(null)} />
+      <MarkPopover
+        anchored={anchored}
+        onClose={() => setAnchored(null)}
+        onOpenVerse={(bookId, chapterNumber) => {
+          const target = all.find((candidate) => candidate.id === bookId);
+          if (target) goTo({ book: target, chapter: chapterNumber });
+          setAnchored(null);
+        }}
+      />
 
       <BookPickerHost
         open={picking}
@@ -721,6 +759,42 @@ export function Read() {
         onClose={() => setPicking(false)}
       />
     </div>
+  );
+}
+
+/** A button inside a grouped cluster: square, no outline, lit when its panel is open. */
+function Grouped({
+  label,
+  active,
+  onClick,
+  children,
+}: {
+  label: string;
+  active?: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.button
+      whileTap={{ scale: 0.95 }}
+      transition={spring.snappy}
+      onClick={onClick}
+      aria-label={label}
+      aria-pressed={active}
+      title={label}
+      style={{
+        width: 30,
+        height: 30,
+        borderRadius: 8,
+        display: 'grid',
+        placeItems: 'center',
+        color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
+        background: active ? 'var(--bg-card)' : 'transparent',
+        boxShadow: active ? '0 1px 2px rgba(0,0,0,0.08)' : 'none',
+      }}
+    >
+      {children}
+    </motion.button>
   );
 }
 

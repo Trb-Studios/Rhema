@@ -1,28 +1,46 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { Context, Subject } from '../lib/marks';
-import { resolve } from '../lib/marks';
+import type { Subject } from '../lib/marks';
+import { allSubjects, nameOfId } from '../lib/marks';
 import { popoverVariants, transition } from '../lib/motion';
 
-export type Anchored = { subject: Subject; at: Context; x: number; y: number };
+export type Anchored = {
+  /** The individual the word stands for. */
+  id: string;
+  /** The word as the text prints it, which may be a different spelling of the name. */
+  text: string;
+  x: number;
+  y: number;
+};
 
-const WIDTH = 320;
+const WIDTH = 330;
 
 /**
- * The card that opens from a name or place in the text. It grows out of the word that
- * was tapped and closes on the next click, on Escape, or on scroll, so it never sits
- * stranded over the page.
+ * The card that opens from a name or place in the text.
  *
- * For a name several people bear, it names the one this passage means when the passage
- * settles it, and otherwise lists who it could be rather than guessing.
+ * It names a person, not a name: the build worked out which bearer of a shared name each
+ * verse means, so this never has to hedge about which Mary. Where the data gives a
+ * family it is shown, and the relatives are themselves openable, which is the genealogy.
  */
 export function MarkPopover({
   anchored,
   onClose,
+  onOpenVerse,
 }: {
   anchored: Anchored | null;
   onClose: () => void;
+  onOpenVerse: (bookId: number, chapter: number) => void;
 }) {
+  const [subjects, setSubjects] = useState<Map<string, Subject> | null>(null);
+  const [showing, setShowing] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (anchored) {
+      setShowing(anchored.id);
+      void allSubjects().then(setSubjects);
+    }
+  }, [anchored]);
+
   useEffect(() => {
     if (!anchored) return;
 
@@ -57,8 +75,9 @@ export function MarkPopover({
     };
   }, [anchored, onClose]);
 
-  const resolved = anchored ? resolve(anchored.subject, anchored.at) : null;
-  const person = anchored?.subject.kind === 'person';
+  const subject = showing ? subjects?.get(showing) : undefined;
+  const person = subject ? subject.kind === 'person' : true;
+  const label = subject?.name ?? (showing ? nameOfId(showing) : '');
 
   return (
     <AnimatePresence>
@@ -71,7 +90,7 @@ export function MarkPopover({
           />
           <motion.div
             role="dialog"
-            aria-label={anchored.subject.name}
+            aria-label={label}
             variants={popoverVariants}
             initial="initial"
             animate="animate"
@@ -84,9 +103,9 @@ export function MarkPopover({
                 Math.max(12, anchored.x - WIDTH / 2),
                 Math.max(12, window.innerWidth - WIDTH - 12),
               ),
-              top: Math.min(anchored.y + 10, Math.max(12, window.innerHeight - 260)),
+              top: Math.min(anchored.y + 10, Math.max(12, window.innerHeight - 320)),
               width: WIDTH,
-              maxHeight: 300,
+              maxHeight: 340,
               overflowY: 'auto',
               transformOrigin: 'top center',
               padding: 16,
@@ -104,77 +123,54 @@ export function MarkPopover({
                 color: person ? 'var(--mark-name)' : 'var(--mark-place)',
               }}
             >
-              {person ? 'Person' : 'Place'}
+              {describe(subject)}
             </div>
 
-            <h3 style={{ fontSize: 20, marginTop: 4 }}>{anchored.subject.name}</h3>
+            <h3 style={{ fontSize: 20, marginTop: 4 }}>{label}</h3>
 
-            {anchored.subject.also && (
+            {/* The word on the page, when the text spells the name another way. */}
+            {showing === anchored.id && anchored.text.toLowerCase() !== label.toLowerCase() && (
               <div style={{ color: 'var(--text-secondary)', fontSize: 13, marginTop: 2 }}>
-                Also {anchored.subject.also}
+                Here called {anchored.text}
               </div>
             )}
 
-            {anchored.subject.meaning && <Row label="Meaning" value={anchored.subject.meaning} />}
-            {anchored.subject.modern && <Row label="Today" value={anchored.subject.modern} />}
-
-            {/* A single, settled person, or a place. */}
-            {!resolved && anchored.subject.note && (
+            {!subjects ? (
+              <p style={{ marginTop: 10, fontSize: 13, color: 'var(--text-faint)' }}>Looking…</p>
+            ) : !subject ? (
               <p style={{ marginTop: 10, fontSize: 13, lineHeight: 1.55 }}>
-                {anchored.subject.note}
+                Named in Scripture, but nothing more is recorded here.
               </p>
-            )}
-
-            {/* A name several people bear. */}
-            {resolved && resolved.certain && (
+            ) : (
               <>
-                <div style={{ fontWeight: 650, fontSize: 14, marginTop: 10 }}>
-                  {resolved.candidates[0].who}
-                </div>
-                <p style={{ marginTop: 6, fontSize: 13, lineHeight: 1.55 }}>
-                  {resolved.candidates[0].note}
-                </p>
+                {subject.summary && (
+                  <p style={{ marginTop: 9, fontSize: 13, lineHeight: 1.55 }}>{subject.summary}</p>
+                )}
+
+                {subject.tribe && <Row label="Tribe" value={subject.tribe} />}
+                {subject.area && <Row label="Region" value={subject.area} />}
+                {subject.near && subject.near !== subject.name && (
+                  <Row label="Also known" value={subject.near} />
+                )}
+
+                <Family subject={subject} subjects={subjects} onOpen={setShowing} />
+
+                <Appearances subject={subject} onOpenVerse={onOpenVerse} />
               </>
             )}
 
-            {resolved && !resolved.certain && (
-              <>
-                <p
-                  style={{
-                    marginTop: 10,
-                    fontSize: 12,
-                    color: 'var(--text-secondary)',
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {resolved.candidates.length} people in Scripture bear this name, and this passage
-                  does not settle which is meant.
-                </p>
-                <ul style={{ margin: '10px 0 0', padding: 0, listStyle: 'none' }}>
-                  {resolved.candidates.map((sense) => (
-                    <li
-                      key={sense.who}
-                      style={{
-                        paddingTop: 10,
-                        marginTop: 10,
-                        borderTop: '1px solid var(--line-default)',
-                      }}
-                    >
-                      <div style={{ fontWeight: 650, fontSize: 13 }}>{sense.who}</div>
-                      <p
-                        style={{
-                          marginTop: 4,
-                          fontSize: 12,
-                          lineHeight: 1.5,
-                          color: 'var(--text-secondary)',
-                        }}
-                      >
-                        {sense.note}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </>
+            {showing !== anchored.id && (
+              <button
+                onClick={() => setShowing(anchored.id)}
+                style={{
+                  marginTop: 12,
+                  color: 'var(--text-secondary)',
+                  fontSize: 12.5,
+                  fontWeight: 600,
+                }}
+              >
+                ← Back to {anchored.text}
+              </button>
             )}
           </motion.div>
         </>
@@ -183,11 +179,125 @@ export function MarkPopover({
   );
 }
 
+/** What kind of thing this is, in a word a reader would use. */
+function describe(subject: Subject | undefined): string {
+  if (!subject) return 'Name';
+  if (subject.kind === 'place') return 'Place';
+  if (subject.type === 'Group') return 'People';
+  if (subject.type === 'Supernatural') return 'Divine or spiritual';
+  if (subject.type === 'Male' || subject.type === 'Female') return 'Person';
+  return subject.type || 'Person';
+}
+
+function Family({
+  subject,
+  subjects,
+  onOpen,
+}: {
+  subject: Subject;
+  subjects: Map<string, Subject>;
+  onOpen: (id: string) => void;
+}) {
+  const groups: Array<[string, string[]]> = [
+    ['Parents', subject.parents],
+    ['Siblings', subject.siblings],
+    [subject.type === 'Female' ? 'Husband' : 'Wife', subject.partners],
+    ['Children', subject.children],
+  ];
+
+  const any = groups.some(([, list]) => list.length > 0);
+  if (!any) return null;
+
+  return (
+    <div
+      style={{
+        marginTop: 12,
+        paddingTop: 10,
+        borderTop: '1px solid var(--line-default)',
+        display: 'grid',
+        gap: 7,
+      }}
+    >
+      {groups.map(([label, list]) =>
+        list.length === 0 ? null : (
+          <div key={label} style={{ display: 'flex', gap: 8, fontSize: 12.5 }}>
+            <span style={{ width: 58, flex: 'none', color: 'var(--text-faint)' }}>{label}</span>
+            <span style={{ flex: 1, lineHeight: 1.5 }}>
+              {list.map((id, index) => {
+                const known = subjects.has(id);
+                return (
+                  <span key={id}>
+                    {index > 0 && ', '}
+                    {known ? (
+                      <button
+                        onClick={() => onOpen(id)}
+                        style={{
+                          font: 'inherit',
+                          color: 'var(--mark-name)',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {subjects.get(id)!.name}
+                      </button>
+                    ) : (
+                      // Someone the text refers to without naming, such as a wife known
+                      // only as her husband's. Shown, but nothing to open.
+                      <span style={{ color: 'var(--text-secondary)' }}>{nameOfId(id)}</span>
+                    )}
+                  </span>
+                );
+              })}
+            </span>
+          </div>
+        ),
+      )}
+    </div>
+  );
+}
+
+function Appearances({
+  subject,
+  onOpenVerse,
+}: {
+  subject: Subject;
+  onOpenVerse: (bookId: number, chapter: number) => void;
+}) {
+  if (subject.total === 0) return null;
+
+  return (
+    <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--line-default)' }}>
+      <div style={{ color: 'var(--text-faint)', fontSize: 12 }}>
+        Named in <span className="tabular">{subject.total}</span>{' '}
+        {subject.total === 1 ? 'verse' : 'verses'}
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 7 }}>
+        {subject.where.slice(0, 8).map(([bookId, chapter, verse]) => (
+          <button
+            key={`${bookId}:${chapter}:${verse}`}
+            onClick={() => onOpenVerse(bookId, chapter)}
+            className="tabular"
+            style={{
+              padding: '3px 8px',
+              borderRadius: 6,
+              border: '1px solid var(--line-default)',
+              fontSize: 11.5,
+              fontWeight: 600,
+              color: 'var(--text-secondary)',
+            }}
+          >
+            {chapter}:{verse}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ display: 'flex', gap: 8, marginTop: 8, fontSize: 13 }}>
-      <span style={{ color: 'var(--text-secondary)', flex: 'none' }}>{label}</span>
-      <span>{value}</span>
+    <div style={{ display: 'flex', gap: 8, marginTop: 7, fontSize: 12.5 }}>
+      <span style={{ width: 58, flex: 'none', color: 'var(--text-faint)' }}>{label}</span>
+      <span style={{ flex: 1, lineHeight: 1.5 }}>{value}</span>
     </div>
   );
 }

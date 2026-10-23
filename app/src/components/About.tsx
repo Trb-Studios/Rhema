@@ -30,6 +30,12 @@ const CREDITS = [
     what: 'What each Hebrew and Greek word means',
     terms: 'Creative Commons Attribution 4.0',
   },
+  {
+    name: 'STEPBible TIPNR',
+    what: 'Who and where: every person and place, with their family',
+    terms: 'Creative Commons Attribution 4.0',
+    note: 'From Tyndale House Cambridge.',
+  },
 ];
 
 export function About() {
@@ -62,9 +68,13 @@ export function About() {
           borderTop: '1px solid var(--line-default)',
         }}
       >
-        People and places are marked from a small hand-written set, not a scholarly dataset, and are
-        marked as such until a proper one replaces it. Book introductions give the traditional view
-        and the main scholarly alternative without choosing between them.
+        People and places are marked as individuals rather than as names, so the Mary of one passage
+        is not the Mary of another. Every mark is checked against this translation's own text before
+        it is kept, which is why a few names the King James spells differently are left unmarked
+        rather than marked on the wrong word. The descriptions are the ones built from the data; the
+        longer prose in that dataset was written by an AI and is deliberately not shown. Book
+        introductions give the traditional view and the main scholarly alternative without choosing
+        between them.
       </p>
     </motion.div>
   );

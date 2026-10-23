@@ -1,112 +1,198 @@
 /**
- * Finding people and places inside a verse.
+ * The people and places inside a verse.
  *
- * Most names belong to one person and are simply marked. Names like Mary, Simon, and
- * Saul belong to several, so each of those carries a list of senses scoped to the books
- * and chapters where that person appears. A verse inside exactly one scope is matched to
- * that person; where scopes overlap or none fit, every possibility is offered and the
- * card says which it cannot tell apart. The one thing never done is picking a person the
- * text does not support.
+ * This used to work from a list of names and a regular expression, which could only ever
+ * find names, not people. Every Mary in Scripture matched the same entry, so the card had
+ * to hedge about which one a verse meant, and names belonging to several people were left
+ * out altogether rather than marked wrongly.
+ *
+ * It now works the other way round. The build records, for each verse, which individuals
+ * are named in it and under which spelling — checked against this translation's own text,
+ * so a mark never appears on a word that is not there. Mary the mother of Jesus and Mary
+ * Magdalene are different people with different verses, and the reader marks whichever one
+ * the verse is actually about.
+ *
+ * Source: TIPNR, from STEPBible and Tyndale House Cambridge, under CC BY 4.0.
  */
 
-import data from '../data/people-places.json';
+import { inDesktopApp, invokeCommand } from './tauri';
 
-export type Sense = {
-  who: string;
-  note: string;
-  /** Books, and where it narrows things, chapter ranges, in which this person appears. */
-  where: Array<[book: string, from: number, to: number]>;
-};
-
+/** An individual: one person, or one place. */
 export type Subject = {
-  kind: 'person' | 'place';
+  id: string;
   name: string;
-  also?: string;
-  meaning?: string;
-  modern?: string;
-  note?: string;
-  /** Set when the name belongs to more than one person. */
-  senses?: Sense[];
+  kind: 'person' | 'place' | 'other';
+  /** Male, Female, Group, Supernatural, and so on. */
+  type: string;
+  summary: string;
+  tribe?: string;
+  area?: string;
+  /** The name a gazetteer knows a place by. */
+  near?: string;
+  parents: string[];
+  siblings: string[];
+  partners: string[];
+  children: string[];
+  /** The first verses where this individual is named, as [bookId, chapter, verse]. */
+  where: Array<[number, number, number]>;
+  /** How many verses name them in all. */
+  total: number;
 };
-
-/** Where in Scripture a mark was found, used to tell one Mary from another. */
-export type Context = { book: string; chapter: number };
-
-const PEOPLE: Subject[] = data.people.map((person) => ({ ...person, kind: 'person' as const }));
-const PLACES: Subject[] = data.places.map((place) => ({ ...place, kind: 'place' as const }));
-const AMBIGUOUS: Subject[] = data.ambiguous.map((entry) => ({
-  ...entry,
-  kind: 'person' as const,
-  senses: entry.senses as Sense[],
-}));
-
-export const SUBJECTS: Subject[] = [...PEOPLE, ...PLACES, ...AMBIGUOUS];
-
-const BY_NAME = new Map(SUBJECTS.map((subject) => [subject.name, subject]));
 
 /**
- * One expression covering every name, longest first so "Abraham" is preferred over any
- * shorter name inside it. Word boundaries keep "Adam" out of "Adamah".
+ * "chapter:verse" to the names found in it.
+ *
+ * Each entry is [spelling, subject id] and, for anything that is not a person, the kind
+ * as a third element. People are by far the common case and carry nothing, which keeps
+ * the file small.
  */
-const PATTERN = new RegExp(
-  `\\b(${SUBJECTS.map((subject) => subject.name)
-    .sort((a, b) => b.length - a.length)
-    .join('|')})\\b`,
-  'g',
-);
+export type Mark = [string, string] | [string, string, Subject['kind']];
+export type BookMarks = Record<string, Mark[]>;
 
-export type Piece =
-  { type: 'text'; text: string } | { type: 'mark'; text: string; subject: Subject };
+type RawSubject = {
+  n: string;
+  k: Subject['kind'];
+  t: string;
+  s: string;
+  tribe?: string;
+  area?: string;
+  near?: string;
+  p?: string[];
+  b?: string[];
+  m?: string[];
+  c?: string[];
+  w: Array<[number, number, number]>;
+  total: number;
+};
 
-/** Splits a verse into plain runs and marked names, in order. */
-export function markUp(text: string): Piece[] {
-  const pieces: Piece[] = [];
-  let index = 0;
-
-  PATTERN.lastIndex = 0;
-  let match = PATTERN.exec(text);
-
-  while (match) {
-    if (match.index > index) {
-      pieces.push({ type: 'text', text: text.slice(index, match.index) });
-    }
-
-    const subject = BY_NAME.get(match[0]);
-    pieces.push(
-      subject ? { type: 'mark', text: match[0], subject } : { type: 'text', text: match[0] },
-    );
-
-    index = match.index + match[0].length;
-    match = PATTERN.exec(text);
-  }
-
-  if (index < text.length) pieces.push({ type: 'text', text: text.slice(index) });
-  return pieces;
+function dataUrl(file: string): URL {
+  return new URL(file, new URL('./bible/', document.baseURI));
 }
 
-export type Resolved = {
-  /** The senses this verse could mean, best first. */
-  candidates: Sense[];
-  /** True when exactly one person fits, so the card can name them plainly. */
-  certain: boolean;
-};
+const markCache = new Map<number, BookMarks>();
+let subjectsPromise: Promise<Map<string, Subject>> | null = null;
+
+/** The marks for one book. Fetched once; a book without any is simply empty. */
+export async function marksFor(bookId: number): Promise<BookMarks> {
+  const already = markCache.get(bookId);
+  if (already) return already;
+
+  let data: BookMarks = {};
+  try {
+    if (inDesktopApp()) {
+      data = (await invokeCommand<BookMarks>('mentions', { bookId })) ?? {};
+    } else {
+      const response = await fetch(dataUrl(`names-${bookId}.json`));
+      if (response.ok) data = (await response.json()) as BookMarks;
+    }
+  } catch {
+    // Reading without the marks is better than not reading.
+  }
+
+  markCache.set(bookId, data);
+  return data;
+}
 
 /**
- * Works out which bearer of a shared name a verse means.
+ * Everyone and everywhere, fetched the first time a name is opened.
  *
- * A sense scoped to this book and chapter is a direct fit. If only one fits, that is the
- * person. If several fit, or none do, all are returned and the caller says so.
+ * It is a megabyte, so it is not loaded with the page: the reader can mark names from
+ * the per-book file alone, and only needs this once someone asks who a name belongs to.
  */
-export function resolve(subject: Subject, at: Context): Resolved | null {
-  if (!subject.senses) return null;
+export function allSubjects(): Promise<Map<string, Subject>> {
+  if (subjectsPromise) return subjectsPromise;
 
-  const fits = subject.senses.filter((sense) =>
-    sense.where.some(
-      ([book, from, to]) => book === at.book && at.chapter >= from && at.chapter <= to,
-    ),
-  );
+  subjectsPromise = (async () => {
+    const out = new Map<string, Subject>();
+    try {
+      const raw = inDesktopApp()
+        ? ((await invokeCommand<Record<string, RawSubject>>('subjects')) ?? {})
+        : await (await fetch(dataUrl('names.json'))).json();
 
-  if (fits.length === 1) return { candidates: fits, certain: true };
-  if (fits.length > 1) return { candidates: fits, certain: false };
-  return { candidates: subject.senses, certain: false };
+      for (const [id, value] of Object.entries(raw as Record<string, RawSubject>)) {
+        out.set(id, {
+          id,
+          name: value.n,
+          kind: value.k,
+          type: value.t ?? '',
+          summary: value.s ?? '',
+          tribe: value.tribe,
+          area: value.area,
+          near: value.near,
+          parents: value.p ?? [],
+          siblings: value.b ?? [],
+          partners: value.m ?? [],
+          children: value.c ?? [],
+          where: value.w ?? [],
+          total: value.total ?? 0,
+        });
+      }
+    } catch {
+      // An empty map means names open nothing rather than the reader breaking.
+    }
+    return out;
+  })();
+
+  return subjectsPromise;
+}
+
+/** The readable name inside an identifier, for a relative with no record of their own. */
+export function nameOfId(id: string): string {
+  const name = id.split('@')[0] ?? id;
+  return name.replace(/_/g, ' ');
+}
+
+export type Piece =
+  | { type: 'text'; text: string }
+  | { type: 'mark'; text: string; id: string; kind: Subject['kind'] };
+
+/**
+ * Splits a verse into plain runs and marked names.
+ *
+ * Longest spelling first, so "Bethlehemjudah" is marked whole rather than as Bethlehem
+ * with stray letters after it, and a name is never marked inside a longer word.
+ */
+export function markUp(text: string, found: Mark[] | undefined): Piece[] {
+  if (!found || found.length === 0) return [{ type: 'text', text }];
+
+  const wanted = [...found].sort((a, b) => b[0].length - a[0].length);
+  const taken: Array<{
+    from: number;
+    to: number;
+    id: string;
+    kind: Subject['kind'];
+    text: string;
+  }> = [];
+
+  for (const [form, id, kind] of wanted) {
+    const pattern = new RegExp(`\\b${form.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'gi');
+    let match = pattern.exec(text);
+
+    while (match) {
+      const from = match.index;
+      const to = from + match[0].length;
+      // A longer name already covering this run wins, and the letter after a name must
+      // not be a letter, or "Adam" would match inside "Adamah".
+      const clash = taken.some((piece) => from < piece.to && to > piece.from);
+      const next = text[to] ?? '';
+      if (!clash && !/[A-Za-z]/.test(next)) {
+        taken.push({ from, to, id, kind: kind ?? 'person', text: match[0] });
+      }
+      match = pattern.exec(text);
+    }
+  }
+
+  if (taken.length === 0) return [{ type: 'text', text }];
+  taken.sort((a, b) => a.from - b.from);
+
+  const pieces: Piece[] = [];
+  let index = 0;
+  for (const piece of taken) {
+    if (piece.from > index) pieces.push({ type: 'text', text: text.slice(index, piece.from) });
+    pieces.push({ type: 'mark', text: piece.text, id: piece.id, kind: piece.kind });
+    index = piece.to;
+  }
+  if (index < text.length) pieces.push({ type: 'text', text: text.slice(index) });
+
+  return pieces;
 }

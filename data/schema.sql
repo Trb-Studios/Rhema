@@ -114,43 +114,46 @@ CREATE TABLE IF NOT EXISTS lexicon (
 
 -- ------------------------------------------------- People and places
 
-CREATE TABLE IF NOT EXISTS people (
-  id           INTEGER PRIMARY KEY,
-  name         TEXT NOT NULL,
-  also_known   TEXT,                     -- Abraham; Elias
-  meaning      TEXT,
-  description  TEXT,
-  gender       TEXT
+-- Every individual person and place in Scripture, as individuals rather than as
+-- names: Mary the mother of Jesus and Mary Magdalene are two rows, not one name.
+-- Source: TIPNR, from STEPBible and Tyndale House Cambridge, CC BY 4.0.
+CREATE TABLE IF NOT EXISTS subjects (
+  id          TEXT PRIMARY KEY,          -- Aaron@Exo.4.14-Heb
+  name        TEXT NOT NULL,             -- Aaron
+  kind        TEXT NOT NULL CHECK (kind IN ('person', 'place', 'other')),
+  type        TEXT,                      -- Male, Female, Group, Place, Supernatural…
+  summary     TEXT,
+  tribe       TEXT,                      -- a person's tribe or nation
+  area        TEXT,                      -- a place's region
+  near        TEXT,                      -- the name a gazetteer knows a place by
+  forms       TEXT NOT NULL              -- JSON: every spelling found in this text
 );
 
-CREATE TABLE IF NOT EXISTS relationships (
-  person_id  INTEGER NOT NULL REFERENCES people(id),
-  related_id INTEGER NOT NULL REFERENCES people(id),
-  kind       TEXT NOT NULL CHECK (kind IN ('parent', 'child', 'spouse', 'sibling')),
-  PRIMARY KEY (person_id, related_id, kind)
+CREATE INDEX IF NOT EXISTS subjects_by_name ON subjects (name);
+
+-- Who is related to whom, one row per relationship.
+CREATE TABLE IF NOT EXISTS relations (
+  subject_id  TEXT NOT NULL REFERENCES subjects(id),
+  related_id  TEXT NOT NULL,
+  relation    TEXT NOT NULL CHECK (relation IN ('parent', 'sibling', 'partner', 'child')),
+  PRIMARY KEY (subject_id, related_id, relation)
 );
 
-CREATE TABLE IF NOT EXISTS places (
-  id          INTEGER PRIMARY KEY,
-  name        TEXT NOT NULL,
-  modern_name TEXT,                      -- Luz becomes Bethel
-  description TEXT,
-  latitude    REAL,
-  longitude   REAL,
-  precision   TEXT                       -- how sure the location is
-);
+CREATE INDEX IF NOT EXISTS relations_by_subject ON relations (subject_id);
 
--- Where a person or place is mentioned. One row per appearance, so a tap in the
--- reader opens the card and the card lists every verse.
+-- Where each individual is named. Only rows whose spelling was actually found in
+-- this translation's text are kept, so nothing is marked that is not on the page.
 CREATE TABLE IF NOT EXISTS mentions (
-  verse_id    INTEGER NOT NULL REFERENCES verses(id),
-  subject_id  INTEGER NOT NULL,
-  subject     TEXT NOT NULL CHECK (subject IN ('person', 'place')),
-  word_index  INTEGER,                   -- which word to tag, when known
-  PRIMARY KEY (verse_id, subject, subject_id, word_index)
+  book_id     INTEGER NOT NULL REFERENCES books(id),
+  chapter     INTEGER NOT NULL,
+  verse       INTEGER NOT NULL,
+  subject_id  TEXT NOT NULL REFERENCES subjects(id),
+  form        TEXT NOT NULL,             -- the spelling as this translation prints it
+  PRIMARY KEY (book_id, chapter, verse, subject_id, form)
 );
 
-CREATE INDEX IF NOT EXISTS mentions_by_subject ON mentions (subject, subject_id);
+CREATE INDEX IF NOT EXISTS mentions_by_chapter ON mentions (book_id, chapter);
+CREATE INDEX IF NOT EXISTS mentions_by_subject ON mentions (subject_id);
 
 -- ------------------------------------------------- Study helps
 

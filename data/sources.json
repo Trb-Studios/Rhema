@@ -38,13 +38,13 @@
       "notes": "From STEPBible. Attribution required and credited in the app. 9,250 Hebrew and 5,025 Greek entries are used, matched to the entries the texts actually carry; the rest are mostly proper names."
     },
     {
-      "id": "theographic",
-      "name": "Theographic Bible Metadata",
-      "provides": "People, family relationships, places, and events, linked to verses",
-      "licence": "Creative Commons Attribution-ShareAlike 4.0",
-      "status": "planned",
-      "homepage": "https://github.com/robertrouse/theographic-bible-metadata",
-      "notes": "ShareAlike applies to this dataset and anything derived from it, not to the app's own code."
+      "id": "tipnr",
+      "name": "Translators Individualised Proper Names with all References (TIPNR)",
+      "provides": "Every person and place in Scripture as an individual, with their family, and every verse where each is named",
+      "licence": "CC BY 4.0",
+      "status": "ready",
+      "homepage": "https://github.com/tyndale/STEPBible-Data",
+      "notes": "From STEPBible and Tyndale House Cambridge. Attribution required and credited in the app. Their licence asks that copies of the file not be posted elsewhere, so it is downloaded at build time and only derived data is kept. It identifies individuals rather than names, which is what lets the reader tell Mary the mother of Jesus from Mary Magdalene. Each claim is checked against the King James text before it is kept: 28,426 of 31,718 survive, the rest being names this translation spells differently or does not carry. The file also holds longer descriptions written by an AI in 2024 and since adapted; those are deliberately not used."
     },
     {
       "id": "openbible-geo",

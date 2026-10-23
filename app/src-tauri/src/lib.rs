@@ -33,6 +33,23 @@ fn original(
         .map_err(|e| e.to_string())
 }
 
+/// Who and what is named in each verse of a book.
+#[tauri::command]
+fn mentions(
+    book_id: u32,
+    state: tauri::State<db::Library>,
+) -> Result<std::collections::HashMap<String, Vec<Vec<String>>>, String> {
+    state.mentions(book_id).map_err(|e| e.to_string())
+}
+
+/// Every individual in Scripture, for the card that opens from a name.
+#[tauri::command]
+fn subjects(
+    state: tauri::State<db::Library>,
+) -> Result<std::collections::HashMap<String, db::SubjectRow>, String> {
+    state.subjects().map_err(|e| e.to_string())
+}
+
 /// Searches one edition of the whole Bible.
 #[tauri::command]
 fn search(
@@ -106,6 +123,8 @@ pub fn run() {
             chapter,
             original,
             search,
+            mentions,
+            subjects,
             save_backup,
             open_backup
         ])

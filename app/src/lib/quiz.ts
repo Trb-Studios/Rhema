@@ -18,7 +18,7 @@
 
 import type { Book } from './bible';
 import { wholeBook } from './bible';
-import { SUBJECTS } from './marks';
+import { marksFor } from './marks';
 
 export type Question = {
   kind: 'missing-word' | 'where-from' | 'who-and-where';
@@ -163,11 +163,21 @@ function missingWord(
 
     // A word worth asking about: long enough to carry meaning, not one of the book's
     // most common, and not so rare it is a proper name nobody could infer.
+    const inVerse = new Map<string, number>();
+    for (const word of words) {
+      const key = bare(word);
+      if (key) inVerse.set(key, (inVerse.get(key) ?? 0) + 1);
+    }
+
     const candidates = words
       .map((word, index) => ({ word, index, key: bare(word) }))
       .filter(({ key }) => {
         const count = counts.get(key) ?? 0;
-        return key.length >= 4 && !COMMON.has(key) && count >= 2 && count <= 60;
+        if (key.length < 4 || COMMON.has(key)) return false;
+        // A word that occurs twice in the verse would be blanked once and printed the
+        // other time, which hands over the answer.
+        if ((inVerse.get(key) ?? 0) !== 1) return false;
+        return count >= 2 && count <= 60;
       });
 
     if (candidates.length === 0) continue;
@@ -240,40 +250,139 @@ function whereFrom(book: Book, verses: Verse[], next: () => number): Question | 
   return null;
 }
 
-function whoAndWhere(book: Book, verses: Verse[], next: () => number): Question | null {
-  // Names that appear in this book, and names that appear nowhere in it, from the same
-  // hand-written set the reader already marks in the text.
+/**
+ * Well-known names, for the wrong answers.
+ *
+ * The right answer comes from the book itself, so it is always genuinely there. The
+ * wrong answers have to be names a reader would recognise — offering an obscure one
+ * gives the question away — and each is checked against the book before it is used.
+ */
+const FAMILIAR = [
+  'Abraham',
+  'Isaac',
+  'Jacob',
+  'Joseph',
+  'Moses',
+  'Aaron',
+  'Joshua',
+  'Samuel',
+  'Saul',
+  'David',
+  'Solomon',
+  'Elijah',
+  'Elisha',
+  'Isaiah',
+  'Jeremiah',
+  'Ezekiel',
+  'Daniel',
+  'Jonah',
+  'Ruth',
+  'Esther',
+  'Nehemiah',
+  'Ezra',
+  'Job',
+  'Noah',
+  'Adam',
+  'Eve',
+  'Cain',
+  'Abel',
+  'Enoch',
+  'Sarah',
+  'Rebekah',
+  'Rachel',
+  'Leah',
+  'Miriam',
+  'Deborah',
+  'Gideon',
+  'Samson',
+  'Hannah',
+  'Naomi',
+  'Boaz',
+  'Absalom',
+  'Hezekiah',
+  'Josiah',
+  'Nebuchadnezzar',
+  'Peter',
+  'Paul',
+  'John',
+  'James',
+  'Matthew',
+  'Mark',
+  'Luke',
+  'Timothy',
+  'Titus',
+  'Stephen',
+  'Barnabas',
+  'Silas',
+  'Philip',
+  'Thomas',
+  'Andrew',
+  'Martha',
+  'Lazarus',
+  'Pilate',
+  'Herod',
+  'Caiaphas',
+  'Nicodemus',
+  'Zacchaeus',
+  'Cornelius',
+  'Jerusalem',
+  'Bethlehem',
+  'Nazareth',
+  'Egypt',
+  'Babylon',
+  'Damascus',
+  'Jericho',
+  'Galilee',
+  'Samaria',
+  'Jordan',
+  'Sinai',
+  'Canaan',
+  'Nineveh',
+  'Antioch',
+  'Corinth',
+  'Ephesus',
+  'Athens',
+  'Rome',
+  'Gaza',
+  'Hebron',
+  'Bethany',
+  'Capernaum',
+  'Patmos',
+];
+
+/**
+ * A name really in the book, against three that are not.
+ *
+ * The names come from the build's own record of who is named where, which was checked
+ * against this translation's text, so the right answer is never a name the book does
+ * not contain.
+ */
+function whoAndWhere(
+  book: Book,
+  verses: Verse[],
+  present: Map<string, { chapter: number; verse: number }>,
+  next: () => number,
+): Question | null {
   const text = verses.map((verse) => verse.text).join(' ');
-  const present: string[] = [];
-  const absent: string[] = [];
+  const named = [...present.keys()].filter((name) => name.length >= 4);
+  if (named.length === 0) return null;
 
-  for (const subject of SUBJECTS) {
-    const name = subject.name;
-    if (name.length < 4) continue;
-    const found = new RegExp(`\\b${name}\\b`).test(text);
-    (found ? present : absent).push(name);
-  }
+  const elsewhere = FAMILIAR.filter(
+    (name) => !present.has(name) && !new RegExp(`\\b${name}`, 'i').test(text),
+  );
+  if (elsewhere.length < 3) return null;
 
-  if (present.length === 0 || absent.length < 3) return null;
-
-  const answer = pick(present, next);
-  const options = shuffle([answer, ...shuffle(absent, next).slice(0, 3)], next);
-  const first = verses.find((verse) => new RegExp(`\\b${answer}\\b`).test(verse.text));
+  const answer = pick(named, next);
+  const options = shuffle([answer, ...shuffle(elsewhere, next).slice(0, 3)], next);
+  const at = present.get(answer)!;
 
   return {
     kind: 'who-and-where',
     prompt: `Which of these is named in ${book.name}?`,
-    reference: {
-      bookId: book.id,
-      book: book.name,
-      chapter: first?.chapter ?? 1,
-      verse: first?.verse ?? 1,
-    },
+    reference: { bookId: book.id, book: book.name, chapter: at.chapter, verse: at.verse },
     options,
     answer: options.indexOf(answer),
-    note: first
-      ? `${answer} appears first at ${book.name} ${first.chapter}:${first.verse}.`
-      : `${answer} is named in ${book.name}.`,
+    note: `${answer} appears at ${book.name} ${at.chapter}:${at.verse}.`,
   };
 }
 
@@ -293,6 +402,18 @@ export type Quiz = {
  */
 export async function buildQuiz(book: Book, count = 10, seed = Date.now()): Promise<Quiz> {
   const all = await wholeBook(book);
+
+  // Who and what is named in this book, and where each is first named, from the data
+  // the build checked against the text.
+  const present = new Map<string, { chapter: number; verse: number }>();
+  for (const [key, list] of Object.entries(await marksFor(book.id))) {
+    const [chapter, verse] = key.split(':').map(Number);
+    for (const [form] of list) {
+      const existing = present.get(form);
+      if (!existing || chapter < existing.chapter) present.set(form, { chapter, verse });
+    }
+  }
+
   const verses = askable(all);
   const next = rng(seed);
 
@@ -322,7 +443,7 @@ export async function buildQuiz(book: Book, count = 10, seed = Date.now()): Prom
           ? missingWord(book, verses, counts, display, vocabulary, next)
           : kind === 'where-from'
             ? whereFrom(book, verses, next)
-            : whoAndWhere(book, verses, next);
+            : whoAndWhere(book, verses, present, next);
 
       if (!made) break;
       const at = `${made.reference.chapter}:${made.reference.verse}`;

@@ -42,6 +42,41 @@ pub struct Book {
     pub chapter_words: Vec<u32>,
 }
 
+/// Who an individual is related to, gathered before the individuals are assembled.
+#[derive(Debug, Default)]
+struct Family {
+    parents: Vec<String>,
+    siblings: Vec<String>,
+    partners: Vec<String>,
+    children: Vec<String>,
+}
+
+/// One individual: a person, or a place. Mirrors what the web build reads from
+/// names.json, so no screen needs to know which it is talking to.
+#[derive(Debug, Serialize)]
+pub struct SubjectRow {
+    pub n: String,
+    pub k: String,
+    pub t: String,
+    pub s: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub tribe: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub area: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub near: Option<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub p: Vec<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub b: Vec<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub m: Vec<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub c: Vec<String>,
+    pub w: Vec<(u32, u32, u32)>,
+    pub total: u32,
+}
+
 pub struct Library {
     connection: Mutex<Option<Connection>>,
 }
@@ -121,6 +156,140 @@ impl Library {
         })?;
 
         rows.collect()
+    }
+
+    /// Who and what is named in each verse of a book, as the reader needs it:
+    /// "chapter:verse" to a list of [spelling, id] and, for anything but a person,
+    /// the kind as a third element.
+    pub fn mentions(&self, book_id: u32) -> rusqlite::Result<HashMap<String, Vec<Vec<String>>>> {
+        let guard = self.connection.lock().expect("database lock poisoned");
+        let Some(connection) = guard.as_ref() else {
+            return Ok(HashMap::new());
+        };
+
+        let mut statement = connection.prepare(
+            "SELECT m.chapter, m.verse, m.form, m.subject_id, s.kind
+               FROM mentions m
+               JOIN subjects s ON s.id = m.subject_id
+              WHERE m.book_id = ?1
+           ORDER BY m.chapter, m.verse",
+        )?;
+
+        let mut out: HashMap<String, Vec<Vec<String>>> = HashMap::new();
+        let rows = statement.query_map([book_id], |row| {
+            Ok((
+                row.get::<_, u32>(0)?,
+                row.get::<_, u32>(1)?,
+                row.get::<_, String>(2)?,
+                row.get::<_, String>(3)?,
+                row.get::<_, String>(4)?,
+            ))
+        })?;
+
+        for row in rows {
+            let (chapter, verse, form, id, kind) = row?;
+            let mut entry = vec![form, id];
+            if kind != "person" {
+                entry.push(kind);
+            }
+            out.entry(format!("{chapter}:{verse}"))
+                .or_default()
+                .push(entry);
+        }
+
+        Ok(out)
+    }
+
+    /// Every individual, for the card that opens from a name.
+    pub fn subjects(&self) -> rusqlite::Result<HashMap<String, SubjectRow>> {
+        let guard = self.connection.lock().expect("database lock poisoned");
+        let Some(connection) = guard.as_ref() else {
+            return Ok(HashMap::new());
+        };
+
+        // Relationships and appearances are gathered first, so each individual is
+        // assembled in one pass rather than with a query apiece.
+        let mut relations: HashMap<String, Family> = HashMap::new();
+        let mut statement =
+            connection.prepare("SELECT subject_id, related_id, relation FROM relations")?;
+        for row in statement.query_map([], |row| {
+            Ok((
+                row.get::<_, String>(0)?,
+                row.get::<_, String>(1)?,
+                row.get::<_, String>(2)?,
+            ))
+        })? {
+            let (id, related, relation) = row?;
+            let entry = relations.entry(id).or_default();
+            match relation.as_str() {
+                "parent" => entry.parents.push(related),
+                "sibling" => entry.siblings.push(related),
+                "partner" => entry.partners.push(related),
+                _ => entry.children.push(related),
+            }
+        }
+
+        let mut where_named: HashMap<String, Vec<(u32, u32, u32)>> = HashMap::new();
+        let mut totals: HashMap<String, u32> = HashMap::new();
+        let mut statement = connection.prepare(
+            "SELECT subject_id, book_id, chapter, verse FROM mentions
+           ORDER BY book_id, chapter, verse",
+        )?;
+        for row in statement.query_map([], |row| {
+            Ok((
+                row.get::<_, String>(0)?,
+                row.get::<_, u32>(1)?,
+                row.get::<_, u32>(2)?,
+                row.get::<_, u32>(3)?,
+            ))
+        })? {
+            let (id, book_id, chapter, verse) = row?;
+            *totals.entry(id.clone()).or_insert(0) += 1;
+            let list = where_named.entry(id).or_default();
+            // The first sixty are enough for a card; the count carries the rest.
+            if list.len() < 60 {
+                list.push((book_id, chapter, verse));
+            }
+        }
+
+        let mut statement = connection
+            .prepare("SELECT id, name, kind, type, summary, tribe, area, near FROM subjects")?;
+        let mut out = HashMap::new();
+        for row in statement.query_map([], |row| {
+            Ok((
+                row.get::<_, String>(0)?,
+                row.get::<_, String>(1)?,
+                row.get::<_, String>(2)?,
+                row.get::<_, Option<String>>(3)?,
+                row.get::<_, Option<String>>(4)?,
+                row.get::<_, Option<String>>(5)?,
+                row.get::<_, Option<String>>(6)?,
+                row.get::<_, Option<String>>(7)?,
+            ))
+        })? {
+            let (id, name, kind, kind_detail, summary, tribe, area, near) = row?;
+            let family = relations.remove(&id).unwrap_or_default();
+            out.insert(
+                id.clone(),
+                SubjectRow {
+                    n: name,
+                    k: kind,
+                    t: kind_detail.unwrap_or_default(),
+                    s: summary.unwrap_or_default(),
+                    tribe,
+                    area,
+                    near,
+                    p: family.parents,
+                    b: family.siblings,
+                    m: family.partners,
+                    c: family.children,
+                    w: where_named.remove(&id).unwrap_or_default(),
+                    total: totals.get(&id).copied().unwrap_or(0),
+                },
+            );
+        }
+
+        Ok(out)
     }
 
     /// A chapter in Hebrew or Greek. Empty where that edition does not cover the book.
