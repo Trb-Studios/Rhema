@@ -378,9 +378,15 @@ impl Library {
         rows.collect()
     }
 
-    /// Searches one edition. The English goes through SQLite's full-text index; the
-    /// Hebrew and Greek are scanned, which is fast enough at this size and avoids
-    /// tokenising scripts the index was not built for.
+    /// Searches one edition.
+    ///
+    /// A plain substring match, the same thing the web build does, so the two give the
+    /// same answers. The full-text index was tried first and disagreed twice: its
+    /// tokeniser found nothing for a partial word, so searching as you type showed
+    /// "nothing matches" until you finished typing, and its stemmer matched words the
+    /// query does not contain, which left the highlight with nowhere to sit. Scanning
+    /// 31,102 verses takes about eight milliseconds, so there is nothing to gain by
+    /// being cleverer.
     pub fn search(&self, query: &str, edition: &str, limit: u32) -> rusqlite::Result<Vec<Hit>> {
         let guard = self.connection.lock().expect("database lock poisoned");
         let Some(connection) = guard.as_ref() else {
@@ -392,79 +398,60 @@ impl Library {
             return Ok(Vec::new());
         }
 
-        let mut hits = Vec::new();
+        // LIKE treats these as wildcards, so a query containing one would match far
+        // too much. They are escaped rather than stripped: someone searching for a
+        // percent sign should find one.
+        let escaped = needle
+            .replace('\\', "\\\\")
+            .replace('%', "\\%")
+            .replace('_', "\\_");
+        let pattern = format!("%{escaped}%");
 
-        if edition == "kjv" {
-            let mut statement = connection.prepare(
-                "SELECT b.id, b.name, v.chapter, v.verse, v.text
-                   FROM verses_fts f
-                   JOIN verses v ON v.id = f.rowid
-                   JOIN books b ON b.id = v.book_id
-                  WHERE verses_fts MATCH ?1
-                  ORDER BY v.id
-                  LIMIT ?2",
-            )?;
-            // Quoted so punctuation in the query cannot be read as query syntax.
-            let phrase = format!("\"{}\"", needle.replace('"', ""));
-            let rows = statement.query_map(rusqlite::params![phrase, limit], |row| {
-                Ok((
-                    row.get::<_, u32>(0)?,
-                    row.get::<_, String>(1)?,
-                    row.get::<_, u32>(2)?,
-                    row.get::<_, u32>(3)?,
-                    row.get::<_, String>(4)?,
-                ))
-            })?;
-            for row in rows {
-                let (book_id, book, chapter, verse, text) = row?;
-                let at = text
-                    .to_lowercase()
-                    .find(&needle)
-                    .map(|start| (start, start + needle.len()))
-                    .unwrap_or((0, 0));
-                hits.push(Hit {
-                    book_id,
-                    book,
-                    chapter,
-                    verse,
-                    text,
-                    at,
-                });
-            }
+        let sql = if edition == "kjv" {
+            "SELECT b.id, b.name, v.chapter, v.verse, v.text
+               FROM verses v
+               JOIN books b ON b.id = v.book_id
+              WHERE lower(v.text) LIKE ?1 ESCAPE '\\'
+              ORDER BY v.id
+              LIMIT ?2"
         } else {
-            let mut statement = connection.prepare(
-                "SELECT b.id, b.name, o.chapter, o.verse, o.text
-                   FROM verses_original o
-                   JOIN books b ON b.id = o.book_id
-                  WHERE o.edition = ?1 AND o.text LIKE ?2
-                  ORDER BY o.book_id, o.chapter, o.verse
-                  LIMIT ?3",
-            )?;
-            let like = format!("%{}%", query.trim());
-            let rows = statement.query_map(rusqlite::params![edition, like, limit], |row| {
-                Ok((
-                    row.get::<_, u32>(0)?,
-                    row.get::<_, String>(1)?,
-                    row.get::<_, u32>(2)?,
-                    row.get::<_, u32>(3)?,
-                    row.get::<_, String>(4)?,
-                ))
-            })?;
-            for row in rows {
-                let (book_id, book, chapter, verse, text) = row?;
-                let at = text
-                    .find(query.trim())
-                    .map(|start| (start, start + query.trim().len()))
-                    .unwrap_or((0, 0));
-                hits.push(Hit {
-                    book_id,
-                    book,
-                    chapter,
-                    verse,
-                    text,
-                    at,
-                });
-            }
+            "SELECT b.id, b.name, o.chapter, o.verse, o.text
+               FROM verses_original o
+               JOIN books b ON b.id = o.book_id
+              WHERE o.edition = ?3 AND lower(o.text) LIKE ?1 ESCAPE '\\'
+              ORDER BY o.book_id, o.chapter, o.verse
+              LIMIT ?2"
+        };
+
+        let mut statement = connection.prepare(sql)?;
+        let rows = statement.query_map(rusqlite::params![pattern, limit, edition], |row| {
+            Ok((
+                row.get::<_, u32>(0)?,
+                row.get::<_, String>(1)?,
+                row.get::<_, u32>(2)?,
+                row.get::<_, u32>(3)?,
+                row.get::<_, String>(4)?,
+            ))
+        })?;
+
+        let mut hits = Vec::new();
+        for row in rows {
+            let (book_id, book, chapter, verse, text) = row?;
+            // Where the match falls, so the interface can mark it. The needle is
+            // always present, because that is what the query asked for.
+            let at = text
+                .to_lowercase()
+                .find(&needle)
+                .map(|start| (start, start + needle.len()))
+                .unwrap_or((0, 0));
+            hits.push(Hit {
+                book_id,
+                book,
+                chapter,
+                verse,
+                text,
+                at,
+            });
         }
 
         Ok(hits)
