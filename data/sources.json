@@ -1,0 +1,67 @@
+{
+  "note": "Every dataset the app uses, where it comes from, and what its licence allows. Check the licence before adding a source here. Nothing that needs a publisher's permission is listed until that permission is in hand.",
+  "sources": [
+    {
+      "id": "kjv",
+      "name": "King James Version",
+      "provides": "The full Bible text, 66 books, 1,189 chapters",
+      "licence": "Public domain in the United States",
+      "status": "ready",
+      "homepage": "https://github.com/scrollmapper/bible_databases",
+      "notes": "In the United Kingdom the KJV is under perpetual Crown copyright, administered by Cambridge University Press. It is public domain in the United States. Confirm before distributing outside the US."
+    },
+    {
+      "id": "strongs",
+      "name": "Strong's numbers and lexicons",
+      "provides": "Hebrew and Greek words, transliterations, and meanings",
+      "licence": "Public domain (the 1890 original)",
+      "status": "planned",
+      "homepage": "https://github.com/openscriptures/strongs"
+    },
+    {
+      "id": "oshb",
+      "name": "Open Scriptures Hebrew Bible",
+      "provides": "The Hebrew text, tagged word by word with Strong's numbers",
+      "licence": "Creative Commons Attribution 4.0",
+      "status": "planned",
+      "homepage": "https://hb.openscriptures.org",
+      "notes": "Attribution required. Credit goes in the app's About screen."
+    },
+    {
+      "id": "theographic",
+      "name": "Theographic Bible Metadata",
+      "provides": "People, family relationships, places, and events, linked to verses",
+      "licence": "Creative Commons Attribution-ShareAlike 4.0",
+      "status": "planned",
+      "homepage": "https://github.com/robertrouse/theographic-bible-metadata",
+      "notes": "ShareAlike applies to this dataset and anything derived from it, not to the app's own code."
+    },
+    {
+      "id": "openbible-geo",
+      "name": "OpenBible.info geocoding",
+      "provides": "Coordinates for biblical places and the verses that mention them",
+      "licence": "Creative Commons Attribution 4.0",
+      "status": "planned",
+      "homepage": "https://www.openbible.info/geo/"
+    },
+    {
+      "id": "tsk",
+      "name": "Treasury of Scripture Knowledge",
+      "provides": "Roughly 500,000 cross-references between verses",
+      "licence": "Public domain (1830s)",
+      "status": "planned",
+      "homepage": "https://www.openbible.info/labs/cross-references/"
+    },
+    {
+      "id": "naves",
+      "name": "Nave's Topical Bible",
+      "provides": "A topical index of Scripture",
+      "licence": "Public domain (1897)",
+      "status": "planned"
+    }
+  ],
+  "excluded": {
+    "note": "These translations need written permission from their publisher before any of their text can go in the app. Until then the app links out to them. See docs/data-licenses.md.",
+    "translations": ["NIV", "ESV", "NLT", "NKJV", "CSB"]
+  }
+}

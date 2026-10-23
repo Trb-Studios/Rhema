@@ -1,0 +1,66 @@
+name: Check
+
+# Every push and pull request is formatted, type-checked, and compiled on Windows,
+# so a change that would break the installer is caught before it reaches main.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  interface:
+    name: Interface
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Formatting
+        run: npm run format:check
+      - name: Types
+        run: npm run check
+      - name: Build
+        run: npm run build:web --workspace app
+
+  desktop:
+    name: Desktop build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: app/src-tauri
+
+      - run: npm ci
+
+      - name: Rust formatting
+        working-directory: app/src-tauri
+        run: cargo fmt --check
+
+      - name: Rust lints
+        working-directory: app/src-tauri
+        run: cargo clippy -- -D warnings
+
+      - name: Build the app
+        run: npm run build

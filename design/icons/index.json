@@ -1,0 +1,217 @@
+{
+  "grid": 24,
+  "stroke": 1.5,
+  "style": "Two-tone line: ink outline with a soft tan fill (gold for AI and streak). Light set uses ink #2A2418; dark set uses #EFE8DB. The sprite uses currentColor and the CSS variables --icon-accent and --icon-gold.",
+  "icons": [
+    {
+      "name": "home",
+      "label": "Home",
+      "group": "Main tabs"
+    },
+    {
+      "name": "read",
+      "label": "Read",
+      "group": "Main tabs"
+    },
+    {
+      "name": "people",
+      "label": "People",
+      "group": "Main tabs"
+    },
+    {
+      "name": "places",
+      "label": "Places",
+      "group": "Main tabs"
+    },
+    {
+      "name": "words",
+      "label": "Words",
+      "group": "Main tabs"
+    },
+    {
+      "name": "notes",
+      "label": "Notes",
+      "group": "Main tabs"
+    },
+    {
+      "name": "highlights",
+      "label": "Highlights",
+      "group": "Main tabs"
+    },
+    {
+      "name": "plan",
+      "label": "Plan",
+      "group": "Main tabs"
+    },
+    {
+      "name": "quiz",
+      "label": "Quiz",
+      "group": "Main tabs"
+    },
+    {
+      "name": "review",
+      "label": "Review",
+      "group": "Main tabs"
+    },
+    {
+      "name": "settings",
+      "label": "Settings",
+      "group": "Main tabs"
+    },
+    {
+      "name": "account",
+      "label": "Account",
+      "group": "Main tabs"
+    },
+    {
+      "name": "sparkle",
+      "label": "AI overview",
+      "group": "Study and AI"
+    },
+    {
+      "name": "study-panel",
+      "label": "Study panel",
+      "group": "Study and AI"
+    },
+    {
+      "name": "ask-ai",
+      "label": "Ask about passage",
+      "group": "Study and AI"
+    },
+    {
+      "name": "cross-refs",
+      "label": "Cross-references",
+      "group": "Study and AI"
+    },
+    {
+      "name": "topics",
+      "label": "Topics",
+      "group": "Study and AI"
+    },
+    {
+      "name": "interlinear",
+      "label": "Interlinear",
+      "group": "Study and AI"
+    },
+    {
+      "name": "word-study",
+      "label": "Word study",
+      "group": "Study and AI"
+    },
+    {
+      "name": "map",
+      "label": "Map",
+      "group": "Geography and people"
+    },
+    {
+      "name": "journeys",
+      "label": "Journeys",
+      "group": "Geography and people"
+    },
+    {
+      "name": "family-tree",
+      "label": "Family tree",
+      "group": "Geography and people"
+    },
+    {
+      "name": "timeline",
+      "label": "Timeline",
+      "group": "Geography and people"
+    },
+    {
+      "name": "library",
+      "label": "Library",
+      "group": "Geography and people"
+    },
+    {
+      "name": "journal",
+      "label": "Journal",
+      "group": "Notes and memory"
+    },
+    {
+      "name": "bookmark",
+      "label": "Bookmark",
+      "group": "Notes and memory"
+    },
+    {
+      "name": "memorize",
+      "label": "Memorize",
+      "group": "Notes and memory"
+    },
+    {
+      "name": "prayer",
+      "label": "Prayer list",
+      "group": "Notes and memory"
+    },
+    {
+      "name": "streak",
+      "label": "Streak",
+      "group": "Notes and memory"
+    },
+    {
+      "name": "search",
+      "label": "Search",
+      "group": "Tools"
+    },
+    {
+      "name": "command",
+      "label": "Command palette",
+      "group": "Tools"
+    },
+    {
+      "name": "audio",
+      "label": "Audio",
+      "group": "Tools"
+    },
+    {
+      "name": "focus",
+      "label": "Focus mode",
+      "group": "Tools"
+    },
+    {
+      "name": "split",
+      "label": "Split view",
+      "group": "Tools"
+    },
+    {
+      "name": "verse-card",
+      "label": "Verse card",
+      "group": "Tools"
+    },
+    {
+      "name": "export",
+      "label": "Export and backup",
+      "group": "Tools"
+    },
+    {
+      "name": "sync",
+      "label": "Cloud sync",
+      "group": "Tools"
+    },
+    {
+      "name": "mail",
+      "label": "Email code",
+      "group": "Account and system"
+    },
+    {
+      "name": "lock",
+      "label": "Privacy",
+      "group": "Account and system"
+    },
+    {
+      "name": "bell",
+      "label": "Reminders",
+      "group": "Account and system"
+    },
+    {
+      "name": "sun",
+      "label": "Light theme",
+      "group": "Account and system"
+    },
+    {
+      "name": "moon",
+      "label": "Dark theme",
+      "group": "Account and system"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "bible-study-companion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Windows desktop app for reading the Bible cover to cover and remembering it",
+  "workspaces": [
+    "app"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace app",
+    "build": "npm run build --workspace app",
+    "tauri": "npm run tauri --workspace app",
+    "check": "npm run check --workspace app",
+    "format": "prettier --write \"**/*.{ts,tsx,css,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,css,json,md}\"",
+    "data:build": "node --experimental-sqlite --no-warnings data/scripts/build-db.mjs"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

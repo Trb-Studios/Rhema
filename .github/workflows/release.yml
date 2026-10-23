@@ -1,0 +1,59 @@
+name: Release
+
+# Pushing a tag such as v0.1.0 builds a signed Windows installer, publishes it to
+# GitHub Releases, and writes the latest.json file the update manager reads.
+#
+# Needs two repository secrets:
+#   TAURI_SIGNING_PRIVATE_KEY           the private half of the updater key pair
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  its password
+# See docs/releasing.md for how to create them.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    name: Windows installer
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: app/src-tauri
+
+      - run: npm ci
+
+      - name: Build the Bible database
+        run: npm run data:build
+
+      - name: Build, sign, and publish
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          projectPath: app
+          tagName: ${{ github.ref_name }}
+          releaseName: Bible Study Companion ${{ github.ref_name }}
+          releaseBody: |
+            See CHANGELOG.md for what changed.
+
+            Windows will warn that the publisher is unknown until the app is
+            code-signed. Choose More info, then Run anyway.
+          releaseDraft: false
+          prerelease: false
+          includeUpdaterJson: true

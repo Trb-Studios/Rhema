@@ -1,0 +1,27 @@
+node_modules/
+dist/
+target/
+*.log
+.DS_Store
+Thumbs.db
+
+# Built database and downloaded source data — rebuild with `npm run data:build`
+data/raw/*
+!data/raw/.gitkeep
+data/bible.db
+data/bible.db-*
+
+# Secrets. Never commit these.
+.env
+.env.*
+*.pem
+*.key
+tauri-signing-key*
+!*.pub
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+app/src-tauri/resources/*
+!app/src-tauri/resources/.gitkeep
