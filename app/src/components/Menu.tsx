@@ -7,6 +7,7 @@ import { useSettings } from '../lib/settings';
 import { calculate, show } from '../lib/plan';
 import { popoverVariants, spring, transition } from '../lib/motion';
 import { About } from './About';
+import { Backup } from './Backup';
 
 /**
  * Everything that is not reading, behind one button: how far through you are, how long
@@ -15,6 +16,7 @@ import { About } from './About';
 export function Menu({ books, progress }: { books: Book[]; progress: Progress }) {
   const [open, setOpen] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
+  const [showBackup, setShowBackup] = useState(false);
   const { settings, update } = useSettings();
 
   const totalChapters = books.reduce((sum, book) => sum + book.chapters, 0);
@@ -167,6 +169,27 @@ export function Menu({ books, progress }: { books: Book[]; progress: Progress })
                   style={{ width: 18, height: 18, accentColor: 'var(--main-fill)' }}
                 />
               </Setting>
+
+              <Divider />
+
+              <button
+                onClick={() => setShowBackup((value) => !value)}
+                aria-expanded={showBackup}
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  font: '600 11px var(--font-ui)',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: 'var(--text-secondary)',
+                }}
+              >
+                Backup
+                <span aria-hidden="true">{showBackup ? '−' : '+'}</span>
+              </button>
+              {showBackup && <Backup />}
 
               <Divider />
 

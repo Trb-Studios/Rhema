@@ -4,66 +4,76 @@
  * One note per chapter, saved as you type. Kept on this device for now; it moves to the
  * person's account once sign-in lands. Saving is debounced so a long note is not written
  * on every keystroke.
+ *
+ * Notes go through the shared store rather than a copy held in the component. The copy
+ * was actively dangerous: it was read once when the panel mounted and written back
+ * whole whenever the window closed, so anything that changed notes afterwards — a
+ * restored backup, a second window — was silently overwritten with the stale copy on
+ * the way out. Writing one chapter's note at a time into the shared value cannot do
+ * that.
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-const KEY = 'rhema.notes';
+import { createStore, useStore } from './store';
 
 type Notes = Record<string, string>;
 
-function load(): Notes {
-  try {
-    return JSON.parse(localStorage.getItem(KEY) ?? '{}') as Notes;
-  } catch {
-    return {};
-  }
-}
-
-function save(notes: Notes) {
-  try {
-    localStorage.setItem(KEY, JSON.stringify(notes));
-  } catch {
-    // Not being able to save is not worth interrupting a reading session over.
-  }
-}
+const store = createStore<Notes>('rhema.notes', {});
 
 export function useNotes(bookId: number, chapter: number) {
   const key = `${bookId}:${chapter}`;
-  const all = useRef<Notes>(load());
-  const [text, setText] = useState(() => all.current[key] ?? '');
-  const timer = useRef<number | undefined>(undefined);
+  const [notes, setNotes] = useStore(store);
 
-  // Moving to another chapter swaps in that chapter's note.
+  // What is in the box right now. It leads the stored value while typing, so a long
+  // note is not written on every keystroke.
+  const [draft, setDraft] = useState(() => notes[key] ?? '');
+  const timer = useRef<number | undefined>(undefined);
+  const pending = useRef<{ key: string; text: string } | null>(null);
+
+  const commit = useCallback(() => {
+    window.clearTimeout(timer.current);
+    const waiting = pending.current;
+    if (!waiting) return;
+    pending.current = null;
+    setNotes((current) => {
+      if (current[waiting.key] === waiting.text) return current;
+      const next = { ...current, [waiting.key]: waiting.text };
+      // An emptied note is removed rather than kept as a blank entry.
+      if (!waiting.text.trim()) delete next[waiting.key];
+      return next;
+    });
+  }, [setNotes]);
+
+  // Moving to another chapter writes what was being typed before swapping the box.
   useEffect(() => {
-    setText(all.current[key] ?? '');
-  }, [key]);
+    commit();
+    setDraft(store.get()[key] ?? '');
+  }, [key, commit]);
 
   const write = useCallback(
     (next: string) => {
-      setText(next);
-      all.current[key] = next;
+      setDraft(next);
+      pending.current = { key, text: next };
       window.clearTimeout(timer.current);
-      timer.current = window.setTimeout(() => save(all.current), 400);
+      timer.current = window.setTimeout(commit, 400);
     },
-    [key],
+    [key, commit],
   );
 
   // A note half-typed when the window closes should still be kept.
   useEffect(() => {
-    const flush = () => save(all.current);
-    window.addEventListener('beforeunload', flush);
+    window.addEventListener('beforeunload', commit);
     return () => {
-      window.removeEventListener('beforeunload', flush);
-      flush();
+      window.removeEventListener('beforeunload', commit);
+      commit();
     };
-  }, []);
+  }, [commit]);
 
   /** Chapters that have a note, for showing where you have written something. */
   const written = useCallback(
-    () => Object.entries(all.current).filter(([, value]) => value.trim()).length,
-    [],
+    () => Object.values(notes).filter((value) => value.trim()).length,
+    [notes],
   );
 
-  return { text, write, written };
+  return { text: draft, write, written };
 }

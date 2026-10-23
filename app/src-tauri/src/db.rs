@@ -91,9 +91,9 @@ impl Library {
         )?;
 
         let mut chapter_words: HashMap<u32, Vec<u32>> = HashMap::new();
-        for row in per_chapter.query_map([], |row| {
-            Ok((row.get::<_, u32>(0)?, row.get::<_, u32>(2)?))
-        })? {
+        for row in
+            per_chapter.query_map([], |row| Ok((row.get::<_, u32>(0)?, row.get::<_, u32>(2)?)))?
+        {
             let (book_id, words) = row?;
             chapter_words.entry(book_id).or_default().push(words);
         }
