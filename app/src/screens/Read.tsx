@@ -26,6 +26,8 @@ import { Menu } from '../components/Menu';
 import { SearchSheet } from '../components/SearchSheet';
 import { CommandPalette } from '../components/CommandPalette';
 import { Tip } from '../components/Tip';
+import { Parallel } from '../components/Parallel';
+import { ColumnsIcon } from '../components/Icons';
 import { keyLabel, matches } from '../lib/commands';
 import type { Command } from '../lib/commands';
 import { WordPopover } from '../components/WordPopover';
@@ -81,6 +83,8 @@ export function Read() {
   const [picking, setPicking] = useState(false);
   const [searching, setSearching] = useState(false);
   const [palette, setPalette] = useState(false);
+  // The other edition shown beside this one, or null for a single column.
+  const [beside, setBeside] = useState<EditionId | null>(null);
   const [reviewing, setReviewing] = useState(false);
   const [planning, setPlanning] = useState(false);
   const [quizzing, setQuizzing] = useState(false);
@@ -134,6 +138,14 @@ export function Read() {
   useEffect(() => {
     if (book && !available.some((candidate) => candidate.id === edition)) setEdition('kjv');
   }, [book, available, edition]);
+
+  // The Hebrew does not cover the New Testament, nor the Greek the Old, so moving
+  // between the two testaments leaves a parallel column with nothing to show.
+  useEffect(() => {
+    if (!beside) return;
+    const stillThere = available.some((candidate) => candidate.id === beside);
+    if (!stillThere || beside === edition) setBeside(null);
+  }, [available, beside, edition]);
 
   useEffect(() => {
     if (!book) return;
@@ -312,6 +324,20 @@ export function Read() {
       });
     }
 
+    const other = available.find((candidate) => candidate.id !== edition);
+    if (other) {
+      list.push({
+        id: 'parallel',
+        title: beside ? 'Close the parallel column' : `Read beside the ${other.title}`,
+        hint: beside ? undefined : 'Both editions at once, paired verse by verse',
+        group: 'View',
+        shortcut: 'Mod+Shift+P',
+        keywords: 'parallel side by side compare interlinear original',
+        on: Boolean(beside),
+        run: () => setBeside(beside ? null : other.id),
+      });
+    }
+
     list.push(
       {
         id: 'theme',
@@ -362,6 +388,7 @@ export function Read() {
     update,
     isRead,
     toggleRead,
+    beside,
   ]);
 
   commandsRef.current = commands;
@@ -446,6 +473,20 @@ export function Read() {
         <Round label="Next chapter" shortcut="\u2192" disabled={!next} onClick={() => goTo(next)}>
           <ChevronIcon dir="right" size={18} />
         </Round>
+
+        {available.length > 1 && (
+          <Round
+            label={beside ? 'Close the parallel column' : 'Read two editions side by side'}
+            shortcut="Mod+Shift+P"
+            active={Boolean(beside)}
+            onClick={() => {
+              const other = available.find((candidate) => candidate.id !== edition);
+              setBeside(beside ? null : (other?.id ?? null));
+            }}
+          >
+            <ColumnsIcon size={18} />
+          </Round>
+        )}
 
         <Tip label="Search, go to a passage, or run a command" shortcut="Mod+K">
           <motion.button
@@ -679,6 +720,16 @@ export function Read() {
                   <p style={{ color: 'var(--text-secondary)' }}>
                     This edition has nothing for {book.name} {number}.
                   </p>
+                ) : beside ? (
+                  <Parallel
+                    book={book}
+                    number={number}
+                    left={edition}
+                    right={beside}
+                    verses={verses}
+                    selected={selected}
+                    onSelect={setSelected}
+                  />
                 ) : (
                   <div
                     className="reading selectable"
