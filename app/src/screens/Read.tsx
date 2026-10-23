@@ -24,6 +24,8 @@ import type { PanelTab } from '../components/SidePanel';
 import { Menu } from '../components/Menu';
 import { SearchSheet } from '../components/SearchSheet';
 import { WordPopover } from '../components/WordPopover';
+import { Review } from '../components/Review';
+import { useReview } from '../lib/review';
 import type { WordAnchor } from '../components/WordPopover';
 import { wordsForBook } from '../lib/words';
 import type { Word } from '../lib/words';
@@ -35,6 +37,7 @@ import {
   InfoIcon,
   NoteIcon,
   SearchIcon,
+  ScrollIcon,
 } from '../components/Icons';
 
 type Highlights = Record<string, number>;
@@ -54,7 +57,8 @@ function loadHighlights(): Highlights {
 export function Read() {
   const { settings } = useSettings();
   const { progress, visit, toggleRead, isRead } = useProgress();
-  const { isSaved, toggle: toggleSaved } = useSaved();
+  const { saved, isSaved, toggle: toggleSaved } = useSaved();
+  const { dueCount, sync: syncReview } = useReview();
 
   const [all, setAll] = useState<Book[]>([]);
   const [book, setBook] = useState<Book | null>(null);
@@ -66,6 +70,7 @@ export function Read() {
   const [anchored, setAnchored] = useState<Anchored | null>(null);
   const [picking, setPicking] = useState(false);
   const [searching, setSearching] = useState(false);
+  const [reviewing, setReviewing] = useState(false);
   const [wordAnchor, setWordAnchor] = useState<WordAnchor | null>(null);
   // The words of the chapter on screen, when an original edition is open.
   const [chapterWords, setChapterWords] = useState<Record<string, Word[]> | null>(null);
@@ -88,6 +93,12 @@ export function Read() {
     // The saved position decides where to open, and is not followed afterwards.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Every saved verse gets a review card as soon as it is saved, so the count in the
+  // header is right without having to open review first.
+  useEffect(() => {
+    syncReview(saved.map((verse) => `${verse.bookId}:${verse.chapter}:${verse.verse}`));
+  }, [saved, syncReview]);
 
   const available = useMemo(() => (book ? editionsFor(book.testament) : []), [book]);
 
@@ -142,7 +153,8 @@ export function Read() {
         setSearching(true);
         return;
       }
-      if (picking || searching || event.target instanceof HTMLTextAreaElement) return;
+      if (picking || searching || reviewing) return;
+      if (event.target instanceof HTMLTextAreaElement) return;
       if (event.target instanceof HTMLInputElement) return;
       if (event.key === 'ArrowLeft') goTo(previous);
       if (event.key === 'ArrowRight') goTo(next);
@@ -150,7 +162,7 @@ export function Read() {
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [previous, next, picking, searching, goTo]);
+  }, [previous, next, picking, searching, reviewing, goTo]);
 
   if (error) {
     return (
@@ -287,6 +299,30 @@ export function Read() {
         >
           <CheckIcon size={15} />
         </Pill>
+
+        <motion.button
+          whileTap={{ scale: 0.96 }}
+          transition={spring.snappy}
+          onClick={() => setReviewing(true)}
+          aria-label={dueCount > 0 ? `Review, ${dueCount} due` : 'Review'}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '6px 13px',
+            borderRadius: 999,
+            fontWeight: 600,
+            fontSize: 13,
+            marginRight: 4,
+            background: dueCount > 0 ? 'var(--main-fill)' : 'transparent',
+            color: dueCount > 0 ? 'var(--main-on)' : 'var(--text-secondary)',
+            border: `1px solid ${dueCount > 0 ? 'var(--main-fill)' : 'var(--line-default)'}`,
+          }}
+        >
+          <ScrollIcon size={15} />
+          Review
+          {dueCount > 0 && <span className="tabular">{dueCount}</span>}
+        </motion.button>
 
         <Round
           label="Notes"
@@ -608,6 +644,8 @@ export function Read() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <Review open={reviewing} onClose={() => setReviewing(false)} />
 
       <SearchSheet
         open={searching}
