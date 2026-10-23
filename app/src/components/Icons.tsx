@@ -229,3 +229,41 @@ export function ScrollIcon(props: IconProps) {
     </Svg>
   );
 }
+
+export function CalendarIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M3.4 9.4h17.2v9.1a2 2 0 0 1-2 2H5.4a2 2 0 0 1-2-2z" {...tintOf(props.tint)} />
+      <rect x="3.4" y="5.1" width="17.2" height="15.4" rx="2.4" {...line} />
+      <path d="M3.4 9.4h17.2" {...line} />
+      <path d="M8.2 3.4v3.4M15.8 3.4v3.4" {...line} />
+      <path d="M7.6 13.1h3M7.6 16.8h3M13.4 13.1h3" {...line} />
+    </Svg>
+  );
+}
+
+export function FlameIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path
+        d="M12 20.6c2.9 0 4.8-1.9 4.8-4.5 0-1.3-.6-2.4-1.4-3.4-.5 1-1.3 1.4-2 1.4 1-3.4-.6-6.1-2.6-7.4.3 2.4-.9 3.6-2.3 5-1 1-1.3 2.4-1.3 4.4 0 2.6 1.9 4.5 4.8 4.5z"
+        {...tintOf(props.tint)}
+      />
+      <path
+        d="M12 20.6c2.9 0 4.8-1.9 4.8-4.5 0-2-.9-3.3-2-4.5-1.4-1.6-2-3-1.7-5.2-2.6 1-5 4.4-3.7 8.5-.9 0-1.7-.6-2.2-1.7-.7 1-1 2-1 2.9 0 2.6 1.9 4.5 4.8 4.5z"
+        {...line}
+      />
+    </Svg>
+  );
+}
+
+export function TargetIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <circle cx="12" cy="12" r="3.4" {...tintOf(props.tint)} />
+      <circle cx="12" cy="12" r="8.6" {...line} />
+      <circle cx="12" cy="12" r="3.4" {...line} />
+      <path d="M12 1.8v2.4M12 19.8v2.4M1.8 12h2.4M19.8 12h2.4" {...line} />
+    </Svg>
+  );
+}

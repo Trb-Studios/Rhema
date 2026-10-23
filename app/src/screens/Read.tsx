@@ -25,6 +25,7 @@ import { Menu } from '../components/Menu';
 import { SearchSheet } from '../components/SearchSheet';
 import { WordPopover } from '../components/WordPopover';
 import { Review } from '../components/Review';
+import { Plan } from '../components/Plan';
 import { useReview } from '../lib/review';
 import type { WordAnchor } from '../components/WordPopover';
 import { wordsForBook } from '../lib/words';
@@ -32,6 +33,7 @@ import type { Word } from '../lib/words';
 import {
   BookmarkIcon,
   ChevronIcon,
+  CalendarIcon,
   CheckIcon,
   HighlightIcon,
   InfoIcon,
@@ -71,6 +73,7 @@ export function Read() {
   const [picking, setPicking] = useState(false);
   const [searching, setSearching] = useState(false);
   const [reviewing, setReviewing] = useState(false);
+  const [planning, setPlanning] = useState(false);
   const [wordAnchor, setWordAnchor] = useState<WordAnchor | null>(null);
   // The words of the chapter on screen, when an original edition is open.
   const [chapterWords, setChapterWords] = useState<Record<string, Word[]> | null>(null);
@@ -153,7 +156,7 @@ export function Read() {
         setSearching(true);
         return;
       }
-      if (picking || searching || reviewing) return;
+      if (picking || searching || reviewing || planning) return;
       if (event.target instanceof HTMLTextAreaElement) return;
       if (event.target instanceof HTMLInputElement) return;
       if (event.key === 'ArrowLeft') goTo(previous);
@@ -162,7 +165,7 @@ export function Read() {
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [previous, next, picking, searching, reviewing, goTo]);
+  }, [previous, next, picking, searching, reviewing, planning, goTo]);
 
   if (error) {
     return (
@@ -324,6 +327,9 @@ export function Read() {
           {dueCount > 0 && <span className="tabular">{dueCount}</span>}
         </motion.button>
 
+        <Round label="Reading plan" active={planning} onClick={() => setPlanning(true)}>
+          <CalendarIcon size={18} />
+        </Round>
         <Round
           label="Notes"
           active={panel === 'notes'}
@@ -646,6 +652,16 @@ export function Read() {
       </AnimatePresence>
 
       <Review open={reviewing} onClose={() => setReviewing(false)} />
+
+      <Plan
+        open={planning}
+        onClose={() => setPlanning(false)}
+        books={all}
+        onOpen={(bookId, chapterNumber) => {
+          const target = all.find((candidate) => candidate.id === bookId);
+          if (target) goTo({ book: target, chapter: chapterNumber });
+        }}
+      />
 
       <SearchSheet
         open={searching}
