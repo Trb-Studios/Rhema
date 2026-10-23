@@ -31,60 +31,116 @@
       "meaning": "He laughs",
       "note": "Son of Abraham and Sarah, father of Jacob and Esau."
     },
-    { "name": "Rebekah", "note": "Wife of Isaac, mother of Jacob and Esau." },
+    {
+      "name": "Rebekah",
+      "note": "Wife of Isaac, mother of Jacob and Esau."
+    },
     {
       "name": "Jacob",
       "also": "Israel",
       "meaning": "Supplanter, or one who takes by the heel",
       "note": "Son of Isaac. Renamed Israel in Genesis 32:28. Father of the twelve tribes."
     },
-    { "name": "Esau", "note": "Jacob's elder twin, who sold his birthright." },
     {
-      "name": "Joseph",
-      "note": "Son of Jacob and Rachel, sold into Egypt and raised to govern it."
+      "name": "Esau",
+      "note": "Jacob's elder twin, who sold his birthright."
     },
-    { "name": "Rachel", "meaning": "Ewe", "note": "Jacob's wife, mother of Joseph and Benjamin." },
-    { "name": "Leah", "note": "Jacob's first wife, mother of six of the tribes." },
-    { "name": "Lot", "note": "Abram's nephew, who settled near Sodom." },
+    {
+      "name": "Rachel",
+      "meaning": "Ewe",
+      "note": "Jacob's wife, mother of Joseph and Benjamin."
+    },
+    {
+      "name": "Leah",
+      "note": "Jacob's first wife, mother of six of the tribes."
+    },
+    {
+      "name": "Lot",
+      "note": "Abram's nephew, who settled near Sodom."
+    },
     {
       "name": "Noah",
       "meaning": "Rest or comfort",
       "note": "Built the ark and survived the flood."
     },
-    { "name": "Adam", "meaning": "Man, from the ground", "note": "The first man." },
+    {
+      "name": "Adam",
+      "meaning": "Man, from the ground",
+      "note": "The first man."
+    },
     {
       "name": "Eve",
       "meaning": "Living",
       "note": "The first woman, called the mother of all living."
     },
-    { "name": "Cain", "note": "Adam's firstborn, who killed his brother Abel." },
-    { "name": "Abel", "note": "Adam's second son, killed by Cain." },
-    { "name": "Enoch", "note": "Walked with God and was taken, rather than dying." },
-    { "name": "Methuselah", "note": "The longest-lived man recorded in Scripture." },
+    {
+      "name": "Cain",
+      "note": "Adam's firstborn, who killed his brother Abel."
+    },
+    {
+      "name": "Abel",
+      "note": "Adam's second son, killed by Cain."
+    },
+    {
+      "name": "Enoch",
+      "note": "Walked with God and was taken, rather than dying."
+    },
+    {
+      "name": "Methuselah",
+      "note": "The longest-lived man recorded in Scripture."
+    },
     {
       "name": "Melchizedek",
       "meaning": "King of righteousness",
       "note": "Priest-king of Salem who blessed Abram."
     },
-    { "name": "Ishmael", "meaning": "God hears", "note": "Son of Abram and Hagar." },
-    { "name": "Hagar", "note": "Sarai's Egyptian servant, mother of Ishmael." },
+    {
+      "name": "Ishmael",
+      "meaning": "God hears",
+      "note": "Son of Abram and Hagar."
+    },
+    {
+      "name": "Hagar",
+      "note": "Sarai's Egyptian servant, mother of Ishmael."
+    },
     {
       "name": "Moses",
       "meaning": "Drawn out",
       "note": "Led Israel out of Egypt and received the law at Sinai."
     },
-    { "name": "Aaron", "note": "Moses' brother and Israel's first high priest." },
-    { "name": "Miriam", "note": "Sister of Moses and Aaron, a prophetess." },
+    {
+      "name": "Aaron",
+      "note": "Moses' brother and Israel's first high priest."
+    },
+    {
+      "name": "Miriam",
+      "note": "Sister of Moses and Aaron, a prophetess."
+    },
     {
       "name": "Joshua",
       "meaning": "The LORD is salvation",
       "note": "Succeeded Moses and led Israel into Canaan."
     },
-    { "name": "Caleb", "note": "One of the two spies who urged Israel to take the land." },
-    { "name": "Pharaoh", "note": "The title of Egypt's king, used in Scripture as a name." },
-    { "name": "Gideon", "note": "A judge who defeated Midian with three hundred men." },
-    { "name": "Samson", "note": "A judge of extraordinary strength, undone by Delilah." },
-    { "name": "Delilah", "note": "The woman who drew out the secret of Samson's strength." },
+    {
+      "name": "Caleb",
+      "note": "One of the two spies who urged Israel to take the land."
+    },
+    {
+      "name": "Pharaoh",
+      "note": "The title of Egypt's king, used in Scripture as a name."
+    },
+    {
+      "name": "Gideon",
+      "note": "A judge who defeated Midian with three hundred men."
+    },
+    {
+      "name": "Samson",
+      "note": "A judge of extraordinary strength, undone by Delilah."
+    },
+    {
+      "name": "Delilah",
+      "note": "The woman who drew out the secret of Samson's strength."
+    },
     {
       "name": "Ruth",
       "note": "A Moabitess who stayed with Naomi and became David's great-grandmother."
@@ -94,21 +150,36 @@
       "meaning": "Pleasant",
       "note": "Ruth's mother-in-law, who returned to Bethlehem."
     },
-    { "name": "Boaz", "note": "Ruth's kinsman-redeemer and husband." },
+    {
+      "name": "Boaz",
+      "note": "Ruth's kinsman-redeemer and husband."
+    },
     {
       "name": "Samuel",
       "meaning": "Heard of God",
       "note": "Prophet who anointed both Saul and David."
     },
     {
-      "name": "Saul",
-      "note": "Israel's first king. Also the name Paul bore before his mission to the Gentiles."
+      "name": "David",
+      "meaning": "Beloved",
+      "note": "Shepherd, psalmist, and king of Israel."
     },
-    { "name": "David", "meaning": "Beloved", "note": "Shepherd, psalmist, and king of Israel." },
-    { "name": "Jonathan", "note": "Saul's son and David's closest friend." },
-    { "name": "Goliath", "note": "The Philistine champion David killed." },
-    { "name": "Bathsheba", "note": "Wife of Uriah, later of David, and mother of Solomon." },
-    { "name": "Absalom", "note": "David's son, who rebelled against him." },
+    {
+      "name": "Jonathan",
+      "note": "Saul's son and David's closest friend."
+    },
+    {
+      "name": "Goliath",
+      "note": "The Philistine champion David killed."
+    },
+    {
+      "name": "Bathsheba",
+      "note": "Wife of Uriah, later of David, and mother of Solomon."
+    },
+    {
+      "name": "Absalom",
+      "note": "David's son, who rebelled against him."
+    },
     {
       "name": "Solomon",
       "meaning": "Peaceful",
@@ -125,76 +196,158 @@
       "also": "Elijah",
       "note": "The Greek form of Elijah, used in the New Testament."
     },
-    { "name": "Elisha", "note": "Elijah's successor as prophet." },
-    { "name": "Ahab", "note": "King of Israel, husband of Jezebel." },
-    { "name": "Jezebel", "note": "Ahab's queen, who promoted the worship of Baal." },
-    { "name": "Hezekiah", "note": "King of Judah who trusted God against Assyria." },
-    { "name": "Josiah", "note": "King of Judah who restored the law and the temple." },
+    {
+      "name": "Elisha",
+      "note": "Elijah's successor as prophet."
+    },
+    {
+      "name": "Ahab",
+      "note": "King of Israel, husband of Jezebel."
+    },
+    {
+      "name": "Jezebel",
+      "note": "Ahab's queen, who promoted the worship of Baal."
+    },
+    {
+      "name": "Hezekiah",
+      "note": "King of Judah who trusted God against Assyria."
+    },
+    {
+      "name": "Josiah",
+      "note": "King of Judah who restored the law and the temple."
+    },
     {
       "name": "Isaiah",
       "meaning": "The LORD is salvation",
       "note": "Prophet to Judah, who foretold the suffering servant."
     },
-    { "name": "Jeremiah", "note": "Prophet who warned Judah before the exile." },
-    { "name": "Ezekiel", "note": "Prophet among the exiles in Babylon." },
+    {
+      "name": "Jeremiah",
+      "note": "Prophet who warned Judah before the exile."
+    },
+    {
+      "name": "Ezekiel",
+      "note": "Prophet among the exiles in Babylon."
+    },
     {
       "name": "Daniel",
       "meaning": "God is my judge",
       "note": "Taken to Babylon, where he served and prophesied."
     },
-    { "name": "Jonah", "meaning": "Dove", "note": "Sent to Nineveh, which he fled before going." },
-    { "name": "Nehemiah", "note": "Rebuilt the wall of Jerusalem after the exile." },
-    { "name": "Ezra", "note": "Priest and scribe who taught the law after the exile." },
-    { "name": "Esther", "note": "Queen of Persia who saved her people." },
-    { "name": "Mordecai", "note": "Esther's cousin, who raised her." },
-    { "name": "Job", "note": "A righteous man who lost everything and questioned God." },
-    { "name": "Jesus", "meaning": "The LORD is salvation", "note": "The Christ, the Son of God." },
+    {
+      "name": "Jonah",
+      "meaning": "Dove",
+      "note": "Sent to Nineveh, which he fled before going."
+    },
+    {
+      "name": "Nehemiah",
+      "note": "Rebuilt the wall of Jerusalem after the exile."
+    },
+    {
+      "name": "Ezra",
+      "note": "Priest and scribe who taught the law after the exile."
+    },
+    {
+      "name": "Esther",
+      "note": "Queen of Persia who saved her people."
+    },
+    {
+      "name": "Mordecai",
+      "note": "Esther's cousin, who raised her."
+    },
+    {
+      "name": "Job",
+      "note": "A righteous man who lost everything and questioned God."
+    },
+    {
+      "name": "Jesus",
+      "meaning": "The LORD is salvation",
+      "note": "The Christ, the Son of God."
+    },
     {
       "name": "Christ",
       "meaning": "Anointed one",
       "note": "The Greek rendering of Messiah, used as a title for Jesus."
     },
-    { "name": "Nicodemus", "note": "A Pharisee who came to Jesus by night." },
+    {
+      "name": "Nicodemus",
+      "note": "A Pharisee who came to Jesus by night."
+    },
     {
       "name": "Peter",
       "also": "Simon, Cephas",
       "meaning": "Rock",
-      "note": "A fisherman called by Jesus, and a leader among the apostles."
+      "note": "The fisherman Simon, renamed Cephas, or Peter, meaning rock. A leader among the apostles, who denied Jesus and was restored."
     },
-    { "name": "Andrew", "note": "Peter's brother, one of the twelve." },
-    { "name": "Matthew", "note": "A tax collector called by Jesus, one of the twelve." },
-    { "name": "Thomas", "note": "One of the twelve, who doubted the resurrection until he saw." },
     {
-      "name": "Judas",
-      "note": "Judas Iscariot betrayed Jesus. The name is also borne by others in the New Testament."
+      "name": "Andrew",
+      "note": "Peter's brother, one of the twelve."
     },
-    { "name": "Pilate", "note": "The Roman governor who handed Jesus over to be crucified." },
-    { "name": "Herod", "note": "The name of several rulers of Judea in the New Testament." },
-    { "name": "Paul", "also": "Saul", "note": "Apostle to the Gentiles, formerly Saul of Tarsus." },
+    {
+      "name": "Matthew",
+      "note": "A tax collector called by Jesus, one of the twelve."
+    },
+    {
+      "name": "Thomas",
+      "note": "One of the twelve, who doubted the resurrection until he saw."
+    },
+    {
+      "name": "Pilate",
+      "note": "The Roman governor who handed Jesus over to be crucified."
+    },
+    {
+      "name": "Paul",
+      "also": "Saul",
+      "note": "Saul of Tarsus, a Pharisee who persecuted the church until Christ met him on the road to Damascus. Apostle to the Gentiles. Called Paul from Acts 13:9 onward."
+    },
     {
       "name": "Barnabas",
       "meaning": "Son of consolation",
       "note": "Paul's companion on his first journey."
     },
-    { "name": "Silas", "note": "Paul's companion after Barnabas." },
-    { "name": "Timothy", "note": "Paul's younger fellow worker, who received two of his letters." },
-    { "name": "Titus", "note": "A Gentile co-worker of Paul, left in Crete." },
-    { "name": "Stephen", "note": "The first Christian martyr." },
-    { "name": "Lazarus", "note": "Brother of Mary and Martha, raised by Jesus." },
-    { "name": "Martha", "note": "Sister of Mary and Lazarus, of Bethany." },
+    {
+      "name": "Silas",
+      "note": "Paul's companion after Barnabas."
+    },
+    {
+      "name": "Timothy",
+      "note": "Paul's younger fellow worker, who received two of his letters."
+    },
+    {
+      "name": "Titus",
+      "note": "A Gentile co-worker of Paul, left in Crete."
+    },
+    {
+      "name": "Stephen",
+      "note": "The first Christian martyr."
+    },
+    {
+      "name": "Lazarus",
+      "note": "Brother of Mary and Martha, raised by Jesus."
+    },
+    {
+      "name": "Martha",
+      "note": "Sister of Mary and Lazarus, of Bethany."
+    },
     {
       "name": "Zacchaeus",
       "note": "A chief tax collector of Jericho who climbed a tree to see Jesus."
     }
   ],
   "places": [
-    { "name": "Eden", "note": "The garden God planted, where Adam and Eve were placed." },
+    {
+      "name": "Eden",
+      "note": "The garden God planted, where Adam and Eve were placed."
+    },
     {
       "name": "Ararat",
       "modern": "Eastern Turkey",
       "note": "The mountains where the ark came to rest."
     },
-    { "name": "Babel", "note": "Where the tower was built and language was confused." },
+    {
+      "name": "Babel",
+      "note": "Where the tower was built and language was confused."
+    },
     {
       "name": "Ur",
       "modern": "Southern Iraq",
@@ -216,20 +369,34 @@
       "modern": "Near Nablus",
       "note": "Where God promised the land to Abram's seed."
     },
-    { "name": "Sichem", "also": "Shechem", "note": "The older spelling of Shechem." },
+    {
+      "name": "Sichem",
+      "also": "Shechem",
+      "note": "The older spelling of Shechem."
+    },
     {
       "name": "Bethel",
       "modern": "Beitin, West Bank",
       "note": "Where Jacob dreamed of the ladder. Formerly called Luz."
     },
-    { "name": "Luz", "also": "Bethel", "note": "The earlier name of Bethel." },
+    {
+      "name": "Luz",
+      "also": "Bethel",
+      "note": "The earlier name of Bethel."
+    },
     {
       "name": "Hebron",
       "modern": "Hebron, West Bank",
       "note": "Where Abraham, Isaac, and Jacob were buried."
     },
-    { "name": "Sodom", "note": "A city of the plain, destroyed for its wickedness." },
-    { "name": "Gomorrah", "note": "Destroyed alongside Sodom." },
+    {
+      "name": "Sodom",
+      "note": "A city of the plain, destroyed for its wickedness."
+    },
+    {
+      "name": "Gomorrah",
+      "note": "Destroyed alongside Sodom."
+    },
     {
       "name": "Egypt",
       "modern": "Egypt",
@@ -245,7 +412,11 @@
       "modern": "Sinai peninsula",
       "note": "The mountain where Moses received the law."
     },
-    { "name": "Horeb", "also": "Sinai", "note": "Another name for the mountain of God." },
+    {
+      "name": "Horeb",
+      "also": "Sinai",
+      "note": "Another name for the mountain of God."
+    },
     {
       "name": "Jordan",
       "modern": "The Jordan river",
@@ -256,8 +427,14 @@
       "modern": "Jericho, West Bank",
       "note": "The first city taken in Canaan, whose walls fell."
     },
-    { "name": "Gilgal", "note": "Israel's first camp after crossing the Jordan." },
-    { "name": "Shiloh", "note": "Where the tabernacle stood before the temple was built." },
+    {
+      "name": "Gilgal",
+      "note": "Israel's first camp after crossing the Jordan."
+    },
+    {
+      "name": "Shiloh",
+      "note": "Where the tabernacle stood before the temple was built."
+    },
     {
       "name": "Bethlehem",
       "modern": "Bethlehem, West Bank",
@@ -268,13 +445,20 @@
       "modern": "Jerusalem",
       "note": "The city of David, where the temple stood."
     },
-    { "name": "Zion", "note": "The hill of Jerusalem, and a name for the city and its people." },
+    {
+      "name": "Zion",
+      "note": "The hill of Jerusalem, and a name for the city and its people."
+    },
     {
       "name": "Samaria",
       "modern": "Northern West Bank",
       "note": "Capital of the northern kingdom, later the whole region."
     },
-    { "name": "Nazareth", "modern": "Nazareth, Israel", "note": "Where Jesus grew up." },
+    {
+      "name": "Nazareth",
+      "modern": "Nazareth, Israel",
+      "note": "Where Jesus grew up."
+    },
     {
       "name": "Capernaum",
       "modern": "North shore of Galilee",
@@ -285,10 +469,24 @@
       "modern": "Northern Israel",
       "note": "The region where Jesus did much of his teaching."
     },
-    { "name": "Bethany", "modern": "Near Jerusalem", "note": "Home of Mary, Martha, and Lazarus." },
-    { "name": "Gethsemane", "note": "The garden where Jesus prayed before his arrest." },
-    { "name": "Golgotha", "note": "The place of a skull, where Jesus was crucified." },
-    { "name": "Calvary", "also": "Golgotha", "note": "The Latin-derived name for Golgotha." },
+    {
+      "name": "Bethany",
+      "modern": "Near Jerusalem",
+      "note": "Home of Mary, Martha, and Lazarus."
+    },
+    {
+      "name": "Gethsemane",
+      "note": "The garden where Jesus prayed before his arrest."
+    },
+    {
+      "name": "Golgotha",
+      "note": "The place of a skull, where Jesus was crucified."
+    },
+    {
+      "name": "Calvary",
+      "also": "Golgotha",
+      "note": "The Latin-derived name for Golgotha."
+    },
     {
       "name": "Babylon",
       "modern": "Central Iraq",
@@ -309,7 +507,11 @@
       "modern": "Antakya, Turkey",
       "note": "Where believers were first called Christians."
     },
-    { "name": "Tarsus", "modern": "Tarsus, Turkey", "note": "Paul's home city." },
+    {
+      "name": "Tarsus",
+      "modern": "Tarsus, Turkey",
+      "note": "Paul's home city."
+    },
     {
       "name": "Ephesus",
       "modern": "Western Turkey",
@@ -340,5 +542,945 @@
       "modern": "Patmos, Greece",
       "note": "The island where John received the Revelation."
     }
-  ]
+  ],
+  "ambiguous": [
+    {
+      "name": "Mary",
+      "senses": [
+        {
+          "who": "Mary, the mother of Jesus",
+          "note": "Betrothed to Joseph, told by Gabriel that she would bear the Son of God. Present at the cross and with the disciples after the ascension.",
+          "where": [
+            [
+              "Matthew",
+              1,
+              2
+            ],
+            [
+              "Mark",
+              6,
+              6
+            ],
+            [
+              "Luke",
+              1,
+              2
+            ],
+            [
+              "John",
+              2,
+              2
+            ],
+            [
+              "John",
+              19,
+              19
+            ],
+            [
+              "Acts",
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "who": "Mary Magdalene",
+          "note": "Out of whom Jesus cast seven devils. She stood by the cross and was the first to see him risen.",
+          "where": [
+            [
+              "Matthew",
+              27,
+              28
+            ],
+            [
+              "Mark",
+              15,
+              16
+            ],
+            [
+              "Luke",
+              8,
+              8
+            ],
+            [
+              "Luke",
+              24,
+              24
+            ],
+            [
+              "John",
+              19,
+              20
+            ]
+          ]
+        },
+        {
+          "who": "Mary of Bethany",
+          "note": "Sister of Martha and Lazarus. She sat at Jesus' feet to listen, and anointed him before his burial.",
+          "where": [
+            [
+              "Luke",
+              10,
+              10
+            ],
+            [
+              "John",
+              11,
+              12
+            ]
+          ]
+        },
+        {
+          "who": "Mary the mother of James and Joses",
+          "note": "One of the women who watched the crucifixion and came to the tomb.",
+          "where": [
+            [
+              "Matthew",
+              27,
+              28
+            ],
+            [
+              "Mark",
+              15,
+              16
+            ],
+            [
+              "Luke",
+              24,
+              24
+            ]
+          ]
+        },
+        {
+          "who": "Mary the mother of John Mark",
+          "note": "The believers met to pray in her house in Jerusalem.",
+          "where": [
+            [
+              "Acts",
+              12,
+              12
+            ]
+          ]
+        },
+        {
+          "who": "Mary of Rome",
+          "note": "Greeted by Paul as one who laboured much for the church there.",
+          "where": [
+            [
+              "Romans",
+              16,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Simon",
+      "senses": [
+        {
+          "who": "Simon Peter",
+          "note": "The fisherman Jesus renamed Cephas, or Peter, meaning rock. Called Simeon in Acts 15:14.",
+          "where": [
+            [
+              "Matthew",
+              4,
+              26
+            ],
+            [
+              "Mark",
+              1,
+              14
+            ],
+            [
+              "Luke",
+              4,
+              22
+            ],
+            [
+              "John",
+              1,
+              21
+            ],
+            [
+              "Acts",
+              1,
+              15
+            ],
+            [
+              "1 Peter",
+              1,
+              5
+            ],
+            [
+              "2 Peter",
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "who": "Simon the Canaanite, called Zelotes",
+          "note": "One of the twelve apostles, named in every list of them.",
+          "where": [
+            [
+              "Matthew",
+              10,
+              10
+            ],
+            [
+              "Mark",
+              3,
+              3
+            ],
+            [
+              "Luke",
+              6,
+              6
+            ],
+            [
+              "Acts",
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "who": "Simon the leper",
+          "note": "In whose house at Bethany Jesus was anointed.",
+          "where": [
+            [
+              "Matthew",
+              26,
+              26
+            ],
+            [
+              "Mark",
+              14,
+              14
+            ]
+          ]
+        },
+        {
+          "who": "Simon of Cyrene",
+          "note": "Compelled to carry the cross of Jesus.",
+          "where": [
+            [
+              "Matthew",
+              27,
+              27
+            ],
+            [
+              "Mark",
+              15,
+              15
+            ],
+            [
+              "Luke",
+              23,
+              23
+            ]
+          ]
+        },
+        {
+          "who": "Simon the Pharisee",
+          "note": "Who invited Jesus to eat, and judged the woman who anointed him.",
+          "where": [
+            [
+              "Luke",
+              7,
+              7
+            ]
+          ]
+        },
+        {
+          "who": "Simon the sorcerer",
+          "note": "Of Samaria, who tried to buy the gift of the Holy Ghost.",
+          "where": [
+            [
+              "Acts",
+              8,
+              8
+            ]
+          ]
+        },
+        {
+          "who": "Simon the tanner",
+          "note": "At whose house in Joppa Peter lodged.",
+          "where": [
+            [
+              "Acts",
+              9,
+              10
+            ]
+          ]
+        },
+        {
+          "who": "Simon, the brother of Jesus",
+          "note": "Named among his brethren by those who knew the family.",
+          "where": [
+            [
+              "Matthew",
+              13,
+              13
+            ],
+            [
+              "Mark",
+              6,
+              6
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Saul",
+      "senses": [
+        {
+          "who": "Saul, the first king of Israel",
+          "note": "Anointed by Samuel, he lost the kingdom through disobedience and died at Gilboa.",
+          "where": [
+            [
+              "1 Samuel",
+              9,
+              31
+            ],
+            [
+              "2 Samuel",
+              1,
+              21
+            ],
+            [
+              "1 Chronicles",
+              5,
+              26
+            ],
+            [
+              "Psalms",
+              18,
+              59
+            ],
+            [
+              "Acts",
+              13,
+              13
+            ]
+          ]
+        },
+        {
+          "who": "Saul of Tarsus, afterwards Paul",
+          "note": "He held the coats at Stephen's death and persecuted the church, until Christ met him on the road to Damascus. Called Paul from Acts 13:9 onward.",
+          "where": [
+            [
+              "Acts",
+              7,
+              13
+            ],
+            [
+              "1 Corinthians",
+              15,
+              15
+            ],
+            [
+              "Galatians",
+              1,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "John",
+      "senses": [
+        {
+          "who": "John the Baptist",
+          "note": "Son of Zacharias and Elisabeth. He preached repentance, baptised Jesus, and was beheaded by Herod.",
+          "where": [
+            [
+              "Matthew",
+              3,
+              3
+            ],
+            [
+              "Matthew",
+              11,
+              11
+            ],
+            [
+              "Matthew",
+              14,
+              14
+            ],
+            [
+              "Mark",
+              1,
+              1
+            ],
+            [
+              "Mark",
+              6,
+              6
+            ],
+            [
+              "Luke",
+              1,
+              3
+            ],
+            [
+              "Luke",
+              7,
+              7
+            ],
+            [
+              "John",
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "who": "John, son of Zebedee",
+          "note": "One of the twelve, brother of James, and the disciple Jesus loved. Traditionally the writer of the fourth Gospel, three letters, and the Revelation.",
+          "where": [
+            [
+              "Matthew",
+              4,
+              4
+            ],
+            [
+              "Matthew",
+              10,
+              10
+            ],
+            [
+              "Matthew",
+              17,
+              17
+            ],
+            [
+              "Mark",
+              3,
+              3
+            ],
+            [
+              "Mark",
+              9,
+              9
+            ],
+            [
+              "Luke",
+              5,
+              9
+            ],
+            [
+              "Acts",
+              1,
+              12
+            ],
+            [
+              "Galatians",
+              2,
+              2
+            ],
+            [
+              "Revelation",
+              1,
+              22
+            ]
+          ]
+        },
+        {
+          "who": "John Mark",
+          "note": "Who went with Barnabas and Paul, turned back at Perga, and was later useful to Paul again.",
+          "where": [
+            [
+              "Acts",
+              12,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "James",
+      "senses": [
+        {
+          "who": "James, son of Zebedee",
+          "note": "One of the twelve, brother of John, and the first apostle martyred, by Herod.",
+          "where": [
+            [
+              "Matthew",
+              4,
+              4
+            ],
+            [
+              "Matthew",
+              10,
+              10
+            ],
+            [
+              "Matthew",
+              17,
+              17
+            ],
+            [
+              "Mark",
+              1,
+              1
+            ],
+            [
+              "Mark",
+              3,
+              3
+            ],
+            [
+              "Mark",
+              9,
+              9
+            ],
+            [
+              "Luke",
+              5,
+              9
+            ],
+            [
+              "Acts",
+              1,
+              12
+            ]
+          ]
+        },
+        {
+          "who": "James, son of Alphaeus",
+          "note": "One of the twelve, named in every list of them.",
+          "where": [
+            [
+              "Matthew",
+              10,
+              10
+            ],
+            [
+              "Mark",
+              3,
+              3
+            ],
+            [
+              "Luke",
+              6,
+              6
+            ],
+            [
+              "Acts",
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "who": "James, the Lord's brother",
+          "note": "A leader of the church at Jerusalem, who spoke at the council there.",
+          "where": [
+            [
+              "Acts",
+              15,
+              21
+            ],
+            [
+              "1 Corinthians",
+              15,
+              15
+            ],
+            [
+              "Galatians",
+              1,
+              2
+            ],
+            [
+              "James",
+              1,
+              5
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Judas",
+      "senses": [
+        {
+          "who": "Judas Iscariot",
+          "note": "One of the twelve, who betrayed Jesus for thirty pieces of silver.",
+          "where": [
+            [
+              "Matthew",
+              10,
+              10
+            ],
+            [
+              "Matthew",
+              26,
+              27
+            ],
+            [
+              "Mark",
+              3,
+              3
+            ],
+            [
+              "Mark",
+              14,
+              14
+            ],
+            [
+              "Luke",
+              6,
+              6
+            ],
+            [
+              "Luke",
+              22,
+              22
+            ],
+            [
+              "John",
+              6,
+              6
+            ],
+            [
+              "John",
+              12,
+              13
+            ],
+            [
+              "John",
+              18,
+              18
+            ],
+            [
+              "Acts",
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "who": "Judas, the Lord's brother",
+          "note": "Named among his brethren, and traditionally the writer of the letter of Jude.",
+          "where": [
+            [
+              "Matthew",
+              13,
+              13
+            ],
+            [
+              "Mark",
+              6,
+              6
+            ]
+          ]
+        },
+        {
+          "who": "Judas, not Iscariot",
+          "note": "One of the twelve, also called Thaddaeus, who asked how Jesus would show himself to them and not the world.",
+          "where": [
+            [
+              "Luke",
+              6,
+              6
+            ],
+            [
+              "John",
+              14,
+              14
+            ],
+            [
+              "Acts",
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "who": "Judas Barsabas",
+          "note": "Sent with Silas from Jerusalem to carry the council's letter to Antioch.",
+          "where": [
+            [
+              "Acts",
+              15,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Joseph",
+      "senses": [
+        {
+          "who": "Joseph, son of Jacob",
+          "note": "Sold into Egypt by his brothers and raised to govern it, where he preserved his family through the famine.",
+          "where": [
+            [
+              "Genesis",
+              30,
+              50
+            ],
+            [
+              "Exodus",
+              1,
+              13
+            ],
+            [
+              "Joshua",
+              24,
+              24
+            ],
+            [
+              "Psalms",
+              105,
+              105
+            ],
+            [
+              "Acts",
+              7,
+              7
+            ]
+          ]
+        },
+        {
+          "who": "Joseph, the husband of Mary",
+          "note": "A carpenter of Nazareth, of the house of David, who took Mary as his wife and raised Jesus.",
+          "where": [
+            [
+              "Matthew",
+              1,
+              2
+            ],
+            [
+              "Luke",
+              1,
+              4
+            ],
+            [
+              "John",
+              1,
+              6
+            ]
+          ]
+        },
+        {
+          "who": "Joseph of Arimathaea",
+          "note": "A rich man and a disciple, who asked Pilate for the body of Jesus and laid it in his own tomb.",
+          "where": [
+            [
+              "Matthew",
+              27,
+              27
+            ],
+            [
+              "Mark",
+              15,
+              15
+            ],
+            [
+              "Luke",
+              23,
+              23
+            ],
+            [
+              "John",
+              19,
+              19
+            ]
+          ]
+        },
+        {
+          "who": "Joseph called Barsabas",
+          "note": "Surnamed Justus, and put forward with Matthias to replace Judas.",
+          "where": [
+            [
+              "Acts",
+              1,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Herod",
+      "senses": [
+        {
+          "who": "Herod the Great",
+          "note": "King of Judea at the birth of Jesus, who ordered the children of Bethlehem killed.",
+          "where": [
+            [
+              "Matthew",
+              2,
+              2
+            ],
+            [
+              "Luke",
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "who": "Herod Antipas",
+          "note": "Tetrarch of Galilee, who beheaded John the Baptist and questioned Jesus before the crucifixion.",
+          "where": [
+            [
+              "Matthew",
+              14,
+              14
+            ],
+            [
+              "Mark",
+              6,
+              8
+            ],
+            [
+              "Luke",
+              3,
+              3
+            ],
+            [
+              "Luke",
+              9,
+              9
+            ],
+            [
+              "Luke",
+              13,
+              13
+            ],
+            [
+              "Luke",
+              23,
+              23
+            ],
+            [
+              "Acts",
+              4,
+              4
+            ]
+          ]
+        },
+        {
+          "who": "Herod Agrippa I",
+          "note": "Who killed James with the sword, imprisoned Peter, and was struck down at Caesarea.",
+          "where": [
+            [
+              "Acts",
+              12,
+              12
+            ]
+          ]
+        },
+        {
+          "who": "Herod Agrippa II",
+          "note": "Before whom Paul made his defence, and who said he was almost persuaded.",
+          "where": [
+            [
+              "Acts",
+              25,
+              26
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Philip",
+      "senses": [
+        {
+          "who": "Philip the apostle",
+          "note": "One of the twelve, of Bethsaida, who brought Nathanael to Jesus.",
+          "where": [
+            [
+              "Matthew",
+              10,
+              10
+            ],
+            [
+              "Mark",
+              3,
+              3
+            ],
+            [
+              "Luke",
+              6,
+              6
+            ],
+            [
+              "John",
+              1,
+              1
+            ],
+            [
+              "John",
+              6,
+              6
+            ],
+            [
+              "John",
+              12,
+              12
+            ],
+            [
+              "John",
+              14,
+              14
+            ],
+            [
+              "Acts",
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "who": "Philip the evangelist",
+          "note": "One of the seven chosen to serve, who preached in Samaria and baptised the Ethiopian.",
+          "where": [
+            [
+              "Acts",
+              6,
+              8
+            ],
+            [
+              "Acts",
+              21,
+              21
+            ]
+          ]
+        },
+        {
+          "who": "Philip the tetrarch",
+          "note": "Brother of Herod Antipas, who ruled Ituraea and Trachonitis.",
+          "where": [
+            [
+              "Matthew",
+              14,
+              14
+            ],
+            [
+              "Mark",
+              6,
+              6
+            ],
+            [
+              "Luke",
+              3,
+              3
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "_ambiguous_note": "Names borne by several different people. Each sense lists the books, and where it helps the chapter range, in which that person appears, so a verse can usually be matched to one of them. Where the scopes overlap or none match, the reader shows every possibility and says it is uncertain rather than choosing one."
 }

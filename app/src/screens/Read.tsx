@@ -161,6 +161,7 @@ export function Read() {
           whileTap={{ scale: 0.97 }}
           transition={spring.snappy}
           onClick={() => setPicking(true)}
+          aria-label={`Reading ${book.name} ${number}. Choose another book or chapter.`}
           style={{
             padding: '6px 14px',
             borderRadius: 999,
@@ -294,6 +295,7 @@ export function Read() {
                                   const box = event.currentTarget.getBoundingClientRect();
                                   setAnchored({
                                     subject: piece.subject,
+                                    at: { book: book.name, chapter: number },
                                     x: box.left + box.width / 2,
                                     y: box.bottom,
                                   });
