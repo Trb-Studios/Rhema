@@ -426,6 +426,7 @@ export function Read() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
       <header
+        className="app-header"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -435,6 +436,11 @@ export function Read() {
           flex: 'none',
           borderBottom: '1px solid var(--line-default)',
           background: 'var(--bg-shell)',
+          // Narrow windows scroll the header sideways rather than wrapping it into
+          // two rows, which pushed the text down and broke every label in half.
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          scrollbarWidth: 'none',
         }}
       >
         <span
@@ -478,6 +484,8 @@ export function Read() {
             borderRadius: 999,
             background: 'var(--bg-sunken)',
             fontWeight: 600,
+            whiteSpace: 'nowrap',
+            flex: 'none',
           }}
         >
           {book.name} {number}
@@ -697,7 +705,9 @@ export function Read() {
         <Menu books={all} progress={progress} />
       </header>
 
-      <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+      {/* Positioned, because on a narrow window the side panel covers this area
+          rather than sitting beside it. */}
+      <div style={{ display: 'flex', flex: 1, minHeight: 0, position: 'relative' }}>
         <div style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
           <AnimatePresence mode="wait">
             <motion.article
@@ -1252,6 +1262,8 @@ function Pill({
         fontWeight: 600,
         fontSize: 13,
         marginRight: 4,
+        whiteSpace: 'nowrap',
+        flex: 'none',
         background: active ? 'var(--main-fill)' : 'transparent',
         color: active ? 'var(--main-on)' : 'var(--text-secondary)',
         border: `1px solid ${active ? 'var(--main-fill)' : 'var(--line-default)'}`,

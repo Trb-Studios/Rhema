@@ -101,3 +101,17 @@ button {
 .library-row:hover {
   background: var(--bg-sunken);
 }
+
+/* The header scrolls sideways on a narrow window rather than wrapping. Its scrollbar
+   is hidden because it is a toolbar, not a list: the controls are reachable by
+   dragging or by the command palette, and a bar across the top of the app would read
+   as a defect. */
+.app-header::-webkit-scrollbar {
+  display: none;
+}
+
+/* Every control in the header keeps its own size. Without this, flex shrinks the
+   round buttons into ovals before it starts scrolling. */
+.app-header > * {
+  flex: none;
+}
