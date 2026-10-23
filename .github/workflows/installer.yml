@@ -12,6 +12,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
 concurrency:
   group: installer-${{ github.ref }}
   cancel-in-progress: true
@@ -77,3 +80,20 @@ jobs:
           path: out/*.exe
           if-no-files-found: error
           retention-days: 30
+
+      # A release gives one permanent link that always holds the newest build, rather
+      # than a workflow artifact that expires and has to be unzipped.
+      - name: Publish it to the latest-build release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest out/*.exe \
+            --prerelease \
+            --title "Rhema — latest build" \
+            --notes "The newest build of Rhema, from commit ${GITHUB_SHA:0:7}.
+
+          Download the .exe below and run it. Windows will say \"Windows protected your PC\" because this build is not code-signed: choose **More info**, then **Run anyway**.
+
+          This build cannot update itself. Signed builds that can will come from the Release workflow once the signing key exists; see docs/releasing.md."
