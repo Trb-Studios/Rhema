@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   books as loadBooks,
@@ -24,6 +24,10 @@ import { SidePanel } from '../components/SidePanel';
 import type { PanelTab } from '../components/SidePanel';
 import { Menu } from '../components/Menu';
 import { SearchSheet } from '../components/SearchSheet';
+import { CommandPalette } from '../components/CommandPalette';
+import { Tip } from '../components/Tip';
+import { keyLabel, matches } from '../lib/commands';
+import type { Command } from '../lib/commands';
 import { WordPopover } from '../components/WordPopover';
 import { Review } from '../components/Review';
 import { Plan } from '../components/Plan';
@@ -61,7 +65,7 @@ function loadHighlights(): Highlights {
 }
 
 export function Read() {
-  const { settings } = useSettings();
+  const { settings, update } = useSettings();
   const { progress, visit, toggleRead, isRead } = useProgress();
   const { saved, isSaved, toggle: toggleSaved } = useSaved();
   const { dueCount, sync: syncReview } = useReview();
@@ -76,6 +80,7 @@ export function Read() {
   const [anchored, setAnchored] = useState<Anchored | null>(null);
   const [picking, setPicking] = useState(false);
   const [searching, setSearching] = useState(false);
+  const [palette, setPalette] = useState(false);
   const [reviewing, setReviewing] = useState(false);
   const [planning, setPlanning] = useState(false);
   const [quizzing, setQuizzing] = useState(false);
@@ -168,23 +173,198 @@ export function Read() {
   );
   const next = useMemo(() => (book ? nextChapter(all, book, number) : null), [all, book, number]);
 
+  const commandsRef = useRef<Command[]>([]);
+  const anyOverlay = picking || searching || palette || reviewing || planning || quizzing;
+
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
-      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+      // The palette opens from anywhere, including from inside the notepad.
+      if (matches(event, 'Mod+K')) {
         event.preventDefault();
-        setSearching(true);
+        setPalette(true);
         return;
       }
-      if (picking || searching || reviewing || planning || quizzing) return;
-      if (event.target instanceof HTMLTextAreaElement) return;
-      if (event.target instanceof HTMLInputElement) return;
+
+      const typing =
+        event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLInputElement;
+
+      // A command's own shortcut uses a modifier, so it still works while typing.
+      for (const command of commandsRef.current) {
+        const shortcut = command.shortcut;
+        if (!shortcut || !shortcut.includes('Mod') || command.available === false) continue;
+        if (matches(event, shortcut)) {
+          event.preventDefault();
+          command.run();
+          return;
+        }
+      }
+
+      if (anyOverlay || typing) return;
       if (event.key === 'ArrowLeft') goTo(previous);
       if (event.key === 'ArrowRight') goTo(next);
       if (event.key === 'Escape') setSelected(null);
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [previous, next, picking, searching, reviewing, planning, quizzing, goTo]);
+  }, [previous, next, anyOverlay, goTo]);
+
+  // Everything the app can do, in one list. The palette, the shortcuts and the header
+  // all read from it, so a command cannot be reachable one way and missing another.
+  const commands: Command[] = useMemo(() => {
+    const panels: Array<[PanelTab, string, string, string]> = [
+      ['notes', 'Notes', 'Mod+J', 'write journal'],
+      ['refs', 'Cross-references', 'Mod+L', 'links related parallel'],
+      ['saved', 'Saved verses', 'Mod+B', 'bookmarks kept'],
+    ];
+
+    const list: Command[] = [
+      {
+        id: 'next',
+        title: 'Next chapter',
+        group: 'Go',
+        shortcut: '\u2192',
+        available: Boolean(next),
+        run: () => goTo(next),
+      },
+      {
+        id: 'previous',
+        title: 'Previous chapter',
+        group: 'Go',
+        shortcut: '\u2190',
+        available: Boolean(previous),
+        run: () => goTo(previous),
+      },
+      {
+        id: 'pick',
+        title: 'Choose a book',
+        hint: 'Browse all 66 books and their chapters',
+        group: 'Go',
+        keywords: 'chapter jump navigate',
+        run: () => setPicking(true),
+      },
+      {
+        id: 'search',
+        title: 'Search the text',
+        hint: 'Every verse of the edition you are reading',
+        group: 'Go',
+        shortcut: 'Mod+F',
+        keywords: 'find concordance',
+        run: () => setSearching(true),
+      },
+      {
+        id: 'read',
+        title: book && isRead(book.id, number) ? 'Mark unread' : 'Mark read',
+        hint: 'Counts towards your progress and streak',
+        group: 'Read',
+        shortcut: 'Mod+Enter',
+        run: () => book && toggleRead(book.id, number),
+      },
+      {
+        id: 'plan',
+        title: 'Reading plan',
+        hint: 'What to read today, and how far through you are',
+        group: 'Read',
+        shortcut: 'Mod+P',
+        keywords: 'schedule pace days',
+        run: () => setPlanning(true),
+      },
+      {
+        id: 'review',
+        title: 'Review',
+        hint: 'Saved verses, resurfaced before you forget them',
+        group: 'Study',
+        shortcut: 'Mod+R',
+        keywords: 'memorise spaced recall',
+        run: () => setReviewing(true),
+      },
+      {
+        id: 'quiz',
+        title: 'Quiz this book',
+        hint: 'Questions drawn from the text itself',
+        group: 'Study',
+        shortcut: 'Mod+Q',
+        keywords: 'test questions',
+        run: () => setQuizzing(true),
+      },
+    ];
+
+    for (const [id, title, shortcut, keywords] of panels) {
+      list.push({
+        id: `panel-${id}`,
+        title,
+        group: 'Keep',
+        shortcut,
+        keywords,
+        on: panel === id,
+        run: () => setPanel(panel === id ? null : id),
+      });
+    }
+
+    for (const option of available) {
+      if (option.id === edition) continue;
+      list.push({
+        id: `edition-${option.id}`,
+        title: `Read in ${option.label === 'English' ? 'English' : option.label}`,
+        hint: option.title,
+        group: 'View',
+        keywords: `${option.title} hebrew greek original language`,
+        run: () => setEdition(option.id),
+      });
+    }
+
+    list.push(
+      {
+        id: 'theme',
+        title: settings.theme === 'dark' ? 'Switch to light' : 'Switch to dark',
+        group: 'View',
+        shortcut: 'Mod+Shift+D',
+        keywords: 'theme appearance night',
+        run: () => update('theme', settings.theme === 'dark' ? 'light' : 'dark'),
+      },
+      {
+        id: 'bigger',
+        title: 'Larger text',
+        group: 'View',
+        keywords: 'font size zoom',
+        available: settings.size < 26,
+        run: () => update('size', Math.min(26, settings.size + 1)),
+      },
+      {
+        id: 'smaller',
+        title: 'Smaller text',
+        group: 'View',
+        keywords: 'font size zoom',
+        available: settings.size > 15,
+        run: () => update('size', Math.max(15, settings.size - 1)),
+      },
+      {
+        id: 'verse-numbers',
+        title: settings.verseNumbers ? 'Hide verse numbers' : 'Show verse numbers',
+        group: 'View',
+        keywords: 'numbering clean',
+        run: () => update('verseNumbers', !settings.verseNumbers),
+      },
+    );
+
+    return list;
+  }, [
+    book,
+    number,
+    next,
+    previous,
+    goTo,
+    panel,
+    available,
+    edition,
+    settings.theme,
+    settings.size,
+    settings.verseNumbers,
+    update,
+    isRead,
+    toggleRead,
+  ]);
+
+  commandsRef.current = commands;
 
   if (error) {
     return (
@@ -235,7 +415,12 @@ export function Read() {
           R
         </span>
 
-        <Round label="Previous chapter" disabled={!previous} onClick={() => goTo(previous)}>
+        <Round
+          label="Previous chapter"
+          shortcut="\u2190"
+          disabled={!previous}
+          onClick={() => goTo(previous)}
+        >
           <ChevronIcon dir="left" size={18} />
         </Round>
 
@@ -258,13 +443,45 @@ export function Read() {
           <ChevronIcon dir="down" size={14} />
         </motion.button>
 
-        <Round label="Next chapter" disabled={!next} onClick={() => goTo(next)}>
+        <Round label="Next chapter" shortcut="\u2192" disabled={!next} onClick={() => goTo(next)}>
           <ChevronIcon dir="right" size={18} />
         </Round>
 
-        <Round label="Search the Bible" onClick={() => setSearching(true)}>
-          <SearchIcon size={18} />
-        </Round>
+        <Tip label="Search, go to a passage, or run a command" shortcut="Mod+K">
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            transition={spring.snappy}
+            onClick={() => setPalette(true)}
+            aria-label="Search, go to a passage, or run a command"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              height: 34,
+              padding: '0 10px 0 11px',
+              marginLeft: 2,
+              borderRadius: 9,
+              background: 'var(--bg-sunken)',
+              color: 'var(--text-secondary)',
+              fontSize: 13,
+            }}
+          >
+            <SearchIcon size={16} />
+            <span className="wide-only">Search</span>
+            <kbd
+              className="wide-only"
+              style={{
+                font: '500 11px var(--font-ui)',
+                padding: '2px 6px',
+                borderRadius: 5,
+                border: '1px solid var(--line-default)',
+                background: 'var(--bg-card)',
+              }}
+            >
+              {keyLabel('Mod+K')}
+            </kbd>
+          </motion.button>
+        </Tip>
 
         {available.length > 1 && (
           <div
@@ -359,15 +576,26 @@ export function Read() {
             {dueCount > 0 && <span className="tabular">{dueCount}</span>}
           </motion.button>
 
-          <Grouped label="Reading plan" active={planning} onClick={() => setPlanning(true)}>
+          <Grouped
+            label="Reading plan"
+            shortcut="Mod+P"
+            active={planning}
+            onClick={() => setPlanning(true)}
+          >
             <CalendarIcon size={17} />
           </Grouped>
-          <Grouped label="Quiz" active={quizzing} onClick={() => setQuizzing(true)}>
+          <Grouped
+            label="Quiz"
+            shortcut="Mod+Q"
+            active={quizzing}
+            onClick={() => setQuizzing(true)}
+          >
             <TargetIcon size={17} />
           </Grouped>
         </div>
         <Round
           label="Notes"
+          shortcut="Mod+J"
           active={panel === 'notes'}
           onClick={() => setPanel(panel === 'notes' ? null : 'notes')}
         >
@@ -375,6 +603,7 @@ export function Read() {
         </Round>
         <Round
           label="Cross-references"
+          shortcut="Mod+L"
           active={panel === 'refs'}
           onClick={() => setPanel(panel === 'refs' ? null : 'refs')}
         >
@@ -382,6 +611,7 @@ export function Read() {
         </Round>
         <Round
           label="Saved verses"
+          shortcut="Mod+B"
           active={panel === 'saved'}
           onClick={() => setPanel(panel === 'saved' ? null : 'saved')}
         >
@@ -720,6 +950,29 @@ export function Read() {
         }}
       />
 
+      <CommandPalette
+        open={palette}
+        commands={commands}
+        books={all}
+        edition={edition}
+        onClose={() => setPalette(false)}
+        onGoTo={(chosen, chapterNumber, verse) => {
+          setBook(chosen);
+          setNumber(chapterNumber);
+          setShowIntro(false);
+          if (verse) setSelected(verse);
+        }}
+        onGoToHit={(hit) => {
+          const target = all.find((candidate) => candidate.id === hit.bookId);
+          if (target) {
+            setBook(target);
+            setNumber(hit.chapter);
+            setShowIntro(false);
+            setSelected(hit.verse);
+          }
+        }}
+      />
+
       <SearchSheet
         open={searching}
         edition={edition}
@@ -775,53 +1028,58 @@ export function Read() {
 /** A button inside a grouped cluster: square, no outline, lit when its panel is open. */
 function Grouped({
   label,
+  shortcut,
   active,
   onClick,
   children,
 }: {
   label: string;
+  shortcut?: string;
   active?: boolean;
   onClick: () => void;
   children: React.ReactNode;
 }) {
   return (
-    <motion.button
-      whileTap={{ scale: 0.95 }}
-      transition={spring.snappy}
-      onClick={onClick}
-      aria-label={label}
-      aria-pressed={active}
-      title={label}
-      style={{
-        width: 30,
-        height: 30,
-        borderRadius: 8,
-        display: 'grid',
-        placeItems: 'center',
-        color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
-        background: active ? 'var(--bg-card)' : 'transparent',
-        boxShadow: active ? '0 1px 2px rgba(0,0,0,0.08)' : 'none',
-      }}
-    >
-      {children}
-    </motion.button>
+    <Tip label={label} shortcut={shortcut}>
+      <motion.button
+        whileTap={{ scale: 0.95 }}
+        transition={spring.snappy}
+        onClick={onClick}
+        aria-label={label}
+        aria-pressed={active}
+        style={{
+          width: 30,
+          height: 30,
+          borderRadius: 8,
+          display: 'grid',
+          placeItems: 'center',
+          color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
+          background: active ? 'var(--bg-card)' : 'transparent',
+          boxShadow: active ? '0 1px 2px rgba(0,0,0,0.08)' : 'none',
+        }}
+      >
+        {children}
+      </motion.button>
+    </Tip>
   );
 }
 
 function Round({
   label,
+  shortcut,
   disabled,
   active,
   onClick,
   children,
 }: {
   label: string;
+  shortcut?: string;
   disabled?: boolean;
   active?: boolean;
   onClick: () => void;
   children: React.ReactNode;
 }) {
-  return (
+  const button = (
     <motion.button
       whileTap={disabled ? undefined : { scale: 0.92 }}
       transition={spring.snappy}
@@ -842,6 +1100,16 @@ function Round({
     >
       {children}
     </motion.button>
+  );
+
+  // A disabled control gets no tooltip: there is nothing to explain about a chapter
+  // before Genesis 1.
+  return disabled ? (
+    button
+  ) : (
+    <Tip label={label} shortcut={shortcut}>
+      {button}
+    </Tip>
   );
 }
 

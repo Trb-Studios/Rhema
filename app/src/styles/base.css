@@ -85,3 +85,11 @@ button {
 .word:hover {
   background: color-mix(in srgb, var(--main-fill) 40%, transparent);
 }
+
+/* Text that only earns its place on a wide window. On a narrow one the icon carries
+   the meaning and the tooltip explains it. */
+@media (max-width: 1100px) {
+  .wide-only {
+    display: none;
+  }
+}
