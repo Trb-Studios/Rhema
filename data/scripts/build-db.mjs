@@ -376,6 +376,18 @@ async function exportForWeb() {
       .all()
       .map((row) => [row.book_id, row.words]),
   );
+  // Per chapter as well as per book, because the reading plan assigns days by words and
+  // chapters are wildly uneven: Psalm 117 is 2 verses, Psalm 119 is 176.
+  const wordsByChapter = new Map();
+  for (const row of db
+    .prepare(
+      `SELECT book_id, chapter, SUM(word_count) AS words
+         FROM verses GROUP BY book_id, chapter ORDER BY book_id, chapter`,
+    )
+    .all()) {
+    if (!wordsByChapter.has(row.book_id)) wordsByChapter.set(row.book_id, []);
+    wordsByChapter.get(row.book_id).push(row.words);
+  }
   const originals = db
     .prepare(
       'SELECT edition, book_id, chapter, verse, text, words FROM verses_original ORDER BY edition, book_id, chapter, verse',
@@ -454,6 +466,7 @@ async function exportForWeb() {
         testament: book.testament,
         chapters: book.chapter_count,
         words: wordsByBook.get(book.id) ?? 0,
+        chapterWords: wordsByChapter.get(book.id) ?? [],
       })),
     ),
   );

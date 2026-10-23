@@ -3,6 +3,7 @@
 //! The database ships inside the installer and is read-only. Search runs here in Rust
 //! rather than in the interface, so a search across 31,000 verses never freezes the window.
 
+use std::collections::HashMap;
 use std::sync::Mutex;
 
 use rusqlite::Connection;
@@ -29,6 +30,7 @@ pub struct Hit {
 }
 
 #[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Book {
     pub id: u32,
     pub name: String,
@@ -36,6 +38,8 @@ pub struct Book {
     pub testament: String,
     pub chapters: u32,
     pub words: u32,
+    /// Words in each chapter, in order. The reading plan assigns days by words.
+    pub chapter_words: Vec<u32>,
 }
 
 pub struct Library {
@@ -77,6 +81,23 @@ impl Library {
             return Ok(Vec::new());
         };
 
+        // Words per chapter as well as per book: the reading plan assigns days by
+        // words, and chapters are wildly uneven.
+        let mut per_chapter = connection.prepare(
+            "SELECT book_id, chapter, SUM(word_count) AS words
+               FROM verses
+           GROUP BY book_id, chapter
+           ORDER BY book_id, chapter",
+        )?;
+
+        let mut chapter_words: HashMap<u32, Vec<u32>> = HashMap::new();
+        for row in per_chapter.query_map([], |row| {
+            Ok((row.get::<_, u32>(0)?, row.get::<_, u32>(2)?))
+        })? {
+            let (book_id, words) = row?;
+            chapter_words.entry(book_id).or_default().push(words);
+        }
+
         let mut statement = connection.prepare(
             "SELECT b.id, b.name, b.abbreviation, b.testament, b.chapter_count,
                     COALESCE(SUM(v.word_count), 0) AS words
@@ -87,13 +108,15 @@ impl Library {
         )?;
 
         let rows = statement.query_map([], |row| {
+            let id: u32 = row.get(0)?;
             Ok(Book {
-                id: row.get(0)?,
+                id,
                 name: row.get(1)?,
                 abbreviation: row.get(2)?,
                 testament: row.get(3)?,
                 chapters: row.get(4)?,
                 words: row.get(5)?,
+                chapter_words: chapter_words.get(&id).cloned().unwrap_or_default(),
             })
         })?;
 

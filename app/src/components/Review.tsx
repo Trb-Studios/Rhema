@@ -58,7 +58,12 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
         return;
       }
       if (!shown) return;
-      const byNumber: Record<string, Grade> = { '1': 'again', '2': 'hard', '3': 'good', '4': 'easy' };
+      const byNumber: Record<string, Grade> = {
+        '1': 'again',
+        '2': 'hard',
+        '3': 'good',
+        '4': 'easy',
+      };
       const chosen = byNumber[event.key];
       if (chosen) {
         event.preventDefault();
@@ -126,7 +131,13 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
               <div
                 role="group"
                 aria-label="How to review"
-                style={{ display: 'flex', gap: 2, padding: 3, borderRadius: 9, background: 'var(--bg-sunken)' }}
+                style={{
+                  display: 'flex',
+                  gap: 2,
+                  padding: 3,
+                  borderRadius: 9,
+                  background: 'var(--bg-sunken)',
+                }}
               >
                 {(
                   [
@@ -223,9 +234,7 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
                     ) : mode === 'memorise' ? (
                       <span style={{ letterSpacing: '0.06em' }}>{firstLetters(verse.text)}</span>
                     ) : (
-                      <span style={{ color: 'var(--text-faint)' }}>
-                        What does this verse say?
-                      </span>
+                      <span style={{ color: 'var(--text-faint)' }}>What does this verse say?</span>
                     )}
                   </div>
 
@@ -273,8 +282,7 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
                             padding: '8px 16px',
                             borderRadius: 'var(--radius-control)',
                             border: '1px solid var(--line-default)',
-                            background:
-                              value === 'good' ? 'var(--main-fill)' : 'transparent',
+                            background: value === 'good' ? 'var(--main-fill)' : 'transparent',
                             color: value === 'good' ? 'var(--main-on)' : 'var(--text-primary)',
                             fontWeight: 600,
                           }}
@@ -309,8 +317,8 @@ function Finished({ done, saved, total }: { done: number; saved: number; total: 
       {saved === 0 ? (
         <>
           <p style={{ fontSize: 15, lineHeight: 1.6 }}>
-            Nothing to review yet. Save a verse while you read and it will come back here,
-            further apart each time you remember it.
+            Nothing to review yet. Save a verse while you read and it will come back here, further
+            apart each time you remember it.
           </p>
         </>
       ) : done > 0 ? (
@@ -327,8 +335,8 @@ function Finished({ done, saved, total }: { done: number; saved: number; total: 
         </>
       ) : (
         <p style={{ fontSize: 15, lineHeight: 1.6 }}>
-          Nothing due today. {total} {total === 1 ? 'verse is' : 'verses are'} in review and
-          will come back when they are due.
+          Nothing due today. {total} {total === 1 ? 'verse is' : 'verses are'} in review and will
+          come back when they are due.
         </p>
       )}
     </div>

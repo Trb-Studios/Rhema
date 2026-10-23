@@ -25,6 +25,8 @@ export type Book = {
   chapters: number;
   /** Total words in the book. The reading plan schedules by words, not chapters. */
   words: number;
+  /** Words in each chapter, in order, so a day's reading can be an even amount. */
+  chapterWords: number[];
 };
 
 export type Verse = {

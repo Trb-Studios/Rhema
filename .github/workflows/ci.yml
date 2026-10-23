@@ -26,10 +26,25 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      # The reading-plan tests schedule the real text rather than a fixture, because the
+      # whole reason to schedule by words is how uneven the real chapters are. The text
+      # is generated rather than committed, so it is built here first.
+      - name: Cache the downloaded datasets
+        uses: actions/cache@v4
+        with:
+          path: data/raw
+          key: datasets-${{ hashFiles('data/sources.json') }}
+
+      - name: Build the Bible database
+        run: npm run data:build
+
       - name: Formatting
         run: npm run format:check
       - name: Types
         run: npm run check
+      - name: Tests
+        run: npm test
       - name: Build
         run: npm run build:web --workspace app
 

@@ -4,9 +4,15 @@
  * Kept on this device for now; it moves to the person's account once sign-in lands.
  * Chapters are recorded as `bookId:chapter`, so the record survives renaming anything
  * in the interface.
+ *
+ * This goes through the shared store because the reader, the plan and the menu all read
+ * it. Giving each its own copy meant marking a chapter read in one never reached the
+ * others.
  */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
+import { isoDate, today } from './dates';
+import { createStore, useStore } from './store';
 
 export type Progress = {
   /** Every chapter marked read. */
@@ -18,23 +24,11 @@ export type Progress = {
 };
 
 const EMPTY: Progress = { read: [], days: [], last: null };
-const KEY = 'rhema.progress';
+
+const store = createStore<Progress>('rhema.progress', EMPTY);
 
 export function chapterKey(bookId: number, chapter: number) {
   return `${bookId}:${chapter}`;
-}
-
-function today() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function load(): Progress {
-  try {
-    const saved = localStorage.getItem(KEY);
-    return saved ? { ...EMPTY, ...(JSON.parse(saved) as Partial<Progress>) } : EMPTY;
-  } catch {
-    return EMPTY;
-  }
 }
 
 /**
@@ -47,13 +41,13 @@ export function streakOf(days: string[]): number {
   const seen = new Set(days);
   const day = new Date();
 
-  if (!seen.has(day.toISOString().slice(0, 10))) {
+  if (!seen.has(isoDate(day))) {
     day.setDate(day.getDate() - 1);
-    if (!seen.has(day.toISOString().slice(0, 10))) return 0;
+    if (!seen.has(isoDate(day))) return 0;
   }
 
   let count = 0;
-  while (seen.has(day.toISOString().slice(0, 10))) {
+  while (seen.has(isoDate(day))) {
     count += 1;
     day.setDate(day.getDate() - 1);
   }
@@ -61,42 +55,58 @@ export function streakOf(days: string[]): number {
 }
 
 export function useProgress() {
-  const [progress, setProgress] = useState<Progress>(load);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(KEY, JSON.stringify(progress));
-    } catch {
-      // Losing the record is not worth interrupting a reading session over.
-    }
-  }, [progress]);
+  const [progress, setProgress] = useStore(store);
 
   /** Remember where the reader is, without claiming the chapter has been read. */
-  const visit = useCallback((bookId: number, chapter: number) => {
-    setProgress((current) => {
-      if (current.last?.bookId === bookId && current.last?.chapter === chapter) return current;
-      return { ...current, last: { bookId, chapter } };
-    });
-  }, []);
+  const visit = useCallback(
+    (bookId: number, chapter: number) => {
+      setProgress((current) => {
+        if (current.last?.bookId === bookId && current.last?.chapter === chapter) return current;
+        return { ...current, last: { bookId, chapter } };
+      });
+    },
+    [setProgress],
+  );
 
   /** Mark a chapter read, or unmark it. Reading anything counts towards today. */
-  const toggleRead = useCallback((bookId: number, chapter: number) => {
-    const key = chapterKey(bookId, chapter);
-    setProgress((current) => {
-      const had = current.read.includes(key);
-      const read = had ? current.read.filter((k) => k !== key) : [...current.read, key];
-      const days =
-        had || current.days.includes(today()) ? current.days : [...current.days, today()];
-      return { ...current, read, days };
-    });
-  }, []);
+  const toggleRead = useCallback(
+    (bookId: number, chapter: number) => {
+      const key = chapterKey(bookId, chapter);
+      setProgress((current) => {
+        const had = current.read.includes(key);
+        const read = had ? current.read.filter((k) => k !== key) : [...current.read, key];
+        const days =
+          had || current.days.includes(today()) ? current.days : [...current.days, today()];
+        return { ...current, read, days };
+      });
+    },
+    [setProgress],
+  );
+
+  /** Mark a run of chapters read at once, for finishing a day's reading in the plan. */
+  const markMany = useCallback(
+    (chapters: { bookId: number; chapter: number }[]) => {
+      if (chapters.length === 0) return;
+      setProgress((current) => {
+        const read = new Set(current.read);
+        for (const item of chapters) read.add(chapterKey(item.bookId, item.chapter));
+        if (read.size === current.read.length) return current;
+        const days = current.days.includes(today()) ? current.days : [...current.days, today()];
+        return { ...current, read: [...read], days };
+      });
+    },
+    [setProgress],
+  );
+
+  const readSet = new Set(progress.read);
 
   return {
     progress,
     visit,
     toggleRead,
+    markMany,
     streak: streakOf(progress.days),
-    isRead: (bookId: number, chapter: number) =>
-      progress.read.includes(chapterKey(bookId, chapter)),
+    readCount: readSet.size,
+    isRead: (bookId: number, chapter: number) => readSet.has(chapterKey(bookId, chapter)),
   };
 }

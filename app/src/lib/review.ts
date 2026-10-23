@@ -11,6 +11,7 @@
  */
 
 import { useCallback } from 'react';
+import { addDays, today } from './dates';
 import { createStore, useStore } from './store';
 
 export type Grade = 'again' | 'hard' | 'good' | 'easy';
@@ -36,14 +37,8 @@ const store = createStore<Record<string, Card>>('rhema.review', {});
 const MIN_EASE = 1.3;
 const DEFAULT_EASE = 2.5;
 
-function today(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
 function plusDays(days: number): string {
-  const date = new Date();
-  date.setDate(date.getDate() + Math.round(days));
-  return date.toISOString().slice(0, 10);
+  return addDays(today(), Math.round(days));
 }
 
 export function newCard(id: string): Card {
