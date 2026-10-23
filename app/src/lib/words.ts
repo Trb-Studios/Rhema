@@ -21,6 +21,25 @@ type BookWords = Record<string, Word[]>;
 const bookCache = new Map<string, BookWords>();
 let totals: Record<string, Record<string, number>> | null = null;
 
+/** headword, transliteration, gloss, definition */
+export type LexiconEntry = [string, string, string, string];
+let lexicon: Record<string, Record<string, LexiconEntry>> | null = null;
+
+/**
+ * What a dictionary entry means.
+ *
+ * Returns null where the lexicon has nothing, which is mostly proper names. The card
+ * then shows the word without a meaning rather than inventing one.
+ */
+export async function meaningOf(edition: EditionId, lemma: string): Promise<LexiconEntry | null> {
+  if (!lexicon) {
+    const response = await fetch(new URL('lexicon.json', DATA));
+    if (!response.ok) return null;
+    lexicon = (await response.json()) as Record<string, Record<string, LexiconEntry>>;
+  }
+  return lexicon[edition]?.[entryOf(edition, lemma)] ?? null;
+}
+
 export async function wordsForBook(edition: EditionId, bookId: number): Promise<BookWords | null> {
   if (edition === 'kjv' || inDesktopApp()) return bookCache.get(`${edition}-${bookId}`) ?? null;
 

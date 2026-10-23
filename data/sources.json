@@ -11,21 +11,31 @@
       "notes": "Public domain in the United States; in the United Kingdom the KJV is under perpetual Crown copyright, administered by Cambridge University Press. This edition was chosen over another because it keeps the small-capital LORD that renders the divine name (5,621 verses, against 6 in the edition tried first) and spells place names without dashes, which stopped them matching."
     },
     {
-      "id": "strongs",
-      "name": "Strong's numbers and lexicons",
-      "provides": "Hebrew and Greek words, transliterations, and meanings",
-      "licence": "Public domain (the 1890 original)",
-      "status": "planned",
-      "homepage": "https://github.com/openscriptures/strongs"
-    },
-    {
       "id": "oshb",
       "name": "Open Scriptures Hebrew Bible",
-      "provides": "The Hebrew text, tagged word by word with Strong's numbers",
+      "provides": "The Hebrew text of the Old Testament, tagged word by word with lemma and morphology",
       "licence": "Creative Commons Attribution 4.0",
-      "status": "planned",
-      "homepage": "https://hb.openscriptures.org",
+      "status": "ready",
+      "homepage": "https://github.com/openscriptures/morphhb",
       "notes": "Attribution required. Credit goes in the app's About screen."
+    },
+    {
+      "id": "sblgnt",
+      "name": "SBL Greek New Testament (MorphGNT)",
+      "provides": "The Greek text of the New Testament, tagged word by word with lemma and parsing",
+      "licence": "CC BY 4.0 for the morphological tagging; the SBLGNT text under the SBLGNT licence",
+      "status": "ready",
+      "homepage": "https://github.com/morphgnt/sblgnt",
+      "notes": "Attribution required. Credited in the app."
+    },
+    {
+      "id": "tbes",
+      "name": "Translators Brief lexicon of Extended Strongs (TBESH and TBESG)",
+      "provides": "What each Hebrew and Greek dictionary entry means: headword, transliteration, gloss and definition",
+      "licence": "CC BY 4.0",
+      "status": "ready",
+      "homepage": "https://github.com/tyndale/STEPBible-Data",
+      "notes": "From STEPBible. Attribution required and credited in the app. 9,250 Hebrew and 5,025 Greek entries are used, matched to the entries the texts actually carry; the rest are mostly proper names."
     },
     {
       "id": "theographic",

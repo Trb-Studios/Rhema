@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { EditionId } from '../lib/editions';
-import { occurrencesIn, parse, strongsOf, totalFor, wordsForBook } from '../lib/words';
-import type { Word } from '../lib/words';
+import { meaningOf, occurrencesIn, parse, strongsOf, totalFor, wordsForBook } from '../lib/words';
+import type { LexiconEntry, Word } from '../lib/words';
 import { popoverVariants, transition } from '../lib/motion';
 
 export type WordAnchor = {
@@ -31,15 +31,18 @@ export function WordPopover({
 }) {
   const [total, setTotal] = useState<number | null>(null);
   const [here, setHere] = useState<string[]>([]);
+  const [meaning, setMeaning] = useState<LexiconEntry | null>(null);
 
   useEffect(() => {
     if (!anchor) return;
     const [, lemma] = anchor.word;
     setTotal(null);
     setHere([]);
+    setMeaning(null);
     if (!lemma) return;
 
     void totalFor(anchor.edition, lemma).then(setTotal);
+    void meaningOf(anchor.edition, lemma).then(setMeaning);
     void wordsForBook(anchor.edition, anchor.bookId).then((book) => {
       if (book) setHere(occurrencesIn(book, anchor.edition, lemma));
     });
@@ -120,6 +123,21 @@ export function WordPopover({
             {written}
           </div>
 
+          {meaning && (
+            <div
+              style={{
+                marginTop: 8,
+                fontFamily: 'var(--font-display)',
+                fontSize: 18,
+                lineHeight: 1.4,
+              }}
+            >
+              {meaning[2]}
+            </div>
+          )}
+
+          {meaning && meaning[1] && <Row label="Said as">{meaning[1]}</Row>}
+
           {lemma && lemma !== written && (
             <Row label="Dictionary form">
               <span
@@ -142,6 +160,21 @@ export function WordPopover({
               {total.toLocaleString()} {total === 1 ? 'time' : 'times'} in the{' '}
               {isHebrew ? 'Old' : 'New'} Testament
             </Row>
+          )}
+
+          {meaning && meaning[3] && (
+            <p
+              style={{
+                marginTop: 12,
+                paddingTop: 12,
+                borderTop: '1px solid var(--line-default)',
+                fontSize: 12.5,
+                lineHeight: 1.6,
+                color: 'var(--text-secondary)',
+              }}
+            >
+              {meaning[3]}
+            </p>
           )}
 
           {here.length > 0 && (

@@ -100,6 +100,18 @@ CREATE TABLE IF NOT EXISTS word_uses (
 
 CREATE INDEX IF NOT EXISTS word_uses_by_word ON word_uses (word_id);
 
+-- What each dictionary entry means. Without this a word study can say a word is
+-- H0430 but not that it means "God", which is the part a reader wants.
+CREATE TABLE IF NOT EXISTS lexicon (
+  edition    TEXT NOT NULL CHECK (edition IN ('hebrew', 'greek')),
+  entry      TEXT NOT NULL,     -- the dictionary entry, as the text gives it
+  headword   TEXT NOT NULL,     -- the word in its own script
+  translit   TEXT NOT NULL,
+  gloss      TEXT NOT NULL,     -- a word or two
+  definition TEXT,              -- the fuller sense
+  PRIMARY KEY (edition, entry)
+);
+
 -- ------------------------------------------------- People and places
 
 CREATE TABLE IF NOT EXISTS people (

@@ -25,6 +25,7 @@ import {
   parseGreek,
   parseHebrew,
 } from './originals.mjs';
+import { GREEK_LEXICON, HEBREW_LEXICON, foldWord, hebrewKey, parseLexicon } from './lexicon.mjs';
 import { createWriteStream } from 'node:fs';
 import { mkdir, readFile, writeFile, copyFile, stat, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -223,22 +224,21 @@ async function main() {
   // 3. The Hebrew and the Greek
   await loadOriginals(db);
 
+  // 4. What the words mean
+  await loadLexicons(db);
+
+  // Everything is loaded, so compact the file and let go of it.
   db.exec('PRAGMA journal_mode = DELETE');
   db.exec('VACUUM');
   db.close();
 
-  // 4. Still to come. Each gets a loader here as its dataset is added.
+  // 5. Still to come. Each gets a loader here as its dataset is added.
   say('\nNot loaded yet (see data/sources.json)');
-  for (const pending of [
-    "Strong's numbers and lexicons",
-    'Hebrew and Greek word tagging',
-    'People, families, and places',
-    'Cross-references and topics',
-  ]) {
+  for (const pending of ['People, families, and places', 'Cross-references and topics']) {
     say(`  · ${pending}`);
   }
 
-  // 5. Hand it to the app
+  // 6. Hand it to the app
   await copyFile(DB, BUNDLE);
   const size = (await stat(DB)).size / 1024 / 1024;
   say(`\nDone. ${size.toFixed(1)} MB at data/bible.db, copied into the app.`);
@@ -304,6 +304,62 @@ async function loadOriginals(db) {
   say(`  Greek: ${GREEK_BOOKS.length} books, ${greekVerses.toLocaleString()} verses`);
 }
 
+/**
+ * Loads the lexicons and keys them to the entries the texts actually use.
+ *
+ * The Hebrew text gives numbered entries, which the lexicon writes zero-padded. The
+ * Greek text gives the headword itself, so those are matched on the word with accents
+ * ignored. Entries that do not match are left out rather than guessed at; most of those
+ * are proper names, which a lexicon has little to say about anyway.
+ */
+async function loadLexicons(db) {
+  say('\nLexicons');
+
+  const insert = db.prepare(
+    `INSERT OR REPLACE INTO lexicon (edition, entry, headword, translit, gloss, definition)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+  );
+
+  const used = db.prepare('SELECT DISTINCT edition, words FROM verses_original').all();
+
+  // Which entries the texts actually use, so the lexicon is not carried wholesale.
+  const wanted = { hebrew: new Set(), greek: new Set() };
+  for (const row of used) {
+    for (const word of JSON.parse(row.words)) {
+      if (word.l) wanted[row.edition].add(entryOf(row.edition, word.l));
+    }
+  }
+
+  const pairs = [
+    ['hebrew', HEBREW_LEXICON, 'H', join(RAW, 'tbesh.txt')],
+    ['greek', GREEK_LEXICON, 'G', join(RAW, 'tbesg.txt')],
+  ];
+
+  db.exec('BEGIN');
+  for (const [edition, url, prefix, path] of pairs) {
+    const file = await fetchOnce(url, path);
+    const { byKey, byWord } = parseLexicon(await readFile(file, 'utf8'), prefix);
+
+    let matched = 0;
+    for (const entry of wanted[edition]) {
+      const found =
+        edition === 'hebrew'
+          ? (byKey.get(hebrewKey(entry) ?? '') ??
+            byKey.get((hebrewKey(entry) ?? '').replace(/[A-Z]$/, '')))
+          : byWord.get(foldWord(entry));
+      if (!found) continue;
+      insert.run(edition, entry, found.w, found.t, found.g, found.d || null);
+      matched += 1;
+    }
+
+    const share = Math.round((matched / wanted[edition].size) * 100);
+    say(
+      `  ${edition}: ${matched.toLocaleString()} of ${wanted[edition].size.toLocaleString()} entries (${share}%)`,
+    );
+  }
+  db.exec('COMMIT');
+}
+
 async function exportForWeb() {
   say('\nWeb preview');
 
@@ -324,6 +380,9 @@ async function exportForWeb() {
     .prepare(
       'SELECT edition, book_id, chapter, verse, text, words FROM verses_original ORDER BY edition, book_id, chapter, verse',
     )
+    .all();
+  const lexiconRows = db
+    .prepare('SELECT edition, entry, headword, translit, gloss, definition FROM lexicon')
     .all();
   db.close();
 
@@ -374,6 +433,16 @@ async function exportForWeb() {
   say(`  wrote ${originalByBook.size} original-language books`);
 
   await exportWordIndex(originals);
+
+  const lexicon = { hebrew: {}, greek: {} };
+  for (const row of lexiconRows) {
+    lexicon[row.edition][row.entry] = [row.headword, row.translit, row.gloss, row.definition ?? ''];
+  }
+  await writeFile(join(WEB, 'lexicon.json'), JSON.stringify(lexicon));
+  say(
+    `  wrote lexicon: ${Object.keys(lexicon.hebrew).length.toLocaleString()} Hebrew, ` +
+      `${Object.keys(lexicon.greek).length.toLocaleString()} Greek entries`,
+  );
 
   await writeFile(
     join(WEB, 'index.json'),
