@@ -30,7 +30,8 @@ import { Parallel } from '../components/Parallel';
 import { ListenBar } from '../components/ListenBar';
 import { Library } from '../components/Library';
 import { useSpeech } from '../lib/speech';
-import { ColumnsIcon, SpeakerIcon, LayersIcon } from '../components/Icons';
+import { ColumnsIcon, SpeakerIcon, LayersIcon, CopyIcon } from '../components/Icons';
+import { copy as toClipboard, format as formatVerse } from '../lib/copy';
 import { keyLabel, matches } from '../lib/commands';
 import type { Command } from '../lib/commands';
 import { WordPopover } from '../components/WordPopover';
@@ -76,6 +77,9 @@ export function Read() {
   const [beside, setBeside] = useState<EditionId | null>(null);
   const [listening, setListening] = useState(false);
   const [library, setLibrary] = useState(false);
+  // Null until a copy is attempted, then what happened, so the button says "Copied"
+  // only when it actually was.
+  const [copied, setCopied] = useState<'yes' | 'no' | null>(null);
   const speech = useSpeech();
   const [reviewing, setReviewing] = useState(false);
   const [planning, setPlanning] = useState(false);
@@ -155,6 +159,14 @@ export function Read() {
       void wordsForBook(edition, book.id).then(setChapterWords);
     }
   }, [book, number, edition, visit]);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(null), 1800);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
+  useEffect(() => setCopied(null), [selected]);
 
   const goTo = useCallback((to: { book: Book; chapter: number } | null) => {
     if (!to) return;
@@ -985,6 +997,40 @@ export function Read() {
                 Clear
               </button>
             </span>
+
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              transition={spring.snappy}
+              onClick={async () => {
+                const worked = await toClipboard(
+                  formatVerse(
+                    {
+                      book: book.name,
+                      chapter: number,
+                      verse: selected,
+                      text: selectedVerse.text,
+                    },
+                    current,
+                  ),
+                );
+                setCopied(worked ? 'yes' : 'no');
+              }}
+              aria-label={`Copy ${book.name} ${number}:${selected}`}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '6px 12px',
+                borderRadius: 999,
+                fontWeight: 600,
+                fontSize: 13,
+                background: 'var(--bg-sunken)',
+                color: copied === 'no' ? 'var(--mark-place)' : 'var(--text-primary)',
+              }}
+            >
+              <CopyIcon size={15} />
+              {copied === 'yes' ? 'Copied' : copied === 'no' ? 'Could not copy' : 'Copy'}
+            </motion.button>
 
             <motion.button
               whileTap={{ scale: 0.96 }}

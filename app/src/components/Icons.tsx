@@ -315,3 +315,22 @@ export function LayersIcon(props: IconProps) {
     </Svg>
   );
 }
+
+export function CopyIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path
+        d="M9 4.6h7.4a1.6 1.6 0 0 1 1.6 1.6V14a1.6 1.6 0 0 1-1.6 1.6H9A1.6 1.6 0 0 1 7.4 14V6.2A1.6 1.6 0 0 1 9 4.6z"
+        {...tintOf(props.tint)}
+      />
+      <path
+        d="M9 4.6h7.4a1.6 1.6 0 0 1 1.6 1.6V14a1.6 1.6 0 0 1-1.6 1.6H9A1.6 1.6 0 0 1 7.4 14V6.2A1.6 1.6 0 0 1 9 4.6z"
+        {...line}
+      />
+      <path
+        d="M15 18a1.6 1.6 0 0 1-1.6 1.4H6a1.6 1.6 0 0 1-1.6-1.6v-7.6A1.6 1.6 0 0 1 5.8 8.6"
+        {...line}
+      />
+    </Svg>
+  );
+}
