@@ -1,1 +1,0 @@
-{"default":{"identifier":"default","description":"What the app window is allowed to do. Kept to the minimum it needs.","local":true,"windows":["main"],"permissions":["core:default","core:app:allow-version","updater:default","process:allow-restart","dialog:allow-message"]}}
