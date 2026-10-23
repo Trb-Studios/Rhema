@@ -27,7 +27,9 @@ import { SearchSheet } from '../components/SearchSheet';
 import { CommandPalette } from '../components/CommandPalette';
 import { Tip } from '../components/Tip';
 import { Parallel } from '../components/Parallel';
-import { ColumnsIcon } from '../components/Icons';
+import { ListenBar } from '../components/ListenBar';
+import { useSpeech } from '../lib/speech';
+import { ColumnsIcon, SpeakerIcon } from '../components/Icons';
 import { keyLabel, matches } from '../lib/commands';
 import type { Command } from '../lib/commands';
 import { WordPopover } from '../components/WordPopover';
@@ -85,6 +87,8 @@ export function Read() {
   const [palette, setPalette] = useState(false);
   // The other edition shown beside this one, or null for a single column.
   const [beside, setBeside] = useState<EditionId | null>(null);
+  const [listening, setListening] = useState(false);
+  const speech = useSpeech();
   const [reviewing, setReviewing] = useState(false);
   const [planning, setPlanning] = useState(false);
   const [quizzing, setQuizzing] = useState(false);
@@ -338,6 +342,21 @@ export function Read() {
       });
     }
 
+    if (speech.supported) {
+      list.push({
+        id: 'listen',
+        title: listening ? 'Stop listening' : 'Read this chapter aloud',
+        hint: listening ? undefined : 'Uses a voice already on this machine',
+        group: 'Read',
+        keywords: 'listen audio speak voice hear narration',
+        on: listening,
+        run: () => {
+          if (listening) speech.stop();
+          setListening(!listening);
+        },
+      });
+    }
+
     list.push(
       {
         id: 'theme',
@@ -389,6 +408,8 @@ export function Read() {
     isRead,
     toggleRead,
     beside,
+    listening,
+    speech,
   ]);
 
   commandsRef.current = commands;
@@ -473,6 +494,19 @@ export function Read() {
         <Round label="Next chapter" shortcut="\u2192" disabled={!next} onClick={() => goTo(next)}>
           <ChevronIcon dir="right" size={18} />
         </Round>
+
+        {speech.supported && (
+          <Round
+            label={listening ? 'Stop listening' : 'Read this chapter aloud'}
+            active={listening}
+            onClick={() => {
+              if (listening) speech.stop();
+              setListening(!listening);
+            }}
+          >
+            <SpeakerIcon size={18} />
+          </Round>
+        )}
 
         {available.length > 1 && (
           <Round
@@ -740,6 +774,7 @@ export function Read() {
                       const colour = highlights[verseKey(book.id, number, verse.number)];
                       const chosen = QUICK_PICKS.find((pick) => pick.index === colour);
                       const isSelected = selected === verse.number;
+                      const beingSpoken = speech.verse === verse.number;
 
                       return (
                         <span key={verse.number}>
@@ -759,15 +794,26 @@ export function Read() {
                             </span>
                           )}
                           <span
+                            ref={
+                              beingSpoken
+                                ? (node) =>
+                                    node?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+                                : undefined
+                            }
                             style={{
                               borderRadius: 3,
                               boxDecorationBreak: 'clone',
                               WebkitBoxDecorationBreak: 'clone',
-                              background: chosen
-                                ? `color-mix(in srgb, ${chosen.colour} ${HIGHLIGHT_OPACITY * 100}%, transparent)`
-                                : undefined,
+                              // The verse being read aloud is tinted so the eye can
+                              // follow the voice, over any highlight already on it.
+                              background: beingSpoken
+                                ? 'color-mix(in srgb, var(--main-fill) 42%, transparent)'
+                                : chosen
+                                  ? `color-mix(in srgb, ${chosen.colour} ${HIGHLIGHT_OPACITY * 100}%, transparent)`
+                                  : undefined,
                               outline: isSelected ? '2px solid var(--focus-ring)' : undefined,
                               outlineOffset: 1,
+                              transition: 'background var(--dur-base) var(--ease-smooth)',
                             }}
                           >
                             {settings.verseNumbers && (
@@ -1000,6 +1046,19 @@ export function Read() {
           if (target) goTo({ book: target, chapter: chapterNumber });
         }}
       />
+
+      <AnimatePresence>
+        {listening && (
+          <ListenBar
+            speech={speech}
+            verses={verses}
+            edition={edition}
+            bookName={book.name}
+            chapter={number}
+            onClose={() => setListening(false)}
+          />
+        )}
+      </AnimatePresence>
 
       <CommandPalette
         open={palette}

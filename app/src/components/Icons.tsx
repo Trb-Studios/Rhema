@@ -290,3 +290,17 @@ export function ColumnsIcon(props: IconProps) {
     </Svg>
   );
 }
+
+export function SpeakerIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M4.4 9.4h3.4L12.4 5.5v13l-4.6-3.9H4.4z" {...tintOf(props.tint)} />
+      <path
+        d="M4.4 9.4h3.4L12.4 5.5v13l-4.6-3.9H4.4a.9.9 0 0 1-.9-.9v-3.4a.9.9 0 0 1 .9-.9z"
+        {...line}
+      />
+      <path d="M15.6 9.6a3.4 3.4 0 0 1 0 4.8" {...line} />
+      <path d="M18.2 7a7 7 0 0 1 0 10" {...line} />
+    </Svg>
+  );
+}
