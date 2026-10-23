@@ -5,8 +5,8 @@ import { allSubjects, nameOfId } from '../lib/marks';
 import { popoverVariants, transition } from '../lib/motion';
 
 export type Anchored = {
-  /** The individual the word stands for. */
-  id: string;
+  /** Everyone the word could stand for here; nearly always one. */
+  ids: string[];
   /** The word as the text prints it, which may be a different spelling of the name. */
   text: string;
   x: number;
@@ -36,7 +36,7 @@ export function MarkPopover({
 
   useEffect(() => {
     if (anchored) {
-      setShowing(anchored.id);
+      setShowing(anchored.ids[0] ?? null);
       void allSubjects().then(setSubjects);
     }
   }, [anchored]);
@@ -129,9 +129,49 @@ export function MarkPopover({
             <h3 style={{ fontSize: 20, marginTop: 4 }}>{label}</h3>
 
             {/* The word on the page, when the text spells the name another way. */}
-            {showing === anchored.id && anchored.text.toLowerCase() !== label.toLowerCase() && (
-              <div style={{ color: 'var(--text-secondary)', fontSize: 13, marginTop: 2 }}>
-                Here called {anchored.text}
+            {anchored.ids.includes(showing ?? '') &&
+              anchored.text.toLowerCase() !== label.toLowerCase() && (
+                <div style={{ color: 'var(--text-secondary)', fontSize: 13, marginTop: 2 }}>
+                  Here called {anchored.text}
+                </div>
+              )}
+
+            {/* Two people of the same name in one verse. The text does not say which
+                occurrence is which, so both are offered rather than one guessed at. */}
+            {anchored.ids.length > 1 && subjects && (
+              <div
+                style={{
+                  display: 'grid',
+                  gap: 5,
+                  marginTop: 10,
+                  paddingBottom: 2,
+                }}
+              >
+                <span style={{ color: 'var(--text-faint)', fontSize: 11.5 }}>
+                  Two of this name stand here. Which one?
+                </span>
+                <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+                  {anchored.ids.map((id) => (
+                    <button
+                      key={id}
+                      onClick={() => setShowing(id)}
+                      aria-pressed={showing === id}
+                      style={{
+                        padding: '3px 10px',
+                        borderRadius: 999,
+                        fontSize: 11.5,
+                        fontWeight: 600,
+                        border: `1px solid ${
+                          showing === id ? 'var(--main-fill)' : 'var(--line-default)'
+                        }`,
+                        background: showing === id ? 'var(--main-fill)' : 'transparent',
+                        color: showing === id ? 'var(--main-on)' : 'var(--text-secondary)',
+                      }}
+                    >
+                      {subjects.get(id)?.name ?? nameOfId(id)}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -159,9 +199,9 @@ export function MarkPopover({
               </>
             )}
 
-            {showing !== anchored.id && (
+            {!anchored.ids.includes(showing ?? '') && (
               <button
-                onClick={() => setShowing(anchored.id)}
+                onClick={() => setShowing(anchored.ids[0] ?? null)}
                 style={{
                   marginTop: 12,
                   color: 'var(--text-secondary)',

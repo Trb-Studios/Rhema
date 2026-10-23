@@ -535,7 +535,7 @@ export function Read() {
                                           onClick={(event) => {
                                             const box = event.currentTarget.getBoundingClientRect();
                                             setAnchored({
-                                              id: piece.id,
+                                              ids: piece.ids,
                                               text: piece.text,
                                               x: box.left + box.width / 2,
                                               y: box.bottom,

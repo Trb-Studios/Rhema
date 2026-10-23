@@ -78,7 +78,9 @@ function idOf(cell) {
 function nameOf(id) {
   const name = id.split('@')[0].trim();
   // A few entries combine two names with a bar, as in "Ham|Ammon".
-  return name.split('|').pop() ?? name;
+  const last = name.split('|').pop() ?? name;
+  // Identifiers join a compound name with underscores, as in "Mary_Magdalene".
+  return last.replace(/_/g, ' ').trim();
 }
 
 function listOf(cell) {

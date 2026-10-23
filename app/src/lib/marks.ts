@@ -144,7 +144,11 @@ export function nameOfId(id: string): string {
 
 export type Piece =
   | { type: 'text'; text: string }
-  | { type: 'mark'; text: string; id: string; kind: Subject['kind'] };
+  // `ids` holds every individual this spelling could mean in this verse. It is almost
+  // always one; in about one marked verse in 250 — "Mary" twice in John 19:25, two
+  // different Harans in Genesis 11:31 — the text alone does not say which occurrence is
+  // which, and the card offers both rather than picking one.
+  | { type: 'mark'; text: string; ids: string[]; kind: Subject['kind'] };
 
 /**
  * Splits a verse into plain runs and marked names.
@@ -155,16 +159,25 @@ export type Piece =
 export function markUp(text: string, found: Mark[] | undefined): Piece[] {
   if (!found || found.length === 0) return [{ type: 'text', text }];
 
-  const wanted = [...found].sort((a, b) => b[0].length - a[0].length);
+  // A spelling can stand for more than one individual in the same verse, so the
+  // spellings are gathered first and each carries everyone it could mean.
+  const byForm = new Map<string, { ids: string[]; kind: Subject['kind'] }>();
+  for (const [form, id, kind] of found) {
+    const entry = byForm.get(form) ?? { ids: [], kind: kind ?? 'person' };
+    if (!entry.ids.includes(id)) entry.ids.push(id);
+    byForm.set(form, entry);
+  }
+
+  const wanted = [...byForm.entries()].sort((a, b) => b[0].length - a[0].length);
   const taken: Array<{
     from: number;
     to: number;
-    id: string;
+    ids: string[];
     kind: Subject['kind'];
     text: string;
   }> = [];
 
-  for (const [form, id, kind] of wanted) {
+  for (const [form, { ids, kind }] of wanted) {
     const pattern = new RegExp(`\\b${form.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'gi');
     let match = pattern.exec(text);
 
@@ -176,7 +189,7 @@ export function markUp(text: string, found: Mark[] | undefined): Piece[] {
       const clash = taken.some((piece) => from < piece.to && to > piece.from);
       const next = text[to] ?? '';
       if (!clash && !/[A-Za-z]/.test(next)) {
-        taken.push({ from, to, id, kind: kind ?? 'person', text: match[0] });
+        taken.push({ from, to, ids, kind, text: match[0] });
       }
       match = pattern.exec(text);
     }
@@ -189,7 +202,7 @@ export function markUp(text: string, found: Mark[] | undefined): Piece[] {
   let index = 0;
   for (const piece of taken) {
     if (piece.from > index) pieces.push({ type: 'text', text: text.slice(index, piece.from) });
-    pieces.push({ type: 'mark', text: piece.text, id: piece.id, kind: piece.kind });
+    pieces.push({ type: 'mark', text: piece.text, ids: piece.ids, kind: piece.kind });
     index = piece.to;
   }
   if (index < text.length) pieces.push({ type: 'text', text: text.slice(index) });
