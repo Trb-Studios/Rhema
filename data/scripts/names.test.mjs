@@ -108,11 +108,41 @@ describe('reading a record', () => {
 
   it('keeps the family', () => {
     const aaron = subjects.get('Aaron@Exo.4.14-Heb');
-    expect(aaron?.parents).toEqual(['Amram@Exo.6.18-1Ch', 'Jochebed@Exo.6.20-Num']);
-    expect(aaron?.siblings).toEqual(['Moses@Exo.2.10-Rev', 'Miriam@Exo.15.20-Mic']);
-    expect(aaron?.partners).toEqual(['Elisheba@Exo.6.23']);
-    expect(aaron?.children).toEqual(['Nadab@Exo.6.23-1Ch']);
+    const ids = (list) => list.map((entry) => entry.id);
+    expect(ids(aaron?.parents ?? [])).toEqual(['Amram@Exo.6.18-1Ch', 'Jochebed@Exo.6.20-Num']);
+    expect(ids(aaron?.siblings ?? [])).toEqual(['Moses@Exo.2.10-Rev', 'Miriam@Exo.15.20-Mic']);
+    expect(ids(aaron?.partners ?? [])).toEqual(['Elisheba@Exo.6.23']);
+    expect(ids(aaron?.children ?? [])).toEqual(['Nadab@Exo.6.23-1Ch']);
     expect(aaron?.tribe).toBe('Tribe of Levi');
+  });
+
+  it('takes the marker off a link and keeps what it meant', () => {
+    // A link reading "David@Rut.4.17-Rev(?)" points at David; the (?) says the source
+    // was not certain. Leaving it on the identifier meant one link in twenty pointed
+    // at nobody at all.
+    const { subjects: parsed } = parseNames(
+      [
+        '$========== PERSON(s)',
+        [
+          'Someone@Gen.1.1',
+          '',
+          'Jesse@Rut.4.17-Rom(?) + Mahol@1Ki.4.31(a)',
+          '',
+          '',
+          'Canaan@Gen.9.18-1Ch(d)',
+          '',
+          '#A man.',
+          'Male',
+        ].join('\t'),
+        ['\u2013 Named', 'Someone@Gen.1.1', 'H1', 'Someone', 'Gen.1.1'].join('\t'),
+      ].join('\n'),
+    );
+    const person = parsed.get('Someone@Gen.1.1');
+    expect(person?.parents).toEqual([
+      { id: 'Jesse@Rut.4.17-Rom', note: 'uncertain' },
+      { id: 'Mahol@1Ki.4.31', note: 'ancestor' },
+    ]);
+    expect(person?.children).toEqual([{ id: 'Canaan@Gen.9.18-1Ch', note: 'descended' }]);
   });
 
   it('keeps the first sentence of the summary and drops the list of forms', () => {

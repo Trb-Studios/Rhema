@@ -405,7 +405,8 @@ async function loadNames(db) {
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   );
   const insertRelation = db.prepare(
-    'INSERT OR REPLACE INTO relations (subject_id, related_id, relation) VALUES (?, ?, ?)',
+    `INSERT OR REPLACE INTO relations (subject_id, related_id, relation, note)
+     VALUES (?, ?, ?, ?)`,
   );
 
   db.exec('BEGIN');
@@ -434,7 +435,9 @@ async function loadNames(db) {
       ['partner', subject.partners],
       ['child', subject.children],
     ]) {
-      for (const related of list) insertRelation.run(subject.id, related, relation);
+      for (const related of list) {
+        insertRelation.run(subject.id, related.id, relation, related.note || null);
+      }
     }
   }
   db.exec('COMMIT');
@@ -550,7 +553,7 @@ async function exportForWeb() {
     .prepare('SELECT id, name, kind, type, summary, tribe, area, near FROM subjects')
     .all();
   const relationRows = db
-    .prepare('SELECT subject_id, related_id, relation FROM relations ORDER BY subject_id')
+    .prepare('SELECT subject_id, related_id, relation, note FROM relations ORDER BY subject_id')
     .all();
   const mentionRows = db
     .prepare(
@@ -673,7 +676,8 @@ async function exportNames(subjects, relations, mentions) {
   const related = new Map();
   for (const row of relations) {
     const entry = related.get(row.subject_id) ?? { parent: [], sibling: [], partner: [], child: [] };
-    entry[row.relation].push(row.related_id);
+    // A plain identifier, or [identifier, what the source said about the link].
+    entry[row.relation].push(row.note ? [row.related_id, row.note] : row.related_id);
     related.set(row.subject_id, entry);
   }
 

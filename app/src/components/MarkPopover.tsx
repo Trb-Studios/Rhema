@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { Subject } from '../lib/marks';
+import type { Relative, Subject } from '../lib/marks';
 import { allSubjects, nameOfId } from '../lib/marks';
 import { popoverVariants, transition } from '../lib/motion';
 
@@ -238,7 +238,7 @@ function Family({
   subjects: Map<string, Subject>;
   onOpen: (id: string) => void;
 }) {
-  const groups: Array<[string, string[]]> = [
+  const groups: Array<[string, Relative[]]> = [
     ['Parents', subject.parents],
     ['Siblings', subject.siblings],
     [subject.type === 'Female' ? 'Husband' : 'Wife', subject.partners],
@@ -263,7 +263,7 @@ function Family({
           <div key={label} style={{ display: 'flex', gap: 8, fontSize: 12.5 }}>
             <span style={{ width: 58, flex: 'none', color: 'var(--text-faint)' }}>{label}</span>
             <span style={{ flex: 1, lineHeight: 1.5 }}>
-              {list.map((id, index) => {
+              {list.map(({ id, note }, index) => {
                 const known = subjects.has(id);
                 return (
                   <span key={id}>
@@ -283,6 +283,10 @@ function Family({
                       // Someone the text refers to without naming, such as a wife known
                       // only as her husband's. Shown, but nothing to open.
                       <span style={{ color: 'var(--text-secondary)' }}>{nameOfId(id)}</span>
+                    )}
+                    {/* Where the source hedged, so does this. */}
+                    {note && (
+                      <span style={{ color: 'var(--text-faint)', fontSize: 11 }}> ({note})</span>
                     )}
                   </span>
                 );

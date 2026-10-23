@@ -17,6 +17,15 @@
 
 import { inDesktopApp, invokeCommand } from './tauri';
 
+/**
+ * Someone related to another.
+ *
+ * `note` is what the source said about the link where it said anything: "uncertain"
+ * when it rests on an ambiguous passage, "ancestor" where a parent is further back than
+ * a parent, "descended" for a nation descended from them, "founder" for a place.
+ */
+export type Relative = { id: string; note: string };
+
 /** An individual: one person, or one place. */
 export type Subject = {
   id: string;
@@ -29,10 +38,10 @@ export type Subject = {
   area?: string;
   /** The name a gazetteer knows a place by. */
   near?: string;
-  parents: string[];
-  siblings: string[];
-  partners: string[];
-  children: string[];
+  parents: Relative[];
+  siblings: Relative[];
+  partners: Relative[];
+  children: Relative[];
   /** The first verses where this individual is named, as [bookId, chapter, verse]. */
   where: Array<[number, number, number]>;
   /** How many verses name them in all. */
@@ -49,6 +58,8 @@ export type Subject = {
 export type Mark = [string, string] | [string, string, Subject['kind']];
 export type BookMarks = Record<string, Mark[]>;
 
+type RawRelative = string | [string, string];
+
 type RawSubject = {
   n: string;
   k: Subject['kind'];
@@ -57,10 +68,10 @@ type RawSubject = {
   tribe?: string;
   area?: string;
   near?: string;
-  p?: string[];
-  b?: string[];
-  m?: string[];
-  c?: string[];
+  p?: RawRelative[];
+  b?: RawRelative[];
+  m?: RawRelative[];
+  c?: RawRelative[];
   w: Array<[number, number, number]>;
   total: number;
 };
@@ -109,6 +120,11 @@ export function allSubjects(): Promise<Map<string, Subject>> {
         ? ((await invokeCommand<Record<string, RawSubject>>('subjects')) ?? {})
         : await (await fetch(dataUrl('names.json'))).json();
 
+      const asRelatives = (list: RawRelative[] | undefined): Relative[] =>
+        (list ?? []).map((entry) =>
+          typeof entry === 'string' ? { id: entry, note: '' } : { id: entry[0], note: entry[1] },
+        );
+
       for (const [id, value] of Object.entries(raw as Record<string, RawSubject>)) {
         out.set(id, {
           id,
@@ -119,10 +135,10 @@ export function allSubjects(): Promise<Map<string, Subject>> {
           tribe: value.tribe,
           area: value.area,
           near: value.near,
-          parents: value.p ?? [],
-          siblings: value.b ?? [],
-          partners: value.m ?? [],
-          children: value.c ?? [],
+          parents: asRelatives(value.p),
+          siblings: asRelatives(value.b),
+          partners: asRelatives(value.m),
+          children: asRelatives(value.c),
           where: value.w ?? [],
           total: value.total ?? 0,
         });

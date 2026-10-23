@@ -83,11 +83,29 @@ function nameOf(id) {
   return last.replace(/_/g, ' ').trim();
 }
 
+/**
+ * A list of related individuals.
+ *
+ * TIPNR marks some links: (?) where the relationship rests on an ambiguous passage,
+ * (a) where the "parent" is an ancestor rather than the actual parent, (d) where a
+ * group or nation descends from them, and (f) for the founder of a place. The marker
+ * is not part of the identifier, so it is taken off — leaving it on meant one link in
+ * twenty pointed at nobody — and what it meant is kept beside it.
+ */
 function listOf(cell) {
-  return (cell ?? '')
-    .split(/[,+]/)
-    .map((part) => idOf(part))
-    .filter((part) => part && part !== '>' && part.includes('@'));
+  const out = [];
+  for (const part of (cell ?? '').split(/[,+]/)) {
+    const raw = idOf(part);
+    if (!raw || raw === '>' || !raw.includes('@')) continue;
+
+    const match = /^(.*?)\(([a-z?])\)$/.exec(raw);
+    const id = match ? match[1] : raw;
+    const note = match
+      ? { '?': 'uncertain', a: 'ancestor', d: 'descended', f: 'founder' }[match[2]] ?? ''
+      : '';
+    out.push({ id, note });
+  }
+  return out;
 }
 
 /**

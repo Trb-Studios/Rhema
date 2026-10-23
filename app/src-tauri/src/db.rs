@@ -45,10 +45,19 @@ pub struct Book {
 /// Who an individual is related to, gathered before the individuals are assembled.
 #[derive(Debug, Default)]
 struct Family {
-    parents: Vec<String>,
-    siblings: Vec<String>,
-    partners: Vec<String>,
-    children: Vec<String>,
+    parents: Vec<Relative>,
+    siblings: Vec<Relative>,
+    partners: Vec<Relative>,
+    children: Vec<Relative>,
+}
+
+/// A related individual: the identifier alone, or the identifier with what the source
+/// said about the link. Matches the shape the web build reads from names.json.
+#[derive(Debug, Serialize)]
+#[serde(untagged)]
+pub enum Relative {
+    Plain(String),
+    Noted(String, String),
 }
 
 /// One individual: a person, or a place. Mirrors what the web build reads from
@@ -66,13 +75,13 @@ pub struct SubjectRow {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub near: Option<String>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub p: Vec<String>,
+    pub p: Vec<Relative>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub b: Vec<String>,
+    pub b: Vec<Relative>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub m: Vec<String>,
+    pub m: Vec<Relative>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub c: Vec<String>,
+    pub c: Vec<Relative>,
     pub w: Vec<(u32, u32, u32)>,
     pub total: u32,
 }
@@ -211,21 +220,26 @@ impl Library {
         // assembled in one pass rather than with a query apiece.
         let mut relations: HashMap<String, Family> = HashMap::new();
         let mut statement =
-            connection.prepare("SELECT subject_id, related_id, relation FROM relations")?;
+            connection.prepare("SELECT subject_id, related_id, relation, note FROM relations")?;
         for row in statement.query_map([], |row| {
             Ok((
                 row.get::<_, String>(0)?,
                 row.get::<_, String>(1)?,
                 row.get::<_, String>(2)?,
+                row.get::<_, Option<String>>(3)?,
             ))
         })? {
-            let (id, related, relation) = row?;
+            let (id, related, relation, note) = row?;
+            let relative = match note {
+                Some(note) => Relative::Noted(related, note),
+                None => Relative::Plain(related),
+            };
             let entry = relations.entry(id).or_default();
             match relation.as_str() {
-                "parent" => entry.parents.push(related),
-                "sibling" => entry.siblings.push(related),
-                "partner" => entry.partners.push(related),
-                _ => entry.children.push(related),
+                "parent" => entry.parents.push(relative),
+                "sibling" => entry.siblings.push(relative),
+                "partner" => entry.partners.push(relative),
+                _ => entry.children.push(relative),
             }
         }
 

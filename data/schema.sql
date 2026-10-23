@@ -136,6 +136,10 @@ CREATE TABLE IF NOT EXISTS relations (
   subject_id  TEXT NOT NULL REFERENCES subjects(id),
   related_id  TEXT NOT NULL,
   relation    TEXT NOT NULL CHECK (relation IN ('parent', 'sibling', 'partner', 'child')),
+  -- What the source said about the link, where it said anything: 'uncertain' when it
+  -- rests on an ambiguous passage, 'ancestor' where a "parent" is further back than a
+  -- parent, 'descended' for a nation descended from them, 'founder' for a place.
+  note        TEXT,
   PRIMARY KEY (subject_id, related_id, relation)
 );
 
