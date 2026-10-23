@@ -801,19 +801,7 @@ export function Read() {
                       return (
                         <span key={verse.number}>
                           {verse.heading && (
-                            <span
-                              style={{
-                                display: 'block',
-                                marginTop: verse.number === 1 ? 0 : '1.2em',
-                                marginBottom: '0.35em',
-                                font: '600 11px var(--font-ui)',
-                                letterSpacing: '0.08em',
-                                textTransform: 'uppercase',
-                                color: 'var(--text-secondary)',
-                              }}
-                            >
-                              {verse.heading}
-                            </span>
+                            <SectionHeading heading={verse.heading} first={verse.number === 1} />
                           )}
                           <span
                             ref={
@@ -1318,5 +1306,64 @@ function Pill({
       {children}
       {label}
     </motion.button>
+  );
+}
+
+/**
+ * The letter standing over a section of an acrostic psalm.
+ *
+ * Psalm 119 is twenty-two eight-verse sections, each opening with the next letter of
+ * the Hebrew alphabet. Set at the same size as the surrounding label the letter is
+ * unreadable — Hebrew needs the height — so the letter is set large in the Hebrew face
+ * and its name kept small beside it, with a rule running out to the margin the way a
+ * printed Bible sets a section break.
+ */
+function SectionHeading({ heading, first }: { heading: string; first: boolean }) {
+  // "א ALEPH" — the letter, then the name the KJV gives it.
+  const space = heading.indexOf(' ');
+  const letter = space === -1 ? heading : heading.slice(0, space);
+  const name = space === -1 ? '' : heading.slice(space + 1);
+
+  return (
+    <span
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        marginTop: first ? 0 : '1.6em',
+        marginBottom: '0.5em',
+      }}
+      role="presentation"
+    >
+      <span
+        lang="he"
+        dir="rtl"
+        style={{
+          font: `400 24px var(--font-hebrew)`,
+          lineHeight: 1,
+          color: 'var(--text-tan)',
+        }}
+      >
+        {letter}
+      </span>
+      {name && (
+        <span
+          style={{
+            font: '600 11px var(--font-ui)',
+            letterSpacing: '0.1em',
+            color: 'var(--text-secondary)',
+          }}
+        >
+          {name}
+        </span>
+      )}
+      <span
+        style={{
+          flex: 1,
+          height: 1,
+          background: 'var(--line-default)',
+        }}
+      />
+    </span>
   );
 }

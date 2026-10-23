@@ -27,6 +27,7 @@ import {
 } from './originals.mjs';
 import { GREEK_LEXICON, HEBREW_LEXICON, foldWord, hebrewKey, parseLexicon } from './lexicon.mjs';
 import { TIPNR, parseNames } from './names.mjs';
+import { splitHeading } from './acrostic.mjs';
 import { CROSS_REFERENCES, parseCrossRefs } from './crossrefs.mjs';
 import { createWriteStream } from 'node:fs';
 import { mkdir, readFile, writeFile, copyFile, stat, rm } from 'node:fs/promises';
@@ -75,19 +76,6 @@ async function fetchOnce(url, destination) {
   }
   await pipeline(Readable.fromWeb(response.body), createWriteStream(destination));
   return destination;
-}
-
-/**
- * Psalm 119 is an acrostic: each of its 22 sections opens with a Hebrew letter. The
- * source carries that letter inside the first verse of each section, which would read
- * as "\u05d0 ALEPH. Blessed are the undefiled...". It is a heading, so it is kept as one.
- */
-const ACROSTIC = /^([\u0590-\u05FF]+)\s+([A-Z]+)\.\s+/;
-
-function splitHeading(text) {
-  const match = ACROSTIC.exec(text);
-  if (!match) return { heading: null, text };
-  return { heading: `${match[1]} ${match[2]}`, text: text.slice(match[0].length) };
 }
 
 /** A short, unique abbreviation for each book: Gen, Exo, 1Sa, 1Ki. */
@@ -172,7 +160,13 @@ async function main() {
     for (const chapter of chapters) {
       const chapterNumber = Number(chapter.chapter);
       for (const verse of chapter.verses ?? []) {
-        const { heading, text } = splitHeading(String(verse.text).trim());
+        const verseNumber = Number(verse.verse);
+        const { heading, text } = splitHeading(
+          name,
+          chapterNumber,
+          verseNumber,
+          String(verse.text).trim(),
+        );
         if (!text) continue;
         verseId += 1;
         const words = countWords(text);
@@ -181,7 +175,7 @@ async function main() {
           verseId,
           bookId,
           chapterNumber,
-          Number(verse.verse),
+          verseNumber,
           text,
           heading ?? null,
           words,
