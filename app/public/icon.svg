@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Rhema">
+  <title>Rhema</title>
+  <!-- An open scroll: the word as it is spoken, which is what rhema means. -->
+  <rect width="64" height="64" rx="14" fill="#D6C2A5"/>
+  <g fill="none" stroke="#4A3B28" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 16.5h20a6 6 0 0 1 6 6v25a6 6 0 0 1-6 6H20"/>
+    <path d="M20 16.5a6 6 0 0 0-6 6v25a6 6 0 0 0 6 6"/>
+    <path d="M26 27h14M26 34h14M26 41h9"/>
+  </g>
+</svg>

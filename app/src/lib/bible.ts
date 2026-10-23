@@ -15,7 +15,9 @@ import type { EditionId } from './editions';
  * path would look for them at the server root, which is not where they are when the
  * build is served from a subpath.
  */
-const DATA = new URL('./bible/', document.baseURI);
+function dataUrl(file: string): URL {
+  return new URL(file, new URL('./bible/', document.baseURI));
+}
 
 export type Book = {
   id: number;
@@ -46,7 +48,7 @@ export async function books(): Promise<Book[]> {
   if (inDesktopApp()) {
     bookCache = (await invokeCommand<Book[]>('books')) ?? [];
   } else {
-    const response = await fetch(new URL('index.json', DATA));
+    const response = await fetch(dataUrl('index.json'));
     if (!response.ok) throw new Error('Run `npm run data:build` to generate the text.');
     bookCache = (await response.json()) as Book[];
   }
@@ -78,7 +80,7 @@ export async function chapter(
       verses =
         (await invokeCommand<Verse[]>('chapter', { book: book.name, chapter: number })) ?? [];
     } else {
-      const response = await fetch(new URL(`${book.id}.json`, DATA));
+      const response = await fetch(dataUrl(`${book.id}.json`));
       if (!response.ok) throw new Error(`Could not load ${book.name}.`);
       const file = (await response.json()) as {
         chapters: string[][];
@@ -98,7 +100,7 @@ export async function chapter(
         chapter: number,
       })) ?? [];
   } else {
-    const response = await fetch(new URL(`${edition}-${book.id}.json`, DATA));
+    const response = await fetch(dataUrl(`${edition}-${book.id}.json`));
     if (!response.ok) return [];
     const file = (await response.json()) as Record<string, Array<[number, string]>>;
     verses = (file[String(number)] ?? []).map(([verseNumber, text]) => ({
@@ -133,7 +135,7 @@ export async function wholeBook(
   }
 
   if (edition === 'kjv') {
-    const response = await fetch(new URL(`${book.id}.json`, DATA));
+    const response = await fetch(dataUrl(`${book.id}.json`));
     if (!response.ok) return out;
     const file = (await response.json()) as { chapters: string[][] };
     file.chapters.forEach((verses, index) => {
@@ -144,7 +146,7 @@ export async function wholeBook(
     return out;
   }
 
-  const response = await fetch(new URL(`${edition}-${book.id}.json`, DATA));
+  const response = await fetch(dataUrl(`${edition}-${book.id}.json`));
   if (!response.ok) return out;
   const file = (await response.json()) as Record<string, Array<[number, string]>>;
   for (const [chapterNumber, verses] of Object.entries(file)) {
