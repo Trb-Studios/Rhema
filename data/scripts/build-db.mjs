@@ -18,7 +18,7 @@
 
 import { DatabaseSync } from 'node:sqlite';
 import { createWriteStream } from 'node:fs';
-import { mkdir, readFile, copyFile, stat, rm } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, copyFile, stat, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Readable } from 'node:stream';
@@ -29,6 +29,7 @@ const DATA = join(HERE, '..');
 const RAW = join(DATA, 'raw');
 const DB = join(DATA, 'bible.db');
 const BUNDLE = join(DATA, '..', 'app', 'src-tauri', 'resources', 'bible.db');
+const WEB = join(DATA, '..', 'app', 'public', 'bible');
 
 const KJV_URL =
   'https://raw.githubusercontent.com/scrollmapper/bible_databases/master/formats/json/KJV.json';
@@ -239,6 +240,58 @@ async function main() {
   await copyFile(DB, BUNDLE);
   const size = (await stat(DB)).size / 1024 / 1024;
   say(`\nDone. ${size.toFixed(1)} MB at data/bible.db, copied into the app.`);
+
+  await exportForWeb();
+}
+
+/**
+ * Writes the same text out as JSON for `npm run dev:web`, where the interface runs in a
+ * plain browser with no Rust build. It means the reader can be designed and reviewed
+ * against the real text rather than a sample. These files are build output, not source.
+ */
+async function exportForWeb() {
+  say('\nWeb preview');
+
+  const db = new DatabaseSync(DB, { readOnly: true });
+  const books = db.prepare('SELECT * FROM books ORDER BY position').all();
+  const verses = db
+    .prepare('SELECT book_id, chapter, verse, text FROM verses ORDER BY book_id, chapter, verse')
+    .all();
+  db.close();
+
+  await mkdir(WEB, { recursive: true });
+
+  const byBook = new Map();
+  for (const row of verses) {
+    if (!byBook.has(row.book_id)) byBook.set(row.book_id, new Map());
+    const chapters = byBook.get(row.book_id);
+    if (!chapters.has(row.chapter)) chapters.set(row.chapter, []);
+    chapters.get(row.chapter).push(row.text);
+  }
+
+  for (const book of books) {
+    const chapters = byBook.get(book.id) ?? new Map();
+    const ordered = [...chapters.keys()].sort((a, b) => a - b).map((n) => chapters.get(n));
+    await writeFile(
+      join(WEB, `${book.id}.json`),
+      JSON.stringify({ name: book.name, chapters: ordered }),
+    );
+  }
+
+  await writeFile(
+    join(WEB, 'index.json'),
+    JSON.stringify(
+      books.map((book) => ({
+        id: book.id,
+        name: book.name,
+        abbreviation: book.abbreviation,
+        testament: book.testament,
+        chapters: book.chapter_count,
+      })),
+    ),
+  );
+
+  say(`  wrote ${books.length} books to app/public/bible`);
 }
 
 main().catch((error) => {

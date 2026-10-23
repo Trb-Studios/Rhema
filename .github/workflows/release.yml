@@ -48,7 +48,7 @@ jobs:
         with:
           projectPath: app
           tagName: ${{ github.ref_name }}
-          releaseName: Bible Study Companion ${{ github.ref_name }}
+          releaseName: Rhema ${{ github.ref_name }}
           releaseBody: |
             See CHANGELOG.md for what changed.
 

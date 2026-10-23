@@ -15,6 +15,15 @@ pub struct Verse {
     pub text: String,
 }
 
+#[derive(Debug, Serialize)]
+pub struct Book {
+    pub id: u32,
+    pub name: String,
+    pub abbreviation: String,
+    pub testament: String,
+    pub chapters: u32,
+}
+
 pub struct Library {
     connection: Mutex<Option<Connection>>,
 }
@@ -45,6 +54,31 @@ impl Library {
         Ok(Self {
             connection: Mutex::new(connection),
         })
+    }
+
+    /// Every book in canonical order. Empty until the database is built.
+    pub fn books(&self) -> rusqlite::Result<Vec<Book>> {
+        let guard = self.connection.lock().expect("database lock poisoned");
+        let Some(connection) = guard.as_ref() else {
+            return Ok(Vec::new());
+        };
+
+        let mut statement = connection.prepare(
+            "SELECT id, name, abbreviation, testament, chapter_count
+               FROM books ORDER BY position",
+        )?;
+
+        let rows = statement.query_map([], |row| {
+            Ok(Book {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                abbreviation: row.get(2)?,
+                testament: row.get(3)?,
+                chapters: row.get(4)?,
+            })
+        })?;
+
+        rows.collect()
     }
 
     pub fn chapter(&self, book: &str, chapter: u32) -> rusqlite::Result<Vec<Verse>> {

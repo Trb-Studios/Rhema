@@ -58,8 +58,8 @@ Node, which is why Node 22 is the minimum.
 Then clone the project and start it:
 
 ```bash
-git clone https://github.com/Trb-Studios/bible-study-companion.git
-cd bible-study-companion
+git clone https://github.com/Trb-Studios/rhema.git
+cd rhema
 npm install
 npm run data:build
 npm run dev
@@ -70,9 +70,9 @@ after that takes seconds. A window should open with the app's tan interface.
 
 ## If something goes wrong
 
-| What you see                   | What to do                                                         |
-| ------------------------------ | ------------------------------------------------------------------ |
-| `link.exe not found`           | Step 1 did not finish, or the C++ workload was not ticked          |
-| `cargo` not recognised         | Reopen the terminal after installing Rust                          |
-| `node:sqlite` cannot be found  | Node is older than 22; install the current LTS                     |
-| The window opens blank         | Check the terminal for a Vite error; try `npm install` again       |
+| What you see                  | What to do                                                   |
+| ----------------------------- | ------------------------------------------------------------ |
+| `link.exe not found`          | Step 1 did not finish, or the C++ workload was not ticked    |
+| `cargo` not recognised        | Reopen the terminal after installing Rust                    |
+| `node:sqlite` cannot be found | Node is older than 22; install the current LTS               |
+| The window opens blank        | Check the terminal for a Vite error; try `npm install` again |

@@ -1,4 +1,4 @@
-# Bible Study Companion
+# Rhema
 
 A Windows desktop app for reading the Bible cover to cover and actually remembering it.
 Names and places are tagged in the text, Hebrew and Greek are a tap away, and what you

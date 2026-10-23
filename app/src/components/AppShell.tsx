@@ -53,9 +53,9 @@ export function AppShell({ children, version }: { children: ReactNode; version: 
               fontFamily: 'var(--font-display)',
             }}
           >
-            B
+            R
           </span>
-          Bible Study
+          Rhema
         </div>
 
         {AREAS.map((area, index) => (

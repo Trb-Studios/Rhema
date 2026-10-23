@@ -25,3 +25,4 @@ tauri-signing-key*
 .idea/
 app/src-tauri/resources/*
 !app/src-tauri/resources/.gitkeep
+app/public/bible/

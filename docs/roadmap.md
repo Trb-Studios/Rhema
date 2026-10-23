@@ -12,17 +12,20 @@ The full plan lives in the Claude doc. This is the build order.
 - [x] Build and release automation
 - [x] SQLite schema and KJV import
 - [ ] First installer built and run on Windows
+- [ ] Repository created and pushed
 
-## Next: the reader
+## Done: the reader
 
-The reader comes first because every other screen opens from the text.
+The reader came first because every other screen opens from the text.
 
-- [ ] Book and chapter navigation across all 66 books
-- [ ] Scripture rendered with the reading settings applied
-- [ ] Blue name marks and red place marks
-- [ ] Verse selection and the 30 highlight colours
+- [x] Book and chapter navigation across all 66 books, with a searchable picker
+- [x] Scripture rendered with the reading settings applied
+- [x] Verse selection and the 30 highlight colours
+- [x] The study panel beside the text, with a tab per source
+- [x] Arrow keys turn chapters, crossing book boundaries
+- [ ] Blue name marks and red place marks — waiting on the Theographic import
 - [ ] Notes on a verse, chapter, and book
-- [ ] The study panel beside the text
+- [ ] Highlights and settings saved to the person's library rather than this device
 
 ## Then
 

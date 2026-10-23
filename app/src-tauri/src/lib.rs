@@ -13,10 +13,20 @@ fn library_path(app: tauri::AppHandle) -> Result<String, String> {
     Ok(dir.to_string_lossy().into_owned())
 }
 
-/// A chapter of Scripture, verse by verse. Returns an empty list until the database
-/// is built — run `npm run data:build`.
+/// Every book in canonical order. Returns an empty list until the database is built —
+/// run `npm run data:build`.
 #[tauri::command]
-fn chapter(book: String, chapter: u32, state: tauri::State<db::Library>) -> Result<Vec<db::Verse>, String> {
+fn books(state: tauri::State<db::Library>) -> Result<Vec<db::Book>, String> {
+    state.books().map_err(|e| e.to_string())
+}
+
+/// A chapter of Scripture, verse by verse.
+#[tauri::command]
+fn chapter(
+    book: String,
+    chapter: u32,
+    state: tauri::State<db::Library>,
+) -> Result<Vec<db::Verse>, String> {
     state.chapter(&book, chapter).map_err(|e| e.to_string())
 }
 
@@ -31,7 +41,7 @@ pub fn run() {
             app.manage(library);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![library_path, chapter])
+        .invoke_handler(tauri::generate_handler![library_path, books, chapter])
         .run(tauri::generate_context!())
         .expect("error while running the app");
 }
