@@ -304,3 +304,14 @@ export function SpeakerIcon(props: IconProps) {
     </Svg>
   );
 }
+
+export function LayersIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="m12 3.9 8 4.1-8 4.1-8-4.1z" {...tintOf(props.tint)} />
+      <path d="m12 3.9 8 4.1-8 4.1-8-4.1z" {...line} />
+      <path d="m4 12 8 4.1 8-4.1" {...line} />
+      <path d="m4 16.1 8 4 8-4" {...line} />
+    </Svg>
+  );
+}

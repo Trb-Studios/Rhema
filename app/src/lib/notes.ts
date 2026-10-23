@@ -77,3 +77,14 @@ export function useNotes(bookId: number, chapter: number) {
 
   return { text: draft, write, written };
 }
+
+/**
+ * Every note, for anything listing them rather than editing one.
+ *
+ * Reads the same store the notepad writes, so the library sees a note the moment it is
+ * typed rather than a copy taken when it opened.
+ */
+export function useNoteIndex(): Record<string, string> {
+  const [notes] = useStore(store);
+  return notes;
+}

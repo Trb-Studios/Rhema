@@ -93,3 +93,11 @@ button {
     display: none;
   }
 }
+
+/* A row in the library. The whole row is the target, so it needs to say so. */
+.library-row {
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+.library-row:hover {
+  background: var(--bg-sunken);
+}

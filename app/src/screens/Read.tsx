@@ -14,7 +14,7 @@ import type { BookMarks } from '../lib/marks';
 import { useProgress } from '../lib/progress';
 import { useSaved } from '../lib/saved';
 import { useSettings } from '../lib/settings';
-import { HIGHLIGHT_OPACITY, QUICK_PICKS } from '../lib/highlights';
+import { HIGHLIGHT_OPACITY, QUICK_PICKS, useHighlights } from '../lib/highlights';
 import { pageVariants, spring, transition } from '../lib/motion';
 import { BookPickerHost } from '../components/BookPicker';
 import { MarkPopover } from '../components/MarkPopover';
@@ -28,8 +28,9 @@ import { CommandPalette } from '../components/CommandPalette';
 import { Tip } from '../components/Tip';
 import { Parallel } from '../components/Parallel';
 import { ListenBar } from '../components/ListenBar';
+import { Library } from '../components/Library';
 import { useSpeech } from '../lib/speech';
-import { ColumnsIcon, SpeakerIcon } from '../components/Icons';
+import { ColumnsIcon, SpeakerIcon, LayersIcon } from '../components/Icons';
 import { keyLabel, matches } from '../lib/commands';
 import type { Command } from '../lib/commands';
 import { WordPopover } from '../components/WordPopover';
@@ -54,20 +55,6 @@ import {
   TargetIcon,
 } from '../components/Icons';
 
-type Highlights = Record<string, number>;
-
-function verseKey(bookId: number, chapter: number, verse: number) {
-  return `${bookId}:${chapter}:${verse}`;
-}
-
-function loadHighlights(): Highlights {
-  try {
-    return JSON.parse(localStorage.getItem('rhema.highlights') ?? '{}') as Highlights;
-  } catch {
-    return {};
-  }
-}
-
 export function Read() {
   const { settings, update } = useSettings();
   const { progress, visit, toggleRead, isRead } = useProgress();
@@ -80,7 +67,7 @@ export function Read() {
   const [edition, setEdition] = useState<EditionId>('kjv');
   const [verses, setVerses] = useState<Verse[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
-  const [highlights, setHighlights] = useState<Highlights>(loadHighlights);
+  const { colourOf, mark, clear } = useHighlights();
   const [anchored, setAnchored] = useState<Anchored | null>(null);
   const [picking, setPicking] = useState(false);
   const [searching, setSearching] = useState(false);
@@ -88,6 +75,7 @@ export function Read() {
   // The other edition shown beside this one, or null for a single column.
   const [beside, setBeside] = useState<EditionId | null>(null);
   const [listening, setListening] = useState(false);
+  const [library, setLibrary] = useState(false);
   const speech = useSpeech();
   const [reviewing, setReviewing] = useState(false);
   const [planning, setPlanning] = useState(false);
@@ -168,14 +156,6 @@ export function Read() {
     }
   }, [book, number, edition, visit]);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem('rhema.highlights', JSON.stringify(highlights));
-    } catch {
-      // Losing a highlight is not worth interrupting a reading session over.
-    }
-  }, [highlights]);
-
   const goTo = useCallback((to: { book: Book; chapter: number } | null) => {
     if (!to) return;
     setBook(to.book);
@@ -190,7 +170,8 @@ export function Read() {
   const next = useMemo(() => (book ? nextChapter(all, book, number) : null), [all, book, number]);
 
   const commandsRef = useRef<Command[]>([]);
-  const anyOverlay = picking || searching || palette || reviewing || planning || quizzing;
+  const anyOverlay =
+    library || picking || searching || palette || reviewing || planning || quizzing;
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -342,6 +323,17 @@ export function Read() {
       });
     }
 
+    list.push({
+      id: 'library',
+      title: 'Your library',
+      hint: 'Every note, highlight and saved verse in one place',
+      group: 'Keep',
+      shortcut: 'Mod+Shift+L',
+      keywords: 'library notes highlights saved browse find all',
+      on: library,
+      run: () => setLibrary(!library),
+    });
+
     if (speech.supported) {
       list.push({
         id: 'listen',
@@ -410,6 +402,7 @@ export function Read() {
     beside,
     listening,
     speech,
+    library,
   ]);
 
   commandsRef.current = commands;
@@ -685,6 +678,14 @@ export function Read() {
           <LinkIcon size={18} />
         </Round>
         <Round
+          label="Open your library"
+          shortcut="Mod+Shift+L"
+          active={library}
+          onClick={() => setLibrary(true)}
+        >
+          <LayersIcon size={18} />
+        </Round>
+        <Round
           label="Saved verses"
           shortcut="Mod+B"
           active={panel === 'saved'}
@@ -771,8 +772,7 @@ export function Read() {
                     style={{ fontFamily: current.font, textAlign: 'start' }}
                   >
                     {verses.map((verse) => {
-                      const colour = highlights[verseKey(book.id, number, verse.number)];
-                      const chosen = QUICK_PICKS.find((pick) => pick.index === colour);
+                      const chosen = colourOf(book.id, number, verse.number);
                       const isSelected = selected === verse.number;
                       const beingSpoken = speech.verse === verse.number;
 
@@ -956,12 +956,7 @@ export function Read() {
                   key={pick.index}
                   whileHover={{ scale: 1.2 }}
                   transition={spring.snappy}
-                  onClick={() =>
-                    setHighlights((currentMarks) => ({
-                      ...currentMarks,
-                      [verseKey(book.id, number, selected)]: pick.index,
-                    }))
-                  }
+                  onClick={() => mark(book.id, number, selected, pick.index)}
                   aria-label={`Highlight ${pick.name}`}
                   style={{
                     width: 20,
@@ -974,13 +969,7 @@ export function Read() {
                 />
               ))}
               <button
-                onClick={() =>
-                  setHighlights((currentMarks) => {
-                    const copy = { ...currentMarks };
-                    delete copy[verseKey(book.id, number, selected)];
-                    return copy;
-                  })
-                }
+                onClick={() => clear(book.id, number, selected)}
                 style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}
               >
                 Clear
@@ -1059,6 +1048,20 @@ export function Read() {
           />
         )}
       </AnimatePresence>
+
+      <Library
+        open={library}
+        books={all}
+        onClose={() => setLibrary(false)}
+        onGo={(bookId, chapterNumber, verse) => {
+          const target = all.find((candidate) => candidate.id === bookId);
+          if (!target) return;
+          setBook(target);
+          setNumber(chapterNumber);
+          setShowIntro(false);
+          if (verse) setSelected(verse);
+        }}
+      />
 
       <CommandPalette
         open={palette}
