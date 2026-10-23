@@ -15,11 +15,15 @@ export type Book = {
   abbreviation: string;
   testament: 'OT' | 'NT';
   chapters: number;
+  /** Total words in the book. The reading plan schedules by words, not chapters. */
+  words: number;
 };
 
 export type Verse = {
   number: number;
   text: string;
+  /** A section heading that opens at this verse, such as Psalm 119's acrostic letters. */
+  heading?: string | null;
 };
 
 let bookCache: Book[] | null = null;
@@ -53,10 +57,14 @@ export async function chapter(book: Book, number: number): Promise<Verse[]> {
   } else {
     const response = await fetch(`/bible/${book.id}.json`);
     if (!response.ok) throw new Error(`Could not load ${book.name}.`);
-    const file = (await response.json()) as { chapters: string[][] };
+    const file = (await response.json()) as {
+      chapters: string[][];
+      headings?: Record<string, string>;
+    };
     verses = (file.chapters[number - 1] ?? []).map((text, index) => ({
       number: index + 1,
       text,
+      heading: file.headings?.[`${number}:${index + 1}`] ?? null,
     }));
   }
 

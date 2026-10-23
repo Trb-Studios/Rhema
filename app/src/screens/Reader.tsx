@@ -9,6 +9,7 @@ import {
 import type { Book, Verse } from '../lib/bible';
 import { HIGHLIGHT_OPACITY, QUICK_PICKS } from '../lib/highlights';
 import { useSettings } from '../lib/settings';
+import { useProgress } from '../lib/progress';
 import { pageVariants, spring, transition } from '../lib/motion';
 import { BookPickerHost } from '../components/BookPicker';
 import { StudyPanel } from '../components/StudyPanel';
@@ -27,6 +28,7 @@ function verseKey(book: Book, chapter: number, verse: number) {
 
 export function Reader() {
   const { settings } = useSettings();
+  const { progress, visit, toggleRead, isRead } = useProgress();
 
   const [all, setAll] = useState<Book[]>([]);
   const [book, setBook] = useState<Book | null>(null);
@@ -41,9 +43,14 @@ export function Reader() {
     loadBooks()
       .then((list) => {
         setAll(list);
-        setBook(list[0] ?? null);
+        const resume = progress.last;
+        const opening = resume ? list.find((b) => b.id === resume.bookId) : undefined;
+        setBook(opening ?? list[0] ?? null);
+        if (opening && resume) setNumber(resume.chapter);
       })
       .catch((cause: Error) => setError(cause.message));
+    // Runs once: the saved position is where to open, not something to follow later.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -52,7 +59,8 @@ export function Reader() {
     loadChapter(book, number)
       .then(setVerses)
       .catch((cause: Error) => setError(cause.message));
-  }, [book, number]);
+    visit(book.id, number);
+  }, [book, number, visit]);
 
   const goTo = useCallback((destination: { book: Book; chapter: number } | null) => {
     if (!destination) return;
@@ -167,37 +175,56 @@ export function Reader() {
                       const colour = highlights[verseKey(book, number, verse.number)];
                       const isSelected = selected === verse.number;
                       return (
-                        <span
-                          key={verse.number}
-                          style={{
-                            display: settings.versePerLine ? 'block' : 'inline',
-                            borderRadius: 3,
-                            boxDecorationBreak: 'clone',
-                            WebkitBoxDecorationBreak: 'clone',
-                            background:
-                              colour === undefined
-                                ? undefined
-                                : `color-mix(in srgb, ${QUICK_PICKS.find((p) => p.index === colour)?.colour ?? 'transparent'} ${HIGHLIGHT_OPACITY * 100}%, transparent)`,
-                            outline: isSelected ? '2px solid var(--focus-ring)' : undefined,
-                            outlineOffset: 1,
-                          }}
-                        >
-                          {settings.verseNumbers && (
-                            <button
-                              onClick={() => setSelected(isSelected ? null : verse.number)}
-                              aria-label={`Select verse ${verse.number}`}
-                              className="tabular"
+                        <span key={`wrap-${verse.number}`}>
+                          {verse.heading && (
+                            <span
                               style={{
-                                font: '600 0.62em var(--font-ui)',
-                                verticalAlign: 'super',
+                                display: 'block',
+                                marginTop: verse.number === 1 ? 0 : '1.1em',
+                                marginBottom: '0.3em',
+                                fontFamily: 'var(--font-ui)',
+                                fontSize: 11,
+                                fontWeight: 600,
+                                letterSpacing: '0.08em',
+                                textTransform: 'uppercase',
                                 color: 'var(--text-secondary)',
-                                marginRight: '0.25em',
                               }}
                             >
-                              {verse.number}
-                            </button>
+                              {verse.heading}
+                            </span>
                           )}
-                          {verse.text}{' '}
+                          <span
+                            key={verse.number}
+                            style={{
+                              display: settings.versePerLine ? 'block' : 'inline',
+                              borderRadius: 3,
+                              boxDecorationBreak: 'clone',
+                              WebkitBoxDecorationBreak: 'clone',
+                              background:
+                                colour === undefined
+                                  ? undefined
+                                  : `color-mix(in srgb, ${QUICK_PICKS.find((p) => p.index === colour)?.colour ?? 'transparent'} ${HIGHLIGHT_OPACITY * 100}%, transparent)`,
+                              outline: isSelected ? '2px solid var(--focus-ring)' : undefined,
+                              outlineOffset: 1,
+                            }}
+                          >
+                            {settings.verseNumbers && (
+                              <button
+                                onClick={() => setSelected(isSelected ? null : verse.number)}
+                                aria-label={`Select verse ${verse.number}`}
+                                className="tabular"
+                                style={{
+                                  font: '600 0.62em var(--font-ui)',
+                                  verticalAlign: 'super',
+                                  color: 'var(--text-secondary)',
+                                  marginRight: '0.25em',
+                                }}
+                              >
+                                {verse.number}
+                              </button>
+                            )}
+                            {verse.text}{' '}
+                          </span>
                         </span>
                       );
                     })}
@@ -285,6 +312,24 @@ export function Reader() {
                   disabled={!previous}
                   onClick={() => goTo(previous)}
                 />
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
+                  transition={spring.snappy}
+                  onClick={() => toggleRead(book.id, number)}
+                  aria-pressed={isRead(book.id, number)}
+                  style={{
+                    padding: '9px 16px',
+                    borderRadius: 'var(--radius-control)',
+                    fontWeight: 600,
+                    background: isRead(book.id, number) ? 'var(--main-fill)' : 'transparent',
+                    color: isRead(book.id, number) ? 'var(--main-on)' : 'var(--text-secondary)',
+                    border: isRead(book.id, number)
+                      ? '1px solid var(--main-fill)'
+                      : '1px solid var(--line-default)',
+                  }}
+                >
+                  {isRead(book.id, number) ? 'Read' : 'Mark read'}
+                </motion.button>
                 <ChapterButton
                   label={next ? `${next.book.name} ${next.chapter}` : 'The end'}
                   disabled={!next}

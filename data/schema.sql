@@ -25,6 +25,9 @@ CREATE TABLE IF NOT EXISTS verses (
   chapter    INTEGER NOT NULL,
   verse      INTEGER NOT NULL,
   text       TEXT NOT NULL,
+  -- Psalm 119's acrostic letters are section headings, not part of the verse. Kept
+  -- apart so the text reads cleanly and the structure is still shown.
+  heading    TEXT,
   word_count INTEGER NOT NULL,         -- the reading plan schedules by words, not chapters
   UNIQUE (book_id, chapter, verse)
 );

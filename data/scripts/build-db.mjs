@@ -66,6 +66,19 @@ async function fetchOnce(url, destination) {
   await pipeline(Readable.fromWeb(response.body), createWriteStream(destination));
 }
 
+/**
+ * Psalm 119 is an acrostic: each of its 22 sections opens with a Hebrew letter. The
+ * source carries that letter inside the first verse of each section, which would read
+ * as "\u05d0 ALEPH. Blessed are the undefiled...". It is a heading, so it is kept as one.
+ */
+const ACROSTIC = /^([\u0590-\u05FF]+)\s+([A-Z]+)\.\s+/;
+
+function splitHeading(text) {
+  const match = ACROSTIC.exec(text);
+  if (!match) return { heading: null, text };
+  return { heading: `${match[1]} ${match[2]}`, text: text.slice(match[0].length) };
+}
+
 function countWords(text) {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
@@ -85,7 +98,7 @@ function readVerses(file) {
     if (!books.has(name)) books.set(name, { chapters: 0, verses: [] });
     const book = books.get(name);
     book.chapters = Math.max(book.chapters, chapter);
-    book.verses.push({ chapter, verse, text });
+    book.verses.push({ chapter, verse, ...splitHeading(text) });
   };
 
   if (Array.isArray(file?.books)) {
@@ -159,8 +172,8 @@ async function main() {
      VALUES (?, ?, ?, ?, ?, ?)`,
   );
   const insertVerse = db.prepare(
-    `INSERT INTO verses (id, book_id, chapter, verse, text, word_count)
-     VALUES (?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO verses (id, book_id, chapter, verse, text, heading, word_count)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
   );
 
   const taken = new Set();
@@ -184,7 +197,15 @@ async function main() {
       verseId += 1;
       const words = countWords(verse.text);
       wordTotal += words;
-      insertVerse.run(verseId, bookId, verse.chapter, verse.verse, verse.text, words);
+      insertVerse.run(
+        verseId,
+        bookId,
+        verse.chapter,
+        verse.verse,
+        verse.text,
+        verse.heading ?? null,
+        words,
+      );
     }
   }
 
@@ -255,18 +276,32 @@ async function exportForWeb() {
   const db = new DatabaseSync(DB, { readOnly: true });
   const books = db.prepare('SELECT * FROM books ORDER BY position').all();
   const verses = db
-    .prepare('SELECT book_id, chapter, verse, text FROM verses ORDER BY book_id, chapter, verse')
+    .prepare(
+      'SELECT book_id, chapter, verse, text, heading FROM verses ORDER BY book_id, chapter, verse',
+    )
     .all();
+  const wordsByBook = new Map(
+    db
+      .prepare('SELECT book_id, SUM(word_count) AS words FROM verses GROUP BY book_id')
+      .all()
+      .map((row) => [row.book_id, row.words]),
+  );
   db.close();
 
   await mkdir(WEB, { recursive: true });
 
   const byBook = new Map();
+  const headings = new Map();
   for (const row of verses) {
     if (!byBook.has(row.book_id)) byBook.set(row.book_id, new Map());
     const chapters = byBook.get(row.book_id);
     if (!chapters.has(row.chapter)) chapters.set(row.chapter, []);
     chapters.get(row.chapter).push(row.text);
+
+    if (row.heading) {
+      if (!headings.has(row.book_id)) headings.set(row.book_id, {});
+      headings.get(row.book_id)[`${row.chapter}:${row.verse}`] = row.heading;
+    }
   }
 
   for (const book of books) {
@@ -274,7 +309,11 @@ async function exportForWeb() {
     const ordered = [...chapters.keys()].sort((a, b) => a - b).map((n) => chapters.get(n));
     await writeFile(
       join(WEB, `${book.id}.json`),
-      JSON.stringify({ name: book.name, chapters: ordered }),
+      JSON.stringify({
+        name: book.name,
+        chapters: ordered,
+        headings: headings.get(book.id) ?? {},
+      }),
     );
   }
 
@@ -287,6 +326,7 @@ async function exportForWeb() {
         abbreviation: book.abbreviation,
         testament: book.testament,
         chapters: book.chapter_count,
+        words: wordsByBook.get(book.id) ?? 0,
       })),
     ),
   );

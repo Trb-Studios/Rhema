@@ -2,22 +2,20 @@ import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Icon } from './Icon';
 import { spring } from '../lib/motion';
+import { SCREENS } from '../lib/screens';
+import type { ScreenId } from '../lib/screens';
 
-/** The areas in the side rail, in order. Each gains a screen as it is built. */
-const AREAS = [
-  { id: 'home', label: 'Home' },
-  { id: 'read', label: 'Read' },
-  { id: 'people', label: 'People' },
-  { id: 'places', label: 'Places' },
-  { id: 'words', label: 'Words' },
-  { id: 'notes', label: 'Notes' },
-  { id: 'plan', label: 'Plan' },
-  { id: 'quiz', label: 'Quiz' },
-  { id: 'review', label: 'Review' },
-  { id: 'settings', label: 'Settings' },
-] as const;
-
-export function AppShell({ children, version }: { children: ReactNode; version: string }) {
+export function AppShell({
+  children,
+  version,
+  current,
+  onNavigate,
+}: {
+  children: ReactNode;
+  version: string;
+  current: ScreenId;
+  onNavigate: (screen: ScreenId) => void;
+}) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '232px minmax(0, 1fr)', height: '100%' }}>
       <nav
@@ -58,29 +56,57 @@ export function AppShell({ children, version }: { children: ReactNode; version: 
           Rhema
         </div>
 
-        {AREAS.map((area, index) => (
-          <motion.button
-            key={area.id}
-            whileTap={{ scale: 0.97 }}
-            transition={spring.snappy}
-            aria-current={index === 0 ? 'page' : undefined}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 12,
-              height: 40,
-              padding: '0 10px',
-              borderRadius: 10,
-              textAlign: 'left',
-              fontWeight: index === 0 ? 600 : 500,
-              color: index === 0 ? 'var(--text-primary)' : 'var(--text-secondary)',
-              background: index === 0 ? 'var(--bg-selected)' : 'transparent',
-            }}
-          >
-            <Icon name={area.id} size={20} />
-            {area.label}
-          </motion.button>
-        ))}
+        {SCREENS.map((screen) => {
+          const active = screen.id === current;
+          return (
+            <motion.button
+              key={screen.id}
+              onClick={() => onNavigate(screen.id)}
+              whileTap={{ scale: 0.97 }}
+              transition={spring.snappy}
+              aria-current={active ? 'page' : undefined}
+              style={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                height: 40,
+                padding: '0 10px',
+                borderRadius: 10,
+                textAlign: 'left',
+                fontWeight: active ? 600 : 500,
+                color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
+              }}
+            >
+              {active && (
+                <motion.span
+                  layoutId="rail-selection"
+                  transition={spring.snappy}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 10,
+                    background: 'var(--bg-selected)',
+                  }}
+                />
+              )}
+              <span
+                style={{
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 12,
+                  color: active ? 'var(--text-tan)' : undefined,
+                }}
+              >
+                <Icon name={screen.icon} size={20} />
+                <span style={{ color: 'var(--text-primary)', opacity: active ? 1 : 0.75 }}>
+                  {screen.label}
+                </span>
+              </span>
+            </motion.button>
+          );
+        })}
 
         <div
           style={{

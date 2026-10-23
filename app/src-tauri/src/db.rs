@@ -13,6 +13,7 @@ use tauri::{AppHandle, Manager};
 pub struct Verse {
     pub number: u32,
     pub text: String,
+    pub heading: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -22,6 +23,7 @@ pub struct Book {
     pub abbreviation: String,
     pub testament: String,
     pub chapters: u32,
+    pub words: u32,
 }
 
 pub struct Library {
@@ -64,8 +66,12 @@ impl Library {
         };
 
         let mut statement = connection.prepare(
-            "SELECT id, name, abbreviation, testament, chapter_count
-               FROM books ORDER BY position",
+            "SELECT b.id, b.name, b.abbreviation, b.testament, b.chapter_count,
+                    COALESCE(SUM(v.word_count), 0) AS words
+               FROM books b
+          LEFT JOIN verses v ON v.book_id = b.id
+           GROUP BY b.id
+           ORDER BY b.position",
         )?;
 
         let rows = statement.query_map([], |row| {
@@ -75,6 +81,7 @@ impl Library {
                 abbreviation: row.get(2)?,
                 testament: row.get(3)?,
                 chapters: row.get(4)?,
+                words: row.get(5)?,
             })
         })?;
 
@@ -88,7 +95,7 @@ impl Library {
         };
 
         let mut statement = connection.prepare(
-            "SELECT v.verse, v.text
+            "SELECT v.verse, v.text, v.heading
                FROM verses v
                JOIN books b ON b.id = v.book_id
               WHERE (b.name = ?1 OR b.abbreviation = ?1) AND v.chapter = ?2
@@ -99,6 +106,7 @@ impl Library {
             Ok(Verse {
                 number: row.get(0)?,
                 text: row.get(1)?,
+                heading: row.get(2)?,
             })
         })?;
 
