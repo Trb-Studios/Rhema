@@ -74,5 +74,8 @@ jobs:
         working-directory: app/src-tauri
         run: cargo clippy -- -D warnings
 
-      - name: Build the app
-        run: npm run build
+      # Compiles the real Windows binary without packaging it. Building the installer
+      # needs the updater signing key, which only a release has; see docs/releasing.md.
+      - name: Compile the app
+        working-directory: app/src-tauri
+        run: cargo build --release
