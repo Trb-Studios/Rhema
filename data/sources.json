@@ -7,8 +7,8 @@
       "provides": "The full Bible text, 66 books, 1,189 chapters",
       "licence": "Public domain in the United States",
       "status": "ready",
-      "homepage": "https://github.com/scrollmapper/bible_databases",
-      "notes": "In the United Kingdom the KJV is under perpetual Crown copyright, administered by Cambridge University Press. It is public domain in the United States. Confirm before distributing outside the US."
+      "homepage": "https://github.com/aruljohn/Bible-kjv",
+      "notes": "Public domain in the United States; in the United Kingdom the KJV is under perpetual Crown copyright, administered by Cambridge University Press. This edition was chosen over another because it keeps the small-capital LORD that renders the divine name (5,621 verses, against 6 in the edition tried first) and spells place names without dashes, which stopped them matching."
     },
     {
       "id": "strongs",

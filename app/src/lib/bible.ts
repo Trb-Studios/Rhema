@@ -9,6 +9,13 @@
 
 import { inDesktopApp, invokeCommand } from './tauri';
 
+/**
+ * Data files sit beside the page, so they are fetched by a relative path. An absolute
+ * path would look for them at the server root, which is not where they are when the
+ * build is served from a subpath.
+ */
+const DATA = new URL('./bible/', document.baseURI);
+
 export type Book = {
   id: number;
   name: string;
@@ -36,7 +43,7 @@ export async function books(): Promise<Book[]> {
   if (inDesktopApp()) {
     bookCache = (await invokeCommand<Book[]>('books')) ?? [];
   } else {
-    const response = await fetch('/bible/index.json');
+    const response = await fetch(new URL('index.json', DATA));
     if (!response.ok) throw new Error('Run `npm run data:build` to generate the text.');
     bookCache = (await response.json()) as Book[];
   }
@@ -55,7 +62,7 @@ export async function chapter(book: Book, number: number): Promise<Verse[]> {
   if (inDesktopApp()) {
     verses = (await invokeCommand<Verse[]>('chapter', { book: book.name, chapter: number })) ?? [];
   } else {
-    const response = await fetch(`/bible/${book.id}.json`);
+    const response = await fetch(new URL(`${book.id}.json`, DATA));
     if (!response.ok) throw new Error(`Could not load ${book.name}.`);
     const file = (await response.json()) as {
       chapters: string[][];

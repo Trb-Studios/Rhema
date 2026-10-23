@@ -1,0 +1,344 @@
+{
+  "_note": "A starter set of well-known people and places, written by hand so the reader has something real to mark while the full dataset is sorted out. It is deliberately small and covers the figures and locations most readers meet first. Matching is by surname-free exact word, so only unambiguous names are listed: 'John' and 'Mary' are left out because each names several different people and marking them all alike would be wrong. Replacing this file with a full dataset needs no change to the reader.",
+  "_source": "General reference. Meanings of Hebrew and Greek names follow the usual lexical sources; where a meaning is disputed it is left out rather than guessed.",
+  "people": [
+    {
+      "name": "Abram",
+      "also": "Abraham",
+      "meaning": "Exalted father",
+      "note": "Called out of Haran to a land God would show him. Renamed Abraham, father of a multitude, in Genesis 17:5."
+    },
+    {
+      "name": "Abraham",
+      "also": "Abram",
+      "meaning": "Father of a multitude",
+      "note": "The patriarch God covenanted with. Father of Isaac."
+    },
+    {
+      "name": "Sarai",
+      "also": "Sarah",
+      "meaning": "My princess",
+      "note": "Wife of Abram. Renamed Sarah in Genesis 17:15."
+    },
+    {
+      "name": "Sarah",
+      "also": "Sarai",
+      "meaning": "Princess",
+      "note": "Wife of Abraham, mother of Isaac."
+    },
+    {
+      "name": "Isaac",
+      "meaning": "He laughs",
+      "note": "Son of Abraham and Sarah, father of Jacob and Esau."
+    },
+    { "name": "Rebekah", "note": "Wife of Isaac, mother of Jacob and Esau." },
+    {
+      "name": "Jacob",
+      "also": "Israel",
+      "meaning": "Supplanter, or one who takes by the heel",
+      "note": "Son of Isaac. Renamed Israel in Genesis 32:28. Father of the twelve tribes."
+    },
+    { "name": "Esau", "note": "Jacob's elder twin, who sold his birthright." },
+    {
+      "name": "Joseph",
+      "note": "Son of Jacob and Rachel, sold into Egypt and raised to govern it."
+    },
+    { "name": "Rachel", "meaning": "Ewe", "note": "Jacob's wife, mother of Joseph and Benjamin." },
+    { "name": "Leah", "note": "Jacob's first wife, mother of six of the tribes." },
+    { "name": "Lot", "note": "Abram's nephew, who settled near Sodom." },
+    {
+      "name": "Noah",
+      "meaning": "Rest or comfort",
+      "note": "Built the ark and survived the flood."
+    },
+    { "name": "Adam", "meaning": "Man, from the ground", "note": "The first man." },
+    {
+      "name": "Eve",
+      "meaning": "Living",
+      "note": "The first woman, called the mother of all living."
+    },
+    { "name": "Cain", "note": "Adam's firstborn, who killed his brother Abel." },
+    { "name": "Abel", "note": "Adam's second son, killed by Cain." },
+    { "name": "Enoch", "note": "Walked with God and was taken, rather than dying." },
+    { "name": "Methuselah", "note": "The longest-lived man recorded in Scripture." },
+    {
+      "name": "Melchizedek",
+      "meaning": "King of righteousness",
+      "note": "Priest-king of Salem who blessed Abram."
+    },
+    { "name": "Ishmael", "meaning": "God hears", "note": "Son of Abram and Hagar." },
+    { "name": "Hagar", "note": "Sarai's Egyptian servant, mother of Ishmael." },
+    {
+      "name": "Moses",
+      "meaning": "Drawn out",
+      "note": "Led Israel out of Egypt and received the law at Sinai."
+    },
+    { "name": "Aaron", "note": "Moses' brother and Israel's first high priest." },
+    { "name": "Miriam", "note": "Sister of Moses and Aaron, a prophetess." },
+    {
+      "name": "Joshua",
+      "meaning": "The LORD is salvation",
+      "note": "Succeeded Moses and led Israel into Canaan."
+    },
+    { "name": "Caleb", "note": "One of the two spies who urged Israel to take the land." },
+    { "name": "Pharaoh", "note": "The title of Egypt's king, used in Scripture as a name." },
+    { "name": "Gideon", "note": "A judge who defeated Midian with three hundred men." },
+    { "name": "Samson", "note": "A judge of extraordinary strength, undone by Delilah." },
+    { "name": "Delilah", "note": "The woman who drew out the secret of Samson's strength." },
+    {
+      "name": "Ruth",
+      "note": "A Moabitess who stayed with Naomi and became David's great-grandmother."
+    },
+    {
+      "name": "Naomi",
+      "meaning": "Pleasant",
+      "note": "Ruth's mother-in-law, who returned to Bethlehem."
+    },
+    { "name": "Boaz", "note": "Ruth's kinsman-redeemer and husband." },
+    {
+      "name": "Samuel",
+      "meaning": "Heard of God",
+      "note": "Prophet who anointed both Saul and David."
+    },
+    {
+      "name": "Saul",
+      "note": "Israel's first king. Also the name Paul bore before his mission to the Gentiles."
+    },
+    { "name": "David", "meaning": "Beloved", "note": "Shepherd, psalmist, and king of Israel." },
+    { "name": "Jonathan", "note": "Saul's son and David's closest friend." },
+    { "name": "Goliath", "note": "The Philistine champion David killed." },
+    { "name": "Bathsheba", "note": "Wife of Uriah, later of David, and mother of Solomon." },
+    { "name": "Absalom", "note": "David's son, who rebelled against him." },
+    {
+      "name": "Solomon",
+      "meaning": "Peaceful",
+      "note": "David's son, who built the temple and was known for wisdom."
+    },
+    {
+      "name": "Elijah",
+      "also": "Elias",
+      "meaning": "My God is the LORD",
+      "note": "Prophet who confronted Ahab and was taken up in a whirlwind."
+    },
+    {
+      "name": "Elias",
+      "also": "Elijah",
+      "note": "The Greek form of Elijah, used in the New Testament."
+    },
+    { "name": "Elisha", "note": "Elijah's successor as prophet." },
+    { "name": "Ahab", "note": "King of Israel, husband of Jezebel." },
+    { "name": "Jezebel", "note": "Ahab's queen, who promoted the worship of Baal." },
+    { "name": "Hezekiah", "note": "King of Judah who trusted God against Assyria." },
+    { "name": "Josiah", "note": "King of Judah who restored the law and the temple." },
+    {
+      "name": "Isaiah",
+      "meaning": "The LORD is salvation",
+      "note": "Prophet to Judah, who foretold the suffering servant."
+    },
+    { "name": "Jeremiah", "note": "Prophet who warned Judah before the exile." },
+    { "name": "Ezekiel", "note": "Prophet among the exiles in Babylon." },
+    {
+      "name": "Daniel",
+      "meaning": "God is my judge",
+      "note": "Taken to Babylon, where he served and prophesied."
+    },
+    { "name": "Jonah", "meaning": "Dove", "note": "Sent to Nineveh, which he fled before going." },
+    { "name": "Nehemiah", "note": "Rebuilt the wall of Jerusalem after the exile." },
+    { "name": "Ezra", "note": "Priest and scribe who taught the law after the exile." },
+    { "name": "Esther", "note": "Queen of Persia who saved her people." },
+    { "name": "Mordecai", "note": "Esther's cousin, who raised her." },
+    { "name": "Job", "note": "A righteous man who lost everything and questioned God." },
+    { "name": "Jesus", "meaning": "The LORD is salvation", "note": "The Christ, the Son of God." },
+    {
+      "name": "Christ",
+      "meaning": "Anointed one",
+      "note": "The Greek rendering of Messiah, used as a title for Jesus."
+    },
+    { "name": "Nicodemus", "note": "A Pharisee who came to Jesus by night." },
+    {
+      "name": "Peter",
+      "also": "Simon, Cephas",
+      "meaning": "Rock",
+      "note": "A fisherman called by Jesus, and a leader among the apostles."
+    },
+    { "name": "Andrew", "note": "Peter's brother, one of the twelve." },
+    { "name": "Matthew", "note": "A tax collector called by Jesus, one of the twelve." },
+    { "name": "Thomas", "note": "One of the twelve, who doubted the resurrection until he saw." },
+    {
+      "name": "Judas",
+      "note": "Judas Iscariot betrayed Jesus. The name is also borne by others in the New Testament."
+    },
+    { "name": "Pilate", "note": "The Roman governor who handed Jesus over to be crucified." },
+    { "name": "Herod", "note": "The name of several rulers of Judea in the New Testament." },
+    { "name": "Paul", "also": "Saul", "note": "Apostle to the Gentiles, formerly Saul of Tarsus." },
+    {
+      "name": "Barnabas",
+      "meaning": "Son of consolation",
+      "note": "Paul's companion on his first journey."
+    },
+    { "name": "Silas", "note": "Paul's companion after Barnabas." },
+    { "name": "Timothy", "note": "Paul's younger fellow worker, who received two of his letters." },
+    { "name": "Titus", "note": "A Gentile co-worker of Paul, left in Crete." },
+    { "name": "Stephen", "note": "The first Christian martyr." },
+    { "name": "Lazarus", "note": "Brother of Mary and Martha, raised by Jesus." },
+    { "name": "Martha", "note": "Sister of Mary and Lazarus, of Bethany." },
+    {
+      "name": "Zacchaeus",
+      "note": "A chief tax collector of Jericho who climbed a tree to see Jesus."
+    }
+  ],
+  "places": [
+    { "name": "Eden", "note": "The garden God planted, where Adam and Eve were placed." },
+    {
+      "name": "Ararat",
+      "modern": "Eastern Turkey",
+      "note": "The mountains where the ark came to rest."
+    },
+    { "name": "Babel", "note": "Where the tower was built and language was confused." },
+    {
+      "name": "Ur",
+      "modern": "Southern Iraq",
+      "note": "The city of the Chaldees that Abram's family left."
+    },
+    {
+      "name": "Haran",
+      "modern": "Harran, southeastern Turkey",
+      "note": "Where Abram's family settled before his call."
+    },
+    {
+      "name": "Canaan",
+      "modern": "Roughly Israel, Palestine, and Lebanon",
+      "note": "The land promised to Abraham's descendants."
+    },
+    {
+      "name": "Shechem",
+      "also": "Sichem",
+      "modern": "Near Nablus",
+      "note": "Where God promised the land to Abram's seed."
+    },
+    { "name": "Sichem", "also": "Shechem", "note": "The older spelling of Shechem." },
+    {
+      "name": "Bethel",
+      "modern": "Beitin, West Bank",
+      "note": "Where Jacob dreamed of the ladder. Formerly called Luz."
+    },
+    { "name": "Luz", "also": "Bethel", "note": "The earlier name of Bethel." },
+    {
+      "name": "Hebron",
+      "modern": "Hebron, West Bank",
+      "note": "Where Abraham, Isaac, and Jacob were buried."
+    },
+    { "name": "Sodom", "note": "A city of the plain, destroyed for its wickedness." },
+    { "name": "Gomorrah", "note": "Destroyed alongside Sodom." },
+    {
+      "name": "Egypt",
+      "modern": "Egypt",
+      "note": "Where Israel was enslaved and from which they were delivered."
+    },
+    {
+      "name": "Goshen",
+      "modern": "Eastern Nile delta",
+      "note": "The part of Egypt where Israel settled."
+    },
+    {
+      "name": "Sinai",
+      "modern": "Sinai peninsula",
+      "note": "The mountain where Moses received the law."
+    },
+    { "name": "Horeb", "also": "Sinai", "note": "Another name for the mountain of God." },
+    {
+      "name": "Jordan",
+      "modern": "The Jordan river",
+      "note": "The river Israel crossed into the land, and where Jesus was baptised."
+    },
+    {
+      "name": "Jericho",
+      "modern": "Jericho, West Bank",
+      "note": "The first city taken in Canaan, whose walls fell."
+    },
+    { "name": "Gilgal", "note": "Israel's first camp after crossing the Jordan." },
+    { "name": "Shiloh", "note": "Where the tabernacle stood before the temple was built." },
+    {
+      "name": "Bethlehem",
+      "modern": "Bethlehem, West Bank",
+      "note": "The city of David, and the birthplace of Jesus."
+    },
+    {
+      "name": "Jerusalem",
+      "modern": "Jerusalem",
+      "note": "The city of David, where the temple stood."
+    },
+    { "name": "Zion", "note": "The hill of Jerusalem, and a name for the city and its people." },
+    {
+      "name": "Samaria",
+      "modern": "Northern West Bank",
+      "note": "Capital of the northern kingdom, later the whole region."
+    },
+    { "name": "Nazareth", "modern": "Nazareth, Israel", "note": "Where Jesus grew up." },
+    {
+      "name": "Capernaum",
+      "modern": "North shore of Galilee",
+      "note": "The town Jesus made the base of his Galilean ministry."
+    },
+    {
+      "name": "Galilee",
+      "modern": "Northern Israel",
+      "note": "The region where Jesus did much of his teaching."
+    },
+    { "name": "Bethany", "modern": "Near Jerusalem", "note": "Home of Mary, Martha, and Lazarus." },
+    { "name": "Gethsemane", "note": "The garden where Jesus prayed before his arrest." },
+    { "name": "Golgotha", "note": "The place of a skull, where Jesus was crucified." },
+    { "name": "Calvary", "also": "Golgotha", "note": "The Latin-derived name for Golgotha." },
+    {
+      "name": "Babylon",
+      "modern": "Central Iraq",
+      "note": "The empire that took Judah into exile."
+    },
+    {
+      "name": "Nineveh",
+      "modern": "Mosul, Iraq",
+      "note": "The Assyrian capital Jonah was sent to."
+    },
+    {
+      "name": "Damascus",
+      "modern": "Damascus, Syria",
+      "note": "Where Saul was travelling when he met Christ."
+    },
+    {
+      "name": "Antioch",
+      "modern": "Antakya, Turkey",
+      "note": "Where believers were first called Christians."
+    },
+    { "name": "Tarsus", "modern": "Tarsus, Turkey", "note": "Paul's home city." },
+    {
+      "name": "Ephesus",
+      "modern": "Western Turkey",
+      "note": "A city where Paul taught for some years."
+    },
+    {
+      "name": "Philippi",
+      "modern": "Northern Greece",
+      "note": "The first church Paul planted in Europe."
+    },
+    {
+      "name": "Corinth",
+      "modern": "Southern Greece",
+      "note": "A port city that received two of Paul's letters."
+    },
+    {
+      "name": "Athens",
+      "modern": "Athens, Greece",
+      "note": "Where Paul preached at the Areopagus."
+    },
+    {
+      "name": "Rome",
+      "modern": "Rome, Italy",
+      "note": "The capital of the empire, and where Paul was finally held."
+    },
+    {
+      "name": "Patmos",
+      "modern": "Patmos, Greece",
+      "note": "The island where John received the Revelation."
+    }
+  ]
+}

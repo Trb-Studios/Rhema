@@ -31,8 +31,11 @@ const DB = join(DATA, 'bible.db');
 const BUNDLE = join(DATA, '..', 'app', 'src-tauri', 'resources', 'bible.db');
 const WEB = join(DATA, '..', 'app', 'public', 'bible');
 
-const KJV_URL =
-  'https://raw.githubusercontent.com/scrollmapper/bible_databases/master/formats/json/KJV.json';
+// This edition keeps the small-capital LORD that marks the divine name, and spells
+// place names without the dashes an older edition used. Both matter for study: LORD
+// renders YHWH and is a different word from "Lord", and the dashes stopped place names
+// matching. See data/sources.json.
+const KJV_BASE = 'https://raw.githubusercontent.com/aruljohn/Bible-kjv/master/';
 
 /** The 39th book ends the Old Testament. */
 const OT_BOOK_COUNT = 39;
@@ -54,16 +57,13 @@ async function exists(path) {
 
 /** Downloads a file once. Anything already in raw/ is reused unless --force is passed. */
 async function fetchOnce(url, destination) {
-  if (!force && (await exists(destination))) {
-    say(`  reusing ${destination.replace(DATA, 'data')}`);
-    return;
-  }
-  say(`  downloading ${url}`);
+  if (!force && (await exists(destination))) return destination;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`${url} returned ${response.status} ${response.statusText}`);
   }
   await pipeline(Readable.fromWeb(response.body), createWriteStream(destination));
+  return destination;
 }
 
 /**
@@ -79,56 +79,6 @@ function splitHeading(text) {
   return { heading: `${match[1]} ${match[2]}`, text: text.slice(match[0].length) };
 }
 
-function countWords(text) {
-  return text.trim().split(/\s+/).filter(Boolean).length;
-}
-
-/**
- * Reads the verses out of the source file, into one map of book name to its verses.
- *
- * The source ships books nested inside chapters. Older releases shipped one flat list
- * of rows under a few different field names, so that shape is accepted too rather than
- * letting a source update break the build silently.
- */
-function readVerses(file) {
-  const books = new Map();
-
-  const add = (name, chapter, verse, text) => {
-    if (!name || !text || !Number.isFinite(chapter) || !Number.isFinite(verse)) return;
-    if (!books.has(name)) books.set(name, { chapters: 0, verses: [] });
-    const book = books.get(name);
-    book.chapters = Math.max(book.chapters, chapter);
-    book.verses.push({ chapter, verse, ...splitHeading(text) });
-  };
-
-  if (Array.isArray(file?.books)) {
-    // Nested: books, each holding chapters, each holding verses.
-    for (const book of file.books) {
-      for (const chapter of book.chapters ?? []) {
-        for (const verse of chapter.verses ?? []) {
-          add(book.name, Number(chapter.chapter), Number(verse.verse), String(verse.text).trim());
-        }
-      }
-    }
-  } else {
-    // Flat: one row per verse.
-    const rows = Array.isArray(file) ? file : (file.verses ?? file.resultset?.row ?? []);
-    for (const row of rows) {
-      add(
-        row.book_name ?? row.book ?? row.b,
-        Number(row.chapter ?? row.c),
-        Number(row.verse ?? row.v),
-        String(row.text ?? row.t ?? '').trim(),
-      );
-    }
-  }
-
-  if (books.size === 0) {
-    throw new Error('No verses in the KJV file. The source format may have changed.');
-  }
-  return books;
-}
-
 /** A short, unique abbreviation for each book: Gen, Exo, 1Sa, 1Ki. */
 function abbreviate(name, taken) {
   const digit = name.match(/^(\d)\s*/)?.[1] ?? '';
@@ -142,6 +92,10 @@ function abbreviate(name, taken) {
   }
   taken.add(candidate);
   return candidate;
+}
+
+function countWords(text) {
+  return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
 async function main() {
@@ -163,9 +117,12 @@ async function main() {
 
   // 2. The KJV
   say('\nKing James Version');
-  const kjvFile = join(RAW, 'kjv.json');
-  await fetchOnce(KJV_URL, kjvFile);
-  const books = readVerses(JSON.parse(await readFile(kjvFile, 'utf8')));
+  const bookNames = JSON.parse(
+    await readFile(await fetchOnce(`${KJV_BASE}Books.json`, join(RAW, 'books.json')), 'utf8'),
+  );
+  if (bookNames.length !== 66) {
+    throw new Error(`Expected 66 book names, got ${bookNames.length}.`);
+  }
 
   const insertBook = db.prepare(
     `INSERT INTO books (id, name, abbreviation, testament, chapter_count, position)
@@ -182,30 +139,43 @@ async function main() {
   let wordTotal = 0;
 
   db.exec('BEGIN');
-  for (const [name, book] of books) {
+  for (const name of bookNames) {
     bookId += 1;
+    // The source names its files without spaces: "1 Samuel" is 1Samuel.json.
+    const file = await fetchOnce(
+      `${KJV_BASE}${encodeURIComponent(name.replace(/\s/g, ''))}.json`,
+      join(RAW, `${name.replace(/\s/g, '')}.json`),
+    );
+    const book = JSON.parse(await readFile(file, 'utf8'));
+    const chapters = book.chapters ?? [];
+
     insertBook.run(
       bookId,
       name,
       abbreviate(name, taken),
       bookId <= OT_BOOK_COUNT ? 'OT' : 'NT',
-      book.chapters,
+      chapters.length,
       bookId,
     );
 
-    for (const verse of book.verses) {
-      verseId += 1;
-      const words = countWords(verse.text);
-      wordTotal += words;
-      insertVerse.run(
-        verseId,
-        bookId,
-        verse.chapter,
-        verse.verse,
-        verse.text,
-        verse.heading ?? null,
-        words,
-      );
+    for (const chapter of chapters) {
+      const chapterNumber = Number(chapter.chapter);
+      for (const verse of chapter.verses ?? []) {
+        const { heading, text } = splitHeading(String(verse.text).trim());
+        if (!text) continue;
+        verseId += 1;
+        const words = countWords(text);
+        wordTotal += words;
+        insertVerse.run(
+          verseId,
+          bookId,
+          chapterNumber,
+          Number(verse.verse),
+          text,
+          heading ?? null,
+          words,
+        );
+      }
     }
   }
 
