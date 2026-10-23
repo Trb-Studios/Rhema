@@ -43,7 +43,7 @@
   },
   "plugins": {
     "updater": {
-      "endpoints": ["https://github.com/Trb-Studios/rhema/releases/latest/download/latest.json"],
+      "endpoints": ["https://github.com/Trb-Studios/Rhema/releases/latest/download/latest.json"],
       "pubkey": "REPLACE_WITH_PUBLIC_KEY",
       "windows": {
         "installMode": "passive"

@@ -58,8 +58,8 @@ Node, which is why Node 22 is the minimum.
 Then clone the project and start it:
 
 ```bash
-git clone https://github.com/Trb-Studios/rhema.git
-cd rhema
+git clone https://github.com/Trb-Studios/Rhema.git
+cd Rhema
 npm install
 npm run data:build
 npm run dev
