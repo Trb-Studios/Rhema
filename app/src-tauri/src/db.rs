@@ -88,6 +88,35 @@ impl Library {
         rows.collect()
     }
 
+    /// A chapter in Hebrew or Greek. Empty where that edition does not cover the book.
+    pub fn original(
+        &self,
+        edition: &str,
+        book_id: u32,
+        chapter: u32,
+    ) -> rusqlite::Result<Vec<Verse>> {
+        let guard = self.connection.lock().expect("database lock poisoned");
+        let Some(connection) = guard.as_ref() else {
+            return Ok(Vec::new());
+        };
+
+        let mut statement = connection.prepare(
+            "SELECT verse, text FROM verses_original
+              WHERE edition = ?1 AND book_id = ?2 AND chapter = ?3
+              ORDER BY verse",
+        )?;
+
+        let rows = statement.query_map(rusqlite::params![edition, book_id, chapter], |row| {
+            Ok(Verse {
+                number: row.get(0)?,
+                text: row.get(1)?,
+                heading: None,
+            })
+        })?;
+
+        rows.collect()
+    }
+
     pub fn chapter(&self, book: &str, chapter: u32) -> rusqlite::Result<Vec<Verse>> {
         let guard = self.connection.lock().expect("database lock poisoned");
         let Some(connection) = guard.as_ref() else {

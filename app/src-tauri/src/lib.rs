@@ -20,6 +20,19 @@ fn books(state: tauri::State<db::Library>) -> Result<Vec<db::Book>, String> {
     state.books().map_err(|e| e.to_string())
 }
 
+/// A chapter in Hebrew or Greek.
+#[tauri::command]
+fn original(
+    edition: String,
+    book_id: u32,
+    chapter: u32,
+    state: tauri::State<db::Library>,
+) -> Result<Vec<db::Verse>, String> {
+    state
+        .original(&edition, book_id, chapter)
+        .map_err(|e| e.to_string())
+}
+
 /// A chapter of Scripture, verse by verse.
 #[tauri::command]
 fn chapter(
@@ -41,7 +54,12 @@ pub fn run() {
             app.manage(library);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![library_path, books, chapter])
+        .invoke_handler(tauri::generate_handler![
+            library_path,
+            books,
+            chapter,
+            original
+        ])
         .run(tauri::generate_context!())
         .expect("error while running the app");
 }

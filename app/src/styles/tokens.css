@@ -41,8 +41,8 @@
   --today-bg: #e8e4f8;
   --font-display: 'Newsreader', Georgia, serif;
   --font-ui: 'Figtree', 'Segoe UI', system-ui, sans-serif;
-  --font-hebrew: 'Frank Ruhl Libre', 'Times New Roman', serif;
-  --font-greek: 'Gentium Plus', Georgia, serif;
+  --font-hebrew: 'Frank Ruhl Libre', 'SBL Hebrew', 'Taamey Frank CLM', 'David', 'Times New Roman', serif;
+  --font-greek: 'Gentium Plus', 'SBL Greek', 'Palatino Linotype', 'Cardo', Georgia, serif;
   --radius-control: 8px;
   --radius-card: 14px;
   --radius-panel: 18px;

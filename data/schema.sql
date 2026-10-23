@@ -55,6 +55,25 @@ CREATE TRIGGER IF NOT EXISTS verses_fts_update AFTER UPDATE ON verses BEGIN
   INSERT INTO verses_fts (rowid, text) VALUES (new.id, new.text);
 END;
 
+-- The Hebrew and Greek, as whole editions rather than a gloss over the English.
+-- Versification follows each edition, which is not always the KJV's: the Hebrew counts
+-- a psalm's title as a verse where the KJV does not, and the Greek New Testament rests
+-- on a different manuscript base, so a few verses the KJV has are absent.
+CREATE TABLE IF NOT EXISTS verses_original (
+  id       INTEGER PRIMARY KEY,
+  edition  TEXT NOT NULL CHECK (edition IN ('hebrew', 'greek')),
+  book_id  INTEGER NOT NULL REFERENCES books(id),
+  chapter  INTEGER NOT NULL,
+  verse    INTEGER NOT NULL,
+  text     TEXT NOT NULL,
+  -- Each word with its dictionary form and parsing, as JSON.
+  words    TEXT NOT NULL,
+  UNIQUE (edition, book_id, chapter, verse)
+);
+
+CREATE INDEX IF NOT EXISTS originals_by_chapter
+  ON verses_original (edition, book_id, chapter);
+
 -- ------------------------------------------------- Hebrew and Greek
 
 CREATE TABLE IF NOT EXISTS words (

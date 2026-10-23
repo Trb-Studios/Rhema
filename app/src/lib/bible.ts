@@ -8,6 +8,7 @@
  */
 
 import { inDesktopApp, invokeCommand } from './tauri';
+import type { EditionId } from './editions';
 
 /**
  * Data files sit beside the page, so they are fetched by a relative path. An absolute
@@ -51,27 +52,56 @@ export async function books(): Promise<Book[]> {
   return bookCache;
 }
 
-/** One chapter, verse by verse. Chapters are numbered from 1. */
-export async function chapter(book: Book, number: number): Promise<Verse[]> {
-  const key = `${book.id}:${number}`;
+/**
+ * One chapter, verse by verse, in the edition asked for.
+ *
+ * An original-language edition is read as its own tradition numbers it, so a verse
+ * number here need not line up with the English. Where an edition has nothing for a
+ * chapter, the result is empty and the caller says so rather than silently falling back
+ * to the English, which would look like the original and not be.
+ */
+export async function chapter(
+  book: Book,
+  number: number,
+  edition: EditionId = 'kjv',
+): Promise<Verse[]> {
+  const key = `${edition}:${book.id}:${number}`;
   const cached = chapterCache.get(key);
   if (cached) return cached;
 
   let verses: Verse[];
 
-  if (inDesktopApp()) {
-    verses = (await invokeCommand<Verse[]>('chapter', { book: book.name, chapter: number })) ?? [];
+  if (edition === 'kjv') {
+    if (inDesktopApp()) {
+      verses =
+        (await invokeCommand<Verse[]>('chapter', { book: book.name, chapter: number })) ?? [];
+    } else {
+      const response = await fetch(new URL(`${book.id}.json`, DATA));
+      if (!response.ok) throw new Error(`Could not load ${book.name}.`);
+      const file = (await response.json()) as {
+        chapters: string[][];
+        headings?: Record<string, string>;
+      };
+      verses = (file.chapters[number - 1] ?? []).map((text, index) => ({
+        number: index + 1,
+        text,
+        heading: file.headings?.[`${number}:${index + 1}`] ?? null,
+      }));
+    }
+  } else if (inDesktopApp()) {
+    verses =
+      (await invokeCommand<Verse[]>('original', {
+        edition,
+        bookId: book.id,
+        chapter: number,
+      })) ?? [];
   } else {
-    const response = await fetch(new URL(`${book.id}.json`, DATA));
-    if (!response.ok) throw new Error(`Could not load ${book.name}.`);
-    const file = (await response.json()) as {
-      chapters: string[][];
-      headings?: Record<string, string>;
-    };
-    verses = (file.chapters[number - 1] ?? []).map((text, index) => ({
-      number: index + 1,
+    const response = await fetch(new URL(`${edition}-${book.id}.json`, DATA));
+    if (!response.ok) return [];
+    const file = (await response.json()) as Record<string, Array<[number, string]>>;
+    verses = (file[String(number)] ?? []).map(([verseNumber, text]) => ({
+      number: verseNumber,
       text,
-      heading: file.headings?.[`${number}:${index + 1}`] ?? null,
     }));
   }
 

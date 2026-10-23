@@ -1,0 +1,467 @@
+{
+  "_note": "A short introduction to each book: when, who, where, and what it is about. Where authorship or date is disputed, both the traditional ascription and the main scholarly alternative are given without taking a side. Dates before the exile are approximate and differ between reckonings.",
+  "books": [
+    {
+      "name": "Genesis",
+      "time": "Events from creation to Joseph's death in Egypt, traditionally placed before about 1400 BC. Written or compiled later.",
+      "author": "Traditionally Moses. Much modern scholarship sees it as drawing on several older strands brought together over a long period.",
+      "place": "The settings move from Mesopotamia to Canaan to Egypt.",
+      "background": "Genesis sets out beginnings: of the world, of humanity, of sin and death, and of a people. After the flood and Babel it narrows to one family, Abraham's, and the promise that through his seed all nations would be blessed. The last quarter follows Joseph into Egypt, which is how Israel comes to be there when Exodus opens."
+    },
+    {
+      "name": "Exodus",
+      "time": "The departure from Egypt, placed by different reckonings in the fifteenth or the thirteenth century BC.",
+      "author": "Traditionally Moses.",
+      "place": "Egypt, the wilderness of Sinai, and Mount Sinai itself.",
+      "background": "Israel has become a slave people. God calls Moses from a burning bush, breaks Egypt with ten plagues, and brings the people out through the sea. At Sinai he gives the law and the covenant, and the tabernacle is built so that he may dwell among them. The golden calf stands in the middle of it as the first great failure."
+    },
+    {
+      "name": "Leviticus",
+      "time": "At Sinai, in the year after the exodus.",
+      "author": "Traditionally Moses.",
+      "place": "The camp at Mount Sinai.",
+      "background": "Instructions for worship: the offerings, the priesthood, what is clean and unclean, and the Day of Atonement. The book turns on holiness, and on how a holy God may be approached. Its logic underlies much of what the New Testament says about sacrifice and the work of Christ."
+    },
+    {
+      "name": "Numbers",
+      "time": "The forty years between Sinai and the plains of Moab.",
+      "author": "Traditionally Moses.",
+      "place": "The wilderness, ending east of the Jordan.",
+      "background": "Named for the two censuses it records. Israel leaves Sinai, sends spies into Canaan, and refuses to go up. A generation dies in the wilderness and a second is counted. Among the narratives are Balaam's oracles and the bronze serpent."
+    },
+    {
+      "name": "Deuteronomy",
+      "time": "On the plains of Moab, at the end of the wilderness years.",
+      "author": "Traditionally Moses. Many scholars connect the book to the law found in the temple under Josiah in 2 Kings 22.",
+      "place": "East of the Jordan, opposite Jericho.",
+      "background": "Moses' farewell addresses, restating the law for the generation about to enter the land. It contains the Shema, the blessings and curses of the covenant, and Moses' death on Nebo. Jesus quotes it more than any other book when tempted."
+    },
+    {
+      "name": "Joshua",
+      "time": "The conquest and settlement of Canaan.",
+      "author": "Traditionally Joshua, with the account of his death added later.",
+      "place": "Canaan.",
+      "background": "Israel crosses the Jordan, takes Jericho and Ai, and the land is divided among the tribes. The book's picture of a swift conquest sits alongside Judges' picture of a slow and partial one, and how to hold the two together is much discussed."
+    },
+    {
+      "name": "Judges",
+      "time": "Between the settlement and the first king, roughly the twelfth to eleventh centuries BC.",
+      "author": "Unknown. Jewish tradition suggests Samuel.",
+      "place": "Canaan.",
+      "background": "A cycle repeated: Israel turns away, is oppressed, cries out, and is delivered by a judge. Deborah, Gideon, Jephthah and Samson are the best known. The book closes with two appalling episodes and the refrain that everyone did what was right in his own eyes."
+    },
+    {
+      "name": "Ruth",
+      "time": "In the days of the judges.",
+      "author": "Unknown.",
+      "place": "Moab and Bethlehem.",
+      "background": "A famine drives an Israelite family to Moab. Naomi returns widowed, and her Moabite daughter-in-law Ruth comes with her. Boaz redeems them, and their great-grandson is David. A quiet book about loyalty, placed deliberately against the violence of Judges."
+    },
+    {
+      "name": "1 Samuel",
+      "time": "From Samuel's birth to Saul's death, around 1100 to 1010 BC.",
+      "author": "Unknown. The books of Samuel were one book in the Hebrew Bible.",
+      "place": "Shiloh, Ramah, Gibeah and the Judean wilderness.",
+      "background": "Israel asks for a king. Samuel anoints Saul, who fails, and then David, who is hunted by him. The book weighs what it means for a people under God to want a king like the other nations."
+    },
+    {
+      "name": "2 Samuel",
+      "time": "David's reign, roughly 1010 to 970 BC.",
+      "author": "Unknown.",
+      "place": "Hebron and Jerusalem.",
+      "background": "David takes the throne, brings the ark to Jerusalem, and receives the promise of an everlasting house. Then comes Bathsheba, and the rest of the book follows the consequences through his family: Amnon, Absalom's rebellion, and the long cost of one night."
+    },
+    {
+      "name": "1 Kings",
+      "time": "From Solomon's accession to the middle of the divided kingdom, about 970 to 850 BC.",
+      "author": "Unknown. Jewish tradition suggests Jeremiah.",
+      "place": "Jerusalem and Samaria.",
+      "background": "Solomon builds the temple and the kingdom reaches its height, then divides after his death. The northern and southern kingdoms are traced in parallel, and Elijah appears to confront Ahab and the prophets of Baal on Carmel."
+    },
+    {
+      "name": "2 Kings",
+      "time": "From Elijah's departure to the fall of Jerusalem in 586 BC.",
+      "author": "Unknown.",
+      "place": "Samaria, Jerusalem, and finally Babylon.",
+      "background": "Elisha succeeds Elijah. The northern kingdom falls to Assyria in 722 BC, and Judah survives longer under kings such as Hezekiah and Josiah before Babylon takes Jerusalem and burns the temple. The book explains the exile as the covenant's warnings coming true."
+    },
+    {
+      "name": "1 Chronicles",
+      "time": "Covers the same ground as Samuel, written after the exile.",
+      "author": "Unknown; traditionally Ezra.",
+      "place": "Jerusalem, written for the returned community.",
+      "background": "Opens with nine chapters of genealogy, then retells David's reign with the temple and worship at the centre. Written to show a people returning from exile who they are and what continues."
+    },
+    {
+      "name": "2 Chronicles",
+      "time": "Solomon to the exile, with the decree of Cyrus at the end.",
+      "author": "Unknown; traditionally Ezra.",
+      "place": "Jerusalem.",
+      "background": "Retells Kings with the southern kingdom and the temple in focus. It gives more room to the reforms of Hezekiah and Josiah, and ends not with ruin but with permission to go home and rebuild."
+    },
+    {
+      "name": "Ezra",
+      "time": "The return from exile, from 538 BC onward.",
+      "author": "Traditionally Ezra.",
+      "place": "Babylon and Jerusalem.",
+      "background": "Cyrus permits the exiles to return. The altar and then the temple are rebuilt against opposition, and Ezra arrives later to teach the law and address intermarriage."
+    },
+    {
+      "name": "Nehemiah",
+      "time": "The middle of the fifth century BC.",
+      "author": "Traditionally Nehemiah, whose memoir much of it reads as.",
+      "place": "Susa and Jerusalem.",
+      "background": "Nehemiah, cupbearer to the Persian king, hears Jerusalem lies open and goes to rebuild the wall. It rises in fifty-two days under threat. The people then gather to hear the law read and renew the covenant."
+    },
+    {
+      "name": "Esther",
+      "time": "During the reign of Ahasuerus, generally identified with Xerxes I, early fifth century BC.",
+      "author": "Unknown.",
+      "place": "Susa, the Persian capital.",
+      "background": "A Jewish woman becomes queen of Persia and, at Mordecai's urging, risks her life to stop Haman's plan to destroy her people. God is never named in the book, which is itself part of its point. The feast of Purim comes from it."
+    },
+    {
+      "name": "Job",
+      "time": "Unknown. The setting feels patriarchal; the date of writing is much debated.",
+      "author": "Unknown.",
+      "place": "Uz, somewhere east of Canaan.",
+      "background": "A righteous man loses everything, and his friends insist he must have deserved it. Job will not accept that, and will not curse God either. God finally answers out of the whirlwind, not with explanations but with questions. The book refuses the neat account of suffering its characters keep reaching for."
+    },
+    {
+      "name": "Psalms",
+      "time": "Composed across centuries, from David's time to after the exile.",
+      "author": "Many hands. Seventy-three psalms carry David's name; others name Asaph, the sons of Korah, Solomon and Moses.",
+      "place": "Largely Jerusalem and the temple.",
+      "background": "Israel's songbook: praise, lament, thanksgiving, confession and complaint, arranged in five books. It is the Bible's prayer book, and the most quoted Old Testament book in the New."
+    },
+    {
+      "name": "Proverbs",
+      "time": "Collected over a long period, much of it associated with Solomon.",
+      "author": "Solomon chiefly; also Agur, Lemuel, and 'the wise'.",
+      "place": "The royal court of Jerusalem.",
+      "background": "Short sayings on how to live well: speech, money, work, friendship, desire. The first nine chapters set the frame by personifying wisdom and folly as two women calling in the street. Its sayings are general truths, not guarantees."
+    },
+    {
+      "name": "Ecclesiastes",
+      "time": "Uncertain.",
+      "author": "The Preacher, son of David. Traditionally Solomon; the language leads many scholars to a later date.",
+      "place": "Jerusalem.",
+      "background": "A sustained look at life lived 'under the sun', where everything passes and nothing lasts. It is unsparing about death, injustice and the limits of wisdom, and yet keeps returning to eating, drinking and doing one's work as a gift."
+    },
+    {
+      "name": "Song of Solomon",
+      "time": "Uncertain.",
+      "author": "Traditionally Solomon.",
+      "place": "Jerusalem and the countryside around it.",
+      "background": "Love poetry between a man and a woman, frank about desire. It has been read as an allegory of God and his people and as a celebration of married love; both readings have long histories."
+    },
+    {
+      "name": "Isaiah",
+      "time": "Ministry from about 740 BC; the book looks on to the exile and the return.",
+      "author": "Isaiah son of Amoz. Many scholars hold that chapters 40 onward come from one or more later hands addressing the exile.",
+      "place": "Jerusalem.",
+      "background": "Judgment on Judah and the nations, then comfort: the promise of a return, the servant who suffers for others, and a new heavens and new earth. Isaiah 53 is among the most quoted passages in the New Testament."
+    },
+    {
+      "name": "Jeremiah",
+      "time": "From about 627 BC to after Jerusalem's fall in 586 BC.",
+      "author": "Jeremiah, with his scribe Baruch.",
+      "place": "Jerusalem, and later Egypt.",
+      "background": "Forty years of warning that went unheeded, and the grief of watching it happen. Jeremiah is beaten, imprisoned and thrown into a cistern. Against all of it stands the promise of a new covenant written on the heart."
+    },
+    {
+      "name": "Lamentations",
+      "time": "Shortly after 586 BC.",
+      "author": "Traditionally Jeremiah.",
+      "place": "The ruins of Jerusalem.",
+      "background": "Five poems mourning the fall of the city, four of them acrostics running through the Hebrew alphabet. At the exact centre stands the line that his mercies are new every morning."
+    },
+    {
+      "name": "Ezekiel",
+      "time": "From 593 BC, among the exiles.",
+      "author": "Ezekiel, a priest.",
+      "place": "Babylon, by the river Chebar.",
+      "background": "Visions of God's glory leaving the temple and returning, acted-out signs, and oracles against the nations. The valley of dry bones and the promise of a heart of flesh are here, as is the long closing vision of a restored temple."
+    },
+    {
+      "name": "Daniel",
+      "time": "The sixth century BC, during the exile.",
+      "author": "Traditionally Daniel. Many scholars date the book to the second century BC on the basis of its language and its detailed view of that period.",
+      "place": "Babylon.",
+      "background": "Six narratives of faithfulness under pressure, including the fiery furnace and the lions' den, followed by six visions of kingdoms rising and falling and of one like a son of man receiving an everlasting kingdom."
+    },
+    {
+      "name": "Hosea",
+      "time": "Mid-eighth century BC, before the fall of the north.",
+      "author": "Hosea.",
+      "place": "The northern kingdom.",
+      "background": "God tells Hosea to marry a woman who will be unfaithful, and his marriage becomes the message. Israel has gone after other gods, and the book holds judgment and an unwillingness to let go in the same breath."
+    },
+    {
+      "name": "Joel",
+      "time": "Uncertain; proposals range widely.",
+      "author": "Joel.",
+      "place": "Judah.",
+      "background": "A locust plague becomes the occasion to speak of the day of the LORD. Its promise that God will pour out his Spirit on all flesh is what Peter quotes at Pentecost."
+    },
+    {
+      "name": "Amos",
+      "time": "About 760 BC, during a prosperous period in the north.",
+      "author": "Amos, a herdsman and tender of sycamore figs from Tekoa.",
+      "place": "Bethel, in the northern kingdom.",
+      "background": "A southerner sent north to a comfortable society, with a message about what that comfort rests on. Amos is relentless on justice: the courts, the markets, and worship offered by people trampling the poor."
+    },
+    {
+      "name": "Obadiah",
+      "time": "Probably soon after 586 BC.",
+      "author": "Obadiah.",
+      "place": "Judah.",
+      "background": "The shortest book in the Old Testament, twenty-one verses against Edom for standing by, and joining in, when Jerusalem fell."
+    },
+    {
+      "name": "Jonah",
+      "time": "Jonah son of Amittai is placed in the eighth century BC.",
+      "author": "Unknown.",
+      "place": "Israel, the sea, and Nineveh.",
+      "background": "A prophet sent to Israel's enemy runs the other way, is swallowed by a great fish, and finally goes. Nineveh repents, and Jonah is furious about it. The book is about the reach of God's mercy and the prophet's resentment of it."
+    },
+    {
+      "name": "Micah",
+      "time": "Late eighth century BC, a contemporary of Isaiah.",
+      "author": "Micah of Moresheth.",
+      "place": "Judah.",
+      "background": "Judgment on both kingdoms for injustice and false religion, with the promise that a ruler would come from Bethlehem. Its summary of what the LORD requires, to do justly, love mercy and walk humbly, is among the best known lines in the prophets."
+    },
+    {
+      "name": "Nahum",
+      "time": "Before Nineveh's fall in 612 BC.",
+      "author": "Nahum.",
+      "place": "Judah.",
+      "background": "Where Jonah saw Nineveh spared, Nahum announces its end. Read alongside Jonah, the two frame mercy and judgment on the same city."
+    },
+    {
+      "name": "Habakkuk",
+      "time": "Late seventh century BC, as Babylon rises.",
+      "author": "Habakkuk.",
+      "place": "Judah.",
+      "background": "The prophet argues with God: why does he tolerate injustice, and how can he use a crueller nation to judge a bad one. The answer, that the just shall live by his faith, is taken up three times in the New Testament."
+    },
+    {
+      "name": "Zephaniah",
+      "time": "During Josiah's reign, late seventh century BC.",
+      "author": "Zephaniah.",
+      "place": "Jerusalem.",
+      "background": "The day of the LORD against Judah and the nations, closing with a remnant restored and God rejoicing over his people with singing."
+    },
+    {
+      "name": "Haggai",
+      "time": "520 BC, in the second year of Darius.",
+      "author": "Haggai.",
+      "place": "Jerusalem.",
+      "background": "The returned exiles have built their own houses and left the temple in ruins. Four short messages in four months, and the work resumes."
+    },
+    {
+      "name": "Zechariah",
+      "time": "From 520 BC, alongside Haggai.",
+      "author": "Zechariah.",
+      "place": "Jerusalem.",
+      "background": "Night visions urging the rebuilding, then oracles looking further ahead: a king coming lowly on a donkey, thirty pieces of silver, one who is pierced. Heavily drawn on in the passion narratives."
+    },
+    {
+      "name": "Malachi",
+      "time": "Fifth century BC, after the temple was rebuilt.",
+      "author": "Malachi, or possibly a title meaning 'my messenger'.",
+      "place": "Jerusalem.",
+      "background": "A disputation: God states a charge, the people answer back, and he replies. Priests offering blemished animals, broken marriages, withheld tithes. It closes the Old Testament looking for a messenger to prepare the way."
+    },
+    {
+      "name": "Matthew",
+      "time": "Written in the first century; dates proposed range from the 50s to the 80s AD.",
+      "author": "Traditionally Matthew the tax collector, one of the twelve.",
+      "place": "Possibly Antioch in Syria.",
+      "background": "Written with Jewish readers in view, repeatedly showing how Jesus fulfils the Scriptures. It gathers his teaching into five great blocks, the first being the Sermon on the Mount, and ends with the commission to make disciples of all nations."
+    },
+    {
+      "name": "Mark",
+      "time": "Generally held to be the earliest Gospel, around 65 to 70 AD.",
+      "author": "Traditionally John Mark, drawing on Peter's preaching.",
+      "place": "Traditionally Rome.",
+      "background": "The shortest and fastest Gospel, driving toward the cross. Jesus acts more than he explains, and repeatedly tells people to say nothing. The oldest manuscripts end abruptly at the empty tomb, and the longer ending is a later addition."
+    },
+    {
+      "name": "Luke",
+      "time": "Written in the first century, with Acts as its second volume.",
+      "author": "Traditionally Luke, a physician and companion of Paul.",
+      "place": "Uncertain.",
+      "background": "An orderly account written for Theophilus after careful inquiry. Luke gives most attention to the poor, to women, to outsiders and to prayer, and alone records the good Samaritan and the prodigal son."
+    },
+    {
+      "name": "John",
+      "time": "Generally regarded as the last Gospel written, late first century.",
+      "author": "Traditionally John son of Zebedee, the disciple whom Jesus loved.",
+      "place": "Traditionally Ephesus.",
+      "background": "Different in shape from the other three: fewer events, longer discourses, seven signs and seven 'I am' sayings. It opens before creation with the Word, and states plainly that it was written so that readers might believe and have life."
+    },
+    {
+      "name": "Acts",
+      "time": "From the ascension to Paul's imprisonment in Rome, about 30 to 62 AD.",
+      "author": "Traditionally Luke, continuing his Gospel.",
+      "place": "Jerusalem outward to Rome.",
+      "background": "The Spirit comes at Pentecost and the church spreads from Jerusalem through Judea and Samaria to the ends of the earth. The second half follows Paul's journeys. The question running through it is how Gentiles belong without becoming Jews first."
+    },
+    {
+      "name": "Romans",
+      "time": "About 57 AD.",
+      "author": "Paul, dictated to Tertius.",
+      "place": "Written from Corinth, to Rome.",
+      "background": "Paul's fullest statement of his gospel, written to a church he had not yet visited. Sin and judgment, justification by faith, life in the Spirit, the place of Israel, and then how all of it looks lived out among people who disagree."
+    },
+    {
+      "name": "1 Corinthians",
+      "time": "About 55 AD.",
+      "author": "Paul.",
+      "place": "Written from Ephesus, to Corinth.",
+      "background": "A gifted and divided church: factions, a scandal, lawsuits, food offered to idols, disorder at the Lord's supper, and confusion about gifts. Chapter 13 on love and chapter 15 on resurrection both arise out of those arguments."
+    },
+    {
+      "name": "2 Corinthians",
+      "time": "Shortly after the first letter.",
+      "author": "Paul.",
+      "place": "Written from Macedonia.",
+      "background": "The most personal of Paul's letters. He defends his ministry against rivals, speaks of affliction and comfort, of a thorn in the flesh, and of strength made perfect in weakness."
+    },
+    {
+      "name": "Galatians",
+      "time": "Among Paul's earliest letters, possibly about 48 to 55 AD.",
+      "author": "Paul.",
+      "place": "Written to churches in Galatia.",
+      "background": "Written in alarm. Teachers are telling Gentile converts they must be circumcised. Paul argues that this is not a refinement of the gospel but its loss, and sets freedom and the Spirit against the law as a means of standing before God."
+    },
+    {
+      "name": "Ephesians",
+      "time": "Probably during an imprisonment, about 60 to 62 AD.",
+      "author": "Paul. Some scholars question this on grounds of style and vocabulary.",
+      "place": "Written from prison.",
+      "background": "Three chapters on what God has done, bringing Jew and Gentile into one body, then three on what follows for how people live together. Ends with the armour of God."
+    },
+    {
+      "name": "Philippians",
+      "time": "During an imprisonment, about 61 AD.",
+      "author": "Paul.",
+      "place": "Written from prison, to Philippi.",
+      "background": "A warm letter of thanks to a church that supported him, written in chains and full of joy. It contains the hymn describing Christ emptying himself and taking the form of a servant."
+    },
+    {
+      "name": "Colossians",
+      "time": "Probably about 60 to 62 AD.",
+      "author": "Paul. Authorship is debated by some scholars.",
+      "place": "Written from prison.",
+      "background": "Against teaching that added philosophy, ritual and angelic powers to Christ, Paul sets out his supremacy: in him dwells all the fullness of the Godhead bodily, and in him believers are complete."
+    },
+    {
+      "name": "1 Thessalonians",
+      "time": "About 50 to 51 AD, possibly Paul's earliest surviving letter.",
+      "author": "Paul, with Silas and Timothy.",
+      "place": "Written from Corinth.",
+      "background": "Encouragement to a young church under pressure, and an answer to their worry about believers who had died before Christ returned."
+    },
+    {
+      "name": "2 Thessalonians",
+      "time": "Soon after the first letter.",
+      "author": "Paul. Questioned by some scholars.",
+      "place": "Written from Corinth.",
+      "background": "Corrects the idea that the day of the Lord had already come, and tells those who had stopped working in expectation of it to get back to work."
+    },
+    {
+      "name": "1 Timothy",
+      "time": "Probably the mid-60s AD.",
+      "author": "Paul. The pastoral letters' authorship is debated.",
+      "place": "Written to Timothy at Ephesus.",
+      "background": "Instructions to a younger colleague about false teaching, prayer, the qualifications of overseers and deacons, and the handling of money and of people."
+    },
+    {
+      "name": "2 Timothy",
+      "time": "Probably the mid-60s AD.",
+      "author": "Paul. Authorship debated with the other pastorals.",
+      "place": "Written from prison in Rome.",
+      "background": "Reads as a last letter. Paul is cold, alone but for Luke, and asks for his cloak and his books. He charges Timothy to preach the word and says he has finished his course."
+    },
+    {
+      "name": "Titus",
+      "time": "Probably the mid-60s AD.",
+      "author": "Paul. Authorship debated with the other pastorals.",
+      "place": "Written to Titus in Crete.",
+      "background": "Appointing elders and ordering church life on a difficult island, with the insistence that grace teaches people how to live."
+    },
+    {
+      "name": "Philemon",
+      "time": "During an imprisonment, about 60 to 62 AD.",
+      "author": "Paul.",
+      "place": "Written from prison, to Colossae.",
+      "background": "A private letter of twenty-five verses. Onesimus, a runaway slave, has become a believer, and Paul sends him back to his master asking that he be received as a brother. Much argued over in the history of slavery and abolition."
+    },
+    {
+      "name": "Hebrews",
+      "time": "Before 70 AD, since it speaks of temple worship as continuing.",
+      "author": "Unknown. Proposals have included Paul, Barnabas, Apollos and Priscilla; the early church did not agree either.",
+      "place": "Unknown.",
+      "background": "Written to Jewish believers tempted to turn back. It argues that Christ is greater than angels, Moses, and the priesthood, and that his one sacrifice ends the need for the rest. Chapter 11 lists those who lived by faith."
+    },
+    {
+      "name": "James",
+      "time": "Possibly among the earliest New Testament writings, before 50 AD.",
+      "author": "Traditionally James, the Lord's brother.",
+      "place": "Jerusalem.",
+      "background": "Practical and blunt: trials, favouritism, the tongue, wealth, and the insistence that faith without works is dead. Often read alongside Paul on faith, and the two are usually held to be answering different questions."
+    },
+    {
+      "name": "1 Peter",
+      "time": "Probably the early 60s AD.",
+      "author": "Peter, with Silvanus.",
+      "place": "Written from 'Babylon', widely taken to mean Rome.",
+      "background": "Written to scattered believers facing hostility. It frames them as strangers and pilgrims, and holds up Christ's suffering as both their salvation and their pattern."
+    },
+    {
+      "name": "2 Peter",
+      "time": "Probably the mid-60s AD.",
+      "author": "Peter. Of all the New Testament books, this one's authorship is the most questioned in the early church and since.",
+      "place": "Uncertain.",
+      "background": "A warning against false teachers and against scoffers who ask why the promised return has not come. It answers that God is not slow but patient."
+    },
+    {
+      "name": "1 John",
+      "time": "Late first century.",
+      "author": "Traditionally John son of Zebedee.",
+      "place": "Traditionally Ephesus.",
+      "background": "Written against teaching that denied Jesus had truly come in the flesh. It gives tests by which readers may know they have eternal life: belief, obedience, and love for one another."
+    },
+    {
+      "name": "2 John",
+      "time": "Late first century.",
+      "author": "The elder; traditionally John.",
+      "place": "Uncertain.",
+      "background": "Thirteen verses to a chosen lady and her children, urging love and warning against receiving those who bring a different teaching."
+    },
+    {
+      "name": "3 John",
+      "time": "Late first century.",
+      "author": "The elder; traditionally John.",
+      "place": "Uncertain.",
+      "background": "Fourteen verses about hospitality to travelling teachers, commending Gaius and Demetrius and rebuking Diotrephes, who liked to have the pre-eminence."
+    },
+    {
+      "name": "Jude",
+      "time": "First century; closely related to 2 Peter.",
+      "author": "Jude, brother of James, and so traditionally a brother of Jesus.",
+      "place": "Uncertain.",
+      "background": "A short, urgent warning against those who had slipped into the church and turned grace into licence. It ends with one of the great benedictions."
+    },
+    {
+      "name": "Revelation",
+      "time": "Commonly dated to the mid-90s AD, under Domitian; some argue for the 60s.",
+      "author": "John. Traditionally John the apostle, though the early church debated it.",
+      "place": "The island of Patmos.",
+      "background": "Letters to seven churches, then visions of judgment and of the Lamb who was slain. Read in several ways: as addressing John's own day, as a sweep of history, as describing the end, or as a pattern repeated. It closes with a new heaven and a new earth, and every tear wiped away."
+    }
+  ]
+}

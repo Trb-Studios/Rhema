@@ -17,6 +17,14 @@
  */
 
 import { DatabaseSync } from 'node:sqlite';
+import {
+  GREEK_BOOKS,
+  HEBREW_BOOKS,
+  greekUrl,
+  hebrewUrl,
+  parseGreek,
+  parseHebrew,
+} from './originals.mjs';
 import { createWriteStream } from 'node:fs';
 import { mkdir, readFile, writeFile, copyFile, stat, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -212,11 +220,14 @@ async function main() {
   if (!hit) throw new Error('Full-text search returned nothing. The index did not build.');
   say(`  search works (${hit.name} ${hit.chapter}:${hit.verse})`);
 
+  // 3. The Hebrew and the Greek
+  await loadOriginals(db);
+
   db.exec('PRAGMA journal_mode = DELETE');
   db.exec('VACUUM');
   db.close();
 
-  // 3. Still to come. Each gets a loader here as its dataset is added.
+  // 4. Still to come. Each gets a loader here as its dataset is added.
   say('\nNot loaded yet (see data/sources.json)');
   for (const pending of [
     "Strong's numbers and lexicons",
@@ -227,7 +238,7 @@ async function main() {
     say(`  · ${pending}`);
   }
 
-  // 4. Hand it to the app
+  // 5. Hand it to the app
   await copyFile(DB, BUNDLE);
   const size = (await stat(DB)).size / 1024 / 1024;
   say(`\nDone. ${size.toFixed(1)} MB at data/bible.db, copied into the app.`);
@@ -240,6 +251,59 @@ async function main() {
  * plain browser with no Rust build. It means the reader can be designed and reviewed
  * against the real text rather than a sample. These files are build output, not source.
  */
+/**
+ * Loads the Westminster Leningrad Codex and the SBL Greek New Testament. The Hebrew
+ * covers the 39 books of the Old Testament, the Greek the 27 of the New, so between
+ * them every book has an original beside the English.
+ */
+async function loadOriginals(db) {
+  say('\nHebrew and Greek');
+
+  const insert = db.prepare(
+    `INSERT OR REPLACE INTO verses_original (edition, book_id, chapter, verse, text, words)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+  );
+
+  let hebrewVerses = 0;
+  db.exec('BEGIN');
+  for (const [index, stem] of HEBREW_BOOKS.entries()) {
+    const file = await fetchOnce(hebrewUrl(stem), join(RAW, `wlc-${stem}.xml`));
+    for (const verse of parseHebrew(await readFile(file, 'utf8'))) {
+      insert.run(
+        'hebrew',
+        index + 1,
+        verse.chapter,
+        verse.verse,
+        verse.text,
+        JSON.stringify(verse.words),
+      );
+      hebrewVerses += 1;
+    }
+  }
+  db.exec('COMMIT');
+  say(`  Hebrew: ${HEBREW_BOOKS.length} books, ${hebrewVerses.toLocaleString()} verses`);
+
+  let greekVerses = 0;
+  db.exec('BEGIN');
+  for (const [index, stem] of GREEK_BOOKS.entries()) {
+    const file = await fetchOnce(greekUrl(stem), join(RAW, `gnt-${stem}.txt`));
+    for (const verse of parseGreek(await readFile(file, 'utf8'))) {
+      insert.run(
+        'greek',
+        // The Greek books follow the Hebrew's 39 in the same numbering as the English.
+        HEBREW_BOOKS.length + index + 1,
+        verse.chapter,
+        verse.verse,
+        verse.text,
+        JSON.stringify(verse.words),
+      );
+      greekVerses += 1;
+    }
+  }
+  db.exec('COMMIT');
+  say(`  Greek: ${GREEK_BOOKS.length} books, ${greekVerses.toLocaleString()} verses`);
+}
+
 async function exportForWeb() {
   say('\nWeb preview');
 
@@ -256,6 +320,11 @@ async function exportForWeb() {
       .all()
       .map((row) => [row.book_id, row.words]),
   );
+  const originals = db
+    .prepare(
+      'SELECT edition, book_id, chapter, verse, text FROM verses_original ORDER BY edition, book_id, chapter, verse',
+    )
+    .all();
   db.close();
 
   await mkdir(WEB, { recursive: true });
@@ -286,6 +355,23 @@ async function exportForWeb() {
       }),
     );
   }
+
+  // The originals, one file per book and edition, fetched only when switched to.
+  const originalByBook = new Map();
+  for (const row of originals) {
+    const key = `${row.edition}-${row.book_id}`;
+    if (!originalByBook.has(key)) originalByBook.set(key, new Map());
+    const chapters = originalByBook.get(key);
+    if (!chapters.has(row.chapter)) chapters.set(row.chapter, []);
+    chapters.get(row.chapter).push([row.verse, row.text]);
+  }
+
+  for (const [key, chapters] of originalByBook) {
+    const ordered = {};
+    for (const [chapterNumber, list] of chapters) ordered[chapterNumber] = list;
+    await writeFile(join(WEB, `${key}.json`), JSON.stringify(ordered));
+  }
+  say(`  wrote ${originalByBook.size} original-language books`);
 
   await writeFile(
     join(WEB, 'index.json'),
