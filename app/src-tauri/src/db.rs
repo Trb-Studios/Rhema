@@ -16,6 +16,18 @@ pub struct Verse {
     pub heading: Option<String>,
 }
 
+/// One search result: where it is, the verse, and where the match falls in it.
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Hit {
+    pub book_id: u32,
+    pub book: String,
+    pub chapter: u32,
+    pub verse: u32,
+    pub text: String,
+    pub at: (usize, usize),
+}
+
 #[derive(Debug, Serialize)]
 pub struct Book {
     pub id: u32,
@@ -115,6 +127,98 @@ impl Library {
         })?;
 
         rows.collect()
+    }
+
+    /// Searches one edition. The English goes through SQLite's full-text index; the
+    /// Hebrew and Greek are scanned, which is fast enough at this size and avoids
+    /// tokenising scripts the index was not built for.
+    pub fn search(&self, query: &str, edition: &str, limit: u32) -> rusqlite::Result<Vec<Hit>> {
+        let guard = self.connection.lock().expect("database lock poisoned");
+        let Some(connection) = guard.as_ref() else {
+            return Ok(Vec::new());
+        };
+
+        let needle = query.trim().to_lowercase();
+        if needle.chars().count() < 2 {
+            return Ok(Vec::new());
+        }
+
+        let mut hits = Vec::new();
+
+        if edition == "kjv" {
+            let mut statement = connection.prepare(
+                "SELECT b.id, b.name, v.chapter, v.verse, v.text
+                   FROM verses_fts f
+                   JOIN verses v ON v.id = f.rowid
+                   JOIN books b ON b.id = v.book_id
+                  WHERE verses_fts MATCH ?1
+                  ORDER BY v.id
+                  LIMIT ?2",
+            )?;
+            // Quoted so punctuation in the query cannot be read as query syntax.
+            let phrase = format!("\"{}\"", needle.replace('"', ""));
+            let rows = statement.query_map(rusqlite::params![phrase, limit], |row| {
+                Ok((
+                    row.get::<_, u32>(0)?,
+                    row.get::<_, String>(1)?,
+                    row.get::<_, u32>(2)?,
+                    row.get::<_, u32>(3)?,
+                    row.get::<_, String>(4)?,
+                ))
+            })?;
+            for row in rows {
+                let (book_id, book, chapter, verse, text) = row?;
+                let at = text
+                    .to_lowercase()
+                    .find(&needle)
+                    .map(|start| (start, start + needle.len()))
+                    .unwrap_or((0, 0));
+                hits.push(Hit {
+                    book_id,
+                    book,
+                    chapter,
+                    verse,
+                    text,
+                    at,
+                });
+            }
+        } else {
+            let mut statement = connection.prepare(
+                "SELECT b.id, b.name, o.chapter, o.verse, o.text
+                   FROM verses_original o
+                   JOIN books b ON b.id = o.book_id
+                  WHERE o.edition = ?1 AND o.text LIKE ?2
+                  ORDER BY o.book_id, o.chapter, o.verse
+                  LIMIT ?3",
+            )?;
+            let like = format!("%{}%", query.trim());
+            let rows = statement.query_map(rusqlite::params![edition, like, limit], |row| {
+                Ok((
+                    row.get::<_, u32>(0)?,
+                    row.get::<_, String>(1)?,
+                    row.get::<_, u32>(2)?,
+                    row.get::<_, u32>(3)?,
+                    row.get::<_, String>(4)?,
+                ))
+            })?;
+            for row in rows {
+                let (book_id, book, chapter, verse, text) = row?;
+                let at = text
+                    .find(query.trim())
+                    .map(|start| (start, start + query.trim().len()))
+                    .unwrap_or((0, 0));
+                hits.push(Hit {
+                    book_id,
+                    book,
+                    chapter,
+                    verse,
+                    text,
+                    at,
+                });
+            }
+        }
+
+        Ok(hits)
     }
 
     pub fn chapter(&self, book: &str, chapter: u32) -> rusqlite::Result<Vec<Verse>> {

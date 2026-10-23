@@ -33,6 +33,18 @@ fn original(
         .map_err(|e| e.to_string())
 }
 
+/// Searches one edition of the whole Bible.
+#[tauri::command]
+fn search(
+    query: String,
+    edition: String,
+    state: tauri::State<db::Library>,
+) -> Result<Vec<db::Hit>, String> {
+    state
+        .search(&query, &edition, 200)
+        .map_err(|e| e.to_string())
+}
+
 /// A chapter of Scripture, verse by verse.
 #[tauri::command]
 fn chapter(
@@ -58,7 +70,8 @@ pub fn run() {
             library_path,
             books,
             chapter,
-            original
+            original,
+            search
         ])
         .run(tauri::generate_context!())
         .expect("error while running the app");

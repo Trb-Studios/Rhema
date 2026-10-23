@@ -109,6 +109,51 @@ export async function chapter(
   return verses;
 }
 
+/**
+ * Every verse of a book at once, for searching.
+ *
+ * Fetches the book's file a single time. Asking for it chapter by chapter would fetch
+ * the same file once per chapter, which for Psalms means 150 times over.
+ */
+export async function wholeBook(
+  book: Book,
+  edition: EditionId = 'kjv',
+): Promise<Array<{ chapter: number; verse: number; text: string }>> {
+  const out: Array<{ chapter: number; verse: number; text: string }> = [];
+
+  if (inDesktopApp()) {
+    for (let number = 1; number <= book.chapters; number += 1) {
+      for (const verse of await chapter(book, number, edition)) {
+        out.push({ chapter: number, verse: verse.number, text: verse.text });
+      }
+    }
+    return out;
+  }
+
+  if (edition === 'kjv') {
+    const response = await fetch(new URL(`${book.id}.json`, DATA));
+    if (!response.ok) return out;
+    const file = (await response.json()) as { chapters: string[][] };
+    file.chapters.forEach((verses, index) => {
+      verses.forEach((text, verseIndex) => {
+        out.push({ chapter: index + 1, verse: verseIndex + 1, text });
+      });
+    });
+    return out;
+  }
+
+  const response = await fetch(new URL(`${edition}-${book.id}.json`, DATA));
+  if (!response.ok) return out;
+  const file = (await response.json()) as Record<string, Array<[number, string]>>;
+  for (const [chapterNumber, verses] of Object.entries(file)) {
+    for (const [verseNumber, text] of verses) {
+      out.push({ chapter: Number(chapterNumber), verse: verseNumber, text });
+    }
+  }
+  out.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse);
+  return out;
+}
+
 /** The chapter before this one, crossing into the previous book. Null at Genesis 1. */
 export function previousChapter(all: Book[], book: Book, number: number) {
   if (number > 1) return { book, chapter: number - 1 };

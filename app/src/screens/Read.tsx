@@ -22,6 +22,7 @@ import { BookIntro } from '../components/BookIntro';
 import { SidePanel } from '../components/SidePanel';
 import type { PanelTab } from '../components/SidePanel';
 import { Menu } from '../components/Menu';
+import { SearchSheet } from '../components/SearchSheet';
 import {
   BookmarkIcon,
   ChevronIcon,
@@ -29,6 +30,7 @@ import {
   HighlightIcon,
   InfoIcon,
   NoteIcon,
+  SearchIcon,
 } from '../components/Icons';
 
 type Highlights = Record<string, number>;
@@ -59,6 +61,7 @@ export function Read() {
   const [highlights, setHighlights] = useState<Highlights>(loadHighlights);
   const [anchored, setAnchored] = useState<Anchored | null>(null);
   const [picking, setPicking] = useState(false);
+  const [searching, setSearching] = useState(false);
   const [panel, setPanel] = useState<PanelTab | null>('notes');
   const [showIntro, setShowIntro] = useState(true);
   const [error, setError] = useState('');
@@ -120,7 +123,12 @@ export function Read() {
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
-      if (picking || event.target instanceof HTMLTextAreaElement) return;
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setSearching(true);
+        return;
+      }
+      if (picking || searching || event.target instanceof HTMLTextAreaElement) return;
       if (event.target instanceof HTMLInputElement) return;
       if (event.key === 'ArrowLeft') goTo(previous);
       if (event.key === 'ArrowRight') goTo(next);
@@ -128,7 +136,7 @@ export function Read() {
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [previous, next, picking, goTo]);
+  }, [previous, next, picking, searching, goTo]);
 
   if (error) {
     return (
@@ -204,6 +212,10 @@ export function Read() {
 
         <Round label="Next chapter" disabled={!next} onClick={() => goTo(next)}>
           <ChevronIcon dir="right" size={18} />
+        </Round>
+
+        <Round label="Search the Bible" onClick={() => setSearching(true)}>
+          <SearchIcon size={18} />
         </Round>
 
         {available.length > 1 && (
@@ -555,6 +567,22 @@ export function Read() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <SearchSheet
+        open={searching}
+        edition={edition}
+        onClose={() => setSearching(false)}
+        onGo={(hit) => {
+          const target = all.find((candidate) => candidate.id === hit.bookId);
+          if (target) {
+            setBook(target);
+            setNumber(hit.chapter);
+            setShowIntro(false);
+            setSelected(hit.verse);
+          }
+          setSearching(false);
+        }}
+      />
 
       <MarkPopover anchored={anchored} onClose={() => setAnchored(null)} />
 
