@@ -1,0 +1,79 @@
+name: Installer
+
+# Builds a Windows installer you can download and run, without needing the updater
+# signing key. Start it from the Actions tab, or it runs on a push to main.
+#
+# The result is unsigned, so Windows shows "Windows protected your PC" on first run:
+# choose More info, then Run anyway. It also cannot update itself. Once the signing key
+# exists, the Release workflow builds a signed installer that can. See docs/releasing.md.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: installer-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    name: Windows installer
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: app/src-tauri
+
+      - run: npm ci
+
+      - name: Cache the downloaded datasets
+        uses: actions/cache@v4
+        with:
+          path: data/raw
+          key: datasets-${{ hashFiles('data/sources.json') }}
+
+      - name: Build the Bible database
+        run: npm run data:build
+
+      # Packaging an updater artifact needs the private signing key, which is
+      # deliberately not in the repository. This build drops that, so an installer can
+      # be produced before the key exists.
+      - name: Build without the updater
+        shell: bash
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = 'app/src-tauri/tauri.conf.json';
+            const config = JSON.parse(fs.readFileSync(path, 'utf8'));
+            config.bundle.createUpdaterArtifacts = false;
+            delete config.plugins.updater;
+            fs.writeFileSync(path, JSON.stringify(config, null, 2));
+            console.log('Updater packaging disabled for this build.');
+          "
+
+      - name: Build the installer
+        run: npm run build
+
+      - name: Collect the installer
+        shell: bash
+        run: |
+          mkdir -p out
+          find app/src-tauri/target/release/bundle -name '*-setup.exe' -exec cp {} out/ \;
+          ls -la out
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rhema-windows-installer
+          path: out/*.exe
+          if-no-files-found: error
+          retention-days: 30
