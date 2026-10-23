@@ -56,7 +56,13 @@ import {
   TargetIcon,
 } from '../components/Icons';
 
-export function Read() {
+/** Something the start page asked for, applied once the reader opens. */
+export type Entry = {
+  verse?: number;
+  open?: 'review' | 'library' | 'plan' | 'palette';
+};
+
+export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) {
   const { settings, update } = useSettings();
   const { progress, visit, toggleRead, isRead } = useProgress();
   const { saved, isSaved, toggle: toggleSaved } = useSaved();
@@ -91,6 +97,8 @@ export function Read() {
   const [bookMarks, setBookMarks] = useState<BookMarks>({});
   const [panel, setPanel] = useState<PanelTab | null>('notes');
   const [showIntro, setShowIntro] = useState(true);
+  // A verse the start page asked for, until it has been scrolled to.
+  const [jumpTo, setJumpTo] = useState<number | null>(entry?.verse ?? null);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -108,6 +116,30 @@ export function Read() {
     // The saved position decides where to open, and is not followed afterwards.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // What the start page asked for, applied once. The passage itself already arrives
+  // through the saved position, so only the verse and any panel are left to open.
+  useEffect(() => {
+    if (!entry) return;
+    if (entry.open === 'review') setReviewing(true);
+    if (entry.open === 'library') setLibrary(true);
+    if (entry.open === 'plan') setPlanning(true);
+    if (entry.open === 'palette') setPalette(true);
+    if (entry.open || entry.verse !== undefined) setShowIntro(false);
+    // Only ever on arrival; afterwards the reader is in charge.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Scroll to the verse the start page asked for, once the chapter is on the page.
+  // Cleared immediately afterwards, so scrolling away does not snap back.
+  useEffect(() => {
+    if (jumpTo === null || verses.length === 0) return;
+    const element = document.getElementById(`verse-${jumpTo}`);
+    element?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    // Selected as well as centred, so it is obvious which verse was asked for.
+    setSelected(jumpTo);
+    setJumpTo(null);
+  }, [jumpTo, verses]);
 
   // Every saved verse gets a review card as soon as it is saved, so the count in the
   // header is right without having to open review first.
@@ -269,6 +301,15 @@ export function Read() {
         run: () => book && toggleRead(book.id, number),
       },
       {
+        id: 'home',
+        title: 'Back to today',
+        hint: 'The verse of the day, where you stopped, and the year so far',
+        group: 'Read',
+        shortcut: 'Mod+Shift+H',
+        keywords: 'start home today portal',
+        run: () => onHome?.(),
+      },
+      {
         id: 'plan',
         title: 'Reading plan',
         hint: 'What to read today, and how far through you are',
@@ -415,6 +456,7 @@ export function Read() {
     listening,
     speech,
     library,
+    onHome,
   ]);
 
   commandsRef.current = commands;
@@ -455,24 +497,30 @@ export function Read() {
           scrollbarWidth: 'none',
         }}
       >
-        <span
-          aria-hidden="true"
-          style={{
-            width: 26,
-            height: 26,
-            borderRadius: 7,
-            background: 'var(--main-fill)',
-            color: 'var(--main-on)',
-            display: 'grid',
-            placeItems: 'center',
-            fontFamily: 'var(--font-display)',
-            fontSize: 15,
-            flex: 'none',
-            marginRight: 4,
-          }}
-        >
-          R
-        </span>
+        <Tip label="Back to today" shortcut="Mod+Shift+H">
+          <motion.button
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.94 }}
+            transition={spring.snappy}
+            onClick={onHome}
+            aria-label="Back to today"
+            style={{
+              width: 26,
+              height: 26,
+              borderRadius: 7,
+              background: 'var(--main-fill)',
+              color: 'var(--main-on)',
+              display: 'grid',
+              placeItems: 'center',
+              fontFamily: 'var(--font-display)',
+              fontSize: 15,
+              flex: 'none',
+              marginRight: 4,
+            }}
+          >
+            R
+          </motion.button>
+        </Tip>
 
         <Round
           label="Previous chapter"
@@ -804,6 +852,7 @@ export function Read() {
                             <SectionHeading heading={verse.heading} first={verse.number === 1} />
                           )}
                           <span
+                            id={`verse-${verse.number}`}
                             ref={
                               beingSpoken
                                 ? (node) =>

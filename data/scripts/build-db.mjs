@@ -28,6 +28,7 @@ import {
 import { GREEK_LEXICON, HEBREW_LEXICON, foldWord, hebrewKey, parseLexicon } from './lexicon.mjs';
 import { TIPNR, parseNames } from './names.mjs';
 import { splitHeading } from './acrostic.mjs';
+import { buildDaily } from './build-daily.mjs';
 import { CROSS_REFERENCES, parseCrossRefs } from './crossrefs.mjs';
 import { createWriteStream } from 'node:fs';
 import { mkdir, readFile, writeFile, copyFile, stat, rm } from 'node:fs/promises';
@@ -42,6 +43,7 @@ const RAW = join(DATA, 'raw');
 const DB = join(DATA, 'bible.db');
 const BUNDLE = join(DATA, '..', 'app', 'src-tauri', 'resources', 'bible.db');
 const WEB = join(DATA, '..', 'app', 'public', 'bible');
+const APP_SRC = join(DATA, '..', 'app', 'src');
 
 // This edition keeps the small-capital LORD that marks the divine name, and spells
 // place names without the dashes an older edition used. Both matter for study: LORD
@@ -688,6 +690,9 @@ async function exportForWeb() {
   );
 
   say(`  wrote ${books.length} books to app/public/bible`);
+
+  const daily = await buildDaily(DB, join(APP_SRC, 'lib', 'daily.generated.ts'));
+  say(`  chose ${daily} verses for the start screen`);
 }
 
 /**
