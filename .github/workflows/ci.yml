@@ -54,6 +54,18 @@ jobs:
 
       - run: npm ci
 
+      # Tauri's config declares the Bible database as a bundled resource, so the Rust
+      # build refuses to start without it. Building it here also checks the data
+      # pipeline on every push.
+      - name: Cache the downloaded datasets
+        uses: actions/cache@v4
+        with:
+          path: data/raw
+          key: datasets-${{ hashFiles('data/sources.json') }}
+
+      - name: Build the Bible database
+        run: npm run data:build
+
       - name: Rust formatting
         working-directory: app/src-tauri
         run: cargo fmt --check

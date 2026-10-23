@@ -36,6 +36,12 @@ jobs:
 
       - run: npm ci
 
+      - name: Cache the downloaded datasets
+        uses: actions/cache@v4
+        with:
+          path: data/raw
+          key: datasets-${{ hashFiles('data/sources.json') }}
+
       - name: Build the Bible database
         run: npm run data:build
 
