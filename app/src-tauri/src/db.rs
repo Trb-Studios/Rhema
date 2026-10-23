@@ -470,6 +470,59 @@ impl Library {
         Ok(hits)
     }
 
+    /// Every word of one book in an original edition, keyed "chapter:verse".
+    ///
+    /// Each word is [written form, dictionary form, parsing], the same shape the web
+    /// build reads from JSON, so the word study is one piece of code either way.
+    pub fn words(
+        &self,
+        edition: &str,
+        book_id: u32,
+    ) -> rusqlite::Result<HashMap<String, Vec<Vec<String>>>> {
+        let guard = self.connection.lock().expect("database lock poisoned");
+        let Some(connection) = guard.as_ref() else {
+            return Ok(HashMap::new());
+        };
+
+        let mut statement = connection.prepare(
+            "SELECT chapter, verse, words FROM verses_original
+              WHERE edition = ?1 AND book_id = ?2
+              ORDER BY chapter, verse",
+        )?;
+
+        let mut out: HashMap<String, Vec<Vec<String>>> = HashMap::new();
+        let rows = statement.query_map(rusqlite::params![edition, book_id], |row| {
+            Ok((
+                row.get::<_, u32>(0)?,
+                row.get::<_, u32>(1)?,
+                row.get::<_, String>(2)?,
+            ))
+        })?;
+
+        for row in rows {
+            let (chapter, verse, json) = row?;
+            // The column holds [{w, l, m}, ...]; the interface wants [[w, l, m], ...].
+            let parsed: Vec<serde_json::Value> = serde_json::from_str(&json).unwrap_or_default();
+            let words = parsed
+                .into_iter()
+                .map(|word| {
+                    ["w", "l", "m"]
+                        .iter()
+                        .map(|field| {
+                            word.get(*field)
+                                .and_then(|value| value.as_str())
+                                .unwrap_or("")
+                                .to_string()
+                        })
+                        .collect()
+                })
+                .collect();
+            out.insert(format!("{chapter}:{verse}"), words);
+        }
+
+        Ok(out)
+    }
+
     pub fn chapter(&self, book: &str, chapter: u32) -> rusqlite::Result<Vec<Verse>> {
         let guard = self.connection.lock().expect("database lock poisoned");
         let Some(connection) = guard.as_ref() else {

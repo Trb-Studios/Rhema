@@ -8,7 +8,7 @@
  */
 
 import type { EditionId } from './editions';
-import { inDesktopApp } from './tauri';
+import { inDesktopApp, invokeCommand } from './tauri';
 
 const DATA = new URL('./bible/', document.baseURI);
 
@@ -41,15 +41,23 @@ export async function meaningOf(edition: EditionId, lemma: string): Promise<Lexi
 }
 
 export async function wordsForBook(edition: EditionId, bookId: number): Promise<BookWords | null> {
-  if (edition === 'kjv' || inDesktopApp()) return bookCache.get(`${edition}-${bookId}`) ?? null;
+  // The English carries no parsing; only the Hebrew and Greek have words to study.
+  if (edition === 'kjv') return null;
 
   const key = `${edition}-words-${bookId}`;
   const already = bookCache.get(key);
   if (already) return already;
 
-  const response = await fetch(new URL(`${key}.json`, DATA));
-  if (!response.ok) return null;
-  const file = (await response.json()) as BookWords;
+  let file: BookWords | null = null;
+
+  if (inDesktopApp()) {
+    file = await invokeCommand<BookWords>('words', { edition, bookId });
+  } else {
+    const response = await fetch(new URL(`${key}.json`, DATA));
+    if (response.ok) file = (await response.json()) as BookWords;
+  }
+
+  if (!file) return null;
   bookCache.set(key, file);
   return file;
 }

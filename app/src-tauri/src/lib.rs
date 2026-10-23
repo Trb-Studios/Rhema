@@ -105,6 +105,16 @@ fn open_backup(path: String) -> Result<String, String> {
     std::fs::read_to_string(&target).map_err(|e| e.to_string())
 }
 
+/// Every word of one book in an original edition, for the word study.
+#[tauri::command]
+fn words(
+    edition: String,
+    book_id: u32,
+    state: tauri::State<db::Library>,
+) -> Result<std::collections::HashMap<String, Vec<Vec<String>>>, String> {
+    state.words(&edition, book_id).map_err(|e| e.to_string())
+}
+
 /// A chapter of Scripture, verse by verse.
 #[tauri::command]
 fn chapter(
@@ -135,6 +145,7 @@ pub fn run() {
             mentions,
             subjects,
             cross_references,
+            words,
             save_backup,
             open_backup
         ])
