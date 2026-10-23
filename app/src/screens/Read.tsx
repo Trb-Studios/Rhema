@@ -23,6 +23,10 @@ import { SidePanel } from '../components/SidePanel';
 import type { PanelTab } from '../components/SidePanel';
 import { Menu } from '../components/Menu';
 import { SearchSheet } from '../components/SearchSheet';
+import { WordPopover } from '../components/WordPopover';
+import type { WordAnchor } from '../components/WordPopover';
+import { wordsForBook } from '../lib/words';
+import type { Word } from '../lib/words';
 import {
   BookmarkIcon,
   ChevronIcon,
@@ -62,6 +66,9 @@ export function Read() {
   const [anchored, setAnchored] = useState<Anchored | null>(null);
   const [picking, setPicking] = useState(false);
   const [searching, setSearching] = useState(false);
+  const [wordAnchor, setWordAnchor] = useState<WordAnchor | null>(null);
+  // The words of the chapter on screen, when an original edition is open.
+  const [chapterWords, setChapterWords] = useState<Record<string, Word[]> | null>(null);
   const [panel, setPanel] = useState<PanelTab | null>('notes');
   const [showIntro, setShowIntro] = useState(true);
   const [error, setError] = useState('');
@@ -98,6 +105,13 @@ export function Read() {
       .then(setVerses)
       .catch((cause: Error) => setError(cause.message));
     if (edition === 'kjv') visit(book.id, number);
+
+    setWordAnchor(null);
+    if (edition === 'kjv') {
+      setChapterWords(null);
+    } else {
+      void wordsForBook(edition, book.id).then(setChapterWords);
+    }
   }, [book, number, edition, visit]);
 
   useEffect(() => {
@@ -405,39 +419,66 @@ export function Read() {
                                 {verse.number}
                               </button>
                             )}
-                            {/* Marks belong to the English; the originals are read as they stand. */}
-                            {edition === 'kjv'
-                              ? markUp(verse.text).map((piece, index) =>
-                                  piece.type === 'text' ? (
-                                    <span key={index}>{piece.text}</span>
-                                  ) : (
+                            {/* Marks belong to the English; an original is read word by word. */}
+                            {edition !== 'kjv' && chapterWords
+                              ? (chapterWords[`${number}:${verse.number}`] ?? []).map(
+                                  (word, index) => (
                                     <button
                                       key={index}
                                       onClick={(event) => {
                                         const box = event.currentTarget.getBoundingClientRect();
-                                        setAnchored({
-                                          subject: piece.subject,
-                                          at: { book: book.name, chapter: number },
+                                        setWordAnchor({
+                                          word,
+                                          edition,
+                                          bookId: book.id,
+                                          book: book.name,
                                           x: box.left + box.width / 2,
                                           y: box.bottom,
                                         });
                                       }}
                                       style={{
                                         font: 'inherit',
-                                        color:
-                                          piece.subject.kind === 'person'
-                                            ? 'var(--mark-name)'
-                                            : 'var(--mark-place)',
-                                        borderBottom:
-                                          '1.5px solid color-mix(in srgb, currentColor 40%, transparent)',
-                                        borderRadius: 2,
+                                        borderRadius: 3,
+                                        padding: '0 1px',
                                       }}
+                                      className="word"
                                     >
-                                      {piece.text}
+                                      {word[0]}
                                     </button>
                                   ),
                                 )
-                              : verse.text}{' '}
+                              : edition === 'kjv'
+                                ? markUp(verse.text).map((piece, index) =>
+                                    piece.type === 'text' ? (
+                                      <span key={index}>{piece.text}</span>
+                                    ) : (
+                                      <button
+                                        key={index}
+                                        onClick={(event) => {
+                                          const box = event.currentTarget.getBoundingClientRect();
+                                          setAnchored({
+                                            subject: piece.subject,
+                                            at: { book: book.name, chapter: number },
+                                            x: box.left + box.width / 2,
+                                            y: box.bottom,
+                                          });
+                                        }}
+                                        style={{
+                                          font: 'inherit',
+                                          color:
+                                            piece.subject.kind === 'person'
+                                              ? 'var(--mark-name)'
+                                              : 'var(--mark-place)',
+                                          borderBottom:
+                                            '1.5px solid color-mix(in srgb, currentColor 40%, transparent)',
+                                          borderRadius: 2,
+                                        }}
+                                      >
+                                        {piece.text}
+                                      </button>
+                                    ),
+                                  )
+                                : verse.text}{' '}
                           </span>
                         </span>
                       );
@@ -581,6 +622,16 @@ export function Read() {
             setSelected(hit.verse);
           }
           setSearching(false);
+        }}
+      />
+
+      <WordPopover
+        anchor={wordAnchor}
+        onClose={() => setWordAnchor(null)}
+        onGo={(chapterNumber, verseNumber) => {
+          setNumber(chapterNumber);
+          setSelected(verseNumber);
+          setWordAnchor(null);
         }}
       />
 

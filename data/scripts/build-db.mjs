@@ -322,7 +322,7 @@ async function exportForWeb() {
   );
   const originals = db
     .prepare(
-      'SELECT edition, book_id, chapter, verse, text FROM verses_original ORDER BY edition, book_id, chapter, verse',
+      'SELECT edition, book_id, chapter, verse, text, words FROM verses_original ORDER BY edition, book_id, chapter, verse',
     )
     .all();
   db.close();
@@ -373,6 +373,8 @@ async function exportForWeb() {
   }
   say(`  wrote ${originalByBook.size} original-language books`);
 
+  await exportWordIndex(originals);
+
   await writeFile(
     join(WEB, 'index.json'),
     JSON.stringify(
@@ -388,6 +390,56 @@ async function exportForWeb() {
   );
 
   say(`  wrote ${books.length} books to app/public/bible`);
+}
+
+/**
+ * The word index: every dictionary form, with each word that bears it and where.
+ *
+ * Written per book so a word study loads only what it needs, plus one small summary of
+ * how often each form occurs across the whole Bible. Loading one index for all 443,000
+ * words would be several megabytes before a reader had asked anything of it.
+ */
+/**
+ * The dictionary entry a word belongs to.
+ *
+ * A Hebrew lemma carries its prefixes, so the same word appears as "7225" and "b/7225"
+ * depending on what precedes it. Counting those separately made a common word look
+ * rare. Only the entry itself counts, and the letter that distinguishes homonyms is
+ * kept, since "1254 a" and "1254 b" are different roots.
+ */
+function entryOf(edition, lemma) {
+  if (edition !== 'hebrew') return lemma;
+  const last = lemma.split('/').pop() ?? lemma;
+  return last.replace(/\s+/g, '');
+}
+
+async function exportWordIndex(originals) {
+  const byBook = new Map();
+  const totals = { hebrew: {}, greek: {} };
+
+  for (const row of originals) {
+    const words = JSON.parse(row.words);
+    const key = `${row.edition}-words-${row.book_id}`;
+    if (!byBook.has(key)) byBook.set(key, {});
+    const book = byBook.get(key);
+    const reference = `${row.chapter}:${row.verse}`;
+    // [written form, dictionary form, parsing] per word, in the order they are read.
+    book[reference] = words.map((word) => [word.w, word.l, word.m]);
+
+    for (const word of words) {
+      if (!word.l) continue;
+      const entry = entryOf(row.edition, word.l);
+      totals[row.edition][entry] = (totals[row.edition][entry] ?? 0) + 1;
+    }
+  }
+
+  for (const [key, book] of byBook) {
+    await writeFile(join(WEB, `${key}.json`), JSON.stringify(book));
+  }
+  await writeFile(join(WEB, 'word-totals.json'), JSON.stringify(totals));
+
+  const forms = Object.keys(totals.hebrew).length + Object.keys(totals.greek).length;
+  say(`  wrote word data for ${byBook.size} books, ${forms.toLocaleString()} dictionary forms`);
 }
 
 main().catch((error) => {

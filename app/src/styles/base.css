@@ -76,3 +76,12 @@ button {
   text-wrap: pretty;
   user-select: text;
 }
+
+/* A word in the Hebrew or Greek. Words sit apart from each other already, so the
+   affordance is a hover rather than an underline that would clutter a page of them. */
+.word {
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+.word:hover {
+  background: color-mix(in srgb, var(--main-fill) 40%, transparent);
+}
