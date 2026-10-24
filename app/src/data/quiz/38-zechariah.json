@@ -1,0 +1,25 @@
+{
+  "book": 38,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "Zechariah was the son of whom?", "a": "Berechiah", "acc": ["berechiah", "barachiah"], "w": ["Amoz", "Hilkiah", "Buzi"], "r": "Zec.1.1" },
+    { "l": 2, "f": "god", "q": "'Turn ye unto me... and I will turn unto ___.'", "a": "You", "acc": ["you"], "w": ["Jerusalem", "The temple", "Israel"], "r": "Zec.1.3" },
+    { "l": 2, "f": "story", "q": "What did Zechariah see among the myrtle trees by night?", "a": "A man riding upon a red horse", "acc": ["a man on a red horse", "red horse"], "ty": 0, "w": ["A golden candlestick", "Four chariots", "A flying roll"], "r": "Zec.1.8" },
+    { "l": 2, "f": "story", "q": "What did the man in chapter 2 carry to measure Jerusalem?", "a": "A measuring line", "acc": ["measuring line", "line", "a line"], "w": ["A rod of iron", "A scroll", "A plumbline"], "r": "Zec.2.1" },
+    { "l": 2, "f": "god", "q": "What will God be unto Jerusalem round about?", "a": "A wall of fire", "acc": ["a wall of fire", "wall of fire"], "w": ["A tower of stone", "A king", "A distant judge"], "r": "Zec.2.5" },
+    { "l": 2, "f": "story", "q": "What was taken away from Joshua the high priest?", "a": "His filthy garments", "acc": ["filthy garments", "dirty clothes", "filthy clothes"], "w": ["His crown", "His sandals", "His breastplate"], "r": "Zec.3.4" },
+    { "l": 2, "f": "god", "q": "Whom does God promise to bring forth, 'my servant the ___'?", "a": "BRANCH", "acc": ["branch", "the branch"], "w": ["Rock", "Lamb", "Star"], "r": "Zec.3.8" },
+    { "t": "fill", "l": 2, "f": "god", "q": "The word to Zerubbabel — complete it.", "text": "Not by [might], nor by [power], but by my spirit, saith the LORD of hosts.", "w": ["gold", "wisdom", "prayer"], "r": "Zec.4.6" },
+    { "l": 2, "f": "story", "q": "What did Zechariah see with seven lamps and two olive trees?", "a": "A candlestick all of gold", "acc": ["candlestick", "a golden candlestick", "lampstand", "golden candlestick"], "w": ["An ark", "A throne", "A chariot"], "r": "Zec.4.2" },
+    { "l": 2, "f": "god", "q": "'For who hath despised the day of small ___?'", "a": "Things", "acc": ["things"], "w": ["Men", "Beginnings", "Gifts"], "r": "Zec.4.10" },
+    { "l": 2, "f": "story", "q": "What flying thing did Zechariah see in chapter 5?", "a": "A roll", "acc": ["roll", "a flying roll", "scroll", "a scroll"], "w": ["An eagle", "A chariot", "An angel"], "r": "Zec.5.1" },
+    { "l": 2, "f": "story", "q": "How many chariots came out from between two mountains of brass?", "a": "Four", "acc": ["4"], "w": ["Seven", "Two", "Twelve"], "r": "Zec.6.1" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Zechariah 9 — complete it.", "text": "behold, thy [King] cometh unto thee: he is just, and having salvation; lowly, and riding upon an [ass],", "w": ["prophet", "horse", "chariot"], "r": "Zec.9.9", "x": "Fulfilled when Jesus rode into Jerusalem (Matthew 21:5)." },
+    { "l": 2, "f": "god", "q": "What price was weighed for the shepherd in Zechariah 11?", "a": "Thirty pieces of silver", "acc": ["30 pieces of silver", "thirty pieces of silver", "thirty"], "w": ["A talent of gold", "Fifty shekels", "Seven pieces of gold"], "r": "Zec.11.12" },
+    { "l": 2, "f": "god", "q": "To whom were the thirty pieces cast in the house of the LORD?", "a": "The potter", "acc": ["the potter", "potter"], "w": ["The priest", "The king", "The poor"], "r": "Zec.11.13" },
+    { "l": 2, "f": "god", "q": "Upon whom shall they look, and mourn, in Zechariah 12:10?", "a": "Me whom they have pierced", "acc": ["the one they pierced", "him whom they pierced", "whom they have pierced"], "ty": 0, "w": ["The fallen temple", "The empty throne", "Their idols"], "r": "Zec.12.10" },
+    { "l": 2, "f": "god", "q": "What shall be opened for sin and for uncleanness?", "a": "A fountain", "acc": ["fountain", "a fountain"], "w": ["A gate", "A book", "A grave"], "r": "Zec.13.1" },
+    { "l": 2, "f": "god", "q": "'Smite the shepherd, and the sheep shall be ___.'", "a": "Scattered", "acc": ["scattered"], "w": ["Saved", "Sold", "Gathered"], "r": "Zec.13.7", "x": "Jesus quotes this the night he was betrayed (Matthew 26:31)." },
+    { "l": 2, "f": "god", "q": "Where shall his feet stand in that day?", "a": "The mount of Olives", "acc": ["mount of olives", "the mount of olives", "olivet"], "w": ["Mount Zion", "Mount Sinai", "Mount Carmel"], "r": "Zec.14.4" },
+    { "l": 2, "f": "god", "q": "What shall be upon the bells of the horses in that day?", "a": "HOLINESS UNTO THE LORD", "acc": ["holiness unto the lord", "holiness to the lord"], "w": ["THE LORD OF HOSTS", "GOD IS KING", "PEACE TO ZION"], "r": "Zec.14.20" }
+  ]
+}

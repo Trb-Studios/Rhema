@@ -1,0 +1,15 @@
+{
+  "book": 36,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "In the days of which king did Zephaniah prophesy?", "a": "Josiah", "w": ["Hezekiah", "Manasseh", "Uzziah"], "r": "Zep.1.1" },
+    { "l": 2, "f": "remember", "q": "Back to which king does Zephaniah trace his family?", "a": "Hizkiah", "acc": ["hezekiah", "hizkiah"], "w": ["David", "Solomon", "Asa"], "r": "Zep.1.1" },
+    { "l": 2, "f": "god", "q": "Which day does Zephaniah say is near, and hasteth greatly?", "a": "The great day of the LORD", "acc": ["day of the lord", "the day of the lord"], "w": ["The sabbath", "The day of atonement", "The day of harvest"], "r": "Zep.1.14" },
+    { "l": 2, "f": "god", "q": "'Seek ye the LORD, all ye ___ of the earth.'", "a": "Meek", "acc": ["meek"], "w": ["Kings", "Nations", "Strong"], "r": "Zep.2.3" },
+    { "l": 2, "f": "remember", "q": "Which great city will God make a desolation, dry like a wilderness?", "a": "Nineveh", "w": ["Babylon", "Tyre", "Damascus"], "r": "Zep.2.13" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Zephaniah 3 — complete it.", "text": "he will rejoice over thee with [joy]; he will rest in his [love], he will joy over thee with singing.", "w": ["peace", "house", "praise"], "r": "Zep.3.17" },
+    { "l": 2, "f": "god", "q": "What will God turn to the people, that they may all call upon him?", "a": "A pure language", "acc": ["pure language", "a pure language", "pure lips"], "w": ["A new law", "A great army", "Gold"], "r": "Zep.3.9" },
+    { "l": 2, "f": "god", "q": "Whom will God leave in the midst of Jerusalem to trust in his name?", "a": "An afflicted and poor people", "acc": ["the poor", "afflicted and poor"], "ty": 0, "w": ["Proud rulers", "Foreign kings", "Rich merchants"], "r": "Zep.3.12" },
+    { "l": 2, "f": "god", "q": "What will God do with her that halteth and her that was driven out?", "a": "Gather them", "acc": ["gather them", "save them", "gather", "save"], "w": ["Leave them", "Judge them", "Sell them"], "r": "Zep.3.19" },
+    { "t": "tf", "l": 2, "f": "god", "q": "Zephaniah ends with God promising to make his people a name and a praise among all people.", "a": true, "r": "Zep.3.20" }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "book": 28,
+  "questions": [
+    { "l": 1, "f": "story", "q": "Whom did Hosea take as his wife?", "a": "Gomer", "w": ["Hagar", "Rahab", "Diblaim"], "r": "Hos.1.3" },
+    { "l": 2, "f": "story", "q": "What did Hosea's marriage picture?", "a": "Israel's unfaithfulness to the LORD", "ty": 0, "w": ["Solomon's many wives", "A royal wedding", "Babylon's pride"], "r": "Hos.1.2" },
+    { "l": 2, "f": "remember", "q": "What was Hosea's daughter called, meaning 'not having obtained mercy'?", "a": "Lo-ruhamah", "acc": ["loruhamah", "lo ruhamah"], "w": ["Lo-ammi", "Gomer", "Jezreel"], "r": "Hos.1.6" },
+    { "l": 2, "f": "remember", "q": "What did the name Lo-ammi say?", "a": "Ye are not my people", "acc": ["not my people", "ye are not my people", "you are not my people"], "w": ["No mercy", "God scatters", "My beloved"], "r": "Hos.1.9" },
+    { "l": 2, "f": "god", "q": "What will God say to them which were not his people?", "a": "Thou art my people", "acc": ["you are my people", "thou art my people"], "w": ["Depart from me", "I know you not", "You are cursed"], "r": "Hos.2.23" },
+    { "l": 2, "f": "story", "q": "What did Hosea pay to buy his wife back?", "a": "Fifteen pieces of silver and barley", "acc": ["fifteen pieces of silver"], "ty": 0, "w": ["Thirty pieces of silver", "A talent of gold", "Nothing"], "r": "Hos.3.2" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Hosea 4 — complete it.", "text": "My people are destroyed for lack of [knowledge]:", "w": ["bread", "faith", "rain"], "r": "Hos.4.6" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Hosea 6 — complete it.", "text": "For I desired [mercy], and not [sacrifice];", "w": ["gold", "prayer", "law"], "r": "Hos.6.6", "x": "Jesus quotes this twice in Matthew (9:13; 12:7)." },
+    { "l": 2, "f": "god", "q": "'They have sown the wind, and they shall reap...' what?", "a": "The whirlwind", "acc": ["whirlwind", "the whirlwind"], "w": ["The storm", "Nothing", "The harvest"], "r": "Hos.8.7" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Hosea 11 — complete it.", "text": "When Israel was a [child], then I loved him, and called my [son] out of Egypt.", "w": ["servant", "people", "nation"], "r": "Hos.11.1", "x": "Matthew 2:15 applies this to Jesus." },
+    { "l": 2, "f": "god", "q": "How does God say he drew Israel?", "a": "With cords of a man, with bands of love", "ty": 0, "w": ["With chains of iron", "With a rod", "With fire"], "r": "Hos.11.4" },
+    { "l": 2, "f": "god", "q": "'How shall I give thee up, Ephraim?' What does God say of his heart?", "a": "It is turned within me", "acc": ["turned within me", "is turned within me"], "ty": 0, "w": ["It grows cold", "It burns with anger", "It forgets"], "r": "Hos.11.8" },
+    { "l": 2, "f": "god", "q": "What does God say to death in Hosea 13:14?", "a": "O death, I will be thy plagues", "ty": 0, "w": ["Thou shalt win", "Thou art final", "Thou art sleep"], "r": "Hos.13.14" },
+    { "l": 2, "f": "god", "q": "What were Israel to take with them when they returned to the LORD?", "a": "Words", "acc": ["words"], "w": ["Gold", "Sacrifices", "Weapons"], "r": "Hos.14.2" },
+    { "l": 2, "f": "remember", "q": "To what is Ephraim compared in 7:11?", "a": "A silly dove without heart", "acc": ["a dove", "dove", "silly dove"], "ty": 0, "w": ["An eagle", "A wolf", "A lamb"], "r": "Hos.7.11" },
+    { "l": 2, "f": "remember", "q": "To what is Ephraim compared in 7:8?", "a": "A cake not turned", "acc": ["cake not turned", "a cake not turned", "half baked cake"], "w": ["A broken pot", "A dry tree", "A lost sheep"], "r": "Hos.7.8" },
+    { "t": "tf", "l": 2, "f": "god", "q": "God says he will betroth Israel unto him for ever.", "a": true, "r": "Hos.2.19" },
+    { "l": 2, "f": "god", "q": "Which valley will God give for a door of hope?", "a": "Achor", "acc": ["valley of achor", "achor"], "w": ["Jezreel", "Hinnom", "Elah"], "r": "Hos.2.15" },
+    { "l": 2, "f": "remember", "q": "Which king of Israel reigned when Hosea prophesied?", "a": "Jeroboam the son of Joash", "acc": ["jeroboam", "jeroboam ii"], "w": ["Ahab", "Jehu", "Omri"], "r": "Hos.1.1" },
+    { "l": 2, "f": "god", "q": "'He hath torn, and he will ___ us.'", "a": "Heal", "acc": ["heal"], "w": ["Judge", "Leave", "Scatter"], "r": "Hos.6.1" }
+  ]
+}

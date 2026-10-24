@@ -1,0 +1,15 @@
+{
+  "book": 39,
+  "questions": [
+    { "l": 1, "f": "god", "q": "What does God say first to Israel in Malachi?", "a": "I have loved you", "acc": ["i have loved you", "i love you"], "w": ["I have forsaken you", "Return to Egypt", "Build my house"], "r": "Mal.1.2" },
+    { "l": 2, "f": "god", "q": "What were the priests offering on God's altar?", "a": "The blind, the lame and the sick", "acc": ["blind and lame", "the blind lame and sick"], "ty": 0, "w": ["Their best rams", "Gold and silver", "Nothing at all"], "r": "Mal.1.8" },
+    { "l": 2, "f": "god", "q": "'For I am the LORD, I change ___.'", "a": "Not", "acc": ["not"], "w": ["Always", "Seasons", "Times"], "r": "Mal.3.6" },
+    { "l": 2, "f": "god", "q": "In what did God say Israel had robbed him?", "a": "Tithes and offerings", "acc": ["tithes and offerings", "tithes", "tithe"], "w": ["Sacrifices of doves", "Stealing the ark", "Silver from the temple"], "r": "Mal.3.8" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Malachi 3 — complete it.", "text": "Bring ye all the [tithes] into the storehouse, that there may be meat in mine house, and prove me now herewith, saith the LORD of hosts, if I will not open you the [windows] of heaven,", "w": ["firstfruits", "gates", "doors"], "r": "Mal.3.10" },
+    { "l": 2, "f": "god", "q": "Whom will God send to prepare the way before him?", "a": "My messenger", "acc": ["messenger", "my messenger"], "w": ["My king", "An army", "Moses"], "r": "Mal.3.1" },
+    { "l": 2, "f": "god", "q": "Which prophet will God send before the great and dreadful day of the LORD?", "a": "Elijah", "acc": ["elijah", "elias"], "w": ["Moses", "Isaiah", "Samuel"], "r": "Mal.4.5", "x": "Jesus says John the Baptist is this Elias (Matthew 11:14)." },
+    { "l": 2, "f": "god", "q": "With what shall the Sun of righteousness arise?", "a": "Healing in his wings", "acc": ["healing", "healing in his wings"], "w": ["A sword", "Fire", "A crown"], "r": "Mal.4.2" },
+    { "l": 2, "f": "god", "q": "What does the LORD say he hateth in Malachi 2:16?", "a": "Putting away", "acc": ["divorce", "putting away"], "w": ["Sacrifice", "The sabbath", "The temple"], "r": "Mal.2.16" },
+    { "l": 2, "f": "remember", "q": "What was written before God for them that feared the LORD?", "a": "A book of remembrance", "acc": ["book of remembrance", "a book of remembrance"], "w": ["A new law", "A letter to the king", "A psalm"], "r": "Mal.3.16" }
+  ]
+}

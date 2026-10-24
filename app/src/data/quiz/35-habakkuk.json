@@ -1,0 +1,15 @@
+{
+  "book": 35,
+  "questions": [
+    { "l": 1, "f": "god", "q": "What does Habakkuk first cry out to God about?", "a": "Violence and iniquity going unpunished", "ty": 0, "w": ["His own poverty", "A famine", "Being ignored by the king"], "r": "Hab.1.2" },
+    { "l": 2, "f": "story", "q": "Whom did God say he was raising up?", "a": "The Chaldeans", "acc": ["chaldeans", "babylonians", "babylon"], "w": ["The Assyrians", "The Egyptians", "The Persians"], "r": "Hab.1.6" },
+    { "l": 2, "f": "story", "q": "Where did Habakkuk set himself to wait for God's answer?", "a": "Upon his watch, upon the tower", "acc": ["watch", "tower", "on the tower", "upon the tower"], "ty": 0, "w": ["In the temple", "By the river", "On mount Zion"], "r": "Hab.2.1" },
+    { "l": 2, "f": "god", "q": "What was Habakkuk told to do with the vision?", "a": "Write it and make it plain upon tables", "acc": ["write it", "write it down", "write the vision"], "ty": 0, "w": ["Keep it secret", "Sing it", "Tell only the king"], "r": "Hab.2.2" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Habakkuk 2 — complete it.", "text": "but the [just] shall live by his [faith].", "w": ["wise", "works", "strength"], "r": "Hab.2.4", "x": "Paul builds Romans and Galatians on this verse." },
+    { "l": 2, "f": "god", "q": "What shall the earth be filled with, as the waters cover the sea?", "a": "The knowledge of the glory of the LORD", "acc": ["knowledge of the glory of the lord"], "ty": 0, "w": ["The armies of Babylon", "Water", "Darkness"], "r": "Hab.2.14" },
+    { "l": 2, "f": "god", "q": "'The LORD is in his holy temple: let all the earth keep ___.'", "a": "Silence", "acc": ["silence"], "w": ["Watch", "Feast", "Fasting"], "r": "Hab.2.20" },
+    { "l": 2, "f": "god", "q": "'In wrath remember ___,' Habakkuk prays.", "a": "Mercy", "acc": ["mercy"], "w": ["Israel", "Sin", "Babylon"], "r": "Hab.3.2" },
+    { "l": 2, "f": "god", "q": "Though the fig tree shall not blossom, what will Habakkuk do?", "a": "Rejoice in the LORD", "acc": ["rejoice", "rejoice in the lord", "joy in god"], "w": ["Curse the land", "Leave Judah", "Give up"], "r": "Hab.3.18" },
+    { "l": 2, "f": "god", "q": "Like what will God make Habakkuk's feet?", "a": "Hinds' feet", "acc": ["hinds feet", "hind's feet", "deer's feet", "hinds"], "w": ["Eagles' wings", "Lions' paws", "Horses' hooves"], "r": "Hab.3.19" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "book": 37,
+  "questions": [
+    { "l": 1, "f": "story", "q": "What was Haggai urging the people to build?", "a": "The house of the LORD", "acc": ["the temple", "temple", "house of the lord", "the house"], "w": ["The walls", "Their own houses", "The king's palace"], "r": "Hag.1.8" },
+    { "l": 2, "f": "story", "q": "Which governor did Haggai address with Joshua the high priest?", "a": "Zerubbabel", "w": ["Ezra", "Nehemiah", "Darius"], "r": "Hag.1.1" },
+    { "l": 2, "f": "god", "q": "Where were the people dwelling while God's house lay waste?", "a": "In their cieled houses", "acc": ["cieled houses", "panelled houses", "their own houses"], "ty": 0, "w": ["In tents", "In caves", "In Babylon"], "r": "Hag.1.4" },
+    { "l": 2, "f": "god", "q": "'Consider your ___,' God told them twice.", "a": "Ways", "acc": ["ways"], "w": ["Fathers", "Laws", "Harvests"], "r": "Hag.1.5" },
+    { "l": 2, "f": "remember", "q": "Into what did he that earned wages put them?", "a": "A bag with holes", "acc": ["bag with holes", "a bag with holes"], "w": ["A locked chest", "The temple treasury", "A clay jar"], "r": "Hag.1.6" },
+    { "l": 2, "f": "god", "q": "What did God promise of the glory of this latter house?", "a": "It shall be greater than of the former", "ty": 0, "w": ["It shall be smaller", "It shall never be built", "It shall move to Babylon"], "r": "Hag.2.9" },
+    { "l": 2, "f": "god", "q": "'The silver is mine, and the ___ is mine, saith the LORD of hosts.'", "a": "Gold", "acc": ["gold"], "w": ["Land", "Temple", "Bread"], "r": "Hag.2.8" },
+    { "l": 2, "f": "god", "q": "What will God give in this place?", "a": "Peace", "acc": ["peace"], "w": ["War", "Gold", "Kings"], "r": "Hag.2.9" },
+    { "l": 2, "f": "god", "q": "As what will God make Zerubbabel in that day?", "a": "A signet", "acc": ["signet", "a signet", "signet ring"], "w": ["A crown", "A rod", "A shield"], "r": "Hag.2.23" },
+    { "l": 2, "f": "remember", "q": "In the second year of which king did Haggai prophesy?", "a": "Darius", "w": ["Cyrus", "Artaxerxes", "Xerxes"], "r": "Hag.1.1" }
+  ]
+}

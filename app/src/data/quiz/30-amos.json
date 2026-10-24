@@ -1,0 +1,15 @@
+{
+  "book": 30,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "What was Amos before the LORD took him?", "a": "An herdman and gatherer of sycomore fruit", "acc": ["herdman", "herdsman", "shepherd"], "ty": 0, "w": ["A priest", "A king's scribe", "A prophet's son"], "r": "Amo.7.14" },
+    { "l": 2, "f": "remember", "q": "Among the herdmen of which town was Amos?", "a": "Tekoa", "w": ["Anathoth", "Bethel", "Moresheth"], "r": "Amo.1.1" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Amos 5 — complete it.", "text": "But let [judgment] run down as waters, and [righteousness] as a mighty stream.", "w": ["mercy", "peace", "wine"], "r": "Amo.5.24" },
+    { "l": 2, "f": "god", "q": "What did God say he hated and despised in Amos 5?", "a": "Their feast days", "acc": ["your feast days", "feast days", "their feasts", "feasts"], "w": ["Their children", "Their land", "Their harvests"], "r": "Amo.5.21" },
+    { "l": 2, "f": "story", "q": "What did the Lord hold in his hand by a wall in Amos 7?", "a": "A plumbline", "acc": ["plumbline", "plumb line"], "w": ["A ladder", "A scroll", "A sword"], "r": "Amo.7.8" },
+    { "l": 2, "f": "story", "q": "What was in the basket Amos saw in chapter 8?", "a": "Summer fruit", "acc": ["summer fruit", "fruit"], "w": ["Bread", "Figs and grapes", "Fish"], "r": "Amo.8.1" },
+    { "l": 2, "f": "story", "q": "Which priest of Bethel told Amos to flee to Judah?", "a": "Amaziah", "w": ["Hilkiah", "Jeroboam", "Uzziah"], "r": "Amo.7.10" },
+    { "l": 2, "f": "god", "q": "What famine does God send in Amos 8?", "a": "A famine of hearing the words of the LORD", "ty": 0, "w": ["A famine of bread", "A famine of water", "A famine of wine"], "r": "Amo.8.11" },
+    { "l": 2, "f": "god", "q": "'Can two walk together, except they be ___?'", "a": "Agreed", "acc": ["agreed", "in agreement"], "w": ["Friends", "Brothers", "Young"], "r": "Amo.3.3" },
+    { "l": 2, "f": "god", "q": "What will God raise up in Amos 9?", "a": "The tabernacle of David that is fallen", "acc": ["tabernacle of david", "the tent of david"], "ty": 0, "w": ["Solomon's temple", "Jeroboam's altar", "The walls of Samaria"], "r": "Amo.9.11", "x": "James quotes this at the council in Jerusalem (Acts 15:16)." }
+  ]
+}

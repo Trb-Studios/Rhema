@@ -1,0 +1,15 @@
+{
+  "book": 33,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "What was Micah called, after his home town?", "a": "The Morasthite", "acc": ["morasthite", "the morasthite", "of moresheth"], "w": ["The Tishbite", "The Elkoshite", "The Anathothite"], "r": "Mic.1.1" },
+    { "t": "fill", "l": 2, "f": "god", "q": "What the LORD requires — complete it.", "text": "but to do [justly], and to love [mercy], and to walk [humbly] with thy God?", "w": ["boldly", "gold", "quickly"], "r": "Mic.6.8" },
+    { "l": 2, "f": "god", "q": "Out of which town shall come forth the ruler in Israel?", "a": "Bethlehem Ephratah", "acc": ["bethlehem", "bethlehem ephratah", "bethlehem ephrathah"], "w": ["Nazareth", "Jerusalem", "Hebron"], "r": "Mic.5.2", "x": "The chief priests quote this to Herod (Matthew 2:6)." },
+    { "l": 2, "f": "god", "q": "Of the ruler from Bethlehem, what does Micah say of his goings forth?", "a": "They have been from of old, from everlasting", "ty": 0, "w": ["They began in Egypt", "They are unknown", "They end in Babylon"], "r": "Mic.5.2" },
+    { "l": 2, "f": "god", "q": "In Micah 4, into what shall they beat their spears?", "a": "Pruninghooks", "acc": ["pruning hooks", "pruninghooks"], "w": ["Plowshares", "Crowns", "Staffs"], "r": "Mic.4.3" },
+    { "l": 2, "f": "god", "q": "Under what shall every man sit, with none to make him afraid?", "a": "His vine and his fig tree", "acc": ["his vine and fig tree", "vine and fig tree"], "ty": 0, "w": ["The temple roof", "A king's tent", "The city wall"], "r": "Mic.4.4" },
+    { "l": 2, "f": "god", "q": "Where will God cast all their sins?", "a": "Into the depths of the sea", "acc": ["the depths of the sea", "depths of the sea", "the sea", "into the sea"], "w": ["Into the fire", "Behind the mountains", "Into the wilderness"], "r": "Mic.7.19" },
+    { "l": 2, "f": "god", "q": "'Who is a God like unto thee, that pardoneth ___?'", "a": "Iniquity", "acc": ["iniquity", "sin"], "w": ["Kings", "Nations", "Priests"], "r": "Mic.7.18" },
+    { "l": 2, "f": "god", "q": "In what does God delight, says Micah 7:18?", "a": "Mercy", "acc": ["mercy"], "w": ["Sacrifice", "Wrath", "Silence"], "r": "Mic.7.18" },
+    { "l": 2, "f": "remember", "q": "Micah prophesied in the days of Jotham, Ahaz and which king?", "a": "Hezekiah", "w": ["Josiah", "Uzziah", "Manasseh"], "r": "Mic.1.1" }
+  ]
+}

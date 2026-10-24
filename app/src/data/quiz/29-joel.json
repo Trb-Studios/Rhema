@@ -1,0 +1,15 @@
+{
+  "book": 29,
+  "questions": [
+    { "l": 1, "f": "story", "q": "What plague does Joel describe stripping the land?", "a": "Locusts", "acc": ["locusts", "locust", "the locust"], "w": ["Frogs", "Hail", "Boils"], "r": "Jol.1.4" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Joel's call to return — complete it.", "text": "And rend your [heart], and not your [garments],", "w": ["hands", "house", "altar"], "r": "Jol.2.13" },
+    { "l": 2, "f": "god", "q": "What does God promise to restore in Joel 2?", "a": "The years that the locust hath eaten", "ty": 0, "w": ["The temple of Solomon", "The ark", "The walls of Samaria"], "r": "Jol.2.25" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Joel 2 — complete it.", "text": "that I will pour out my [spirit] upon all [flesh];", "w": ["blessing", "Israel", "wrath"], "r": "Jol.2.28", "x": "Peter quotes this at Pentecost (Acts 2:17)." },
+    { "l": 2, "f": "god", "q": "Who shall be delivered, says Joel 2:32?", "a": "Whosoever shall call on the name of the LORD", "ty": 0, "w": ["Only the priests", "Only Judah", "Only the elders"], "r": "Jol.2.32" },
+    { "l": 2, "f": "remember", "q": "What shall the sun and the moon be turned into before the day of the LORD?", "a": "Darkness and blood", "acc": ["darkness and blood", "the sun into darkness and the moon into blood"], "ty": 0, "w": ["Gold and silver", "Fire and smoke", "Light and glory"], "r": "Jol.2.31" },
+    { "l": 2, "f": "remember", "q": "In Joel 3, into what shall they beat their plowshares?", "a": "Swords", "acc": ["swords"], "w": ["Crowns", "Spears", "Chains"], "r": "Jol.3.10" },
+    { "l": 2, "f": "remember", "q": "In which valley will God gather all nations for judgment?", "a": "Jehoshaphat", "acc": ["valley of jehoshaphat", "the valley of jehoshaphat"], "w": ["Achor", "Hinnom", "Elah"], "r": "Jol.3.2" },
+    { "l": 2, "f": "remember", "q": "'Multitudes, multitudes in the valley of ___.'", "a": "Decision", "acc": ["decision"], "w": ["Judgment", "Jezreel", "Tears"], "r": "Jol.3.14" },
+    { "l": 2, "f": "god", "q": "How does Joel 2:13 describe God, besides gracious?", "a": "Merciful, slow to anger, and of great kindness", "ty": 0, "w": ["Fierce and terrible", "Far away", "Pleased with sacrifice"], "r": "Jol.2.13" }
+  ]
+}

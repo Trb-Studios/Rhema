@@ -1,0 +1,15 @@
+{
+  "book": 32,
+  "questions": [
+    { "l": 1, "f": "story", "q": "To which great city did God send Jonah?", "a": "Nineveh", "w": ["Tarshish", "Joppa", "Babylon"], "r": "Jon.1.2" },
+    { "l": 1, "f": "story", "q": "Where did Jonah try to flee from the presence of the LORD?", "a": "Tarshish", "w": ["Nineveh", "Egypt", "Damascus"], "r": "Jon.1.3" },
+    { "l": 2, "f": "story", "q": "How did the sailors find out who brought the storm?", "a": "They cast lots", "acc": ["lots", "casting lots", "cast lots"], "w": ["A dream", "Jonah confessed first", "A voice from heaven"], "r": "Jon.1.7" },
+    { "l": 1, "f": "story", "q": "What swallowed Jonah?", "a": "A great fish", "acc": ["fish", "great fish", "whale", "a whale"], "w": ["A serpent", "The sea", "A whirlpool"], "r": "Jon.1.17" },
+    { "l": 2, "f": "story", "q": "How long was Jonah in the belly of the fish?", "a": "Three days and three nights", "acc": ["three days", "3 days", "three days and three nights"], "w": ["Seven days", "Forty days", "One night"], "r": "Jon.1.17", "x": "Jesus calls it the sign of the prophet Jonas (Matthew 12:40)." },
+    { "l": 2, "f": "god", "q": "'Salvation is of the ___,' Jonah prayed from the fish.", "a": "LORD", "acc": ["lord", "the lord", "god"], "w": ["Sea", "Righteous", "Prophets"], "r": "Jon.2.9" },
+    { "l": 2, "f": "story", "q": "How did the people of Nineveh answer Jonah's preaching?", "a": "They believed God, proclaimed a fast and put on sackcloth", "ty": 0, "w": ["They mocked him", "They killed him", "They fled"], "r": "Jon.3.5" },
+    { "l": 2, "f": "god", "q": "Why was Jonah angry when God spared Nineveh?", "a": "He knew God was gracious and merciful and would repent of the evil", "ty": 0, "w": ["He lost his house", "The fish hurt him", "The king insulted him"], "r": "Jon.4.2" },
+    { "l": 2, "f": "story", "q": "What did God prepare to be a shadow over Jonah's head?", "a": "A gourd", "acc": ["gourd", "a gourd", "plant", "a plant", "vine"], "w": ["A tent", "A cloud", "A cave"], "r": "Jon.4.6" },
+    { "l": 2, "f": "god", "q": "How many in Nineveh could not discern their right hand from their left?", "a": "More than sixscore thousand", "acc": ["120000", "120,000", "sixscore thousand", "a hundred and twenty thousand"], "w": ["Seven thousand", "A million", "Forty thousand"], "r": "Jon.4.11" }
+  ]
+}
