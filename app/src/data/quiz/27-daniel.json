@@ -1,0 +1,25 @@
+{
+  "book": 27,
+  "questions": [
+    { "l": 1, "f": "story", "q": "Who were Daniel's three companions from Judah?", "a": "Hananiah, Mishael and Azariah", "acc": ["shadrach meshach and abednego", "shadrach meshach and abed-nego", "hananiah mishael and azariah"], "ty": 0, "w": ["Peter, James and John", "Ezra, Nehemiah and Haggai", "Hur, Aaron and Joshua"], "r": "Dan.1.6" },
+    { "l": 2, "f": "story", "q": "What did Daniel ask to be given instead of the king's meat?", "a": "Pulse and water", "acc": ["pulse", "vegetables", "pulse and water", "vegetables and water"], "w": ["Fish and bread", "Honey and figs", "Nothing at all"], "r": "Dan.1.12" },
+    { "l": 2, "f": "story", "q": "What did Nebuchadnezzar see in his dream in chapter 2?", "a": "A great image", "acc": ["a great image", "statue", "a statue", "an image", "image"], "w": ["Seven fat kine", "A tree reaching to heaven", "Four beasts from the sea"], "r": "Dan.2.31" },
+    { "l": 2, "f": "god", "q": "What smote the image upon its feet?", "a": "A stone cut out without hands", "acc": ["a stone", "stone"], "ty": 0, "w": ["Fire from heaven", "A great flood", "An army"], "r": "Dan.2.34" },
+    { "l": 2, "f": "god", "q": "What did the stone become?", "a": "A great mountain filling the whole earth", "ty": 0, "w": ["A temple", "A sword", "Dust"], "r": "Dan.2.35" },
+    { "l": 1, "f": "story", "q": "Into what were Shadrach, Meshach and Abed-nego cast?", "a": "A burning fiery furnace", "acc": ["furnace", "fiery furnace", "the fiery furnace", "burning fiery furnace"], "w": ["A den of lions", "A dungeon", "The river"], "r": "Dan.3.21" },
+    { "t": "fill", "l": 2, "f": "god", "q": "The three to the king — complete it.", "text": "our God whom we serve is able to [deliver] us from the burning fiery [furnace],", "w": ["save", "den", "fire"], "r": "Dan.3.17" },
+    { "l": 2, "f": "story", "q": "How many men did the king see walking loose in the fire?", "a": "Four", "acc": ["4"], "w": ["Three", "Two", "Seven"], "r": "Dan.3.25" },
+    { "l": 2, "f": "story", "q": "What befell Nebuchadnezzar when his heart was lifted up?", "a": "He was driven from men and did eat grass as oxen", "ty": 0, "w": ["He died", "He was taken to Persia", "He lost his voice"], "r": "Dan.4.33" },
+    { "l": 2, "f": "story", "q": "What words were written on the wall at Belshazzar's feast?", "a": "MENE, MENE, TEKEL, UPHARSIN", "acc": ["mene mene tekel upharsin", "mene tekel"], "w": ["HOLY TO THE LORD", "WOE TO BABYLON", "THE KING IS DEAD"], "r": "Dan.5.25" },
+    { "l": 2, "f": "god", "q": "What did TEKEL mean?", "a": "Thou art weighed in the balances, and art found wanting", "ty": 0, "w": ["Thy days are numbered", "Thy kingdom is divided", "Thou shalt live"], "r": "Dan.5.27" },
+    { "l": 1, "f": "story", "q": "Why was Daniel cast into the den of lions?", "a": "He kept praying to his God against the decree", "ty": 0, "w": ["He stole from the king", "He refused to eat", "He insulted the queen"], "r": "Dan.6.10" },
+    { "l": 2, "f": "story", "q": "How often did Daniel pray with his windows open toward Jerusalem?", "a": "Three times a day", "acc": ["three times a day", "3 times a day", "three times"], "w": ["Once a day", "Seven times a day", "Every sabbath"], "r": "Dan.6.10" },
+    { "l": 2, "f": "god", "q": "How was Daniel kept safe among the lions?", "a": "God sent his angel and shut the lions' mouths", "ty": 0, "w": ["The lions were asleep", "He fought them", "The king guarded him"], "r": "Dan.6.22" },
+    { "l": 2, "f": "remember", "q": "Which king had Daniel cast into the den of lions?", "a": "Darius", "w": ["Nebuchadnezzar", "Belshazzar", "Cyrus"], "r": "Dan.6.9" },
+    { "l": 2, "f": "god", "q": "Who came with the clouds of heaven to the Ancient of days?", "a": "One like the Son of man", "acc": ["son of man", "one like the son of man"], "w": ["A great beast", "An angel with a sword", "Michael"], "r": "Dan.7.13", "x": "Jesus takes this title for himself before the high priest (Mark 14:62)." },
+    { "l": 2, "f": "remember", "q": "How many great beasts came up from the sea in Daniel 7?", "a": "Four", "acc": ["4"], "w": ["Seven", "Ten", "Two"], "r": "Dan.7.3" },
+    { "l": 2, "f": "remember", "q": "Which angel came to Daniel to give him understanding?", "a": "Gabriel", "w": ["Michael", "Raphael", "Uriel"], "r": "Dan.9.21" },
+    { "l": 2, "f": "god", "q": "What shall they that be wise do, says Daniel 12?", "a": "Shine as the brightness of the firmament", "ty": 0, "w": ["Rule the nations", "Never die", "Build the temple"], "r": "Dan.12.3" },
+    { "t": "order", "l": 3, "f": "story", "q": "Put these in the order Daniel tells them.", "items": ["Daniel refuses the king's meat", "The dream of the great image", "The fiery furnace", "Nebuchadnezzar eats grass", "The writing on the wall", "The den of lions"], "r": "Dan.6.16" }
+  ]
+}

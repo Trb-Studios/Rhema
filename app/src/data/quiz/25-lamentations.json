@@ -1,0 +1,15 @@
+{
+  "book": 25,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "Over which city do the Lamentations mourn?", "a": "Jerusalem", "acc": ["jerusalem", "zion"], "w": ["Babylon", "Samaria", "Nineveh"], "r": "Lam.1.7" },
+    { "t": "fill", "l": 2, "f": "god", "q": "The heart of Lamentations — complete it.", "text": "They are new every [morning]: great is thy [faithfulness].", "w": ["evening", "mercy", "goodness"], "r": "Lam.3.23" },
+    { "l": 2, "f": "god", "q": "Why are we not consumed, says Lamentations 3?", "a": "Because his compassions fail not", "ty": 0, "w": ["Because we are strong", "Because Babylon is merciful", "Because the walls still stand"], "r": "Lam.3.22" },
+    { "l": 2, "f": "remember", "q": "'How doth the city sit ___, that was full of people!'", "a": "Solitary", "acc": ["solitary", "alone"], "w": ["Proudly", "Silently", "Desolate"], "r": "Lam.1.1" },
+    { "l": 2, "f": "god", "q": "'The LORD is my portion, saith my soul; therefore will I ___ in him.'", "a": "Hope", "acc": ["hope"], "w": ["Rest", "Rejoice", "Hide"], "r": "Lam.3.24" },
+    { "l": 2, "f": "god", "q": "'The LORD is good unto them that ___ for him.'", "a": "Wait", "acc": ["wait"], "w": ["Fight", "Sing", "Fast"], "r": "Lam.3.25" },
+    { "l": 2, "f": "god", "q": "'For the Lord will not cast off for ___.'", "a": "Ever", "acc": ["ever", "for ever"], "w": ["Long", "A season", "Nothing"], "r": "Lam.3.31" },
+    { "l": 3, "f": "remember", "q": "How are the first four chapters of Lamentations arranged in the Hebrew?", "a": "As acrostics on the alphabet", "ty": 0, "w": ["As letters to Babylon", "As one song with a refrain", "As a list of kings"], "r": "Lam.3.1" },
+    { "l": 2, "f": "story", "q": "What does Lamentations 4 say of the young children?", "a": "They ask bread, and no man breaketh it unto them", "ty": 0, "w": ["They are carried to Egypt", "They sing in the streets", "They are safe in the temple"], "r": "Lam.4.4" },
+    { "l": 2, "f": "god", "q": "'Turn thou us unto thee, O LORD... renew our days as of ___.'", "a": "Old", "acc": ["old"], "w": ["Moses", "David", "Youth"], "r": "Lam.5.21" }
+  ]
+}
