@@ -1,0 +1,25 @@
+{
+  "book": 3,
+  "questions": [
+    { "l": 1, "f": "story", "q": "What is Leviticus mostly about?", "a": "Offerings, the priesthood and holiness", "ty": 0, "w": ["Israel's battles in Canaan", "Moses' life in Egypt", "The kings of Israel"], "r": "Lev.1.2" },
+    { "l": 1, "f": "remember", "q": "Which offering was burned whole upon the altar?", "a": "The burnt offering", "acc": ["burnt offering", "burnt sacrifice", "burnt"], "w": ["The peace offering", "The meat offering", "The drink offering"], "r": "Lev.1.9" },
+    { "l": 2, "f": "story", "q": "Which two sons of Aaron died for offering strange fire?", "a": "Nadab and Abihu", "acc": ["Abihu and Nadab"], "w": ["Eleazar and Ithamar", "Hophni and Phinehas", "Korah and Dathan"], "r": "Lev.10.1" },
+    { "l": 1, "f": "story", "q": "Who were consecrated as priests in Leviticus 8?", "a": "Aaron and his sons", "acc": ["aaron", "aaron and sons"], "w": ["Moses and Joshua", "The elders of Israel", "The whole tribe of Judah"], "r": "Lev.8.6" },
+    { "t": "fill", "l": 2, "f": "god", "q": "God's call to Israel — complete it.", "text": "Ye shall be [holy]: for I the LORD your God am [holy].", "w": ["faithful", "righteous", "just"], "r": "Lev.19.2", "x": "Peter quotes this to the church (1 Peter 1:16)." },
+    { "l": 2, "f": "god", "q": "On the day of atonement, what was let go into the wilderness bearing Israel's iniquities?", "a": "The scapegoat", "acc": ["scapegoat", "a goat", "goat"], "w": ["A lamb", "A dove", "A bullock"], "r": "Lev.16.10" },
+    { "l": 2, "f": "remember", "q": "On which day of the seventh month was the day of atonement?", "a": "The tenth", "acc": ["10th", "tenth", "10", "tenth day"], "w": ["The first", "The fourteenth", "The fifteenth"], "r": "Lev.16.29" },
+    { "l": 3, "f": "god", "q": "Why was blood not to be eaten?", "a": "The life of the flesh is in the blood", "ty": 0, "w": ["It was unclean in Egypt", "It belonged to the Levites", "It was used for dyeing"], "r": "Lev.17.11", "x": "I have given it to you upon the altar to make an atonement for your souls." },
+    { "l": 2, "f": "remember", "q": "Which command, later called the second great commandment by Jesus, is in Leviticus 19:18?", "a": "Love thy neighbour as thyself", "acc": ["love your neighbor as yourself", "love your neighbour as yourself", "love thy neighbour"], "w": ["Honour thy father", "Thou shalt not steal", "Remember the sabbath"], "r": "Lev.19.18" },
+    { "l": 2, "f": "remember", "q": "Which year was hallowed as the year of jubile?", "a": "The fiftieth", "acc": ["50", "fiftieth", "50th", "fifty"], "w": ["The seventh", "The fortieth", "The twelfth"], "r": "Lev.25.10" },
+    { "l": 2, "f": "remember", "q": "What was the land to have every seventh year?", "a": "A sabbath of rest", "acc": ["rest", "sabbath", "a rest", "lie fallow", "fallow"], "w": ["A new owner", "A census", "A double harvest"], "r": "Lev.25.4" },
+    { "l": 2, "f": "story", "q": "What happened when Aaron offered the first sacrifices?", "a": "Fire came out from before the LORD and consumed the offering", "ty": 0, "w": ["The altar cracked", "Rain fell on the camp", "The people fled"], "r": "Lev.9.24" },
+    { "t": "match", "l": 3, "f": "remember", "q": "Match each feast to its time.", "pairs": [["Passover", "Fourteenth day of the first month"], ["Day of atonement", "Tenth day of the seventh month"], ["Feast of tabernacles", "Fifteenth day of the seventh month"], ["Feast of weeks", "Fifty days after the firstfruits"]], "r": "Lev.23.5" },
+    { "t": "tf", "l": 2, "f": "god", "q": "God promised to walk among Israel and be their God.", "a": true, "r": "Lev.26.12" },
+    { "l": 2, "f": "story", "q": "What happened to the man who blasphemed the name of the LORD?", "a": "He was stoned", "acc": ["stoned", "stoning", "stoned to death"], "w": ["He was exiled", "He was fined", "He was made a slave"], "r": "Lev.24.23" },
+    { "l": 3, "f": "god", "q": "Why did Israel dwell in booths for seven days?", "a": "To remember they dwelt in booths when God brought them out of Egypt", "ty": 0, "w": ["Because the harvest failed", "To honour the priests", "To prepare for war"], "r": "Lev.23.43" },
+    { "l": 2, "f": "remember", "q": "From which tribe came Aaron and the priests?", "a": "Levi", "acc": ["levites", "the levites", "tribe of levi"], "w": ["Judah", "Benjamin", "Dan"], "r": "Lev.25.33" },
+    { "l": 2, "f": "remember", "q": "Which beasts could Israel eat?", "a": "Those that part the hoof and chew the cud", "ty": 0, "w": ["Only birds", "Any that live on land", "None at all"], "r": "Lev.11.3" },
+    { "l": 3, "f": "story", "q": "What was a leper to cry as he went?", "a": "Unclean, unclean", "acc": ["unclean"], "w": ["Have mercy", "Holy, holy", "Make way"], "r": "Lev.13.45" },
+    { "t": "order", "l": 3, "f": "remember", "q": "Put the offerings in the order Leviticus 1 to 5 describes them.", "items": ["Burnt offering", "Meat offering", "Peace offering", "Sin offering", "Trespass offering"], "r": "Lev.7.37" }
+  ]
+}

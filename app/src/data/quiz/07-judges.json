@@ -1,0 +1,25 @@
+{
+  "book": 7,
+  "questions": [
+    { "l": 2, "f": "god", "q": "What happens again and again in Judges?", "a": "Israel sins, is oppressed, cries out, and God raises a judge", "ty": 0, "w": ["Israel wins every battle", "Kings succeed one another", "The priests rule in peace"], "r": "Jdg.2.16" },
+    { "t": "fill", "l": 2, "f": "remember", "q": "The last verse of Judges — complete it.", "text": "In those days there was no [king] in Israel: every man did that which was right in his own [eyes].", "w": ["judge", "heart", "priest"], "r": "Jdg.21.25" },
+    { "l": 2, "f": "story", "q": "Who was the first deliverer, the son of Caleb's younger brother?", "a": "Othniel", "w": ["Ehud", "Shamgar", "Gideon"], "r": "Jdg.3.9" },
+    { "l": 2, "f": "story", "q": "Which left-handed deliverer killed Eglon king of Moab?", "a": "Ehud", "w": ["Othniel", "Jephthah", "Samson"], "r": "Jdg.3.21" },
+    { "l": 1, "f": "story", "q": "Which prophetess judged Israel under a palm tree?", "a": "Deborah", "w": ["Jael", "Miriam", "Huldah"], "r": "Jdg.4.5" },
+    { "l": 2, "f": "story", "q": "Who killed Sisera with a nail of the tent?", "a": "Jael", "w": ["Deborah", "Rahab", "Delilah"], "r": "Jdg.4.21" },
+    { "l": 2, "f": "story", "q": "What was Gideon doing when the angel of the LORD came to him?", "a": "Threshing wheat by the winepress", "ty": 0, "w": ["Leading an army", "Praying at Shiloh", "Keeping sheep"], "r": "Jdg.6.11" },
+    { "l": 2, "f": "story", "q": "What sign did Gideon ask for with a fleece?", "a": "Dew on the fleece only, then on the ground only", "ty": 0, "w": ["Fire on the fleece", "The fleece turning red", "A dove landing on it"], "r": "Jdg.6.37" },
+    { "l": 2, "f": "story", "q": "With how many men did God save Israel from Midian through Gideon?", "a": "Three hundred", "acc": ["300"], "w": ["Ten thousand", "Twelve", "Thirty-two thousand"], "r": "Jdg.7.7" },
+    { "l": 3, "f": "story", "q": "What did Gideon's men carry into the camp of Midian?", "a": "Trumpets and pitchers with lamps", "ty": 0, "w": ["Swords and shields", "Bows and arrows", "Spears and slings"], "r": "Jdg.7.16" },
+    { "l": 2, "f": "god", "q": "Why did the LORD make Gideon's army smaller?", "a": "Lest Israel boast that their own hand saved them", "ty": 0, "w": ["The men were cowards", "There was not enough water", "The Midianites were few"], "r": "Jdg.7.2" },
+    { "l": 2, "f": "story", "q": "Which judge made a vow that cost him his daughter?", "a": "Jephthah", "w": ["Gideon", "Samson", "Ehud"], "r": "Jdg.11.31" },
+    { "l": 1, "f": "story", "q": "What did Samson tell Delilah was the secret of his strength?", "a": "His hair had never been cut", "acc": ["hair", "his hair", "uncut hair", "his long hair"], "ty": 0, "w": ["A magic sword", "His mother's prayers", "Eating honey"], "r": "Jdg.16.17" },
+    { "l": 1, "f": "story", "q": "Who betrayed Samson to the Philistines?", "a": "Delilah", "w": ["Jael", "His father-in-law", "Deborah"], "r": "Jdg.16.18" },
+    { "l": 2, "f": "story", "q": "With what did Samson slay a thousand men?", "a": "The jawbone of an ass", "acc": ["jawbone", "jaw bone", "donkey's jawbone", "jawbone of a donkey"], "w": ["A sword", "A ploughshare", "A spear"], "r": "Jdg.15.15" },
+    { "l": 3, "f": "story", "q": "How did Samson die?", "a": "He pulled down the house of Dagon on the Philistines", "ty": 0, "w": ["In battle at Gaza", "Of old age", "Stoned by Israel"], "r": "Jdg.16.30" },
+    { "l": 2, "f": "remember", "q": "Which tribe took Laish and renamed it after their father?", "a": "Dan", "w": ["Benjamin", "Asher", "Zebulun"], "r": "Jdg.18.29" },
+    { "t": "tf", "l": 2, "f": "god", "q": "When Israel cried unto the LORD, he raised up a deliverer.", "a": true, "r": "Jdg.3.9" },
+    { "t": "match", "l": 3, "f": "remember", "q": "Match each deliverer to the enemy.", "pairs": [["Ehud", "Eglon of Moab"], ["Deborah and Barak", "Sisera"], ["Gideon", "Midian"], ["Samson", "The Philistines"]], "r": "Jdg.8.28" },
+    { "l": 2, "f": "god", "q": "What did the angel call Gideon, who was hiding from Midian?", "a": "Thou mighty man of valour", "acc": ["mighty man of valour", "mighty man of valor", "man of valour", "mighty man"], "w": ["Thou least in Manasseh", "Thou son of Joash", "Thou servant of Baal"], "r": "Jdg.6.12" }
+  ]
+}

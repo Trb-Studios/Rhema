@@ -1,0 +1,15 @@
+{
+  "book": 8,
+  "questions": [
+    { "l": 1, "f": "story", "q": "Where did Elimelech take his family when there was famine?", "a": "Moab", "acc": ["the country of moab"], "w": ["Egypt", "Edom", "Philistia"], "r": "Rut.1.1" },
+    { "l": 1, "f": "story", "q": "Who were Naomi's two daughters-in-law?", "a": "Orpah and Ruth", "acc": ["Ruth and Orpah"], "w": ["Leah and Rachel", "Peninnah and Hannah", "Abigail and Michal"], "r": "Rut.1.4" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Ruth's promise to Naomi — complete it.", "text": "for whither thou goest, I will go; and where thou lodgest, I will lodge: thy [people] shall be my people, and thy [God] my God:", "w": ["land", "house", "king"], "r": "Rut.1.16", "x": "A Moabitess chooses Israel's God, and becomes great-grandmother of David." },
+    { "l": 2, "f": "story", "q": "What did Naomi ask to be called, since the Almighty had dealt very bitterly with her?", "a": "Mara", "acc": ["marah"], "w": ["Hagar", "Peninnah", "Jerusha"], "r": "Rut.1.20", "x": "Naomi means pleasant; Mara means bitter." },
+    { "l": 1, "f": "story", "q": "In whose field did Ruth happen to glean?", "a": "Boaz", "w": ["Elimelech", "Obed", "Jesse"], "r": "Rut.2.3" },
+    { "l": 2, "f": "remember", "q": "At which harvest did Naomi and Ruth come to Bethlehem?", "a": "Barley harvest", "acc": ["barley", "the barley harvest"], "w": ["Wheat harvest", "Grape harvest", "Olive harvest"], "r": "Rut.1.22" },
+    { "l": 2, "f": "god", "q": "Under whose wings did Boaz say Ruth had come to trust?", "a": "The LORD God of Israel", "acc": ["the lord", "god", "lord god of israel", "god of israel"], "w": ["Chemosh", "Naomi's", "The elders of Bethlehem"], "r": "Rut.2.12" },
+    { "l": 3, "f": "remember", "q": "What was Boaz to Ruth that let him redeem the land and marry her?", "a": "A near kinsman", "acc": ["kinsman", "kinsman redeemer", "near kinsman", "redeemer", "goel"], "w": ["Judge of Israel", "Priest of Bethlehem", "King's officer"], "r": "Rut.3.9" },
+    { "l": 2, "f": "story", "q": "How did the nearer kinsman confirm he gave up his right to redeem?", "a": "He drew off his shoe", "acc": ["shoe", "took off his shoe", "sandal", "drew off his shoe"], "w": ["They shook hands", "They broke bread", "They signed a scroll"], "r": "Rut.4.8" },
+    { "t": "order", "l": 3, "f": "remember", "q": "Put Ruth's line in order, from her husband to the king.", "items": ["Boaz", "Obed", "Jesse", "David"], "r": "Rut.4.17" }
+  ]
+}

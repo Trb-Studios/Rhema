@@ -1,0 +1,25 @@
+{
+  "book": 6,
+  "questions": [
+    { "l": 1, "f": "story", "q": "Who led Israel into Canaan after Moses died?", "a": "Joshua", "w": ["Caleb", "Eleazar", "Aaron"], "r": "Jos.1.2" },
+    { "l": 2, "f": "remember", "q": "What book was not to depart out of Joshua's mouth?", "a": "The book of the law", "acc": ["the law", "law", "book of the law"], "w": ["The book of Jasher", "The chronicles of the kings", "The psalms of David"], "r": "Jos.1.8" },
+    { "t": "fill", "l": 2, "f": "god", "q": "God's charge to Joshua — complete it.", "text": "Be strong and of a good [courage]; be not afraid, neither be thou dismayed: for the LORD thy God is [with] thee whithersoever thou goest.", "w": ["heart", "before", "faith"], "r": "Jos.1.9" },
+    { "l": 1, "f": "story", "q": "Who hid the two spies in Jericho?", "a": "Rahab", "w": ["Deborah", "Jael", "Ruth"], "r": "Jos.2.1" },
+    { "l": 2, "f": "story", "q": "What was Rahab to bind in her window?", "a": "A line of scarlet thread", "acc": ["scarlet thread", "scarlet cord", "red cord", "scarlet line", "scarlet", "red thread"], "w": ["A white cloth", "A lamp", "A palm branch"], "r": "Jos.2.18" },
+    { "l": 2, "f": "story", "q": "What did the Jordan do when the priests' feet touched its waters?", "a": "The waters stood up upon an heap", "ty": 0, "w": ["It froze over", "It turned to blood", "It flooded the camp"], "r": "Jos.3.16" },
+    { "l": 2, "f": "remember", "q": "Why did Joshua set up twelve stones from the Jordan?", "a": "As a memorial for their children", "ty": 0, "w": ["To build an altar to Baal", "To mark the border of Edom", "To count the tribes for war"], "r": "Jos.4.7" },
+    { "l": 1, "f": "story", "q": "On how many days did Israel compass Jericho?", "a": "Seven", "acc": ["7", "seven days"], "w": ["Three", "Forty", "Twelve"], "r": "Jos.6.4" },
+    { "l": 1, "f": "story", "q": "What happened when the people shouted at the sound of the trumpets?", "a": "The wall fell down flat", "acc": ["walls fell", "wall fell", "the walls fell down", "walls fell down flat"], "w": ["The gates opened", "Fire fell from heaven", "The king surrendered"], "r": "Jos.6.20" },
+    { "l": 2, "f": "story", "q": "Why was Israel beaten the first time at Ai?", "a": "Achan had taken of the accursed thing", "ty": 0, "w": ["They were too few", "Joshua was ill", "They attacked by night"], "r": "Jos.7.1" },
+    { "l": 2, "f": "story", "q": "How did the Gibeonites deceive Joshua into a league with them?", "a": "They pretended to come from a far country", "ty": 0, "w": ["They offered gold", "They hid in the ark", "They dressed as priests"], "r": "Jos.9.6" },
+    { "l": 2, "f": "god", "q": "What did the sun and moon do in the battle for Gibeon?", "a": "Stood still", "acc": ["stood still", "stopped", "stayed"], "w": ["Went dark", "Turned to blood", "Went backward"], "r": "Jos.10.13" },
+    { "l": 2, "f": "story", "q": "Who asked for Hebron as his inheritance at eighty-five years old?", "a": "Caleb", "w": ["Joshua", "Othniel", "Phinehas"], "r": "Jos.14.13" },
+    { "l": 2, "f": "remember", "q": "Which tribe was given no land, the LORD God being their inheritance?", "a": "Levi", "acc": ["levites", "the levites", "tribe of levi"], "w": ["Judah", "Simeon", "Reuben"], "r": "Jos.13.33" },
+    { "l": 2, "f": "remember", "q": "Where was the tabernacle set up once the land was subdued?", "a": "Shiloh", "w": ["Jerusalem", "Bethel", "Hebron"], "r": "Jos.18.1" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Joshua's challenge at Shechem — complete it.", "text": "but as for me and my [house], we will [serve] the LORD.", "w": ["family", "follow", "worship"], "r": "Jos.24.15" },
+    { "t": "tf", "l": 2, "f": "god", "q": "There failed not any good thing which the LORD had spoken to Israel; all came to pass.", "a": true, "r": "Jos.21.45" },
+    { "l": 2, "f": "remember", "q": "How old was Joshua when he died?", "a": "110", "acc": ["an hundred and ten", "110 years", "one hundred and ten"], "w": ["120", "90", "175"], "r": "Jos.24.29" },
+    { "t": "order", "l": 3, "f": "story", "q": "Put these in the order Joshua tells them.", "items": ["Crossing the Jordan", "The fall of Jericho", "Defeat at Ai", "The Gibeonites' trick", "The sun stands still"], "r": "Jos.10.13" },
+    { "l": 2, "f": "god", "q": "Who stood before Joshua near Jericho with a drawn sword?", "a": "The captain of the LORD's host", "acc": ["captain of the host of the lord", "captain of the lords host", "an angel", "angel"], "w": ["The king of Jericho", "Caleb", "Eleazar the priest"], "r": "Jos.5.14" }
+  ]
+}
