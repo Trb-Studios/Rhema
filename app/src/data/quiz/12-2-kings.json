@@ -1,0 +1,25 @@
+{
+  "book": 12,
+  "questions": [
+    { "l": 1, "f": "story", "q": "How was Elijah taken up into heaven?", "a": "By a whirlwind, with a chariot of fire", "acc": ["whirlwind", "chariot of fire", "in a whirlwind"], "ty": 0, "w": ["He died in his sleep", "He walked into the Jordan", "He was carried by angels"], "r": "2Ki.2.11" },
+    { "l": 2, "f": "story", "q": "What did Elisha ask of Elijah before he was taken?", "a": "A double portion of his spirit", "acc": ["double portion", "a double portion"], "w": ["His mantle only", "To go with him", "Long life"], "r": "2Ki.2.9" },
+    { "l": 2, "f": "story", "q": "With what did Elisha heal the waters of Jericho?", "a": "Salt", "acc": ["salt", "with salt"], "w": ["His staff", "Oil", "Ashes"], "r": "2Ki.2.21" },
+    { "l": 2, "f": "story", "q": "What happened to the widow's pot of oil?", "a": "It filled every vessel she borrowed", "ty": 0, "w": ["It turned to wine", "It broke", "It was stolen"], "r": "2Ki.4.6" },
+    { "l": 2, "f": "story", "q": "What did Elisha do for the Shunammite's son?", "a": "Raised him from the dead", "acc": ["raised him", "brought him back to life", "raised him from the dead", "restored him to life"], "w": ["Healed his leprosy", "Made him a prophet", "Sent him to Egypt"], "r": "2Ki.4.35" },
+    { "l": 1, "f": "story", "q": "How many times did Naaman dip himself in the Jordan?", "a": "Seven", "acc": ["7", "seven times"], "w": ["Three", "Once", "Twelve"], "r": "2Ki.5.14" },
+    { "l": 2, "f": "story", "q": "Who ran after Naaman for gifts and was struck with his leprosy?", "a": "Gehazi", "w": ["Elisha", "Naaman's servant", "Ben-hadad"], "r": "2Ki.5.27" },
+    { "l": 2, "f": "god", "q": "What did Elisha's servant see when his eyes were opened at Dothan?", "a": "Horses and chariots of fire", "acc": ["chariots of fire", "horses and chariots of fire", "fiery chariots"], "ty": 0, "w": ["The Syrian army fleeing", "An angel with a sword", "The walls of Samaria"], "r": "2Ki.6.17" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Elisha to his servant — complete it.", "text": "Fear not: for they that be with [us] are more than they that be with [them].", "w": ["God", "Israel", "you"], "r": "2Ki.6.16" },
+    { "l": 2, "f": "story", "q": "Who was anointed to cut off the house of Ahab?", "a": "Jehu", "w": ["Joash", "Hazael", "Jehoram"], "r": "2Ki.9.6" },
+    { "l": 2, "f": "story", "q": "How did Jezebel die?", "a": "She was thrown down from a window", "acc": ["thrown from a window", "thrown down", "thrown out of a window"], "ty": 0, "w": ["She fled to Tyre", "She was stoned", "She died in her bed"], "r": "2Ki.9.33" },
+    { "l": 2, "f": "story", "q": "Which empire carried the northern kingdom of Israel away captive?", "a": "Assyria", "acc": ["assyrians", "the king of assyria"], "w": ["Babylon", "Egypt", "Persia"], "r": "2Ki.17.6" },
+    { "l": 2, "f": "god", "q": "Why does 2 Kings say Israel was carried away?", "a": "They had sinned against the LORD and served idols", "ty": 0, "w": ["Their army was small", "Their king died young", "They lost the ark"], "r": "2Ki.17.7" },
+    { "l": 2, "f": "story", "q": "Which king of Judah spread Sennacherib's letter before the LORD and prayed?", "a": "Hezekiah", "w": ["Josiah", "Manasseh", "Ahaz"], "r": "2Ki.19.15" },
+    { "l": 2, "f": "story", "q": "What happened to the Assyrian camp outside Jerusalem?", "a": "The angel of the LORD smote 185,000", "ty": 0, "w": ["It took the city", "It turned to fight Egypt", "It was drowned"], "r": "2Ki.19.35" },
+    { "l": 2, "f": "god", "q": "What sign did Hezekiah receive that he would be healed?", "a": "The shadow went back ten degrees", "ty": 0, "w": ["Fire fell on the altar", "Rain in summer", "A dove on the temple"], "r": "2Ki.20.11" },
+    { "l": 2, "f": "story", "q": "Which king seduced Judah to do more evil than the nations?", "a": "Manasseh", "w": ["Hezekiah", "Josiah", "Jehoshaphat"], "r": "2Ki.21.9" },
+    { "l": 2, "f": "story", "q": "What did Hilkiah find in the house of the LORD in Josiah's day?", "a": "The book of the law", "acc": ["book of the law", "the law", "scroll of the law"], "w": ["The ark", "Goliath's sword", "A golden calf"], "r": "2Ki.22.8" },
+    { "l": 2, "f": "story", "q": "Which king of Babylon besieged and finally burned Jerusalem?", "a": "Nebuchadnezzar", "acc": ["nebuchadrezzar"], "w": ["Cyrus", "Belshazzar", "Sennacherib"], "r": "2Ki.25.1" },
+    { "t": "order", "l": 3, "f": "story", "q": "Put these in the order 2 Kings tells them.", "items": ["Elijah taken up", "Naaman healed", "Jehu's revolt", "Israel taken by Assyria", "Jerusalem burned by Babylon"], "r": "2Ki.17.6" }
+  ]
+}

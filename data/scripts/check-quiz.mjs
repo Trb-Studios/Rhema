@@ -23,7 +23,13 @@ const QUIZ = join(ROOT, 'app', 'src', 'data', 'quiz');
 const BIBLE = join(ROOT, 'app', 'public', 'bible');
 
 const expected = (chapters) => (chapters < 10 ? 10 : chapters < 30 ? 20 : 50);
-const squash = (text) => text.replace(/\s+/g, ' ').trim();
+// Straight and curly quotes are the same words; the source text uses curly ones.
+const squash = (text) =>
+  text
+    .replace(/[‘’]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
 
 const index = JSON.parse(await readFile(join(BIBLE, 'index.json'), 'utf8'));
 const texts = new Map();

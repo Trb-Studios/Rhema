@@ -1,0 +1,25 @@
+{
+  "book": 13,
+  "questions": [
+    { "l": 1, "f": "story", "q": "With whom do the genealogies of 1 Chronicles begin?", "a": "Adam", "w": ["Abraham", "Noah", "David"], "r": "1Ch.1.1" },
+    { "l": 2, "f": "remember", "q": "Who prayed, 'Oh that thou wouldest bless me indeed, and enlarge my coast'?", "a": "Jabez", "w": ["Jabesh", "Jehu", "Jesse"], "r": "1Ch.4.10" },
+    { "t": "tf", "l": 2, "f": "god", "q": "God granted Jabez that which he requested.", "a": true, "r": "1Ch.4.10" },
+    { "l": 2, "f": "story", "q": "Why does Chronicles say Saul died?", "a": "For his transgression, and for asking counsel of a familiar spirit", "ty": 0, "w": ["He was too old", "He lost to Goliath", "He refused to fight"], "r": "1Ch.10.13" },
+    { "l": 2, "f": "story", "q": "Which men 'had understanding of the times, to know what Israel ought to do'?", "a": "The children of Issachar", "acc": ["issachar", "sons of issachar", "men of issachar"], "w": ["The men of Benjamin", "The children of Judah", "The sons of Levi"], "r": "1Ch.12.32" },
+    { "l": 2, "f": "story", "q": "In whose house did the ark stay three months after Uzza died?", "a": "Obed-edom's", "acc": ["obededom", "obed-edom", "obed edom", "obededoms"], "w": ["Abinadab's", "Jesse's", "Nathan's"], "r": "1Ch.13.14" },
+    { "l": 2, "f": "story", "q": "Who carried the ark the second time, as Moses commanded?", "a": "The Levites", "acc": ["levites", "priests and levites", "sons of levi", "the children of the levites"], "w": ["The men of Judah", "A new cart", "David's mighty men"], "r": "1Ch.15.15" },
+    { "t": "fill", "l": 2, "f": "god", "q": "David's psalm of thanks — complete it.", "text": "O give thanks unto the LORD; for he is [good]; for his [mercy] endureth for ever.", "w": ["great", "love", "holy"], "r": "1Ch.16.34" },
+    { "l": 2, "f": "god", "q": "What did God promise David concerning his son?", "a": "He would build God a house and his throne would be established for ever", "ty": 0, "w": ["He would conquer Egypt", "He would be a priest", "He would never die"], "r": "1Ch.17.12" },
+    { "l": 2, "f": "story", "q": "Why was David not to build the house of the LORD?", "a": "He had shed much blood and made great wars", "ty": 0, "w": ["He was too old", "He had no gold", "He was not of Levi"], "r": "1Ch.22.8" },
+    { "l": 2, "f": "story", "q": "Whom did David charge to build the house of the LORD?", "a": "Solomon", "w": ["Adonijah", "Nathan", "Joab"], "r": "1Ch.22.6" },
+    { "l": 2, "f": "remember", "q": "On whose threshingfloor was the place for the temple chosen?", "a": "Ornan the Jebusite", "acc": ["ornan", "araunah"], "w": ["Obed-edom", "Boaz", "Jesse"], "r": "1Ch.21.28" },
+    { "l": 2, "f": "god", "q": "Who stood up against Israel and provoked David to number Israel?", "a": "Satan", "acc": ["the devil", "satan"], "w": ["Joab", "Nathan", "Gad"], "r": "1Ch.21.1" },
+    { "t": "fill", "l": 3, "f": "god", "q": "David blesses the LORD — complete it.", "text": "Thine, O LORD, is the [greatness], and the power, and the [glory], and the victory, and the majesty:", "w": ["mercy", "wisdom", "law"], "r": "1Ch.29.11" },
+    { "l": 2, "f": "god", "q": "'For all things come of thee, and of ___ have we given thee.' What is missing?", "a": "Thine own", "acc": ["thine own", "your own", "yours"], "w": ["Our labour", "Our fathers'", "The nations'"], "r": "1Ch.29.14" },
+    { "l": 2, "f": "remember", "q": "Into how many courses were the priests divided?", "a": "Twenty-four", "acc": ["24", "four and twenty"], "w": ["Twelve", "Seven", "Forty"], "r": "1Ch.24.18" },
+    { "l": 2, "f": "remember", "q": "Who were set over the music in the house of the LORD?", "a": "Asaph, Heman and Jeduthun", "ty": 0, "w": ["Nathan, Gad and Samuel", "Joab, Abishai and Asahel", "Zadok, Abiathar and Ahimelech"], "r": "1Ch.25.1" },
+    { "l": 2, "f": "remember", "q": "To whom was Reuben's birthright given?", "a": "The sons of Joseph", "acc": ["joseph", "josephs sons", "joseph's sons"], "w": ["Judah", "Levi", "Simeon"], "r": "1Ch.5.1" },
+    { "t": "tf", "l": 2, "f": "remember", "q": "1 Chronicles retells the reign of Saul at length.", "a": false, "r": "1Ch.10.13", "x": "It tells only of his death, then turns to David." },
+    { "l": 2, "f": "story", "q": "Which city, also called Jebus, did David take?", "a": "Jerusalem", "w": ["Hebron", "Gibeon", "Bethel"], "r": "1Ch.11.4" }
+  ]
+}

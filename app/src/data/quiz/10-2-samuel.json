@@ -1,0 +1,25 @@
+{
+  "book": 10,
+  "questions": [
+    { "l": 1, "f": "story", "q": "Who was anointed king over Judah in Hebron after Saul?", "a": "David", "w": ["Ishbosheth", "Abner", "Joab"], "r": "2Sa.2.4" },
+    { "l": 2, "f": "story", "q": "Which son of Saul reigned over Israel for two years?", "a": "Ishbosheth", "acc": ["ish-bosheth", "eshbaal"], "w": ["Jonathan", "Mephibosheth", "Abinadab"], "r": "2Sa.2.10" },
+    { "l": 2, "f": "story", "q": "Which stronghold did David take from the Jebusites?", "a": "Zion", "acc": ["the stronghold of zion", "jerusalem", "zion"], "w": ["Hebron", "Shiloh", "Bethlehem"], "r": "2Sa.5.7" },
+    { "l": 2, "f": "story", "q": "Who died when he put out his hand to steady the ark?", "a": "Uzzah", "w": ["Ahio", "Obed-edom", "Abinadab"], "r": "2Sa.6.7" },
+    { "l": 2, "f": "story", "q": "Why did Michal despise David in her heart?", "a": "He danced before the LORD with all his might", "ty": 0, "w": ["He married Bathsheba", "He spared Saul's house", "He lost a battle"], "r": "2Sa.6.16" },
+    { "l": 2, "f": "god", "q": "What did God promise David through Nathan?", "a": "His house and throne would be established for ever", "ty": 0, "w": ["That he would build the temple himself", "That he would never sin", "That Saul's sons would serve him"], "r": "2Sa.7.16" },
+    { "l": 2, "f": "god", "q": "Who did God say would build a house for his name?", "a": "David's seed after him", "acc": ["his son", "davids son", "solomon", "his seed"], "w": ["David himself", "Nathan", "Hiram of Tyre"], "r": "2Sa.7.13" },
+    { "l": 2, "f": "story", "q": "Which son of Jonathan, lame on both feet, ate at the king's table?", "a": "Mephibosheth", "acc": ["merib-baal"], "w": ["Ishbosheth", "Ziba", "Amasa"], "r": "2Sa.9.13" },
+    { "l": 1, "f": "story", "q": "With whom did David commit adultery?", "a": "Bathsheba", "w": ["Abigail", "Michal", "Tamar"], "r": "2Sa.11.4" },
+    { "l": 2, "f": "story", "q": "How did David arrange the death of Uriah?", "a": "He had him set in the forefront of the hottest battle", "ty": 0, "w": ["He poisoned him", "He had him stoned", "He sent him to Egypt"], "r": "2Sa.11.15" },
+    { "l": 2, "f": "story", "q": "What was Nathan's parable to David about?", "a": "A rich man who took a poor man's ewe lamb", "ty": 0, "w": ["A lost coin", "A king's vineyard", "A shepherd who left his sheep"], "r": "2Sa.12.4" },
+    { "t": "fill", "l": 1, "f": "story", "q": "Nathan to David — complete it.", "text": "And Nathan said to David, Thou art the [man].", "w": ["king", "sinner", "thief"], "r": "2Sa.12.7" },
+    { "l": 2, "f": "story", "q": "Which son of David stole the hearts of the men of Israel?", "a": "Absalom", "w": ["Amnon", "Adonijah", "Solomon"], "r": "2Sa.15.6" },
+    { "l": 2, "f": "story", "q": "How was Absalom caught as he fled?", "a": "His head caught hold of an oak", "acc": ["in a tree", "in an oak", "his head caught in a tree", "his hair caught in a tree"], "ty": 0, "w": ["In a cave", "At the city gate", "In a pit"], "r": "2Sa.18.9" },
+    { "l": 2, "f": "story", "q": "Who killed Absalom, though the king had asked that he be spared?", "a": "Joab", "w": ["Abishai", "Ittai", "Ahimaaz"], "r": "2Sa.18.14" },
+    { "t": "fill", "l": 2, "f": "story", "q": "David mourns — complete it.", "text": "O my son Absalom, my son, my son Absalom! would God I had [died] for thee, O Absalom, my son, my son!", "w": ["fought", "prayed", "wept"], "r": "2Sa.18.33" },
+    { "l": 2, "f": "remember", "q": "Which son of Zeruiah was over David's host?", "a": "Joab", "w": ["Abner", "Benaiah", "Amasa"], "r": "2Sa.8.16" },
+    { "l": 2, "f": "god", "q": "Why did a pestilence come upon Israel at the end of 2 Samuel?", "a": "David numbered the people", "acc": ["census", "he counted the people", "david counted the people", "numbering the people"], "w": ["Absalom rebelled", "The ark was taken", "Saul's sons were spared"], "r": "2Sa.24.10" },
+    { "l": 2, "f": "god", "q": "Where did David build an altar to stay the plague?", "a": "Araunah's threshingfloor", "acc": ["threshing floor of araunah", "araunah", "threshingfloor", "the threshing floor", "araunahs threshing floor"], "w": ["Mount Gilboa", "The gate of Bethlehem", "The pool of Gibeon"], "r": "2Sa.24.18" },
+    { "t": "order", "l": 3, "f": "story", "q": "Put these in the order 2 Samuel tells them.", "items": ["David king in Hebron", "Jerusalem taken", "The ark brought up", "David and Bathsheba", "Absalom's revolt"], "r": "2Sa.5.7" }
+  ]
+}

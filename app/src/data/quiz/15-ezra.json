@@ -1,0 +1,25 @@
+{
+  "book": 15,
+  "questions": [
+    { "l": 1, "f": "story", "q": "Which king of Persia let the Jews return to build the house of the LORD?", "a": "Cyrus", "w": ["Darius", "Xerxes", "Nebuchadnezzar"], "r": "Ezr.1.2" },
+    { "l": 2, "f": "story", "q": "Who built the altar with Jeshua the priest?", "a": "Zerubbabel", "w": ["Ezra", "Nehemiah", "Mordecai"], "r": "Ezr.3.2" },
+    { "l": 2, "f": "story", "q": "What did the returned exiles set up first, before the foundation of the temple?", "a": "The altar", "acc": ["altar", "the altar of god"], "w": ["The walls", "The gates", "A palace"], "r": "Ezr.3.3" },
+    { "l": 2, "f": "story", "q": "Why did the old men weep when the foundation was laid?", "a": "They had seen the first house", "acc": ["they remembered the first temple", "they had seen the first temple"], "ty": 0, "w": ["They were sick", "The foundation cracked", "They were not invited"], "r": "Ezr.3.12" },
+    { "l": 2, "f": "story", "q": "Whose offer to help build was refused?", "a": "The adversaries of Judah and Benjamin", "acc": ["adversaries", "the people of the land", "samaritans"], "ty": 0, "w": ["The Persians", "The Babylonians", "The priests of Egypt"], "r": "Ezr.4.3" },
+    { "l": 2, "f": "story", "q": "Which two prophets stirred the people to build again?", "a": "Haggai and Zechariah", "acc": ["Zechariah and Haggai"], "w": ["Isaiah and Jeremiah", "Ezekiel and Daniel", "Malachi and Joel"], "r": "Ezr.5.1" },
+    { "l": 2, "f": "story", "q": "Which king had the records searched and found Cyrus' decree?", "a": "Darius", "w": ["Artaxerxes", "Cyrus", "Ahasuerus"], "r": "Ezr.6.1" },
+    { "l": 2, "f": "remember", "q": "What was Ezra?", "a": "A ready scribe in the law of Moses", "acc": ["scribe", "a ready scribe", "a scribe", "priest and scribe"], "ty": 0, "w": ["A royal tax collector", "A prophet of Persia", "A builder of walls"], "r": "Ezr.7.6" },
+    { "t": "fill", "l": 2, "f": "god", "q": "What Ezra set his heart to — complete it.", "text": "For Ezra had prepared his heart to [seek] the law of the LORD, and to [do] it, and to [teach] in Israel statutes and judgments.", "w": ["read", "copy", "sing"], "r": "Ezr.7.10" },
+    { "l": 2, "f": "god", "q": "Why was Ezra ashamed to ask the king for soldiers?", "a": "He had said God's hand is upon all them that seek him", "ty": 0, "w": ["The road was safe", "He had no money", "The king refused"], "r": "Ezr.8.22" },
+    { "l": 2, "f": "story", "q": "What did Ezra do when he heard the people had married foreign wives?", "a": "He rent his garment and sat down astonied", "ty": 0, "w": ["He laughed", "He left Jerusalem", "He wrote to the king"], "r": "Ezr.9.3" },
+    { "l": 2, "f": "remember", "q": "Which king sent Ezra to Jerusalem with a letter?", "a": "Artaxerxes", "w": ["Cyrus", "Darius", "Xerxes"], "r": "Ezr.7.11" },
+    { "l": 2, "f": "story", "q": "What did the people agree to do after Ezra's prayer?", "a": "Make a covenant to put away the strange wives", "ty": 0, "w": ["Stone Ezra", "Return to Babylon", "Build a second temple"], "r": "Ezr.10.3" },
+    { "l": 2, "f": "god", "q": "What did Ezra confess about God's punishment of Israel?", "a": "God had punished them less than their iniquities deserved", "ty": 0, "w": ["God had forgotten them", "God was unjust", "God dwelt only in Persia"], "r": "Ezr.9.13" },
+    { "t": "tf", "l": 2, "f": "god", "q": "When the foundation was laid they sang that the LORD is good and his mercy endureth for ever.", "a": true, "r": "Ezr.3.11" },
+    { "l": 2, "f": "remember", "q": "How many were in the whole congregation of the first return?", "a": "42,360", "acc": ["42360", "forty two thousand three hundred and sixty"], "w": ["7,000", "100,000", "12,000"], "r": "Ezr.2.64" },
+    { "l": 2, "f": "story", "q": "How did enemies stop the building in Artaxerxes' days?", "a": "They wrote to the king accusing Jerusalem of rebellion", "ty": 0, "w": ["They attacked by night", "They bribed the priests", "They poisoned the wells"], "r": "Ezr.4.15" },
+    { "l": 2, "f": "remember", "q": "What did Cyrus give back that Nebuchadnezzar had taken?", "a": "The vessels of the house of the LORD", "acc": ["vessels", "the temple vessels", "temple vessels", "the vessels"], "w": ["The ark", "Solomon's crown", "The tables of stone"], "r": "Ezr.1.7" },
+    { "t": "order", "l": 3, "f": "story", "q": "Put these in the order Ezra tells them.", "items": ["Cyrus' decree", "The altar set up", "The work stopped", "Haggai and Zechariah prophesy", "The house finished under Darius", "Ezra comes to Jerusalem"], "r": "Ezr.6.15" },
+    { "l": 2, "f": "god", "q": "What did Ezra proclaim at the river Ahava to seek a right way?", "a": "A fast", "acc": ["fast", "a fast", "fasting"], "w": ["A feast", "A census", "A war"], "r": "Ezr.8.21" }
+  ]
+}

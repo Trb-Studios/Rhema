@@ -1,0 +1,25 @@
+{
+  "book": 16,
+  "questions": [
+    { "l": 1, "f": "story", "q": "What news made Nehemiah weep in Shushan?", "a": "The wall of Jerusalem was broken down", "ty": 0, "w": ["The king was dying", "Ezra had died", "The temple was finished"], "r": "Neh.1.3" },
+    { "l": 2, "f": "story", "q": "What was Nehemiah's office in the king's court?", "a": "The king's cupbearer", "acc": ["cupbearer", "cup bearer", "the king's cupbearer"], "w": ["Scribe", "Treasurer", "Captain of the guard"], "r": "Neh.1.11" },
+    { "l": 2, "f": "god", "q": "What did Nehemiah do before he answered the king's question?", "a": "He prayed to the God of heaven", "acc": ["prayed", "he prayed"], "ty": 0, "w": ["He fasted three days", "He consulted Ezra", "He wrote a letter"], "r": "Neh.2.4" },
+    { "l": 2, "f": "story", "q": "Which king sent Nehemiah to Jerusalem?", "a": "Artaxerxes", "w": ["Cyrus", "Darius", "Xerxes"], "r": "Neh.2.1" },
+    { "l": 2, "f": "story", "q": "Who laughed the builders to scorn?", "a": "Sanballat and Tobiah", "acc": ["Tobiah and Sanballat", "sanballat", "sanballat tobiah and geshem"], "w": ["Haman and Agag", "Ezra and Shimei", "Gog and Magog"], "r": "Neh.2.19" },
+    { "l": 2, "f": "story", "q": "How did the builders work once attack was threatened?", "a": "With a weapon in one hand", "ty": 0, "w": ["Only by night", "Only on the sabbath", "With hired soldiers alone"], "r": "Neh.4.17" },
+    { "l": 1, "f": "story", "q": "In how many days was the wall finished?", "a": "Fifty-two", "acc": ["52", "fifty and two", "fifty two"], "w": ["Forty", "Seven", "Ninety"], "r": "Neh.6.15" },
+    { "l": 2, "f": "god", "q": "Why were the enemies cast down when the wall was finished?", "a": "They saw the work was wrought of God", "ty": 0, "w": ["Persia sent an army", "Their king died", "A storm came"], "r": "Neh.6.16" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Nehemiah to the weeping people — complete it.", "text": "neither be ye sorry; for the [joy] of the LORD is your [strength].", "w": ["fear", "shield", "peace"], "r": "Neh.8.10" },
+    { "l": 2, "f": "story", "q": "Who read the law to the people from a pulpit of wood?", "a": "Ezra", "w": ["Nehemiah", "Haggai", "Zerubbabel"], "r": "Neh.8.4" },
+    { "l": 2, "f": "story", "q": "What did the people do when they heard the words of the law?", "a": "They wept", "acc": ["wept", "cried", "they wept", "mourned"], "w": ["They laughed", "They left", "They fought"], "r": "Neh.8.9" },
+    { "l": 2, "f": "story", "q": "Which feast did they keep by dwelling in booths?", "a": "Tabernacles", "acc": ["feast of tabernacles", "booths", "feast of booths"], "w": ["Passover", "Purim", "Pentecost"], "r": "Neh.8.14" },
+    { "l": 2, "f": "god", "q": "How do the Levites describe God in their prayer in Nehemiah 9?", "a": "Ready to pardon, gracious and merciful", "ty": 0, "w": ["Distant and silent", "Quick to destroy", "Bound to Persia"], "r": "Neh.9.17" },
+    { "l": 2, "f": "story", "q": "Why did Nehemiah not eat the governor's bread?", "a": "Because of the fear of God", "ty": 0, "w": ["He was fasting", "The king forbade it", "He disliked bread"], "r": "Neh.5.15" },
+    { "l": 2, "f": "story", "q": "For what did Nehemiah rebuke the nobles and rulers?", "a": "Exacting usury of their brethren", "acc": ["usury", "charging interest", "interest"], "ty": 0, "w": ["Worshipping idols", "Breaking the sabbath", "Neglecting the wall"], "r": "Neh.5.7" },
+    { "l": 2, "f": "story", "q": "What did Nehemiah do with Tobiah's household stuff in the temple chamber?", "a": "Cast it all out", "acc": ["cast it out", "threw it out", "threw out his things", "cast out his stuff"], "w": ["Kept it", "Sold it", "Burned the chamber"], "r": "Neh.13.8" },
+    { "l": 2, "f": "story", "q": "How did Nehemiah stop buying and selling on the sabbath?", "a": "He shut the gates of Jerusalem", "acc": ["shut the gates", "closed the gates"], "ty": 0, "w": ["He fined the traders", "He moved the market", "He prayed only"], "r": "Neh.13.19" },
+    { "l": 2, "f": "god", "q": "'Remember me, O my God, for ___' — how does Nehemiah end?", "a": "Good", "acc": ["good", "for good"], "w": ["Ever", "Mercy", "My works"], "r": "Neh.13.31" },
+    { "t": "tf", "l": 2, "f": "story", "q": "Sanballat asked Nehemiah to meet in the plain of Ono, meaning him harm.", "a": true, "r": "Neh.6.2" },
+    { "l": 2, "f": "remember", "q": "'I am doing a great ___, so that I cannot come down.' What is missing?", "a": "Work", "acc": ["work"], "w": ["Feast", "Battle", "Prayer"], "r": "Neh.6.3" }
+  ]
+}

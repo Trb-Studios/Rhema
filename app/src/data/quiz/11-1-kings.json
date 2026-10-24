@@ -1,0 +1,25 @@
+{
+  "book": 11,
+  "questions": [
+    { "l": 2, "f": "story", "q": "Which son of David exalted himself to be king before Solomon?", "a": "Adonijah", "w": ["Absalom", "Amnon", "Chileab"], "r": "1Ki.1.5" },
+    { "l": 1, "f": "story", "q": "What did Solomon ask God for at Gibeon?", "a": "An understanding heart", "acc": ["wisdom", "understanding", "an understanding heart", "a wise heart"], "w": ["Riches", "Long life", "The life of his enemies"], "r": "1Ki.3.9" },
+    { "l": 2, "f": "god", "q": "What did God give Solomon besides wisdom, that he had not asked for?", "a": "Riches and honour", "acc": ["riches", "wealth", "riches and honor"], "w": ["A second kingdom", "Victory over Egypt", "A hundred sons"], "r": "1Ki.3.13" },
+    { "l": 1, "f": "story", "q": "How did Solomon find out the true mother of the living child?", "a": "He ordered the child divided with a sword", "ty": 0, "w": ["He asked the child", "He cast lots", "He sent for a prophet"], "r": "1Ki.3.25" },
+    { "l": 1, "f": "story", "q": "What great building did Solomon raise for the LORD?", "a": "The temple", "acc": ["temple", "the house of the lord", "house of god", "the house"], "w": ["A golden calf", "The tabernacle", "A palace for Pharaoh's daughter"], "r": "1Ki.6.14" },
+    { "l": 2, "f": "god", "q": "In his prayer, what did Solomon say even the heaven of heavens cannot contain?", "a": "God", "acc": ["the lord", "god", "thee"], "w": ["The ark", "The angels", "His people's sin"], "r": "1Ki.8.27" },
+    { "l": 2, "f": "story", "q": "Which queen came to prove Solomon with hard questions?", "a": "The queen of Sheba", "acc": ["sheba", "queen of sheba"], "w": ["Jezebel", "The queen of Egypt", "Athaliah"], "r": "1Ki.10.1" },
+    { "l": 2, "f": "god", "q": "What turned Solomon's heart after other gods when he was old?", "a": "His many foreign wives", "acc": ["wives", "his wives", "foreign wives", "his foreign wives"], "w": ["His wealth only", "His war with Egypt", "The queen of Sheba"], "r": "1Ki.11.4" },
+    { "l": 2, "f": "story", "q": "Under which son of Solomon did Israel rebel and the kingdom divide?", "a": "Rehoboam", "w": ["Jeroboam", "Abijam", "Asa"], "r": "1Ki.12.16" },
+    { "l": 2, "f": "story", "q": "What did Jeroboam set up in Bethel and in Dan?", "a": "Two calves of gold", "acc": ["golden calves", "calves", "two golden calves", "calves of gold"], "w": ["Two altars of stone", "Two pillars of brass", "Two cities of refuge"], "r": "1Ki.12.28" },
+    { "l": 1, "f": "story", "q": "What brought Elijah bread and flesh by the brook Cherith?", "a": "Ravens", "acc": ["the ravens", "birds"], "w": ["Angels", "A widow", "The prophets"], "r": "1Ki.17.6" },
+    { "l": 2, "f": "story", "q": "What did not fail in the house of the widow of Zarephath?", "a": "The meal and the oil", "acc": ["meal and oil", "flour and oil", "oil and meal", "oil"], "w": ["Water and wine", "Bread and fish", "Barley and figs"], "r": "1Ki.17.16" },
+    { "l": 1, "f": "story", "q": "On which mount did Elijah face the prophets of Baal?", "a": "Carmel", "acc": ["mount carmel"], "w": ["Sinai", "Horeb", "Zion"], "r": "1Ki.18.19" },
+    { "l": 2, "f": "god", "q": "How did the LORD answer Elijah on Carmel?", "a": "Fire fell and consumed the sacrifice", "acc": ["fire", "fire from heaven", "with fire"], "ty": 0, "w": ["A voice from the cloud", "Rain fell at once", "An earthquake"], "r": "1Ki.18.38" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Elijah to the people — complete it.", "text": "How long halt ye between two [opinions]? if the LORD be God, [follow] him:", "w": ["kings", "serve", "gods"], "r": "1Ki.18.21" },
+    { "l": 2, "f": "god", "q": "How did God speak to Elijah at Horeb?", "a": "In a still small voice", "acc": ["still small voice", "a still small voice", "whisper", "a whisper"], "w": ["In the wind", "In the earthquake", "In the fire"], "r": "1Ki.19.12" },
+    { "l": 2, "f": "story", "q": "Whom did Elijah call from ploughing to follow him?", "a": "Elisha", "w": ["Gehazi", "Obadiah", "Micaiah"], "r": "1Ki.19.19" },
+    { "l": 2, "f": "story", "q": "Whose vineyard did Ahab covet and Jezebel take by a lie?", "a": "Naboth's", "acc": ["naboth", "naboths"], "w": ["Obadiah's", "Micaiah's", "Jehu's"], "r": "1Ki.21.2" },
+    { "l": 3, "f": "remember", "q": "Which prophet told Ahab the truth about Ramoth-gilead when four hundred said otherwise?", "a": "Micaiah", "w": ["Zedekiah", "Elijah", "Jonah"], "r": "1Ki.22.17" },
+    { "t": "match", "l": 3, "f": "remember", "q": "Match each king to what he is remembered for.", "pairs": [["Solomon", "Built the temple"], ["Rehoboam", "The kingdom divided under him"], ["Jeroboam", "Calves at Bethel and Dan"], ["Ahab", "Married Jezebel"]], "r": "1Ki.16.31" }
+  ]
+}

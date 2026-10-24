@@ -1,0 +1,25 @@
+{
+  "book": 17,
+  "questions": [
+    { "l": 1, "f": "story", "q": "Which king reigned from India to Ethiopia, from Shushan the palace?", "a": "Ahasuerus", "acc": ["xerxes"], "w": ["Darius", "Cyrus", "Artaxerxes"], "r": "Est.1.2" },
+    { "l": 2, "f": "story", "q": "Why was queen Vashti put away?", "a": "She refused to come at the king's commandment", "ty": 0, "w": ["She plotted against him", "She was a Jew", "She lost the crown"], "r": "Est.1.12" },
+    { "l": 1, "f": "story", "q": "Who brought up Esther, his uncle's daughter?", "a": "Mordecai", "w": ["Haman", "Hegai", "Hathach"], "r": "Est.2.7" },
+    { "l": 2, "f": "story", "q": "What had Mordecai charged Esther not to show?", "a": "Her people and her kindred", "acc": ["that she was a jew", "her people", "she was jewish", "her kindred"], "ty": 0, "w": ["Her age", "Her name", "Her riches"], "r": "Est.2.10" },
+    { "l": 2, "f": "story", "q": "What plot did Mordecai make known?", "a": "Two chamberlains sought to kill the king", "ty": 0, "w": ["Haman's plan to rob the treasury", "A Persian invasion", "A plot against Esther"], "r": "Est.2.21" },
+    { "l": 2, "f": "story", "q": "Why was Haman full of wrath against Mordecai?", "a": "He would not bow nor do him reverence", "acc": ["he would not bow", "refused to bow", "would not bow"], "ty": 0, "w": ["He stole from him", "He insulted the king", "He married Esther"], "r": "Est.3.2" },
+    { "l": 2, "f": "story", "q": "How did Haman fix the day to destroy the Jews?", "a": "By casting Pur, that is, the lot", "acc": ["lots", "pur", "casting lots", "the lot"], "ty": 0, "w": ["By the stars", "By asking a prophet", "By the king's dream"], "r": "Est.3.7" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Mordecai to Esther — complete it.", "text": "and who knoweth whether thou art come to the [kingdom] for such a [time] as this?", "w": ["palace", "purpose", "day"], "r": "Est.4.14", "x": "God is never named in Esther, yet his hand runs through every turn." },
+    { "l": 2, "f": "story", "q": "'I will go in unto the king... and if I perish, ___.' What did Esther say?", "a": "I perish", "acc": ["i perish"], "w": ["God forgive me", "Remember me", "So be it"], "r": "Est.4.16" },
+    { "l": 2, "f": "story", "q": "How long did Esther ask the Jews of Shushan to fast for her?", "a": "Three days", "acc": ["3 days", "three days", "three days and nights"], "w": ["Seven days", "Forty days", "One day"], "r": "Est.4.16" },
+    { "l": 2, "f": "story", "q": "What did the king hold out to receive Esther?", "a": "The golden sceptre", "acc": ["sceptre", "scepter", "golden sceptre", "golden scepter"], "w": ["His ring", "His sword", "A crown"], "r": "Est.5.2" },
+    { "l": 2, "f": "story", "q": "What did Haman have made for Mordecai?", "a": "A gallows fifty cubits high", "acc": ["gallows", "a gallows"], "w": ["A prison", "A pit", "A fiery furnace"], "r": "Est.5.14" },
+    { "l": 2, "f": "story", "q": "What happened the night the king could not sleep?", "a": "The chronicles were read and Mordecai's deed was found", "ty": 0, "w": ["Haman was promoted", "Esther fell ill", "A war began"], "r": "Est.6.2" },
+    { "l": 2, "f": "story", "q": "Who had to lead Mordecai through the city in the king's apparel?", "a": "Haman", "w": ["Hegai", "Harbonah", "Bigthan"], "r": "Est.6.11" },
+    { "l": 1, "f": "story", "q": "What became of Haman?", "a": "He was hanged on the gallows he made for Mordecai", "acc": ["hanged", "hanged on the gallows"], "ty": 0, "w": ["He fled to Egypt", "He was forgiven", "He became a Jew"], "r": "Est.7.10" },
+    { "l": 2, "f": "story", "q": "Why could Haman's decree not simply be reversed?", "a": "A writing sealed with the king's ring may no man reverse", "ty": 0, "w": ["Haman's family held it", "It was lost", "Esther forbade it"], "r": "Est.8.8" },
+    { "l": 2, "f": "remember", "q": "Which feast remembers the deliverance in Esther?", "a": "Purim", "w": ["Passover", "Tabernacles", "Dedication"], "r": "Est.9.26" },
+    { "l": 2, "f": "remember", "q": "Why is the feast called Purim?", "a": "After Pur, the lot Haman cast", "ty": 0, "w": ["After the city Shushan", "After Mordecai's father", "After the month Adar"], "r": "Est.9.26" },
+    { "t": "tf", "l": 2, "f": "remember", "q": "The name of God does not appear anywhere in the book of Esther.", "a": true, "r": "Est.4.14", "x": "Yet deliverance comes 'from another place', and its timing is everything." },
+    { "t": "order", "l": 3, "f": "story", "q": "Put these in the order Esther tells them.", "items": ["Vashti refuses the king", "Esther made queen", "Haman's decree", "Esther goes in to the king", "Haman hanged", "Purim established"], "r": "Est.9.26" }
+  ]
+}
