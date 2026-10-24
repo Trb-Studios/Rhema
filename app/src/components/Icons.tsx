@@ -43,8 +43,13 @@ const line = {
   strokeLinejoin: 'round' as const,
 };
 
+/** The second tone is quieter on dark, where a half-strength tan reads as a blob. */
 function tintOf(tint?: string) {
-  return { fill: tint ?? 'var(--main-fill)', fillOpacity: 0.5, stroke: 'none' };
+  return {
+    fill: tint ?? 'var(--main-fill)',
+    stroke: 'none',
+    style: { fillOpacity: 'var(--icon-tint, 0.22)' } as React.CSSProperties,
+  };
 }
 
 export function BookIcon(props: IconProps) {
@@ -312,6 +317,164 @@ export function LayersIcon(props: IconProps) {
       <path d="m12 3.9 8 4.1-8 4.1-8-4.1z" {...line} />
       <path d="m4 12 8 4.1 8-4.1" {...line} />
       <path d="m4 16.1 8 4 8-4" {...line} />
+    </Svg>
+  );
+}
+
+export function HomeIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M5 10.2 12 4.4l7 5.8v9.1a1.2 1.2 0 0 1-1.2 1.2H6.2A1.2 1.2 0 0 1 5 19.3z" {...tintOf(props.tint)} />
+      <path d="M5 10.2 12 4.4l7 5.8v9.1a1.2 1.2 0 0 1-1.2 1.2H6.2A1.2 1.2 0 0 1 5 19.3z" {...line} />
+      <path d="M9.8 20.5v-5.3h4.4v5.3" {...line} />
+    </Svg>
+  );
+}
+
+export function PeopleIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <circle cx="9" cy="8.4" r="3.1" {...tintOf(props.tint)} />
+      <circle cx="9" cy="8.4" r="3.1" {...line} />
+      <path d="M3.2 19.6a5.8 5.8 0 0 1 11.6 0" {...line} />
+      <path d="M15.4 5.6a3 3 0 0 1 0 5.7M17.6 14.3a5.8 5.8 0 0 1 3.2 5.3" {...line} />
+    </Svg>
+  );
+}
+
+export function SidebarIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M5.6 4.8h3.8v14.4H5.6a1.8 1.8 0 0 1-1.8-1.8V6.6a1.8 1.8 0 0 1 1.8-1.8z" {...tintOf(props.tint)} />
+      <rect x="3.8" y="4.8" width="16.4" height="14.4" rx="2.2" {...line} />
+      <path d="M9.4 4.8v14.4" {...line} />
+    </Svg>
+  );
+}
+
+/** The mark that sits beside anything written by AI. Filled, so it never reads as a button. */
+export function SparkleIcon({ size = 16, title }: { size?: number; title?: string }) {
+  return (
+    <Svg size={size} title={title}>
+      <path
+        d="M12 2.8c.5 4.6 2.6 6.7 7.2 7.2-4.6.5-6.7 2.6-7.2 7.2-.5-4.6-2.6-6.7-7.2-7.2 4.6-.5 6.7-2.6 7.2-7.2z"
+        fill="var(--ai-sparkle)"
+      />
+      <path d="M18.4 15.6c.2 1.7 1 2.5 2.7 2.7-1.7.2-2.5 1-2.7 2.7-.2-1.7-1-2.5-2.7-2.7 1.7-.2 2.5-1 2.7-2.7z" fill="var(--ai-sparkle)" />
+    </Svg>
+  );
+}
+
+export function NotebookIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M7 3.8h10.4a1.6 1.6 0 0 1 1.6 1.6v13.2a1.6 1.6 0 0 1-1.6 1.6H7z" {...tintOf(props.tint)} />
+      <path d="M7 3.8h10.4a1.6 1.6 0 0 1 1.6 1.6v13.2a1.6 1.6 0 0 1-1.6 1.6H7z" {...line} />
+      <path d="M7 3.8v16.4M4.6 7.6H7M4.6 12H7M4.6 16.4H7M10.6 8.2h5M10.6 11.6h3.4" {...line} />
+    </Svg>
+  );
+}
+
+export function StickyIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M5 5.2A1.2 1.2 0 0 1 6.2 4h11.6A1.2 1.2 0 0 1 19 5.2v8.6L13.8 19H6.2A1.2 1.2 0 0 1 5 17.8z" {...tintOf(props.tint)} />
+      <path d="M5 5.2A1.2 1.2 0 0 1 6.2 4h11.6A1.2 1.2 0 0 1 19 5.2v8.6L13.8 19H6.2A1.2 1.2 0 0 1 5 17.8z" {...line} />
+      <path d="M13.8 19v-4a1.2 1.2 0 0 1 1.2-1.2h4" {...line} />
+    </Svg>
+  );
+}
+
+export function TrophyIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M7.4 4h9.2v5.2a4.6 4.6 0 0 1-9.2 0z" {...tintOf(props.tint)} />
+      <path d="M7.4 4h9.2v5.2a4.6 4.6 0 0 1-9.2 0z" {...line} />
+      <path d="M7.4 6H4.6a2.8 2.8 0 0 0 3.2 4.2M16.6 6h2.8a2.8 2.8 0 0 1-3.2 4.2M12 13.8v3.4M8.6 20.4h6.8M9.6 17.2h4.8v3.2H9.6z" {...line} />
+    </Svg>
+  );
+}
+
+export function HeartIcon({ filled, ...props }: IconProps & { filled?: boolean }) {
+  const d =
+    'M12 19.6S4.4 15.1 4.4 9.6a3.9 3.9 0 0 1 7.6-1.3 3.9 3.9 0 0 1 7.6 1.3c0 5.5-7.6 10-7.6 10z';
+  return (
+    <Svg {...props}>
+      {filled && <path d={d} fill="currentColor" stroke="none" />}
+      <path d={d} {...line} />
+    </Svg>
+  );
+}
+
+export function BoltIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M13.4 3.4 5.6 13.2h5.6l-.8 7.4 7.8-9.8h-5.6z" {...tintOf(props.tint)} />
+      <path d="M13.4 3.4 5.6 13.2h5.6l-.8 7.4 7.8-9.8h-5.6z" {...line} />
+    </Svg>
+  );
+}
+
+export function ClockIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <circle cx="12" cy="12" r="8.4" {...tintOf(props.tint)} />
+      <circle cx="12" cy="12" r="8.4" {...line} />
+      <path d="M12 7.6V12l3 2" {...line} />
+    </Svg>
+  );
+}
+
+export function CardsIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <rect x="7.6" y="3.8" width="11" height="14.4" rx="2" {...tintOf(props.tint)} />
+      <rect x="7.6" y="3.8" width="11" height="14.4" rx="2" {...line} />
+      <path d="M5.4 7.2v11a2 2 0 0 0 2 2h8.4" {...line} />
+    </Svg>
+  );
+}
+
+export function GlobeIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <circle cx="12" cy="12" r="8.4" {...tintOf(props.tint)} />
+      <circle cx="12" cy="12" r="8.4" {...line} />
+      <path d="M3.6 12h16.8M12 3.6c2.2 2.3 3.3 5.1 3.3 8.4s-1.1 6.1-3.3 8.4c-2.2-2.3-3.3-5.1-3.3-8.4s1.1-6.1 3.3-8.4z" {...line} />
+    </Svg>
+  );
+}
+
+export function ArrowIcon({
+  dir = 'right',
+  ...props
+}: IconProps & { dir?: 'up' | 'down' | 'left' | 'right' }) {
+  const d = {
+    right: 'M5 12h14M13 6l6 6-6 6',
+    left: 'M19 12H5M11 6l-6 6 6 6',
+    up: 'M12 19V5M6 11l6-6 6 6',
+    down: 'M12 5v14M6 13l6 6 6-6',
+  }[dir];
+  return (
+    <Svg {...props}>
+      <path d={d} {...line} />
+    </Svg>
+  );
+}
+
+export function PlusIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M12 5v14M5 12h14" {...line} strokeWidth={1.9} />
+    </Svg>
+  );
+}
+
+export function TrashIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M6.4 7.2h11.2l-.9 11.7a1.6 1.6 0 0 1-1.6 1.5H8.9a1.6 1.6 0 0 1-1.6-1.5z" {...tintOf(props.tint)} />
+      <path d="M4.6 7.2h14.8M9.4 7.2V5.4a1 1 0 0 1 1-1h3.2a1 1 0 0 1 1 1v1.8M6.4 7.2l.9 11.7a1.6 1.6 0 0 0 1.6 1.5h6.2a1.6 1.6 0 0 0 1.6-1.5l.9-11.7" {...line} />
     </Svg>
   );
 }

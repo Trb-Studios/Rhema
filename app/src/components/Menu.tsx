@@ -13,7 +13,16 @@ import { Backup } from './Backup';
  * Everything that is not reading, behind one button: how far through you are, how long
  * the rest will take, and the handful of settings that change how the page reads.
  */
-export function Menu({ books, progress }: { books: Book[]; progress: Progress }) {
+export function Menu({
+  books,
+  progress,
+  placement = 'down',
+}: {
+  books: Book[];
+  progress: Progress;
+  /** Where the panel opens from: under a header button, or above or beside the sidebar's foot. */
+  placement?: 'down' | 'up' | 'right';
+}) {
   const [open, setOpen] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [showBackup, setShowBackup] = useState(false);
@@ -43,9 +52,9 @@ export function Menu({ books, progress }: { books: Book[]; progress: Progress })
         aria-label="Progress and settings"
         aria-expanded={open}
         style={{
-          width: 32,
-          height: 32,
-          borderRadius: 8,
+          width: 28,
+          height: 28,
+          borderRadius: 7,
           display: 'grid',
           placeItems: 'center',
           color: 'var(--text-secondary)',
@@ -76,18 +85,20 @@ export function Menu({ books, progress }: { books: Book[]; progress: Progress })
               animate="animate"
               exit="exit"
               transition={transition('snappy')}
+              className="glass"
               style={{
                 position: 'fixed',
-                top: 56,
-                right: 12,
+                ...(placement === 'down'
+                  ? { top: 56, right: 12, transformOrigin: 'top right' }
+                  : placement === 'up'
+                    ? { bottom: 56, left: 12, transformOrigin: 'bottom left' }
+                    : { bottom: 12, left: 70, transformOrigin: 'bottom left' }),
                 zIndex: 61,
                 width: 300,
-                transformOrigin: 'top right',
+                maxHeight: 'calc(100vh - 80px)',
+                overflowY: 'auto',
                 padding: 18,
                 borderRadius: 'var(--radius-card)',
-                background: 'var(--bg-card)',
-                border: '1px solid var(--line-default)',
-                boxShadow: 'var(--shadow-shell)',
               }}
             >
               <Label>Progress</Label>

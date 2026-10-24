@@ -21,11 +21,16 @@ export type Store<T> = {
   subscribe: (listener: Listener) => () => void;
 };
 
-export function createStore<T>(key: string, fallback: T): Store<T> {
+/**
+ * `persist: false` keeps the value in memory only, for state that should not outlive the
+ * window, such as a request to open a passage.
+ */
+export function createStore<T>(key: string, fallback: T, persist = true): Store<T> {
   let value: T = read();
   const listeners = new Set<Listener>();
 
   function read(): T {
+    if (!persist) return fallback;
     try {
       const saved = localStorage.getItem(key);
       return saved === null ? fallback : (JSON.parse(saved) as T);
@@ -36,6 +41,7 @@ export function createStore<T>(key: string, fallback: T): Store<T> {
   }
 
   function write(next: T) {
+    if (!persist) return;
     try {
       localStorage.setItem(key, JSON.stringify(next));
     } catch {

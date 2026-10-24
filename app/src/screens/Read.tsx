@@ -22,51 +22,49 @@ import type { Anchored } from '../components/MarkPopover';
 import { BookIntro } from '../components/BookIntro';
 import { SidePanel } from '../components/SidePanel';
 import type { PanelTab } from '../components/SidePanel';
-import { Menu } from '../components/Menu';
 import { SearchSheet } from '../components/SearchSheet';
-import { CommandPalette } from '../components/CommandPalette';
 import { Tip } from '../components/Tip';
 import { Parallel } from '../components/Parallel';
 import { ListenBar } from '../components/ListenBar';
 import { Library } from '../components/Library';
 import { useSpeech } from '../lib/speech';
-import { ColumnsIcon, SpeakerIcon, LayersIcon, CopyIcon } from '../components/Icons';
+import { ColumnsIcon, SpeakerIcon, CopyIcon } from '../components/Icons';
 import { copy as toClipboard, format as formatVerse } from '../lib/copy';
-import { keyLabel, matches } from '../lib/commands';
+import { matches, registerCommands } from '../lib/commands';
 import type { Command } from '../lib/commands';
+import type { Route } from '../lib/nav';
+import {
+  navigate,
+  noteRecentBook,
+  openPalette,
+  replaceRoute,
+  setReaderEdition,
+} from '../lib/nav';
 import { WordPopover } from '../components/WordPopover';
 import { Review } from '../components/Review';
 import { Plan } from '../components/Plan';
-import { Quiz } from '../components/Quiz';
 import { useReview } from '../lib/review';
 import type { WordAnchor } from '../components/WordPopover';
 import { wordsForBook } from '../lib/words';
 import type { Word } from '../lib/words';
 import {
+  BookIcon,
   BookmarkIcon,
   ChevronIcon,
-  CalendarIcon,
   CheckIcon,
   HighlightIcon,
   InfoIcon,
-  NoteIcon,
   LinkIcon,
   SearchIcon,
-  ScrollIcon,
-  TargetIcon,
+  StickyIcon,
 } from '../components/Icons';
 
-/** Something the start page asked for, applied once the reader opens. */
-export type Entry = {
-  verse?: number;
-  open?: 'review' | 'library' | 'plan' | 'palette';
-};
-
-export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) {
+export function Read({ route }: { route: Route }) {
+  const onHome = useCallback(() => navigate({ screen: 'today' }), []);
   const { settings, update } = useSettings();
   const { progress, visit, toggleRead, isRead } = useProgress();
   const { saved, isSaved, toggle: toggleSaved } = useSaved();
-  const { dueCount, sync: syncReview } = useReview();
+  const { sync: syncReview } = useReview();
 
   const [all, setAll] = useState<Book[]>([]);
   const [book, setBook] = useState<Book | null>(null);
@@ -78,7 +76,6 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
   const [anchored, setAnchored] = useState<Anchored | null>(null);
   const [picking, setPicking] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [palette, setPalette] = useState(false);
   // The other edition shown beside this one, or null for a single column.
   const [beside, setBeside] = useState<EditionId | null>(null);
   const [listening, setListening] = useState(false);
@@ -89,7 +86,6 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
   const speech = useSpeech();
   const [reviewing, setReviewing] = useState(false);
   const [planning, setPlanning] = useState(false);
-  const [quizzing, setQuizzing] = useState(false);
   const [wordAnchor, setWordAnchor] = useState<WordAnchor | null>(null);
   // The words of the chapter on screen, when an original edition is open.
   const [chapterWords, setChapterWords] = useState<Record<string, Word[]> | null>(null);
@@ -97,8 +93,8 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
   const [bookMarks, setBookMarks] = useState<BookMarks>({});
   const [panel, setPanel] = useState<PanelTab | null>('notes');
   const [showIntro, setShowIntro] = useState(true);
-  // A verse the start page asked for, until it has been scrolled to.
-  const [jumpTo, setJumpTo] = useState<number | null>(entry?.verse ?? null);
+  // A verse someone asked for, until it has been scrolled to.
+  const [jumpTo, setJumpTo] = useState<number | null>(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -117,18 +113,40 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // What the start page asked for, applied once. The passage itself already arrives
-  // through the saved position, so only the verse and any panel are left to open.
+  // A request from elsewhere — the palette, a person's card, the start page — to open
+  // a passage or a sheet. Acted on once per request, which is what the nonce is for.
   useEffect(() => {
-    if (!entry) return;
-    if (entry.open === 'review') setReviewing(true);
-    if (entry.open === 'library') setLibrary(true);
-    if (entry.open === 'plan') setPlanning(true);
-    if (entry.open === 'palette') setPalette(true);
-    if (entry.open || entry.verse !== undefined) setShowIntro(false);
-    // Only ever on arrival; afterwards the reader is in charge.
+    if (all.length === 0) return;
+    if (route.bookId) {
+      const target = all.find((candidate) => candidate.id === route.bookId);
+      if (target) {
+        setBook(target);
+        setNumber(Math.min(Math.max(1, route.chapter ?? 1), target.chapters));
+        setEdition('kjv');
+        setShowIntro(route.verse === undefined && (route.chapter ?? 1) === 1);
+        if (route.verse !== undefined) setJumpTo(route.verse);
+      }
+    }
+    if (route.sheet === 'review') setReviewing(true);
+    if (route.sheet === 'library') setLibrary(true);
+    if (route.sheet === 'plan') setPlanning(true);
+    if (route.sheet) setShowIntro(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [route.nonce, all.length]);
+
+  // A sheet closing hands the sidebar back to the reader itself.
+  const closeSheet = useCallback((close: () => void) => {
+    close();
+    if (route.sheet) replaceRoute({ screen: 'read' });
+  }, [route.sheet]);
+
+  useEffect(() => {
+    if (book) noteRecentBook(book.id);
+  }, [book]);
+
+  useEffect(() => {
+    setReaderEdition(edition);
+  }, [edition]);
 
   // Scroll to the verse the start page asked for, once the chapter is on the page.
   // Cleared immediately afterwards, so scrolling away does not snap back.
@@ -214,18 +232,10 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
   const next = useMemo(() => (book ? nextChapter(all, book, number) : null), [all, book, number]);
 
   const commandsRef = useRef<Command[]>([]);
-  const anyOverlay =
-    library || picking || searching || palette || reviewing || planning || quizzing;
+  const anyOverlay = library || picking || searching || reviewing || planning;
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
-      // The palette opens from anywhere, including from inside the notepad.
-      if (matches(event, 'Mod+K')) {
-        event.preventDefault();
-        setPalette(true);
-        return;
-      }
-
       const typing =
         event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLInputElement;
 
@@ -329,12 +339,12 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
       },
       {
         id: 'quiz',
-        title: 'Quiz this book',
-        hint: 'Questions drawn from the text itself',
+        title: book ? `Quiz me on ${book.name}` : 'Quiz me on this book',
+        hint: 'Flashcards, or a quiz at three levels',
         group: 'Study',
         shortcut: 'Mod+Q',
-        keywords: 'test questions',
-        run: () => setQuizzing(true),
+        keywords: 'test questions game flashcards',
+        run: () => navigate({ screen: 'quiz', quizBook: book?.id }),
       },
     ];
 
@@ -404,14 +414,6 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
 
     list.push(
       {
-        id: 'theme',
-        title: settings.theme === 'dark' ? 'Switch to light' : 'Switch to dark',
-        group: 'View',
-        shortcut: 'Mod+Shift+D',
-        keywords: 'theme appearance night',
-        run: () => update('theme', settings.theme === 'dark' ? 'light' : 'dark'),
-      },
-      {
         id: 'bigger',
         title: 'Larger text',
         group: 'View',
@@ -446,7 +448,6 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
     panel,
     available,
     edition,
-    settings.theme,
     settings.size,
     settings.verseNumbers,
     update,
@@ -460,6 +461,12 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
   ]);
 
   commandsRef.current = commands;
+
+  // The palette offers these while the reader is on screen, and only then.
+  useEffect(() => {
+    registerCommands(commands);
+  }, [commands]);
+  useEffect(() => () => registerCommands([]), []);
 
   if (error) {
     return (
@@ -484,12 +491,12 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: 6,
-          padding: '0 14px',
-          height: 56,
+          gap: 4,
+          padding: '0 10px 0 12px',
+          height: 'var(--topbar-height)',
           flex: 'none',
           borderBottom: '1px solid var(--line-default)',
-          background: 'var(--bg-shell)',
+          background: 'var(--bg-page)',
           // Narrow windows scroll the header sideways rather than wrapping it into
           // two rows, which pushed the text down and broke every label in half.
           overflowX: 'auto',
@@ -497,64 +504,109 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
           scrollbarWidth: 'none',
         }}
       >
-        <Tip label="Back to today" shortcut="Mod+Shift+H">
-          <motion.button
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.94 }}
-            transition={spring.snappy}
-            onClick={onHome}
-            aria-label="Back to today"
-            style={{
-              width: 26,
-              height: 26,
-              borderRadius: 7,
-              background: 'var(--main-fill)',
-              color: 'var(--main-on)',
-              display: 'grid',
-              placeItems: 'center',
-              fontFamily: 'var(--font-display)',
-              fontSize: 15,
-              flex: 'none',
-              marginRight: 4,
-            }}
-          >
-            R
-          </motion.button>
-        </Tip>
-
         <Round
           label="Previous chapter"
-          shortcut="\u2190"
+          shortcut="←"
           disabled={!previous}
           onClick={() => goTo(previous)}
         >
-          <ChevronIcon dir="left" size={18} />
+          <ChevronIcon dir="left" size={17} />
+        </Round>
+        <Round label="Next chapter" shortcut="→" disabled={!next} onClick={() => goTo(next)}>
+          <ChevronIcon dir="right" size={17} />
         </Round>
 
+        {/* Breadcrumb: the book, then the chapter. Either opens the picker. */}
         <motion.button
           whileTap={{ scale: 0.97 }}
           transition={spring.snappy}
           onClick={() => setPicking(true)}
           aria-label={`Reading ${book.name} ${number}. Choose another book or chapter.`}
+          className="row-hover"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 6,
-            padding: '7px 14px',
-            borderRadius: 999,
-            background: 'var(--bg-sunken)',
-            fontWeight: 600,
+            gap: 7,
+            height: 30,
+            padding: '0 10px',
+            marginLeft: 4,
+            borderRadius: 7,
             whiteSpace: 'nowrap',
-            flex: 'none',
+            fontSize: 13,
           }}
         >
-          {book.name} {number}
-          <ChevronIcon dir="down" size={14} />
+          <span style={{ color: 'var(--text-tan)', display: 'grid' }}>
+            <BookIcon size={15} />
+          </span>
+          <span style={{ color: 'var(--text-secondary)' }}>{book.name}</span>
+          <span style={{ color: 'var(--text-faint)' }}>›</span>
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.span
+              key={number}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={spring.snappy}
+              className="tabular"
+              style={{ fontWeight: 600 }}
+            >
+              Chapter {number}
+            </motion.span>
+          </AnimatePresence>
+          <ChevronIcon dir="down" size={13} />
         </motion.button>
 
-        <Round label="Next chapter" shortcut="\u2192" disabled={!next} onClick={() => goTo(next)}>
-          <ChevronIcon dir="right" size={18} />
-        </Round>
+        {available.length > 1 && (
+          <div
+            role="group"
+            aria-label="Edition"
+            style={{
+              display: 'flex',
+              gap: 2,
+              marginLeft: 8,
+              padding: 2,
+              borderRadius: 8,
+              background: 'var(--bg-sunken)',
+              border: '1px solid var(--line-default)',
+            }}
+          >
+            {available.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => setEdition(option.id)}
+                aria-pressed={edition === option.id}
+                title={option.title}
+                style={{
+                  position: 'relative',
+                  height: 24,
+                  padding: '0 11px',
+                  borderRadius: 6,
+                  fontWeight: 600,
+                  fontSize: 12,
+                  color: edition === option.id ? 'var(--text-primary)' : 'var(--text-faint)',
+                  transition: 'color var(--dur-fast) var(--ease-smooth)',
+                }}
+              >
+                {edition === option.id && (
+                  <motion.span
+                    layoutId="edition-pill"
+                    transition={spring.snappy}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      borderRadius: 6,
+                      background: 'var(--bg-selected)',
+                      boxShadow: 'inset 0 1px 0 var(--glass-highlight), 0 1px 2px rgba(0,0,0,0.25)',
+                    }}
+                  />
+                )}
+                <span style={{ position: 'relative' }}>{option.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        <span style={{ flex: 1, minWidth: 12 }} />
 
         {speech.supported && (
           <Round
@@ -565,7 +617,7 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
               setListening(!listening);
             }}
           >
-            <SpeakerIcon size={18} />
+            <SpeakerIcon size={17} />
           </Round>
         )}
 
@@ -579,163 +631,29 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
               setBeside(beside ? null : (other?.id ?? null));
             }}
           >
-            <ColumnsIcon size={18} />
+            <ColumnsIcon size={17} />
           </Round>
         )}
 
-        <Tip label="Search, go to a passage, or run a command" shortcut="Mod+K">
-          <motion.button
-            whileTap={{ scale: 0.97 }}
-            transition={spring.snappy}
-            onClick={() => setPalette(true)}
-            aria-label="Search, go to a passage, or run a command"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              height: 34,
-              padding: '0 10px 0 11px',
-              marginLeft: 2,
-              borderRadius: 9,
-              background: 'var(--bg-sunken)',
-              color: 'var(--text-secondary)',
-              fontSize: 13,
-            }}
-          >
-            <SearchIcon size={16} />
-            <span className="wide-only">Search</span>
-            <kbd
-              className="wide-only"
-              style={{
-                font: '500 11px var(--font-ui)',
-                padding: '2px 6px',
-                borderRadius: 5,
-                border: '1px solid var(--line-default)',
-                background: 'var(--bg-card)',
-              }}
-            >
-              {keyLabel('Mod+K')}
-            </kbd>
-          </motion.button>
-        </Tip>
-
-        {available.length > 1 && (
-          <div
-            role="group"
-            aria-label="Edition"
-            style={{
-              display: 'flex',
-              gap: 2,
-              marginLeft: 10,
-              padding: 3,
-              borderRadius: 999,
-              background: 'var(--bg-sunken)',
-            }}
-          >
-            {available.map((option) => (
-              <button
-                key={option.id}
-                onClick={() => setEdition(option.id)}
-                aria-pressed={edition === option.id}
-                title={option.title}
-                style={{
-                  position: 'relative',
-                  padding: '5px 13px',
-                  borderRadius: 999,
-                  fontWeight: 600,
-                  fontSize: 13,
-                  color: edition === option.id ? 'var(--main-on)' : 'var(--text-secondary)',
-                }}
-              >
-                {edition === option.id && (
-                  <motion.span
-                    layoutId="edition-pill"
-                    transition={spring.snappy}
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      borderRadius: 999,
-                      background: 'var(--main-fill)',
-                    }}
-                  />
-                )}
-                <span style={{ position: 'relative' }}>{option.label}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        <span style={{ flex: 1 }} />
+        <Divider />
 
         <Pill
           active={read}
           onClick={() => toggleRead(book.id, number)}
           label={read ? 'Read' : 'Mark read'}
         >
-          <CheckIcon size={15} />
+          <CheckIcon size={14} />
         </Pill>
 
-        {/* The three ways of going over what has been read, kept together so they read
-            as one group rather than three unrelated buttons. */}
-        <div
-          role="group"
-          aria-label="Go over what you have read"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            padding: 3,
-            marginRight: 4,
-            borderRadius: 11,
-            background: 'var(--bg-sunken)',
-          }}
-        >
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            transition={spring.snappy}
-            onClick={() => setReviewing(true)}
-            aria-label={dueCount > 0 ? `Review, ${dueCount} due` : 'Review'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-              height: 30,
-              padding: dueCount > 0 ? '0 11px' : '0 9px',
-              borderRadius: 8,
-              fontWeight: 600,
-              fontSize: 13,
-              background: dueCount > 0 ? 'var(--main-fill)' : 'transparent',
-              color: dueCount > 0 ? 'var(--main-on)' : 'var(--text-secondary)',
-            }}
-          >
-            <ScrollIcon size={17} />
-            {dueCount > 0 && <span className="tabular">{dueCount}</span>}
-          </motion.button>
+        <Divider />
 
-          <Grouped
-            label="Reading plan"
-            shortcut="Mod+P"
-            active={planning}
-            onClick={() => setPlanning(true)}
-          >
-            <CalendarIcon size={17} />
-          </Grouped>
-          <Grouped
-            label="Quiz"
-            shortcut="Mod+Q"
-            active={quizzing}
-            onClick={() => setQuizzing(true)}
-          >
-            <TargetIcon size={17} />
-          </Grouped>
-        </div>
         <Round
-          label="Notes"
+          label="Sticky notes for this book"
           shortcut="Mod+J"
           active={panel === 'notes'}
           onClick={() => setPanel(panel === 'notes' ? null : 'notes')}
         >
-          <NoteIcon size={18} />
+          <StickyIcon size={17} />
         </Round>
         <Round
           label="Cross-references"
@@ -743,15 +661,7 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
           active={panel === 'refs'}
           onClick={() => setPanel(panel === 'refs' ? null : 'refs')}
         >
-          <LinkIcon size={18} />
-        </Round>
-        <Round
-          label="Open your library"
-          shortcut="Mod+Shift+L"
-          active={library}
-          onClick={() => setLibrary(true)}
-        >
-          <LayersIcon size={18} />
+          <LinkIcon size={17} />
         </Round>
         <Round
           label="Saved verses"
@@ -759,10 +669,11 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
           active={panel === 'saved'}
           onClick={() => setPanel(panel === 'saved' ? null : 'saved')}
         >
-          <BookmarkIcon size={18} />
+          <BookmarkIcon size={17} />
         </Round>
-
-        <Menu books={all} progress={progress} />
+        <Round label="Search everything" shortcut="Mod+K" onClick={openPalette}>
+          <SearchIcon size={17} />
+        </Round>
       </header>
 
       {/* Positioned, because on a narrow window the side panel covers this area
@@ -1106,22 +1017,11 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
         )}
       </AnimatePresence>
 
-      <Review open={reviewing} onClose={() => setReviewing(false)} />
-
-      <Quiz
-        open={quizzing}
-        onClose={() => setQuizzing(false)}
-        book={book}
-        books={all}
-        onOpenVerse={(bookId, chapterNumber) => {
-          const target = all.find((candidate) => candidate.id === bookId);
-          if (target) goTo({ book: target, chapter: chapterNumber });
-        }}
-      />
+      <Review open={reviewing} onClose={() => closeSheet(() => setReviewing(false))} />
 
       <Plan
         open={planning}
-        onClose={() => setPlanning(false)}
+        onClose={() => closeSheet(() => setPlanning(false))}
         books={all}
         onOpen={(bookId, chapterNumber) => {
           const target = all.find((candidate) => candidate.id === bookId);
@@ -1145,7 +1045,7 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
       <Library
         open={library}
         books={all}
-        onClose={() => setLibrary(false)}
+        onClose={() => closeSheet(() => setLibrary(false))}
         onGo={(bookId, chapterNumber, verse) => {
           const target = all.find((candidate) => candidate.id === bookId);
           if (!target) return;
@@ -1153,29 +1053,6 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
           setNumber(chapterNumber);
           setShowIntro(false);
           if (verse) setSelected(verse);
-        }}
-      />
-
-      <CommandPalette
-        open={palette}
-        commands={commands}
-        books={all}
-        edition={edition}
-        onClose={() => setPalette(false)}
-        onGoTo={(chosen, chapterNumber, verse) => {
-          setBook(chosen);
-          setNumber(chapterNumber);
-          setShowIntro(false);
-          if (verse) setSelected(verse);
-        }}
-        onGoToHit={(hit) => {
-          const target = all.find((candidate) => candidate.id === hit.bookId);
-          if (target) {
-            setBook(target);
-            setNumber(hit.chapter);
-            setShowIntro(false);
-            setSelected(hit.verse);
-          }
         }}
       />
 
@@ -1231,42 +1108,13 @@ export function Read({ entry, onHome }: { entry?: Entry; onHome?: () => void }) 
   );
 }
 
-/** A button inside a grouped cluster: square, no outline, lit when its panel is open. */
-function Grouped({
-  label,
-  shortcut,
-  active,
-  onClick,
-  children,
-}: {
-  label: string;
-  shortcut?: string;
-  active?: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
+/** A hairline between groups of header controls. */
+function Divider() {
   return (
-    <Tip label={label} shortcut={shortcut}>
-      <motion.button
-        whileTap={{ scale: 0.95 }}
-        transition={spring.snappy}
-        onClick={onClick}
-        aria-label={label}
-        aria-pressed={active}
-        style={{
-          width: 30,
-          height: 30,
-          borderRadius: 8,
-          display: 'grid',
-          placeItems: 'center',
-          color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
-          background: active ? 'var(--bg-card)' : 'transparent',
-          boxShadow: active ? '0 1px 2px rgba(0,0,0,0.08)' : 'none',
-        }}
-      >
-        {children}
-      </motion.button>
-    </Tip>
+    <span
+      aria-hidden="true"
+      style={{ width: 1, height: 18, margin: '0 6px', background: 'var(--line-default)' }}
+    />
   );
 }
 
@@ -1287,20 +1135,22 @@ function Round({
 }) {
   const button = (
     <motion.button
-      whileTap={disabled ? undefined : { scale: 0.92 }}
+      whileTap={disabled ? undefined : { scale: 0.9 }}
       transition={spring.snappy}
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
       aria-pressed={active}
+      className={active || disabled ? undefined : 'row-hover'}
       style={{
-        width: 34,
-        height: 34,
-        borderRadius: 9,
+        width: 30,
+        height: 30,
+        borderRadius: 7,
         display: 'grid',
         placeItems: 'center',
-        color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
+        color: active ? 'var(--text-tan)' : 'var(--text-secondary)',
         background: active ? 'var(--bg-selected)' : 'transparent',
+        boxShadow: active ? 'inset 0 1px 0 var(--glass-highlight)' : 'none',
         opacity: disabled ? 0.3 : 1,
       }}
     >
@@ -1340,16 +1190,17 @@ function Pill({
         display: 'flex',
         alignItems: 'center',
         gap: 6,
-        padding: '6px 13px',
-        borderRadius: 999,
+        height: 28,
+        padding: '0 11px',
+        borderRadius: 7,
         fontWeight: 600,
-        fontSize: 13,
-        marginRight: 4,
+        fontSize: 12.5,
         whiteSpace: 'nowrap',
         flex: 'none',
-        background: active ? 'var(--main-fill)' : 'transparent',
-        color: active ? 'var(--main-on)' : 'var(--text-secondary)',
-        border: `1px solid ${active ? 'var(--main-fill)' : 'var(--line-default)'}`,
+        background: active ? 'var(--good-tint)' : 'transparent',
+        color: active ? 'var(--good)' : 'var(--text-secondary)',
+        border: `1px solid ${active ? 'color-mix(in srgb, var(--good) 35%, transparent)' : 'var(--line-default)'}`,
+        transition: 'background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast)',
       }}
     >
       {children}

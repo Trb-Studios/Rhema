@@ -8,8 +8,26 @@
  */
 
 import type { ReactNode } from 'react';
+import { createStore, useStore } from './store';
 
 export type CommandGroup = 'Go' | 'Read' | 'Study' | 'View' | 'Keep';
+
+/**
+ * The commands the screen on view offers, on top of the app-wide ones.
+ *
+ * The palette is global, but most commands belong to a screen: "Next chapter" means
+ * nothing on the People page. Each screen registers its own here while it is shown, and
+ * the palette lists whatever is registered.
+ */
+const registry = createStore<Command[]>('rhema.screen-commands', [], false);
+
+export function registerCommands(list: Command[]) {
+  registry.set(list);
+}
+
+export function useRegisteredCommands(): Command[] {
+  return useStore(registry)[0];
+}
 
 export type Command = {
   id: string;

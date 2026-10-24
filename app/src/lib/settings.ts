@@ -19,8 +19,9 @@ export type Settings = {
   verseNumbers: boolean;
 };
 
+// Dark first: the app is designed dark and lit in tan, and light is the alternative.
 export const DEFAULTS: Settings = {
-  theme: 'system',
+  theme: 'dark',
   size: 19,
   lineHeight: 1.7,
   width: 640,

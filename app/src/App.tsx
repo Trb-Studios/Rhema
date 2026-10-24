@@ -1,78 +1,156 @@
-import { useCallback, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { UpdateBanner } from './components/UpdateBanner';
+import { Sidebar } from './components/Sidebar';
+import { CommandPalette } from './components/CommandPalette';
 import { Read } from './screens/Read';
-import type { Entry } from './screens/Read';
 import { Start } from './screens/Start';
 import type { Opening } from './screens/Start';
+import { People } from './screens/People';
+import { Places } from './screens/Places';
+import { QuizScreen } from './screens/QuizScreen';
+import { Notebook } from './screens/Notebook';
+import { Highlights } from './screens/Highlights';
 import { useSettings } from './lib/settings';
-import { useProgress } from './lib/progress';
+import type { Command } from './lib/commands';
+import { matches } from './lib/commands';
+import type { Screen } from './lib/nav';
+import {
+  goBack,
+  navigate,
+  openPalette,
+  useRoute,
+  useSidebarCollapsed,
+} from './lib/nav';
 import { transition } from './lib/motion';
+import {
+  BookIcon,
+  HighlightIcon,
+  HomeIcon,
+  MoonIcon,
+  NotebookIcon,
+  PeopleIcon,
+  PlaceIcon,
+  SidebarIcon,
+  TargetIcon,
+} from './components/Icons';
+
+const SCREEN_KEYS: Array<[string, Screen]> = [
+  ['Mod+1', 'today'],
+  ['Mod+2', 'read'],
+  ['Mod+3', 'people'],
+  ['Mod+4', 'places'],
+  ['Mod+5', 'quiz'],
+  ['Mod+6', 'notebook'],
+  ['Mod+7', 'highlights'],
+];
 
 /**
- * Rhema: the Bible and a notepad, side by side.
+ * Rhema: the Bible, and everything that helps it stay with you.
  *
- * Two screens. The start page answers "what now" — a verse, the way back into the text,
- * and an honest picture of the habit. The reader is everything else: progress, how long
- * the rest will take, how the page reads, all behind one button in the header so
- * nothing competes with the text.
+ * A sidebar on the left reaches every part of the app, the screen beside it does one
+ * thing at a time, and the palette reaches everything from the keyboard. Screens change
+ * with a short drift and fade rather than a cut, so moving around feels like one space.
  */
 export default function App() {
   // Reading settings apply to the whole document, so they are set up once here.
-  useSettings();
-  const { visit } = useProgress();
+  const { settings, update } = useSettings();
+  const route = useRoute();
+  const [collapsed, setCollapsed] = useSidebarCollapsed();
 
-  const [screen, setScreen] = useState<'start' | 'read'>('start');
-  const [entry, setEntry] = useState<Entry | undefined>(undefined);
-
-  const open = useCallback(
-    (what: Opening) => {
-      if ('open' in what) {
-        setEntry({ open: what.open });
-      } else {
-        // The reader opens wherever the saved position points, so moving the position
-        // is how the start page sends someone to a passage.
-        visit(what.bookId, what.chapter);
-        setEntry(what.verse === undefined ? {} : { verse: what.verse });
-      }
-      setScreen('read');
-    },
-    [visit],
+  const globalCommands: Command[] = useMemo(
+    () => [
+      { id: 'go-today', title: 'Today', hint: 'The verse of the day and where you stopped', group: 'Go', shortcut: 'Mod+1', icon: <HomeIcon size={15} />, keywords: 'home start', run: () => navigate({ screen: 'today' }) },
+      { id: 'go-read', title: 'Read', hint: 'Back to the text where you left it', group: 'Go', shortcut: 'Mod+2', icon: <BookIcon size={15} />, keywords: 'bible text', run: () => navigate({ screen: 'read' }) },
+      { id: 'go-people', title: 'People', hint: 'Everyone in Scripture, with their family and every verse', group: 'Go', shortcut: 'Mod+3', icon: <PeopleIcon size={15} />, keywords: 'names characters who', run: () => navigate({ screen: 'people' }) },
+      { id: 'go-places', title: 'Places', hint: 'Where it happened, and where it is now', group: 'Go', shortcut: 'Mod+4', icon: <PlaceIcon size={15} />, keywords: 'map where geography', run: () => navigate({ screen: 'places' }) },
+      { id: 'go-quiz', title: 'Quiz', hint: 'Flashcards and a three-level quiz on any book', group: 'Study', shortcut: 'Mod+5', icon: <TargetIcon size={15} />, keywords: 'test game questions flashcards', run: () => navigate({ screen: 'quiz' }) },
+      { id: 'go-notebook', title: 'Notebook', hint: 'One notebook for the whole Bible', group: 'Keep', shortcut: 'Mod+6', icon: <NotebookIcon size={15} />, keywords: 'notes journal write', run: () => navigate({ screen: 'notebook' }) },
+      { id: 'go-highlights', title: 'Highlights', hint: 'Every phrase and verse you have marked', group: 'Keep', shortcut: 'Mod+7', icon: <HighlightIcon size={15} />, keywords: 'marked colours', run: () => navigate({ screen: 'highlights' }) },
+      { id: 'theme', title: settings.theme === 'light' ? 'Switch to dark' : 'Switch to light', group: 'View', shortcut: 'Mod+Shift+D', icon: <MoonIcon size={15} />, keywords: 'theme appearance night', run: () => update('theme', settings.theme === 'light' ? 'dark' : 'light') },
+      { id: 'sidebar', title: collapsed ? 'Expand the sidebar' : 'Collapse the sidebar', group: 'View', shortcut: 'Mod+\\', icon: <SidebarIcon size={15} />, keywords: 'sidebar rail navigation', run: () => setCollapsed(!collapsed) },
+    ],
+    [settings.theme, update, collapsed, setCollapsed],
   );
 
-  const read = useCallback(() => {
-    setEntry(undefined);
-    setScreen('read');
-  }, []);
+  useEffect(() => {
+    function onKey(event: KeyboardEvent) {
+      if (matches(event, 'Mod+K')) {
+        event.preventDefault();
+        openPalette();
+        return;
+      }
+      for (const [shortcut, screen] of SCREEN_KEYS) {
+        if (matches(event, shortcut)) {
+          event.preventDefault();
+          navigate({ screen });
+          return;
+        }
+      }
+      if (matches(event, 'Mod+\\')) {
+        event.preventDefault();
+        setCollapsed(!collapsed);
+        return;
+      }
+      if (matches(event, 'Mod+Shift+D')) {
+        event.preventDefault();
+        update('theme', settings.theme === 'light' ? 'dark' : 'light');
+        return;
+      }
+      if (event.altKey && event.key === 'ArrowLeft') {
+        event.preventDefault();
+        goBack();
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [collapsed, setCollapsed, settings.theme, update]);
+
+  const openFromStart = (what: Opening) => {
+    if ('open' in what) {
+      if (what.open === 'palette') openPalette();
+      else navigate({ screen: 'read', sheet: what.open });
+    } else {
+      navigate({ screen: 'read', bookId: what.bookId, chapter: what.chapter, verse: what.verse });
+    }
+  };
 
   return (
-    <>
-      <UpdateBanner />
-      <AnimatePresence mode="wait" initial={false}>
-        {screen === 'start' ? (
+    <div style={{ display: 'flex', height: '100%', minHeight: 0 }}>
+      <Sidebar />
+      <main
+        style={{
+          position: 'relative',
+          flex: 1,
+          minWidth: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          background: 'var(--bg-page)',
+        }}
+      >
+        <UpdateBanner />
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div
-            key="start"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            key={route.screen}
+            initial={{ opacity: 0, y: 6, filter: 'blur(2px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -4, filter: 'blur(2px)' }}
             transition={transition('smooth')}
-            style={{ height: '100%' }}
+            style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}
           >
-            <Start onRead={read} onOpen={open} />
+            {route.screen === 'today' && (
+              <Start onRead={() => navigate({ screen: 'read' })} onOpen={openFromStart} />
+            )}
+            {route.screen === 'read' && <Read route={route} />}
+            {route.screen === 'people' && <People route={route} />}
+            {route.screen === 'places' && <Places route={route} />}
+            {route.screen === 'quiz' && <QuizScreen route={route} />}
+            {route.screen === 'notebook' && <Notebook />}
+            {route.screen === 'highlights' && <Highlights />}
           </motion.div>
-        ) : (
-          <motion.div
-            key="read"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={transition('smooth')}
-            style={{ height: '100%' }}
-          >
-            <Read entry={entry} onHome={() => setScreen('start')} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+        </AnimatePresence>
+      </main>
+      <CommandPalette globalCommands={globalCommands} />
+    </div>
   );
 }

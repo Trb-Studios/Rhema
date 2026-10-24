@@ -1,4 +1,7 @@
-/* Bible Study Companion - style tokens v0.1 (generated from tokens.json) */
+/* Rhema style tokens v0.2 — dark first, tan accent. Mirrors design/tokens.json. */
+
+/* Dark is the default. Light applies when chosen, or when the system asks for it and
+   nothing has been chosen. */
 :root {
   --tan-50: #fbf9f6;
   --tan-100: #f7f2eb;
@@ -10,47 +13,78 @@
   --tan-700: #9c7e54;
   --tan-800: #6d593b;
   --tan-900: #372e1f;
-  --bg-page: #f6f1e8;
-  --bg-shell: #fbf9f6;
-  --bg-card: #fffefb;
-  --bg-sunken: #f7f2eb;
-  --bg-selected: #f0e9dd;
-  --line-default: #ebe4d6;
-  --line-strong: #dccbb2;
-  --text-primary: #2a2418;
-  --text-secondary: #6e6355;
-  --text-faint: #9a8f7e;
-  --text-tan: #6d593b;
+
+  --bg-page: #0f0f11;
+  --bg-shell: #0b0b0d;
+  --bg-card: #151517;
+  --bg-elevated: #19191c;
+  --bg-sunken: #1c1c1f;
+  --bg-selected: #242428;
+  --bg-hover: #1f1f23;
+  --line-default: #242427;
+  --line-strong: #313136;
+  --line-faint: #1b1b1e;
+  --text-primary: #ededef;
+  --text-secondary: #9b9ba4;
+  --text-faint: #64646d;
+  --text-tan: #d6c2a5;
   --main-fill: #d6c2a5;
-  --main-hover: #dccbb2;
+  --main-hover: #e3d3bc;
   --main-pressed: #bba381;
-  --main-on: #2a2418;
-  --focus-ring: #6d593b;
-  --mark-name: #2c6ea6;
-  --mark-name-tint: #e3eef8;
-  --mark-place: #b1403a;
-  --mark-place-tint: #f7e3e0;
-  --mark-word: #9a8f7e;
-  --status-progress-bg: #e4eaf3;
-  --status-progress-text: #34506f;
-  --status-pending-bg: #f9edcf;
-  --status-pending-text: #6a4e12;
-  --status-done-bg: #e1ede6;
-  --status-done-text: #2e5b45;
+  --main-on: #1a160f;
+  --focus-ring: #d6c2a5;
+  --mark-name: #8dbfea;
+  --mark-name-tint: #16222e;
+  --mark-place: #f09a92;
+  --mark-place-tint: #2e1816;
+  --mark-word: #64646d;
+  --status-progress-bg: #1a2433;
+  --status-progress-text: #a9c4e4;
+  --status-pending-bg: #2e2510;
+  --status-pending-text: #e8c875;
+  --status-done-bg: #13281e;
+  --status-done-text: #8fd4ae;
   --ai-sparkle: #e9b949;
-  --today-bg: #e8e4f8;
-  --font-display: 'Newsreader', Georgia, serif;
-  --font-ui: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  --today-bg: #262240;
+
+  /* Game and feedback colours, for the quiz and anything that celebrates or warns. */
+  --good: #4cc38a;
+  --good-tint: #12281d;
+  --bad: #f2555a;
+  --bad-tint: #2e1415;
+  --warn: #f5a524;
+  --violet: #9d8cff;
+  --violet-tint: #1f1a3a;
+
+  /* Glass: floating panels, the palette, popovers. */
+  --glass-bg: rgba(22, 22, 25, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+  --scrim: rgba(5, 5, 7, 0.55);
+  --glow-a: rgba(214, 194, 165, 0.16);
+  --glow-b: rgba(233, 120, 73, 0.1);
+
+  --kbd-bg: #222226;
+  --kbd-border: #34343a;
+  --kbd-text: #a3a3ac;
+
+  --font-display: 'Newsreader Variable', 'Newsreader', Georgia, serif;
+  --font-ui: 'Figtree Variable', 'Figtree', 'Segoe UI', system-ui, sans-serif;
   --font-hebrew:
     'Frank Ruhl Libre', 'SBL Hebrew', 'Taamey Frank CLM', 'David', 'Times New Roman', serif;
   --font-greek: 'Gentium Plus', 'SBL Greek', 'Palatino Linotype', 'Cardo', Georgia, serif;
+
   --radius-control: 8px;
   --radius-card: 14px;
   --radius-panel: 18px;
   --radius-shell: 20px;
   --radius-pill: 999px;
-  --shadow-raised: 0 1px 2px rgba(55, 46, 31, 0.05), 0 8px 24px rgba(55, 46, 31, 0.07);
-  --shadow-shell: 0 1px 2px rgba(55, 46, 31, 0.04), 0 16px 48px rgba(55, 46, 31, 0.08);
+
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-shell: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 18px 48px rgba(0, 0, 0, 0.5);
+  --shadow-pop: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 24px 70px rgba(0, 0, 0, 0.6),
+    0 2px 6px rgba(0, 0, 0, 0.4);
+
   --dur-instant: 90ms;
   --dur-fast: 150ms;
   --dur-base: 250ms;
@@ -61,73 +95,135 @@
   --ease-bouncy: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --highlight-opacity: 0.42;
+
+  --sidebar-width: 232px;
+  --sidebar-collapsed: 60px;
+  --topbar-height: 48px;
+
+  color-scheme: dark;
 }
-:root[data-theme='dark'] {
-  --bg-page: #17140f;
-  --bg-shell: #1b1812;
-  --bg-card: #1f1b16;
-  --bg-sunken: #26211a;
-  --bg-selected: #2b251d;
-  --line-default: #2f2a22;
-  --line-strong: #3e372c;
-  --text-primary: #efe8db;
-  --text-secondary: #a89d8b;
-  --text-faint: #7f7565;
-  --text-tan: #d6c2a5;
+
+/* Light. Warm paper, crisp hairlines, the same tan. */
+:root[data-theme='light'] {
+  --bg-page: #fbfaf8;
+  --bg-shell: #f4f2ee;
+  --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #f1eee9;
+  --bg-selected: #e9e5de;
+  --bg-hover: #efebe5;
+  --line-default: #e7e3dc;
+  --line-strong: #d9d3c9;
+  --line-faint: #f0ede8;
+  --text-primary: #1c1a17;
+  --text-secondary: #6b655c;
+  --text-faint: #a39d93;
+  /* tan-500 fails as text on white (1.73:1), so tan text is tan-800 here. */
+  --text-tan: #6d593b;
   --main-fill: #d6c2a5;
   --main-hover: #dccbb2;
   --main-pressed: #bba381;
   --main-on: #2a2418;
-  --focus-ring: #d6c2a5;
-  --mark-name: #8dbfea;
-  --mark-name-tint: #20303f;
-  --mark-place: #f09a92;
-  --mark-place-tint: #40231f;
-  --mark-word: #7f7565;
-  --status-progress-bg: #222d3b;
-  --status-progress-text: #a9c4e4;
-  --status-pending-bg: #3a2f14;
-  --status-pending-text: #e8c875;
-  --status-done-bg: #1f3329;
-  --status-done-text: #9ed0b4;
-  --ai-sparkle: #e9b949;
-  --today-bg: #2e2a44;
-  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+  --focus-ring: #6d593b;
+  --mark-name: #2c6ea6;
+  --mark-name-tint: #e3eef8;
+  --mark-place: #b1403a;
+  --mark-place-tint: #f7e3e0;
+  --mark-word: #a39d93;
+  --status-progress-bg: #e4eaf3;
+  --status-progress-text: #34506f;
+  --status-pending-bg: #f9edcf;
+  --status-pending-text: #6a4e12;
+  --status-done-bg: #e1ede6;
+  --status-done-text: #2e5b45;
+  --ai-sparkle: #d9a52c;
+  --today-bg: #e8e4f8;
+
+  --good: #1f8f5c;
+  --good-tint: #e1f3e9;
+  --bad: #c9373c;
+  --bad-tint: #fbe5e5;
+  --warn: #b7791f;
+  --violet: #6b56e0;
+  --violet-tint: #ece8fd;
+
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(28, 26, 23, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.6);
+  --scrim: rgba(28, 26, 23, 0.28);
+  --glow-a: rgba(214, 194, 165, 0.35);
+  --glow-b: rgba(233, 140, 90, 0.12);
+
+  --kbd-bg: #f4f2ee;
+  --kbd-border: #ddd8cf;
+  --kbd-text: #6b655c;
+
+  --shadow-raised: 0 1px 2px rgba(55, 46, 31, 0.05), 0 8px 24px rgba(55, 46, 31, 0.07);
+  --shadow-shell: 0 1px 2px rgba(55, 46, 31, 0.04), 0 16px 48px rgba(55, 46, 31, 0.1);
+  --shadow-pop: 0 0 0 1px rgba(55, 46, 31, 0.06), 0 24px 60px rgba(55, 46, 31, 0.16),
+    0 2px 6px rgba(55, 46, 31, 0.06);
+
+  color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --bg-page: #17140f;
-    --bg-shell: #1b1812;
-    --bg-card: #1f1b16;
-    --bg-sunken: #26211a;
-    --bg-selected: #2b251d;
-    --line-default: #2f2a22;
-    --line-strong: #3e372c;
-    --text-primary: #efe8db;
-    --text-secondary: #a89d8b;
-    --text-faint: #7f7565;
-    --text-tan: #d6c2a5;
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg-page: #fbfaf8;
+    --bg-shell: #f4f2ee;
+    --bg-card: #ffffff;
+    --bg-elevated: #ffffff;
+    --bg-sunken: #f1eee9;
+    --bg-selected: #e9e5de;
+    --bg-hover: #efebe5;
+    --line-default: #e7e3dc;
+    --line-strong: #d9d3c9;
+    --line-faint: #f0ede8;
+    --text-primary: #1c1a17;
+    --text-secondary: #6b655c;
+    --text-faint: #a39d93;
+    --text-tan: #6d593b;
     --main-fill: #d6c2a5;
     --main-hover: #dccbb2;
     --main-pressed: #bba381;
     --main-on: #2a2418;
-    --focus-ring: #d6c2a5;
-    --mark-name: #8dbfea;
-    --mark-name-tint: #20303f;
-    --mark-place: #f09a92;
-    --mark-place-tint: #40231f;
-    --mark-word: #7f7565;
-    --status-progress-bg: #222d3b;
-    --status-progress-text: #a9c4e4;
-    --status-pending-bg: #3a2f14;
-    --status-pending-text: #e8c875;
-    --status-done-bg: #1f3329;
-    --status-done-text: #9ed0b4;
-    --ai-sparkle: #e9b949;
-    --today-bg: #2e2a44;
-    --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+    --focus-ring: #6d593b;
+    --mark-name: #2c6ea6;
+    --mark-name-tint: #e3eef8;
+    --mark-place: #b1403a;
+    --mark-place-tint: #f7e3e0;
+    --mark-word: #a39d93;
+    --status-progress-bg: #e4eaf3;
+    --status-progress-text: #34506f;
+    --status-pending-bg: #f9edcf;
+    --status-pending-text: #6a4e12;
+    --status-done-bg: #e1ede6;
+    --status-done-text: #2e5b45;
+    --ai-sparkle: #d9a52c;
+    --today-bg: #e8e4f8;
+    --good: #1f8f5c;
+    --good-tint: #e1f3e9;
+    --bad: #c9373c;
+    --bad-tint: #fbe5e5;
+    --warn: #b7791f;
+    --violet: #6b56e0;
+    --violet-tint: #ece8fd;
+    --glass-bg: rgba(255, 255, 255, 0.82);
+    --glass-border: rgba(28, 26, 23, 0.08);
+    --glass-highlight: rgba(255, 255, 255, 0.6);
+    --scrim: rgba(28, 26, 23, 0.28);
+    --glow-a: rgba(214, 194, 165, 0.35);
+    --glow-b: rgba(233, 140, 90, 0.12);
+    --kbd-bg: #f4f2ee;
+    --kbd-border: #ddd8cf;
+    --kbd-text: #6b655c;
+    --shadow-raised: 0 1px 2px rgba(55, 46, 31, 0.05), 0 8px 24px rgba(55, 46, 31, 0.07);
+    --shadow-shell: 0 1px 2px rgba(55, 46, 31, 0.04), 0 16px 48px rgba(55, 46, 31, 0.1);
+    --shadow-pop: 0 0 0 1px rgba(55, 46, 31, 0.06), 0 24px 60px rgba(55, 46, 31, 0.16),
+      0 2px 6px rgba(55, 46, 31, 0.06);
+    color-scheme: light;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-fast: 100ms;

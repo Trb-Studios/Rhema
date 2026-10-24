@@ -20,9 +20,20 @@ export function Tip({
 }: {
   label: string;
   shortcut?: string;
-  side?: 'bottom' | 'top';
+  side?: 'bottom' | 'top' | 'right';
   children: ReactNode;
 }) {
+  const placement: React.CSSProperties =
+    side === 'right'
+      ? { left: 'calc(100% + 10px)', top: '50%', translate: '0 -50%' }
+      : {
+          [side === 'bottom' ? 'top' : 'bottom']: 'calc(100% + 7px)',
+          left: '50%',
+          translate: '-50% 0',
+        };
+  const from =
+    side === 'right' ? { x: -4, y: 0 } : { x: 0, y: side === 'bottom' ? -3 : 3 };
+
   const [shown, setShown] = useState(false);
   const timer = useRef<number | undefined>(undefined);
 
@@ -49,41 +60,30 @@ export function Tip({
       <AnimatePresence>
         {shown && (
           <motion.span
-            initial={{ opacity: 0, y: side === 'bottom' ? -3 : 3, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ opacity: 0, ...from, scale: 0.97 }}
+            animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.12 }}
             role="tooltip"
+            className="glass"
             style={{
               position: 'absolute',
-              [side === 'bottom' ? 'top' : 'bottom']: 'calc(100% + 7px)',
-              left: '50%',
-              translate: '-50% 0',
+              ...placement,
               zIndex: 90,
               display: 'flex',
               alignItems: 'center',
-              gap: 7,
-              padding: '5px 9px',
-              borderRadius: 7,
-              background: 'var(--text-primary)',
-              color: 'var(--bg-card)',
+              gap: 8,
+              padding: '5px 6px 5px 9px',
+              borderRadius: 8,
+              color: 'var(--text-primary)',
               font: '500 12px var(--font-ui)',
               whiteSpace: 'nowrap',
               pointerEvents: 'none',
-              boxShadow: '0 4px 14px rgba(0,0,0,.18)',
             }}
           >
             {label}
-            {shortcut && (
-              <kbd
-                style={{
-                  font: '500 11px var(--font-ui)',
-                  opacity: 0.65,
-                }}
-              >
-                {keyLabel(shortcut)}
-              </kbd>
-            )}
+            {shortcut && <kbd className="kbd">{keyLabel(shortcut)}</kbd>}
+            {!shortcut && <span style={{ width: 3 }} />}
           </motion.span>
         )}
       </AnimatePresence>
