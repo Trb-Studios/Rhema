@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { Relative, Subject } from '../lib/marks';
 import { allSubjects, nameOfId } from '../lib/marks';
 import { popoverVariants, transition } from '../lib/motion';
+import { Portal } from './Portal';
 
 export type Anchored = {
   /** Everyone the word could stand for here; nearly always one. */
@@ -80,142 +81,146 @@ export function MarkPopover({
   const label = subject?.name ?? (showing ? nameOfId(showing) : '');
 
   return (
-    <AnimatePresence>
-      {anchored && (
-        <>
-          <div
-            onClick={onClose}
-            style={{ position: 'fixed', inset: 0, zIndex: 50 }}
-            aria-hidden="true"
-          />
-          <motion.div
-            role="dialog"
-            aria-label={label}
-            variants={popoverVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={transition('snappy')}
-            style={{
-              position: 'fixed',
-              zIndex: 51,
-              left: Math.min(
-                Math.max(12, anchored.x - WIDTH / 2),
-                Math.max(12, window.innerWidth - WIDTH - 12),
-              ),
-              top: Math.min(anchored.y + 10, Math.max(12, window.innerHeight - 320)),
-              width: WIDTH,
-              maxHeight: 340,
-              overflowY: 'auto',
-              transformOrigin: 'top center',
-              padding: 16,
-              borderRadius: 'var(--radius-card)',
-              background: 'var(--bg-card)',
-              border: '1px solid var(--line-default)',
-              boxShadow: 'var(--shadow-shell)',
-            }}
-          >
+    <Portal>
+      <AnimatePresence>
+        {anchored && (
+          <>
             <div
+              onClick={onClose}
+              style={{ position: 'fixed', inset: 0, zIndex: 50 }}
+              aria-hidden="true"
+            />
+            <motion.div
+              role="dialog"
+              aria-label={label}
+              variants={popoverVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={transition('snappy')}
               style={{
-                font: '600 11px var(--font-ui)',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                color: person ? 'var(--mark-name)' : 'var(--mark-place)',
+                position: 'fixed',
+                zIndex: 51,
+                left: Math.min(
+                  Math.max(12, anchored.x - WIDTH / 2),
+                  Math.max(12, window.innerWidth - WIDTH - 12),
+                ),
+                top: Math.min(anchored.y + 10, Math.max(12, window.innerHeight - 320)),
+                width: WIDTH,
+                maxHeight: 340,
+                overflowY: 'auto',
+                transformOrigin: 'top center',
+                padding: 16,
+                borderRadius: 'var(--radius-card)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--line-default)',
+                boxShadow: 'var(--shadow-shell)',
               }}
             >
-              {describe(subject)}
-            </div>
+              <div
+                style={{
+                  font: '600 11px var(--font-ui)',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: person ? 'var(--mark-name)' : 'var(--mark-place)',
+                }}
+              >
+                {describe(subject)}
+              </div>
 
-            <h3 style={{ fontSize: 20, marginTop: 4 }}>{label}</h3>
+              <h3 style={{ fontSize: 20, marginTop: 4 }}>{label}</h3>
 
-            {/* The word on the page, when the text spells the name another way. */}
-            {anchored.ids.includes(showing ?? '') &&
-              anchored.text.toLowerCase() !== label.toLowerCase() && (
-                <div style={{ color: 'var(--text-secondary)', fontSize: 13, marginTop: 2 }}>
-                  Here called {anchored.text}
+              {/* The word on the page, when the text spells the name another way. */}
+              {anchored.ids.includes(showing ?? '') &&
+                anchored.text.toLowerCase() !== label.toLowerCase() && (
+                  <div style={{ color: 'var(--text-secondary)', fontSize: 13, marginTop: 2 }}>
+                    Here called {anchored.text}
+                  </div>
+                )}
+
+              {/* Two people of the same name in one verse. The text does not say which
+                occurrence is which, so both are offered rather than one guessed at. */}
+              {anchored.ids.length > 1 && subjects && (
+                <div
+                  style={{
+                    display: 'grid',
+                    gap: 5,
+                    marginTop: 10,
+                    paddingBottom: 2,
+                  }}
+                >
+                  <span style={{ color: 'var(--text-faint)', fontSize: 11.5 }}>
+                    Two of this name stand here. Which one?
+                  </span>
+                  <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+                    {anchored.ids.map((id) => (
+                      <button
+                        key={id}
+                        onClick={() => setShowing(id)}
+                        aria-pressed={showing === id}
+                        style={{
+                          padding: '3px 10px',
+                          borderRadius: 999,
+                          fontSize: 11.5,
+                          fontWeight: 600,
+                          border: `1px solid ${
+                            showing === id ? 'var(--main-fill)' : 'var(--line-default)'
+                          }`,
+                          background: showing === id ? 'var(--main-fill)' : 'transparent',
+                          color: showing === id ? 'var(--main-on)' : 'var(--text-secondary)',
+                        }}
+                      >
+                        {subjects.get(id)?.name ?? nameOfId(id)}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
-            {/* Two people of the same name in one verse. The text does not say which
-                occurrence is which, so both are offered rather than one guessed at. */}
-            {anchored.ids.length > 1 && subjects && (
-              <div
-                style={{
-                  display: 'grid',
-                  gap: 5,
-                  marginTop: 10,
-                  paddingBottom: 2,
-                }}
-              >
-                <span style={{ color: 'var(--text-faint)', fontSize: 11.5 }}>
-                  Two of this name stand here. Which one?
-                </span>
-                <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-                  {anchored.ids.map((id) => (
-                    <button
-                      key={id}
-                      onClick={() => setShowing(id)}
-                      aria-pressed={showing === id}
-                      style={{
-                        padding: '3px 10px',
-                        borderRadius: 999,
-                        fontSize: 11.5,
-                        fontWeight: 600,
-                        border: `1px solid ${
-                          showing === id ? 'var(--main-fill)' : 'var(--line-default)'
-                        }`,
-                        background: showing === id ? 'var(--main-fill)' : 'transparent',
-                        color: showing === id ? 'var(--main-on)' : 'var(--text-secondary)',
-                      }}
-                    >
-                      {subjects.get(id)?.name ?? nameOfId(id)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+              {!subjects ? (
+                <p style={{ marginTop: 10, fontSize: 13, color: 'var(--text-faint)' }}>Looking…</p>
+              ) : !subject ? (
+                <p style={{ marginTop: 10, fontSize: 13, lineHeight: 1.55 }}>
+                  Named in Scripture, but nothing more is recorded here.
+                </p>
+              ) : (
+                <>
+                  {subject.summary && (
+                    <p style={{ marginTop: 9, fontSize: 13, lineHeight: 1.55 }}>
+                      {subject.summary}
+                    </p>
+                  )}
 
-            {!subjects ? (
-              <p style={{ marginTop: 10, fontSize: 13, color: 'var(--text-faint)' }}>Looking…</p>
-            ) : !subject ? (
-              <p style={{ marginTop: 10, fontSize: 13, lineHeight: 1.55 }}>
-                Named in Scripture, but nothing more is recorded here.
-              </p>
-            ) : (
-              <>
-                {subject.summary && (
-                  <p style={{ marginTop: 9, fontSize: 13, lineHeight: 1.55 }}>{subject.summary}</p>
-                )}
+                  {subject.tribe && <Row label="Tribe" value={subject.tribe} />}
+                  {subject.area && <Row label="Region" value={subject.area} />}
+                  {subject.near && subject.near !== subject.name && (
+                    <Row label="Also known" value={subject.near} />
+                  )}
 
-                {subject.tribe && <Row label="Tribe" value={subject.tribe} />}
-                {subject.area && <Row label="Region" value={subject.area} />}
-                {subject.near && subject.near !== subject.name && (
-                  <Row label="Also known" value={subject.near} />
-                )}
+                  <Family subject={subject} subjects={subjects} onOpen={setShowing} />
 
-                <Family subject={subject} subjects={subjects} onOpen={setShowing} />
+                  <Appearances subject={subject} onOpenVerse={onOpenVerse} />
+                </>
+              )}
 
-                <Appearances subject={subject} onOpenVerse={onOpenVerse} />
-              </>
-            )}
-
-            {!anchored.ids.includes(showing ?? '') && (
-              <button
-                onClick={() => setShowing(anchored.ids[0] ?? null)}
-                style={{
-                  marginTop: 12,
-                  color: 'var(--text-secondary)',
-                  fontSize: 12.5,
-                  fontWeight: 600,
-                }}
-              >
-                ← Back to {anchored.text}
-              </button>
-            )}
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+              {!anchored.ids.includes(showing ?? '') && (
+                <button
+                  onClick={() => setShowing(anchored.ids[0] ?? null)}
+                  style={{
+                    marginTop: 12,
+                    color: 'var(--text-secondary)',
+                    fontSize: 12.5,
+                    fontWeight: 600,
+                  }}
+                >
+                  ← Back to {anchored.text}
+                </button>
+              )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </Portal>
   );
 }
 

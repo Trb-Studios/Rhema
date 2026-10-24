@@ -4,6 +4,7 @@ import type { EditionId } from '../lib/editions';
 import { meaningOf, occurrencesIn, parse, strongsOf, totalFor, wordsForBook } from '../lib/words';
 import type { LexiconEntry, Word } from '../lib/words';
 import { popoverVariants, transition } from '../lib/motion';
+import { Portal } from './Portal';
 
 export type WordAnchor = {
   word: Word;
@@ -65,164 +66,166 @@ export function WordPopover({
   const isHebrew = anchor.edition === 'hebrew';
 
   return (
-    <AnimatePresence>
-      <>
-        <div
-          onClick={onClose}
-          style={{ position: 'fixed', inset: 0, zIndex: 50 }}
-          aria-hidden="true"
-        />
-        <motion.div
-          role="dialog"
-          aria-label={`The word ${written}`}
-          variants={popoverVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={transition('snappy')}
-          style={{
-            position: 'fixed',
-            zIndex: 51,
-            left: Math.min(
-              Math.max(12, anchor.x - WIDTH / 2),
-              Math.max(12, window.innerWidth - WIDTH - 12),
-            ),
-            top: Math.min(anchor.y + 10, Math.max(12, window.innerHeight - 300)),
-            width: WIDTH,
-            maxHeight: 340,
-            overflowY: 'auto',
-            transformOrigin: 'top center',
-            padding: 16,
-            borderRadius: 'var(--radius-card)',
-            background: 'var(--bg-card)',
-            border: '1px solid var(--line-default)',
-            boxShadow: 'var(--shadow-shell)',
-          }}
-        >
+    <Portal>
+      <AnimatePresence>
+        <>
           <div
+            onClick={onClose}
+            style={{ position: 'fixed', inset: 0, zIndex: 50 }}
+            aria-hidden="true"
+          />
+          <motion.div
+            role="dialog"
+            aria-label={`The word ${written}`}
+            variants={popoverVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={transition('snappy')}
             style={{
-              font: '600 11px var(--font-ui)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--text-tan)',
+              position: 'fixed',
+              zIndex: 51,
+              left: Math.min(
+                Math.max(12, anchor.x - WIDTH / 2),
+                Math.max(12, window.innerWidth - WIDTH - 12),
+              ),
+              top: Math.min(anchor.y + 10, Math.max(12, window.innerHeight - 300)),
+              width: WIDTH,
+              maxHeight: 340,
+              overflowY: 'auto',
+              transformOrigin: 'top center',
+              padding: 16,
+              borderRadius: 'var(--radius-card)',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--line-default)',
+              boxShadow: 'var(--shadow-shell)',
             }}
           >
-            {isHebrew ? 'Hebrew' : 'Greek'}
-          </div>
-
-          <div
-            dir={isHebrew ? 'rtl' : 'ltr'}
-            style={{
-              fontFamily: isHebrew ? 'var(--font-hebrew)' : 'var(--font-greek)',
-              fontSize: 30,
-              lineHeight: 1.35,
-              marginTop: 6,
-              textAlign: 'start',
-            }}
-          >
-            {written}
-          </div>
-
-          {meaning && (
             <div
               style={{
-                marginTop: 8,
-                fontFamily: 'var(--font-display)',
-                fontSize: 18,
-                lineHeight: 1.4,
+                font: '600 11px var(--font-ui)',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: 'var(--text-tan)',
               }}
             >
-              {meaning[2]}
+              {isHebrew ? 'Hebrew' : 'Greek'}
             </div>
-          )}
 
-          {meaning && meaning[1] && <Row label="Said as">{meaning[1]}</Row>}
-
-          {lemma && lemma !== written && (
-            <Row label="Dictionary form">
-              <span
-                dir={isHebrew ? 'rtl' : 'ltr'}
-                style={{ fontFamily: isHebrew ? 'var(--font-hebrew)' : 'var(--font-greek)' }}
-              >
-                {isHebrew ? (strongs ?? lemma) : lemma}
-              </span>
-            </Row>
-          )}
-
-          {parsing.length > 0 ? (
-            <Row label="Parsing">{parsing.join(', ')}</Row>
-          ) : (
-            code && <Row label="Parsing code">{code}</Row>
-          )}
-
-          {total !== null && (
-            <Row label="Occurs">
-              {total.toLocaleString()} {total === 1 ? 'time' : 'times'} in the{' '}
-              {isHebrew ? 'Old' : 'New'} Testament
-            </Row>
-          )}
-
-          {meaning && meaning[3] && (
-            <p
+            <div
+              dir={isHebrew ? 'rtl' : 'ltr'}
               style={{
-                marginTop: 12,
-                paddingTop: 12,
-                borderTop: '1px solid var(--line-default)',
-                fontSize: 12.5,
-                lineHeight: 1.6,
-                color: 'var(--text-secondary)',
+                fontFamily: isHebrew ? 'var(--font-hebrew)' : 'var(--font-greek)',
+                fontSize: 30,
+                lineHeight: 1.35,
+                marginTop: 6,
+                textAlign: 'start',
               }}
             >
-              {meaning[3]}
-            </p>
-          )}
+              {written}
+            </div>
 
-          {here.length > 0 && (
-            <>
+            {meaning && (
               <div
                 style={{
-                  marginTop: 14,
+                  marginTop: 8,
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 18,
+                  lineHeight: 1.4,
+                }}
+              >
+                {meaning[2]}
+              </div>
+            )}
+
+            {meaning && meaning[1] && <Row label="Said as">{meaning[1]}</Row>}
+
+            {lemma && lemma !== written && (
+              <Row label="Dictionary form">
+                <span
+                  dir={isHebrew ? 'rtl' : 'ltr'}
+                  style={{ fontFamily: isHebrew ? 'var(--font-hebrew)' : 'var(--font-greek)' }}
+                >
+                  {isHebrew ? (strongs ?? lemma) : lemma}
+                </span>
+              </Row>
+            )}
+
+            {parsing.length > 0 ? (
+              <Row label="Parsing">{parsing.join(', ')}</Row>
+            ) : (
+              code && <Row label="Parsing code">{code}</Row>
+            )}
+
+            {total !== null && (
+              <Row label="Occurs">
+                {total.toLocaleString()} {total === 1 ? 'time' : 'times'} in the{' '}
+                {isHebrew ? 'Old' : 'New'} Testament
+              </Row>
+            )}
+
+            {meaning && meaning[3] && (
+              <p
+                style={{
+                  marginTop: 12,
                   paddingTop: 12,
                   borderTop: '1px solid var(--line-default)',
-                  font: '600 11px var(--font-ui)',
-                  letterSpacing: '0.06em',
-                  textTransform: 'uppercase',
+                  fontSize: 12.5,
+                  lineHeight: 1.6,
                   color: 'var(--text-secondary)',
                 }}
               >
-                {here.length} {here.length === 1 ? 'verse' : 'verses'} in {anchor.book}
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
-                {here.slice(0, 40).map((reference) => {
-                  const [chapter, verse] = reference.split(':').map(Number);
-                  return (
-                    <button
-                      key={reference}
-                      onClick={() => onGo(chapter, verse)}
-                      className="tabular"
-                      style={{
-                        padding: '3px 9px',
-                        borderRadius: 999,
-                        background: 'var(--bg-sunken)',
-                        fontSize: 12,
-                        fontWeight: 600,
-                      }}
-                    >
-                      {reference}
-                    </button>
-                  );
-                })}
-                {here.length > 40 && (
-                  <span style={{ color: 'var(--text-faint)', fontSize: 12, alignSelf: 'center' }}>
-                    and {here.length - 40} more
-                  </span>
-                )}
-              </div>
-            </>
-          )}
-        </motion.div>
-      </>
-    </AnimatePresence>
+                {meaning[3]}
+              </p>
+            )}
+
+            {here.length > 0 && (
+              <>
+                <div
+                  style={{
+                    marginTop: 14,
+                    paddingTop: 12,
+                    borderTop: '1px solid var(--line-default)',
+                    font: '600 11px var(--font-ui)',
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    color: 'var(--text-secondary)',
+                  }}
+                >
+                  {here.length} {here.length === 1 ? 'verse' : 'verses'} in {anchor.book}
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
+                  {here.slice(0, 40).map((reference) => {
+                    const [chapter, verse] = reference.split(':').map(Number);
+                    return (
+                      <button
+                        key={reference}
+                        onClick={() => onGo(chapter, verse)}
+                        className="tabular"
+                        style={{
+                          padding: '3px 9px',
+                          borderRadius: 999,
+                          background: 'var(--bg-sunken)',
+                          fontSize: 12,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {reference}
+                      </button>
+                    );
+                  })}
+                  {here.length > 40 && (
+                    <span style={{ color: 'var(--text-faint)', fontSize: 12, alignSelf: 'center' }}>
+                      and {here.length - 40} more
+                    </span>
+                  )}
+                </div>
+              </>
+            )}
+          </motion.div>
+        </>
+      </AnimatePresence>
+    </Portal>
   );
 }
 

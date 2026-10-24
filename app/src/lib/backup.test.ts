@@ -191,6 +191,37 @@ describe('merging two devices', () => {
     expect(read('rhema.settings')).toEqual({ size: 15 });
   });
 
+  it('merges phrase highlights and sticky notes by id, keeping both machines’ work', () => {
+    put('rhema.phrases', [{ id: 'a' }, { id: 'b' }]);
+    put('rhema.stickies', { '1': [{ id: 's1' }] });
+    apply(
+      backupOf({
+        'rhema.phrases': [{ id: 'b' }, { id: 'c' }],
+        'rhema.stickies': { '1': [{ id: 's1' }, { id: 's2' }], '40': [{ id: 's3' }] },
+      }),
+      'merge',
+    );
+    expect(read('rhema.phrases')).toEqual([{ id: 'a' }, { id: 'b' }, { id: 'c' }]);
+    expect(read('rhema.stickies')).toEqual({
+      '1': [{ id: 's1' }, { id: 's2' }],
+      '40': [{ id: 's3' }],
+    });
+  });
+
+  it('joins two different notebooks rather than dropping either', () => {
+    put('rhema.notebook', { text: 'Mine', updated: '2026-01-01' });
+    apply(backupOf({ 'rhema.notebook': { text: 'Theirs', updated: '2026-01-02' } }), 'merge');
+    const merged = read('rhema.notebook') as { text: string };
+    expect(merged.text).toContain('Mine');
+    expect(merged.text).toContain('Theirs');
+  });
+
+  it('keeps the better quiz score for each book and level', () => {
+    put('rhema.quiz', { '1:easy': { best: 900 }, '2:hard': { best: 100 } });
+    apply(backupOf({ 'rhema.quiz': { '1:easy': { best: 400 }, '2:hard': { best: 700 } } }), 'merge');
+    expect(read('rhema.quiz')).toEqual({ '1:easy': { best: 900 }, '2:hard': { best: 700 } });
+  });
+
   it('round-trips the whole state unchanged', () => {
     put('rhema.notes', { '1:1': 'a' });
     put('rhema.highlights', { '1:1:1': 2 });
@@ -199,6 +230,10 @@ describe('merging two devices', () => {
     put('rhema.review', { '1:1:1': { due: '2026-01-01' } });
     put('rhema.plan', { mode: 'days', value: 365 });
     put('rhema.settings', { size: 19 });
+    put('rhema.phrases', [{ id: 'p1', bookId: 1, chapter: 1 }]);
+    put('rhema.stickies', { '1': [{ id: 's1', text: 'x' }] });
+    put('rhema.notebook', { text: '## Genesis 1\nx', updated: '2026-01-01' });
+    put('rhema.quiz', { '1:easy': { best: 900 } });
 
     const before = collect();
     const text = JSON.stringify(before);

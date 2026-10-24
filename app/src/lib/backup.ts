@@ -23,6 +23,10 @@ export const KEYS = [
   'rhema.review',
   'rhema.plan',
   'rhema.settings',
+  'rhema.phrases',
+  'rhema.stickies',
+  'rhema.notebook',
+  'rhema.quiz',
 ] as const;
 
 export type Backup = {
@@ -175,6 +179,50 @@ function merge(key: string, current: unknown, incoming: unknown): unknown {
     for (const [id, card] of Object.entries(b)) {
       const mine = out[id];
       if (!mine || (card.due ?? '') < (mine.due ?? '')) out[id] = card;
+    }
+    return out;
+  }
+
+  if (key === 'rhema.phrases') {
+    // Highlights are kept by id; the same highlight on both machines is kept once.
+    const a = (Array.isArray(current) ? current : []) as Array<{ id: string }>;
+    const b = (Array.isArray(incoming) ? incoming : []) as Array<{ id: string }>;
+    const seen = new Set(a.map((phrase) => phrase.id));
+    return [...a, ...b.filter((phrase) => !seen.has(phrase.id))];
+  }
+
+  if (key === 'rhema.stickies') {
+    // Per book, every note from both, without repeating one that exists on both.
+    const a = (current ?? {}) as Record<string, Array<{ id: string }>>;
+    const b = (incoming ?? {}) as Record<string, Array<{ id: string }>>;
+    const out: Record<string, Array<{ id: string }>> = { ...a };
+    for (const [book, list] of Object.entries(b)) {
+      const mine = out[book] ?? [];
+      const seen = new Set(mine.map((sticky) => sticky.id));
+      out[book] = [...mine, ...list.filter((sticky) => !seen.has(sticky.id))];
+    }
+    return out;
+  }
+
+  if (key === 'rhema.notebook') {
+    // One document: two different notebooks are joined rather than one discarded.
+    const a = (current ?? { text: '' }) as { text: string; updated: string };
+    const b = (incoming ?? { text: '' }) as { text: string; updated: string };
+    if (!b.text.trim() || a.text.includes(b.text.trim())) return a;
+    if (!a.text.trim() || b.text.includes(a.text.trim())) return b;
+    return {
+      text: `${a.text.trimEnd()}\n\n## From the other machine\n${b.text.trim()}\n`,
+      updated: new Date().toISOString(),
+    };
+  }
+
+  if (key === 'rhema.quiz') {
+    // Best scores: whichever is higher for each book and level.
+    const a = (current ?? {}) as Record<string, { best?: number }>;
+    const b = (incoming ?? {}) as Record<string, { best?: number }>;
+    const out = { ...a };
+    for (const [id, record] of Object.entries(b)) {
+      if ((record.best ?? 0) > (out[id]?.best ?? 0)) out[id] = record;
     }
     return out;
   }

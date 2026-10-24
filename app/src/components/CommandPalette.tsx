@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Command } from '../lib/commands';
@@ -74,7 +74,14 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
   const input = useRef<HTMLInputElement>(null);
   const list = useRef<HTMLDivElement>(null);
 
-  const close = () => setOpen(false);
+  // Cleared on the way out as well as on the way in: typing the instant the palette
+  // reopens could otherwise land before the reset and be added to the last search.
+  const close = () => {
+    setOpen(false);
+    setQuery('');
+    setHits([]);
+    setCursor(0);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -162,6 +169,13 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
   useEffect(() => {
     list.current?.querySelector('[data-at-cursor="true"]')?.scrollIntoView({ block: 'nearest' });
   }, [cursor]);
+
+  // Where the highlighted row sits in the list, for the highlight to slide to.
+  const [highlight, setHighlight] = useState({ top: 0, height: 0 });
+  useLayoutEffect(() => {
+    const row = list.current?.querySelector<HTMLElement>('[data-at-cursor="true"]');
+    setHighlight(row ? { top: row.offsetTop, height: row.offsetHeight } : { top: 0, height: 0 });
+  }, [cursor, rows, open]);
 
   const current = rows[cursor];
 
@@ -283,9 +297,9 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
           }}
         >
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.97, filter: 'blur(6px)' }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -6, scale: 0.98, filter: 'blur(4px)' }}
+            initial={{ opacity: 0, y: -10, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={transition('smooth')}
             onClick={(event) => event.stopPropagation()}
             onKeyDown={onKeyDown}
@@ -331,6 +345,7 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
               </span>
               <input
                 ref={input}
+                autoFocus
                 value={query}
                 onChange={(event) => {
                   setQuery(event.target.value);
@@ -437,11 +452,33 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
               <div
                 ref={list}
                 style={{
+                  position: 'relative',
                   overflowY: 'auto',
                   padding: 7,
                   borderRight: '1px solid var(--glass-border)',
                 }}
               >
+                {/* One highlight that slides to the row under the cursor. Measured and
+                    moved by hand rather than with a shared layout animation, which held
+                    the closing palette on screen, invisible, over the whole window. */}
+                {rows.length > 0 && (
+                  <motion.span
+                    aria-hidden="true"
+                    initial={false}
+                    animate={{ y: highlight.top, height: highlight.height, opacity: highlight.height ? 1 : 0 }}
+                    transition={spring.snappy}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 7,
+                      right: 7,
+                      borderRadius: 8,
+                      background: 'var(--bg-selected)',
+                      boxShadow: 'inset 0 1px 0 var(--glass-highlight)',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                )}
                 {rows.length === 0 && (
                   <p style={{ padding: 16, color: 'var(--text-faint)', fontSize: 13, lineHeight: 1.6 }}>
                     {query.trim()
@@ -487,19 +524,6 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
                           borderRadius: 8,
                         }}
                       >
-                        {atCursor && (
-                          <motion.span
-                            layoutId="palette-cursor"
-                            transition={spring.snappy}
-                            style={{
-                              position: 'absolute',
-                              inset: 0,
-                              borderRadius: 8,
-                              background: 'var(--bg-selected)',
-                              boxShadow: 'inset 0 1px 0 var(--glass-highlight)',
-                            }}
-                          />
-                        )}
                         <span style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10, width: '100%', minWidth: 0 }}>
                           <RowIcon row={row} />
                           <RowText row={row} />
@@ -517,18 +541,18 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
               </div>
 
               <div style={{ minHeight: 0, overflowY: 'auto' }}>
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={current ? rowKey(current, cursor) : 'empty'}
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.12 }}
-                    style={{ height: '100%' }}
-                  >
-                    <Preview row={current} edition={edition} books={books} />
-                  </motion.div>
-                </AnimatePresence>
+                {/* Keyed so each row's preview fades in fresh. Deliberately no exit
+                    animation: a nested exit still running when the palette closes kept
+                    the whole palette mounted, invisible, over the window. */}
+                <motion.div
+                  key={current ? rowKey(current, cursor) : 'empty'}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.14 }}
+                  style={{ height: '100%' }}
+                >
+                  <Preview row={current} edition={edition} books={books} />
+                </motion.div>
               </div>
             </div>
 

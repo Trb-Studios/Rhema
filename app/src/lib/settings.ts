@@ -17,6 +17,8 @@ export type Settings = {
   /** Column width in pixels. Narrow reads better than wide. */
   width: number;
   verseNumbers: boolean;
+  /** The English beneath each verse when reading the Hebrew or Greek. */
+  originalEnglish: boolean;
 };
 
 // Dark first: the app is designed dark and lit in tan, and light is the alternative.
@@ -26,6 +28,7 @@ export const DEFAULTS: Settings = {
   lineHeight: 1.7,
   width: 640,
   verseNumbers: true,
+  originalEnglish: true,
 };
 
 const store = createStore<Settings>('rhema.settings', DEFAULTS);

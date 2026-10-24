@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { SlidingHighlight } from './SlidingHighlight';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Book } from '../lib/bible';
 import { referenceOf, useSaved } from '../lib/saved';
-import { useNotes } from '../lib/notes';
-import { spring, transition } from '../lib/motion';
-import { BookmarkIcon, CloseIcon, LinkIcon, NoteIcon } from './Icons';
+import { transition } from '../lib/motion';
+import { BookmarkIcon, CloseIcon, LinkIcon, NotebookIcon, StickyIcon } from './Icons';
 import { CrossRefs } from './CrossRefs';
+import { StickyBoard } from './StickyBoard';
+import { NotebookEditor } from './NotebookEditor';
 
-export type PanelTab = 'notes' | 'saved' | 'refs';
+export type PanelTab = 'notes' | 'notebook' | 'saved' | 'refs';
 
 /**
  * The panel beside the text: what you have written, and what you have kept.
@@ -35,10 +37,10 @@ export function SidePanel({
   chapter: number;
   /** The verse selected in the reader, which the references follow. */
   verse: number | null;
-  onOpenVerse: (bookId: number, chapter: number) => void;
+  onOpenVerse: (bookId: number, chapter: number, verse?: number) => void;
 }) {
-  const notes = useNotes(book.id, chapter);
   const { saved, remove } = useSaved();
+  const tabList = useRef<HTMLDivElement>(null);
   const beside = useRoomToSit();
 
   // Below this width the panel would leave the text narrower than itself, so it
@@ -99,18 +101,31 @@ export function SidePanel({
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <div
+                  ref={tabList}
                   role="tablist"
                   style={{
+                    position: 'relative',
                     display: 'flex',
                     gap: 2,
-                    padding: 3,
-                    borderRadius: 10,
+                    padding: 2,
+                    borderRadius: 9,
                     background: 'var(--bg-sunken)',
+                    border: '1px solid var(--line-default)',
                   }}
                 >
+                  <SlidingHighlight
+                    container={tabList}
+                    activeKey={tab}
+                    style={{
+                      borderRadius: 7,
+                      background: 'var(--bg-selected)',
+                      boxShadow: 'inset 0 1px 0 var(--glass-highlight), 0 1px 2px rgba(0,0,0,0.25)',
+                    }}
+                  />
                   {(
                     [
-                      ['notes', 'Notes', NoteIcon],
+                      ['notes', 'Sticky', StickyIcon],
+                      ['notebook', 'Notebook', NotebookIcon],
                       ['refs', 'Links', LinkIcon],
                       ['saved', 'Saved', BookmarkIcon],
                     ] as const
@@ -118,35 +133,24 @@ export function SidePanel({
                     <button
                       key={id}
                       role="tab"
+                      data-active={tab === id}
                       aria-selected={tab === id}
                       onClick={() => onTab(id)}
                       style={{
                         position: 'relative',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 6,
-                        padding: '6px 12px',
+                        gap: 5,
+                        height: 26,
+                        padding: '0 8px',
                         borderRadius: 7,
                         fontWeight: 600,
-                        fontSize: 13,
-                        color: tab === id ? 'var(--text-primary)' : 'var(--text-secondary)',
+                        fontSize: 12,
+                        color: tab === id ? 'var(--text-primary)' : 'var(--text-faint)',
                       }}
                     >
-                      {tab === id && (
-                        <motion.span
-                          layoutId="panel-tab"
-                          transition={spring.snappy}
-                          style={{
-                            position: 'absolute',
-                            inset: 0,
-                            borderRadius: 7,
-                            background: 'var(--bg-card)',
-                            boxShadow: '0 1px 2px rgba(0,0,0,0.07)',
-                          }}
-                        />
-                      )}
-                      <span style={{ position: 'relative', display: 'flex', gap: 6 }}>
-                        <Icon size={15} />
+                      <span style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 5 }}>
+                        <Icon size={14} />
                         {label}
                         {id === 'saved' && saved.length > 0 && (
                           <span className="tabular" style={{ color: 'var(--text-faint)' }}>
@@ -184,40 +188,21 @@ export function SidePanel({
                   onOpenVerse={onOpenVerse}
                 />
               ) : tab === 'notes' ? (
-                <>
-                  <div
-                    style={{
-                      marginTop: 16,
-                      font: '600 11px var(--font-ui)',
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                      color: 'var(--text-secondary)',
-                    }}
-                  >
-                    {book.name} {chapter}
-                  </div>
-                  <textarea
-                    value={notes.text}
-                    onChange={(event) => notes.write(event.target.value)}
-                    placeholder="What do you see here, and what is it asking of you?"
-                    style={{
-                      flex: 1,
-                      marginTop: 10,
-                      padding: 16,
-                      borderRadius: 'var(--radius-card)',
-                      border: '1px solid var(--line-default)',
-                      background: 'var(--bg-card)',
-                      color: 'var(--text-primary)',
-                      fontFamily: 'var(--font-display)',
-                      fontSize: 16,
-                      lineHeight: 1.65,
-                      resize: 'none',
-                    }}
+                <StickyBoard
+                  book={book}
+                  chapter={chapter}
+                  verse={verse}
+                  onOpenVerse={(chapterNumber, verseNumber) =>
+                    onOpenVerse(book.id, chapterNumber, verseNumber)
+                  }
+                />
+              ) : tab === 'notebook' ? (
+                <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: 14 }}>
+                  <NotebookEditor
+                    compact
+                    passage={`${book.name} ${chapter}${verse ? `:${verse}` : ''}`}
                   />
-                  <div style={{ color: 'var(--text-faint)', fontSize: 12, marginTop: 10 }}>
-                    Saved as you type · {notes.written()} chapters with notes
-                  </div>
-                </>
+                </div>
               ) : (
                 <div style={{ flex: 1, overflowY: 'auto', marginTop: 14 }}>
                   {saved.length === 0 ? (

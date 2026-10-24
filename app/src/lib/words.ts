@@ -10,7 +10,10 @@
 import type { EditionId } from './editions';
 import { inDesktopApp, invokeCommand } from './tauri';
 
-const DATA = new URL('./bible/', document.baseURI);
+/** Data files sit beside the page; worked out when first needed, not at import. */
+function dataUrl(file: string): URL {
+  return new URL(file, new URL('./bible/', document.baseURI));
+}
 
 /** One word as the text carries it: written form, dictionary form, parsing code. */
 export type Word = [written: string, lemma: string, parsing: string];
@@ -32,12 +35,65 @@ let lexicon: Record<string, Record<string, LexiconEntry>> | null = null;
  * then shows the word without a meaning rather than inventing one.
  */
 export async function meaningOf(edition: EditionId, lemma: string): Promise<LexiconEntry | null> {
-  if (!lexicon) {
-    const response = await fetch(new URL('lexicon.json', DATA));
-    if (!response.ok) return null;
-    lexicon = (await response.json()) as Record<string, Record<string, LexiconEntry>>;
+  await loadLexicon();
+  return lexicon?.[edition]?.[entryOf(edition, lemma)] ?? null;
+}
+
+let lexiconLoading: Promise<void> | null = null;
+
+/**
+ * Fetches the lexicon once. Hover meanings need it already in memory: a gloss that
+ * arrives after the pointer has moved on is no use, so it is loaded the moment an
+ * original edition opens rather than on the first hover.
+ */
+export function loadLexicon(): Promise<void> {
+  if (lexicon) return Promise.resolve();
+  lexiconLoading ??= (async () => {
+    try {
+      const response = await fetch(dataUrl('lexicon.json'));
+      if (response.ok) {
+        lexicon = (await response.json()) as Record<string, Record<string, LexiconEntry>>;
+      }
+    } catch {
+      // Without the lexicon the words still read; they just carry no meaning on hover.
+    }
+  })();
+  return lexiconLoading;
+}
+
+/** The entry for a word if the lexicon is already loaded, without waiting. */
+export function meaningNow(edition: EditionId, lemma: string): LexiconEntry | null {
+  return lexicon?.[edition]?.[entryOf(edition, lemma)] ?? null;
+}
+
+/**
+ * A line of senses short enough for a tooltip: "to create, shape, form", "a king".
+ *
+ * The Hebrew lexicon numbers its senses, so the first numbered sense is taken. The
+ * Greek one is prose in Abbott-Smith's style, with Septuagint notes in brackets and
+ * references throughout, so those are stripped and the first clause kept. Anything that
+ * still reads as a paragraph is dropped, and the one-word gloss carries the meaning.
+ */
+export function shortSenses(edition: EditionId, definition: string): string {
+  if (!definition) return '';
+  let text = definition;
+
+  if (edition === 'hebrew') {
+    const first = /1\)\s*([^]*?)(?=\s+1a\)|\s+2\)|\s+Aramaic|\s+Also means|$)/.exec(text);
+    text = first ? first[1] : text.replace(/^:\s*/, '');
+  } else {
+    text = text
+      .replace(/\[[^\]]*\]/g, ' ')
+      .replace(/\([^)]*\)/g, ' ')
+      .replace(/__\(?[A-Za-z0-9]{1,4}[.)]/g, ' ');
+    const start = text.search(/[A-Za-z]/);
+    text = start === -1 ? '' : text.slice(start);
+    const stop = text.search(/\s:|;|\.\s|\b[1-3]?[A-Z][a-z]{1,3}\.\d|__|\bLat\./);
+    if (stop !== -1) text = text.slice(0, stop);
   }
-  return lexicon[edition]?.[entryOf(edition, lemma)] ?? null;
+
+  text = text.replace(/\s+/g, ' ').replace(/[\s,.:]+$/, '').trim();
+  return text.length > 64 ? '' : text;
 }
 
 export async function wordsForBook(edition: EditionId, bookId: number): Promise<BookWords | null> {
@@ -53,7 +109,7 @@ export async function wordsForBook(edition: EditionId, bookId: number): Promise<
   if (inDesktopApp()) {
     file = await invokeCommand<BookWords>('words', { edition, bookId });
   } else {
-    const response = await fetch(new URL(`${key}.json`, DATA));
+    const response = await fetch(dataUrl(`${key}.json`));
     if (response.ok) file = (await response.json()) as BookWords;
   }
 
@@ -77,7 +133,7 @@ export function entryOf(edition: EditionId, lemma: string): string {
 /** How often a dictionary entry occurs in the whole of its testament. */
 export async function totalFor(edition: EditionId, lemma: string): Promise<number | null> {
   if (!totals) {
-    const response = await fetch(new URL('word-totals.json', DATA));
+    const response = await fetch(dataUrl('word-totals.json'));
     if (!response.ok) return null;
     totals = (await response.json()) as Record<string, Record<string, number>>;
   }

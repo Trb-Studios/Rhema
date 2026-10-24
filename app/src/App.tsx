@@ -116,25 +116,31 @@ export default function App() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100%', minHeight: 0 }}>
+    // Clipped rather than hidden: an element scrolled into view can still scroll a
+    // container that merely hides its overflow, which slid the whole window sideways.
+    <div style={{ display: 'flex', height: '100%', minHeight: 0, overflow: 'clip' }}>
       <Sidebar />
       <main
         style={{
           position: 'relative',
           flex: 1,
           minWidth: 0,
+          overflow: 'clip',
           display: 'flex',
           flexDirection: 'column',
           background: 'var(--bg-page)',
         }}
       >
         <UpdateBanner />
-        <AnimatePresence mode="wait" initial={false}>
+        {/* The outgoing screen is lifted out of the layout and fades over the incoming
+            one, rather than the incoming one waiting for it: a screen whose exit never
+            finished would otherwise leave the window blank. */}
+        <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={route.screen}
-            initial={{ opacity: 0, y: 6, filter: 'blur(2px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -4, filter: 'blur(2px)' }}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4, pointerEvents: 'none' }}
             transition={transition('smooth')}
             style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}
           >

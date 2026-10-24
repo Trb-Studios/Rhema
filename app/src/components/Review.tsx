@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { SlidingHighlight } from './SlidingHighlight';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSaved } from '../lib/saved';
 import type { SavedVerse } from '../lib/saved';
@@ -21,6 +22,7 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
   const { saved } = useSaved();
   const { cards, due, answer } = useReview();
   const [mode, setMode] = useState<Mode>('recall');
+  const modeGroup = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
   const [done, setDone] = useState(0);
 
@@ -129,9 +131,11 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
               }}
             >
               <div
+                ref={modeGroup}
                 role="group"
                 aria-label="How to review"
                 style={{
+                  position: 'relative',
                   display: 'flex',
                   gap: 2,
                   padding: 3,
@@ -139,6 +143,11 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
                   background: 'var(--bg-sunken)',
                 }}
               >
+                <SlidingHighlight
+                  container={modeGroup}
+                  activeKey={mode}
+                  style={{ borderRadius: 7, background: 'var(--bg-selected)', boxShadow: 'inset 0 1px 0 var(--glass-highlight)' }}
+                />
                 {(
                   [
                     ['recall', 'Recall'],
@@ -147,6 +156,7 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
                 ).map(([id, label]) => (
                   <button
                     key={id}
+                    data-active={mode === id}
                     onClick={() => setMode(id)}
                     aria-pressed={mode === id}
                     style={{
@@ -158,19 +168,6 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
                       color: mode === id ? 'var(--text-primary)' : 'var(--text-secondary)',
                     }}
                   >
-                    {mode === id && (
-                      <motion.span
-                        layoutId="review-mode"
-                        transition={spring.snappy}
-                        style={{
-                          position: 'absolute',
-                          inset: 0,
-                          borderRadius: 7,
-                          background: 'var(--bg-card)',
-                          boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
-                        }}
-                      />
-                    )}
                     <span style={{ position: 'relative' }}>{label}</span>
                   </button>
                 ))}

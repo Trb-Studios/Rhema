@@ -9,12 +9,12 @@ import {
 import type { Book, Verse } from '../lib/bible';
 import type { EditionId } from '../lib/editions';
 import { editionById, editionsFor } from '../lib/editions';
-import { markUp, marksFor } from '../lib/marks';
+import { marksFor } from '../lib/marks';
 import type { BookMarks } from '../lib/marks';
 import { useProgress } from '../lib/progress';
 import { useSaved } from '../lib/saved';
 import { useSettings } from '../lib/settings';
-import { HIGHLIGHT_OPACITY, QUICK_PICKS, useHighlights } from '../lib/highlights';
+import { QUICK_PICKS, useHighlights } from '../lib/highlights';
 import { pageVariants, spring, transition } from '../lib/motion';
 import { BookPickerHost } from '../components/BookPicker';
 import { MarkPopover } from '../components/MarkPopover';
@@ -45,7 +45,16 @@ import { Review } from '../components/Review';
 import { Plan } from '../components/Plan';
 import { useReview } from '../lib/review';
 import type { WordAnchor } from '../components/WordPopover';
-import { wordsForBook } from '../lib/words';
+import { loadLexicon, wordsForBook } from '../lib/words';
+import { usePhrases } from '../lib/phrases';
+import { addSticky } from '../lib/stickies';
+import { OriginalText } from '../components/OriginalText';
+import { KjvText } from '../components/KjvText';
+import type { TextSelection } from '../components/KjvText';
+import { GlossTip, useGlossHover } from '../components/GlossTip';
+import { HighlightBar } from '../components/HighlightBar';
+import { SlidingHighlight } from '../components/SlidingHighlight';
+import type { BarTarget } from '../components/HighlightBar';
 import type { Word } from '../lib/words';
 import {
   BookIcon,
@@ -96,6 +105,22 @@ export function Read({ route }: { route: Route }) {
   // A verse someone asked for, until it has been scrolled to.
   const [jumpTo, setJumpTo] = useState<number | null>(null);
   const [error, setError] = useState('');
+
+  // Highlighting any stretch of words, and the bar that offers it.
+  const { phrases, add: addPhrase, remove: removePhrase, recolour } = usePhrases();
+  const [bar, setBar] = useState<BarTarget | null>(null);
+  const pendingSelection = useRef<TextSelection | null>(null);
+  const onSelectText = useCallback((selection: TextSelection | null) => {
+    pendingSelection.current = selection;
+    if (selection) setBar({ mode: 'new', text: selection.text, rect: selection.rect });
+    else setBar((open) => (open?.mode === 'new' ? null : open));
+  }, []);
+
+  const editionGroup = useRef<HTMLDivElement>(null);
+
+  // The English under each verse when reading an original, and the hover meanings.
+  const [english, setEnglish] = useState<Verse[] | null>(null);
+  const gloss = useGlossHover();
 
   useEffect(() => {
     loadBooks()
@@ -195,19 +220,32 @@ export function Read({ route }: { route: Route }) {
 
   useEffect(() => {
     if (!book) return;
+    // Only the latest request may fill the page. Moving quickly — or arriving from the
+    // palette while the last chapter is still loading — would otherwise let a slower,
+    // older chapter land on top of the one asked for.
+    let live = true;
     setSelected(null);
     setAnchored(null);
     loadChapter(book, number, edition)
-      .then(setVerses)
-      .catch((cause: Error) => setError(cause.message));
+      .then((found) => live && setVerses(found))
+      .catch((cause: Error) => live && setError(cause.message));
     if (edition === 'kjv') visit(book.id, number);
 
     setWordAnchor(null);
+    setBar(null);
+    gloss.clear();
     if (edition === 'kjv') {
       setChapterWords(null);
+      setEnglish(null);
     } else {
-      void wordsForBook(edition, book.id).then(setChapterWords);
+      void loadLexicon();
+      void wordsForBook(edition, book.id).then((found) => live && setChapterWords(found));
+      void loadChapter(book, number, 'kjv').then((found) => live && setEnglish(found));
     }
+    return () => {
+      live = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [book, number, edition, visit]);
 
   useEffect(() => {
@@ -263,7 +301,8 @@ export function Read({ route }: { route: Route }) {
   // all read from it, so a command cannot be reachable one way and missing another.
   const commands: Command[] = useMemo(() => {
     const panels: Array<[PanelTab, string, string, string]> = [
-      ['notes', 'Notes', 'Mod+J', 'write journal'],
+      ['notes', 'Sticky notes for this book', 'Mod+J', 'write sticky note pin'],
+      ['notebook', 'Notebook beside the text', 'Mod+Shift+J', 'write journal notebook'],
       ['refs', 'Cross-references', 'Mod+L', 'links related parallel'],
       ['saved', 'Saved verses', 'Mod+B', 'bookmarks kept'],
     ];
@@ -430,6 +469,16 @@ export function Read({ route }: { route: Route }) {
         run: () => update('size', Math.max(15, settings.size - 1)),
       },
       {
+        id: 'original-english',
+        title: settings.originalEnglish
+          ? 'Hide the English under the Hebrew and Greek'
+          : 'Show the English under the Hebrew and Greek',
+        group: 'View',
+        keywords: 'interlinear translation original greek hebrew english gloss',
+        on: settings.originalEnglish,
+        run: () => update('originalEnglish', !settings.originalEnglish),
+      },
+      {
         id: 'verse-numbers',
         title: settings.verseNumbers ? 'Hide verse numbers' : 'Show verse numbers',
         group: 'View',
@@ -450,6 +499,7 @@ export function Read({ route }: { route: Route }) {
     edition,
     settings.size,
     settings.verseNumbers,
+    settings.originalEnglish,
     update,
     isRead,
     toggleRead,
@@ -558,9 +608,11 @@ export function Read({ route }: { route: Route }) {
 
         {available.length > 1 && (
           <div
+            ref={editionGroup}
             role="group"
             aria-label="Edition"
             style={{
+              position: 'relative',
               display: 'flex',
               gap: 2,
               marginLeft: 8,
@@ -570,9 +622,19 @@ export function Read({ route }: { route: Route }) {
               border: '1px solid var(--line-default)',
             }}
           >
+            <SlidingHighlight
+              container={editionGroup}
+              activeKey={`${edition}:${available.length}`}
+              style={{
+                borderRadius: 6,
+                background: 'var(--bg-selected)',
+                boxShadow: 'inset 0 1px 0 var(--glass-highlight), 0 1px 2px rgba(0,0,0,0.25)',
+              }}
+            />
             {available.map((option) => (
               <button
                 key={option.id}
+                data-active={edition === option.id}
                 onClick={() => setEdition(option.id)}
                 aria-pressed={edition === option.id}
                 title={option.title}
@@ -587,19 +649,6 @@ export function Read({ route }: { route: Route }) {
                   transition: 'color var(--dur-fast) var(--ease-smooth)',
                 }}
               >
-                {edition === option.id && (
-                  <motion.span
-                    layoutId="edition-pill"
-                    transition={spring.snappy}
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      borderRadius: 6,
-                      background: 'var(--bg-selected)',
-                      boxShadow: 'inset 0 1px 0 var(--glass-highlight), 0 1px 2px rgba(0,0,0,0.25)',
-                    }}
-                  />
-                )}
                 <span style={{ position: 'relative' }}>{option.label}</span>
               </button>
             ))}
@@ -679,7 +728,15 @@ export function Read({ route }: { route: Route }) {
       {/* Positioned, because on a narrow window the side panel covers this area
           rather than sitting beside it. */}
       <div style={{ display: 'flex', flex: 1, minHeight: 0, position: 'relative' }}>
-        <div style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
+        <div
+          style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}
+          onScroll={() => {
+            // Floating cards are placed against the page as it was; once it moves they
+            // would point at the wrong words.
+            if (gloss.target) gloss.clear();
+            if (bar?.mode === 'edit') setBar(null);
+          }}
+        >
           <AnimatePresence mode="wait">
             <motion.article
               key={`${book.id}:${number}:${edition}`}
@@ -746,127 +803,61 @@ export function Read({ route }: { route: Route }) {
                     selected={selected}
                     onSelect={setSelected}
                   />
+                ) : edition !== 'kjv' ? (
+                  <OriginalText
+                    book={book}
+                    number={number}
+                    edition={current}
+                    verses={verses}
+                    words={chapterWords}
+                    english={english}
+                    showEnglish={settings.originalEnglish}
+                    verseNumbers={settings.verseNumbers}
+                    selected={selected}
+                    spoken={speech.verse}
+                    colourOf={colourOf}
+                    onSelect={setSelected}
+                    onWordEnter={(word, element) => gloss.enter(word, edition, element)}
+                    onWordLeave={gloss.leave}
+                    onWordClick={(word, element) => {
+                      gloss.clear();
+                      const box = element.getBoundingClientRect();
+                      setWordAnchor({
+                        word,
+                        edition,
+                        bookId: book.id,
+                        book: book.name,
+                        x: box.left + box.width / 2,
+                        y: box.bottom,
+                      });
+                    }}
+                  />
                 ) : (
-                  <div
-                    className="reading selectable"
-                    dir={current.direction}
-                    style={{ fontFamily: current.font, textAlign: 'start' }}
-                  >
-                    {verses.map((verse) => {
-                      const chosen = colourOf(book.id, number, verse.number);
-                      const isSelected = selected === verse.number;
-                      const beingSpoken = speech.verse === verse.number;
-
-                      return (
-                        <span key={verse.number}>
-                          {verse.heading && (
-                            <SectionHeading heading={verse.heading} first={verse.number === 1} />
-                          )}
-                          <span
-                            id={`verse-${verse.number}`}
-                            ref={
-                              beingSpoken
-                                ? (node) =>
-                                    node?.scrollIntoView({ block: 'center', behavior: 'smooth' })
-                                : undefined
-                            }
-                            style={{
-                              borderRadius: 3,
-                              boxDecorationBreak: 'clone',
-                              WebkitBoxDecorationBreak: 'clone',
-                              // The verse being read aloud is tinted so the eye can
-                              // follow the voice, over any highlight already on it.
-                              background: beingSpoken
-                                ? 'color-mix(in srgb, var(--main-fill) 42%, transparent)'
-                                : chosen
-                                  ? `color-mix(in srgb, ${chosen.colour} ${HIGHLIGHT_OPACITY * 100}%, transparent)`
-                                  : undefined,
-                              outline: isSelected ? '2px solid var(--focus-ring)' : undefined,
-                              outlineOffset: 1,
-                              transition: 'background var(--dur-base) var(--ease-smooth)',
-                            }}
-                          >
-                            {settings.verseNumbers && (
-                              <button
-                                onClick={() => setSelected(isSelected ? null : verse.number)}
-                                aria-label={`Select verse ${verse.number}`}
-                                className="tabular"
-                                style={{
-                                  font: '600 0.58em var(--font-ui)',
-                                  verticalAlign: 'super',
-                                  color: 'var(--text-faint)',
-                                  margin: '0 0.3em 0 0',
-                                }}
-                              >
-                                {verse.number}
-                              </button>
-                            )}
-                            {/* Marks belong to the English; an original is read word by word. */}
-                            {edition !== 'kjv' && chapterWords
-                              ? (chapterWords[`${number}:${verse.number}`] ?? []).map(
-                                  (word, index) => (
-                                    <button
-                                      key={index}
-                                      onClick={(event) => {
-                                        const box = event.currentTarget.getBoundingClientRect();
-                                        setWordAnchor({
-                                          word,
-                                          edition,
-                                          bookId: book.id,
-                                          book: book.name,
-                                          x: box.left + box.width / 2,
-                                          y: box.bottom,
-                                        });
-                                      }}
-                                      style={{
-                                        font: 'inherit',
-                                        borderRadius: 3,
-                                        padding: '0 1px',
-                                      }}
-                                      className="word"
-                                    >
-                                      {word[0]}
-                                    </button>
-                                  ),
-                                )
-                              : edition === 'kjv'
-                                ? markUp(verse.text, bookMarks[`${number}:${verse.number}`]).map(
-                                    (piece, index) =>
-                                      piece.type === 'text' ? (
-                                        <span key={index}>{piece.text}</span>
-                                      ) : (
-                                        <button
-                                          key={index}
-                                          onClick={(event) => {
-                                            const box = event.currentTarget.getBoundingClientRect();
-                                            setAnchored({
-                                              ids: piece.ids,
-                                              text: piece.text,
-                                              x: box.left + box.width / 2,
-                                              y: box.bottom,
-                                            });
-                                          }}
-                                          style={{
-                                            font: 'inherit',
-                                            color:
-                                              piece.kind === 'place'
-                                                ? 'var(--mark-place)'
-                                                : 'var(--mark-name)',
-                                            borderBottom:
-                                              '1.5px solid color-mix(in srgb, currentColor 40%, transparent)',
-                                            borderRadius: 2,
-                                          }}
-                                        >
-                                          {piece.text}
-                                        </button>
-                                      ),
-                                  )
-                                : verse.text}{' '}
-                          </span>
-                        </span>
-                      );
-                    })}
-                  </div>
+                  <KjvText
+                    book={book}
+                    number={number}
+                    verses={verses}
+                    marks={bookMarks}
+                    phrases={phrases}
+                    verseNumbers={settings.verseNumbers}
+                    selected={selected}
+                    spoken={speech.verse}
+                    colourOf={colourOf}
+                    onSelectVerse={setSelected}
+                    onMark={setAnchored}
+                    onSelectText={onSelectText}
+                    onPhrase={(id, rect) => {
+                      const phrase = phrases.find((candidate) => candidate.id === id);
+                      if (!phrase) return;
+                      setBar({
+                        mode: 'edit',
+                        id,
+                        text: phrase.text,
+                        colour: phrase.colour,
+                        rect: { left: rect.left, top: rect.top, width: rect.width, bottom: rect.bottom },
+                      });
+                    }}
+                  />
                 )}
               </div>
             </motion.article>
@@ -882,9 +873,18 @@ export function Read({ route }: { route: Route }) {
           books={all}
           chapter={number}
           verse={selected}
-          onOpenVerse={(bookId, chapterNumber) => {
+          onOpenVerse={(bookId, chapterNumber, verseNumber) => {
             const target = all.find((candidate) => candidate.id === bookId);
-            if (target) goTo({ book: target, chapter: chapterNumber });
+            if (!target) return;
+            if (target.id === book.id && chapterNumber === number) {
+              if (verseNumber) setJumpTo(verseNumber);
+              return;
+            }
+            goTo({ book: target, chapter: chapterNumber });
+            if (verseNumber) {
+              setShowIntro(false);
+              setJumpTo(verseNumber);
+            }
           }}
         />
       </div>
@@ -899,20 +899,23 @@ export function Read({ route }: { route: Route }) {
             transition={transition('snappy')}
             role="toolbar"
             aria-label={`Verse ${selected}`}
+            className="glass"
             style={{
               position: 'absolute',
-              left: '50%',
-              bottom: 24,
-              transform: 'translateX(-50%)',
+              left: 16,
+              right: panel ? 408 : 16,
+              bottom: 20,
+              width: 'fit-content',
+              maxWidth: `calc(100% - ${panel ? 424 : 32}px)`,
+              margin: '0 auto',
               zIndex: 20,
               display: 'flex',
+              flexWrap: 'wrap',
               alignItems: 'center',
-              gap: 14,
-              padding: '10px 16px',
-              borderRadius: 999,
-              background: 'var(--bg-card)',
-              border: '1px solid var(--line-default)',
-              boxShadow: 'var(--shadow-shell)',
+              justifyContent: 'center',
+              gap: 12,
+              padding: '8px 10px 8px 16px',
+              borderRadius: 14,
             }}
           >
             <strong className="tabular" style={{ fontSize: 13 }}>
@@ -1072,6 +1075,53 @@ export function Read({ route }: { route: Route }) {
         }}
       />
 
+      <GlossTip target={gloss.target} />
+
+      <HighlightBar
+        target={bar}
+        onClose={() => setBar(null)}
+        onColour={(index) => {
+          const selection = pendingSelection.current;
+          if (bar?.mode === 'new' && selection) {
+            addPhrase({
+              bookId: book.id,
+              chapter: number,
+              from: selection.from,
+              to: selection.to,
+              colour: index,
+              text: selection.text,
+            });
+            window.getSelection()?.removeAllRanges();
+            pendingSelection.current = null;
+          } else if (bar?.mode === 'edit') {
+            recolour(bar.id, index);
+          }
+          setBar(null);
+        }}
+        onRemove={() => {
+          if (bar?.mode === 'edit') removePhrase(bar.id);
+          setBar(null);
+        }}
+        onSticky={() => {
+          const from =
+            bar?.mode === 'new'
+              ? pendingSelection.current?.from.verse
+              : phrases.find((phrase) => bar?.mode === 'edit' && phrase.id === bar.id)?.from.verse;
+          addSticky(book.id, { anchor: { chapter: number, verse: from, quote: bar?.text } });
+          window.getSelection()?.removeAllRanges();
+          setPanel('notes');
+          setBar(null);
+        }}
+        onCopy={() => {
+          if (!bar) return;
+          const verse =
+            bar.mode === 'new'
+              ? pendingSelection.current?.from.verse
+              : phrases.find((phrase) => phrase.id === bar.id)?.from.verse;
+          void toClipboard(`“${bar.text}” (${book.name} ${number}${verse ? `:${verse}` : ''})`);
+        }}
+      />
+
       <WordPopover
         anchor={wordAnchor}
         onClose={() => setWordAnchor(null)}
@@ -1206,64 +1256,5 @@ function Pill({
       {children}
       {label}
     </motion.button>
-  );
-}
-
-/**
- * The letter standing over a section of an acrostic psalm.
- *
- * Psalm 119 is twenty-two eight-verse sections, each opening with the next letter of
- * the Hebrew alphabet. Set at the same size as the surrounding label the letter is
- * unreadable — Hebrew needs the height — so the letter is set large in the Hebrew face
- * and its name kept small beside it, with a rule running out to the margin the way a
- * printed Bible sets a section break.
- */
-function SectionHeading({ heading, first }: { heading: string; first: boolean }) {
-  // "א ALEPH" — the letter, then the name the KJV gives it.
-  const space = heading.indexOf(' ');
-  const letter = space === -1 ? heading : heading.slice(0, space);
-  const name = space === -1 ? '' : heading.slice(space + 1);
-
-  return (
-    <span
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
-        marginTop: first ? 0 : '1.6em',
-        marginBottom: '0.5em',
-      }}
-      role="presentation"
-    >
-      <span
-        lang="he"
-        dir="rtl"
-        style={{
-          font: `400 24px var(--font-hebrew)`,
-          lineHeight: 1,
-          color: 'var(--text-tan)',
-        }}
-      >
-        {letter}
-      </span>
-      {name && (
-        <span
-          style={{
-            font: '600 11px var(--font-ui)',
-            letterSpacing: '0.1em',
-            color: 'var(--text-secondary)',
-          }}
-        >
-          {name}
-        </span>
-      )}
-      <span
-        style={{
-          flex: 1,
-          height: 1,
-          background: 'var(--line-default)',
-        }}
-      />
-    </span>
   );
 }
