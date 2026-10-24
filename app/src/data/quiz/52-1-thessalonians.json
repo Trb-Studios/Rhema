@@ -1,0 +1,15 @@
+{
+  "book": 52,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To which church is this letter written?", "a": "The Thessalonians", "acc": ["thessalonica", "thessalonians", "the church of the thessalonians"], "w": ["The Philippians", "The Corinthians", "The Galatians"], "r": "1Th.1.1" },
+    { "l": 2, "f": "story", "q": "From what did the Thessalonians turn to God?", "a": "From idols", "acc": ["idols", "from idols"], "w": ["From the law", "From Caesar", "From the synagogue"], "r": "1Th.1.9", "x": "To serve the living and true God, and to wait for his Son from heaven." },
+    { "l": 3, "f": "story", "q": "How does Paul say he was gentle among them?", "a": "Even as a nurse cherisheth her children", "acc": ["as a nurse", "like a nurse"], "ty": 0, "w": ["As a king with his servants", "As a soldier with his captain", "As a judge in the gate"], "r": "1Th.2.7" },
+    { "l": 3, "f": "story", "q": "Whom did Paul send from Athens to establish them?", "a": "Timotheus", "acc": ["timothy", "timotheus"], "w": ["Silas", "Titus", "Luke"], "r": "1Th.3.2" },
+    { "l": 2, "f": "god", "q": "What is the will of God, says 1 Thessalonians 4:3?", "a": "Your sanctification", "acc": ["sanctification", "your sanctification"], "w": ["Your riches", "Your silence", "Your circumcision"], "r": "1Th.4.3" },
+    { "t": "order", "l": 3, "f": "god", "q": "Put the Lord's coming in the order Paul gives it.", "items": ["The Lord descends from heaven with a shout", "The dead in Christ rise first", "We which are alive are caught up", "So shall we ever be with the Lord"], "r": "1Th.4.17" },
+    { "l": 2, "f": "god", "q": "How does the day of the Lord come?", "a": "As a thief in the night", "acc": ["like a thief", "as a thief", "a thief in the night", "as a thief in the night"], "w": ["With a year's warning", "Only to the Jews", "At the new moon"], "r": "1Th.5.2" },
+    { "l": 1, "f": "god", "q": "'Pray without ___.'", "a": "Ceasing", "acc": ["ceasing"], "w": ["Fear", "Words", "Doubt"], "r": "1Th.5.17" },
+    { "l": 1, "f": "god", "q": "'In every thing give ___.'", "a": "Thanks", "acc": ["thanks"], "w": ["Alms", "Way", "Glory"], "r": "1Th.5.18" },
+    { "l": 2, "f": "god", "q": "'Quench not the ___.'", "a": "Spirit", "acc": ["spirit", "the spirit"], "w": ["Fire", "Lamp", "Prophets"], "r": "1Th.5.19" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "book": 65,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "Whose brother does Jude call himself?", "a": "James", "acc": ["james"], "w": ["Peter", "John", "Paul"], "r": "Jud.1.1" },
+    { "l": 2, "f": "god", "q": "For what should they earnestly contend?", "a": "The faith which was once delivered unto the saints", "acc": ["the faith", "faith"], "ty": 0, "w": ["The temple tax", "The land of Israel", "The seat of Moses"], "r": "Jud.1.3" },
+    { "l": 2, "f": "story", "q": "What happened to the people saved out of Egypt that believed not?", "a": "The Lord destroyed them", "acc": ["destroyed", "they were destroyed"], "ty": 0, "w": ["They returned to Egypt", "They became kings", "They were forgiven"], "r": "Jud.1.5" },
+    { "l": 3, "f": "story", "q": "Who contended with the devil about the body of Moses?", "a": "Michael the archangel", "acc": ["michael", "michael the archangel"], "w": ["Gabriel", "Raphael", "Joshua"], "r": "Jud.1.9", "x": "He durst not bring a railing accusation, but said, The Lord rebuke thee." },
+    { "t": "match", "l": 3, "f": "story", "q": "Match the three warnings of Jude 11.", "pairs": [["Cain", "Went in his way"], ["Balaam", "Ran greedily for reward"], ["Core", "Perished in the gainsaying"]], "r": "Jud.1.11" },
+    { "l": 2, "f": "remember", "q": "What does Jude call false teachers in your feasts of charity?", "a": "Spots", "acc": ["spots", "hidden reefs"], "w": ["Shepherds", "Lamps", "Pillars"], "r": "Jud.1.12" },
+    { "l": 3, "f": "god", "q": "Who, 'the seventh from Adam', prophesied of the Lord coming with ten thousands of his saints?", "a": "Enoch", "acc": ["enoch"], "w": ["Noah", "Methuselah", "Lamech"], "r": "Jud.1.14" },
+    { "l": 2, "f": "god", "q": "'Keep yourselves in the love of ___.'", "a": "God", "acc": ["god"], "w": ["Each other", "The law", "The brethren"], "r": "Jud.1.21" },
+    { "l": 1, "f": "god", "q": "What is God able to keep you from?", "a": "Falling", "acc": ["falling", "stumbling"], "w": ["Suffering", "Death", "Hunger"], "r": "Jud.1.24" },
+    { "l": 1, "f": "god", "q": "How does Jude describe God in his closing praise?", "a": "The only wise God our Saviour", "acc": ["the only wise god", "only wise god", "god our saviour"], "ty": 0, "w": ["The God of the hills", "The unknown God", "The God of Jacob alone"], "r": "Jud.1.25" }
+  ]
+}

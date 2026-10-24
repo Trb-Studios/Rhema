@@ -1,0 +1,15 @@
+{
+  "book": 61,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "What does Peter call himself in 2 Peter 1:1?", "a": "A servant and an apostle of Jesus Christ", "acc": ["servant and apostle", "a servant and apostle"], "ty": 0, "w": ["The rock of the church", "A prisoner in Rome", "The elder"], "r": "2Pe.1.1" },
+    { "t": "order", "l": 3, "f": "god", "q": "Put the virtues in the order Peter adds them to faith.", "items": ["Virtue", "Knowledge", "Temperance", "Patience", "Godliness", "Brotherly kindness", "Charity"], "r": "2Pe.1.7" },
+    { "l": 2, "f": "story", "q": "On which mount did Peter hear the voice from the excellent glory?", "a": "The holy mount", "acc": ["holy mount", "the holy mount", "mount of transfiguration"], "w": ["Mount Sinai", "Mount Carmel", "Mount Ebal"], "r": "2Pe.1.18" },
+    { "l": 2, "f": "god", "q": "How did prophecy come, says 2 Peter 1:21?", "a": "Holy men spake as moved by the Holy Ghost", "acc": ["by the holy ghost", "moved by the holy ghost", "by the holy spirit"], "ty": 0, "w": ["By the will of man", "By study of the stars", "By the council at Jerusalem"], "r": "2Pe.1.21" },
+    { "l": 3, "f": "story", "q": "Whose ass spoke with man's voice to forbid his madness?", "a": "Balaam's", "acc": ["balaam", "balaams"], "w": ["Abraham's", "Saul's", "Balak's"], "r": "2Pe.2.16" },
+    { "l": 2, "f": "story", "q": "Which righteous man was delivered from Sodom?", "a": "Lot", "acc": ["lot", "just lot"], "w": ["Abraham", "Isaac", "Melchisedec"], "r": "2Pe.2.7" },
+    { "l": 2, "f": "god", "q": "One day with the Lord is as how many years?", "a": "A thousand", "acc": ["1000", "a thousand", "thousand", "a thousand years"], "w": ["Seventy", "A hundred", "Seven"], "r": "2Pe.3.8" },
+    { "l": 2, "f": "god", "q": "Why is the Lord longsuffering, not slack concerning his promise?", "a": "Not willing that any should perish", "acc": ["not willing that any should perish"], "ty": 0, "w": ["He has forgotten", "He waits for the temple", "He waits for Rome to fall"], "r": "2Pe.3.9" },
+    { "l": 3, "f": "god", "q": "What shall melt with fervent heat in the day of the Lord?", "a": "The elements", "acc": ["elements", "the elements"], "w": ["The idols", "The seas", "The mountains of Israel"], "r": "2Pe.3.10" },
+    { "l": 3, "f": "remember", "q": "Whose letters does Peter say contain 'some things hard to be understood'?", "a": "Our beloved brother Paul's", "acc": ["paul", "pauls"], "w": ["James'", "John's", "Jude's"], "r": "2Pe.3.16" }
+  ]
+}

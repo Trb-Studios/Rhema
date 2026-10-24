@@ -1,0 +1,15 @@
+{
+  "book": 55,
+  "questions": [
+    { "t": "match", "l": 3, "f": "story", "q": "Match where each man had gone, as Paul writes from prison.", "pairs": [["Demas", "Thessalonica"], ["Crescens", "Galatia"], ["Titus", "Dalmatia"], ["Tychicus", "Ephesus"]], "r": "2Ti.4.12" },
+    { "l": 2, "f": "remember", "q": "Who were Timothy's grandmother and mother, of unfeigned faith?", "a": "Lois and Eunice", "acc": ["lois and eunice", "eunice and lois"], "w": ["Mary and Martha", "Priscilla and Lydia", "Naomi and Ruth"], "r": "2Ti.1.5" },
+    { "l": 2, "f": "god", "q": "'For God hath not given us the spirit of ___.'", "a": "Fear", "acc": ["fear"], "w": ["Power", "Love", "Truth"], "r": "2Ti.1.7", "x": "But of power, and of love, and of a sound mind." },
+    { "l": 2, "f": "god", "q": "As what kind of soldier should Timothy endure hardness?", "a": "A good soldier of Jesus Christ", "acc": ["good soldier", "a good soldier"], "w": ["A Roman soldier", "A hired soldier", "A captain of fifty"], "r": "2Ti.2.3" },
+    { "l": 2, "f": "god", "q": "'Study to shew thyself ___ unto God.'", "a": "Approved", "acc": ["approved"], "w": ["Faithful", "Humble", "Wise"], "r": "2Ti.2.15" },
+    { "l": 3, "f": "story", "q": "Which two said the resurrection was past already?", "a": "Hymenaeus and Philetus", "acc": ["hymenaeus and philetus", "philetus and hymenaeus"], "w": ["Ananias and Sapphira", "Jannes and Jambres", "Demas and Crescens"], "r": "2Ti.2.17" },
+    { "t": "fill", "l": 2, "f": "god", "q": "2 Timothy 3 — complete it.", "text": "All [scripture] is given by inspiration of God, and is [profitable] for doctrine,", "w": ["wisdom", "perfect", "law"], "r": "2Ti.3.16" },
+    { "l": 1, "f": "god", "q": "'I have fought a good fight, I have finished my ___.'", "a": "Course", "acc": ["course", "race"], "w": ["Work", "Letter", "Journey"], "r": "2Ti.4.7" },
+    { "l": 3, "f": "story", "q": "Who forsook Paul, 'having loved this present world'?", "a": "Demas", "acc": ["demas"], "w": ["Luke", "Titus", "Onesiphorus"], "r": "2Ti.4.10" },
+    { "l": 1, "f": "story", "q": "Who alone was with Paul at the end?", "a": "Luke", "acc": ["luke", "lucas"], "w": ["Mark", "Barnabas", "Silas"], "r": "2Ti.4.11", "x": "Paul also asks for Mark: 'he is profitable to me for the ministry'." }
+  ]
+}

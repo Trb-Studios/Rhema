@@ -1,0 +1,15 @@
+{
+  "book": 54,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "What does Paul call Timothy?", "a": "My own son in the faith", "acc": ["son in the faith", "my son", "his son in the faith"], "ty": 0, "w": ["My master", "My brother in the flesh", "My fellowprisoner"], "r": "1Ti.1.2" },
+    { "l": 2, "f": "god", "q": "Of sinners, whom does Paul call himself?", "a": "Chief", "acc": ["chief", "the chief", "the worst"], "w": ["Least", "Last", "Forgiven"], "r": "1Ti.1.15", "x": "Christ Jesus came into the world to save sinners; of whom I am chief." },
+    { "l": 2, "f": "god", "q": "How many mediators between God and men?", "a": "One", "acc": ["1", "one"], "w": ["Two", "Twelve", "Seventy"], "r": "1Ti.2.5", "x": "The man Christ Jesus." },
+    { "l": 3, "f": "remember", "q": "Which of these must a bishop be?", "a": "Apt to teach", "acc": ["apt to teach", "able to teach"], "w": ["Wealthy", "A novice", "Unmarried"], "r": "1Ti.3.2" },
+    { "t": "order", "l": 3, "f": "god", "q": "Put the 'mystery of godliness' in Paul's order.", "items": ["God was manifest in the flesh", "Justified in the Spirit", "Seen of angels", "Preached unto the Gentiles", "Believed on in the world", "Received up into glory"], "r": "1Ti.3.16" },
+    { "l": 2, "f": "remember", "q": "'Let no man despise thy ___.'", "a": "Youth", "acc": ["youth"], "w": ["Words", "Gift", "Teaching"], "r": "1Ti.4.12" },
+    { "l": 3, "f": "remember", "q": "For what does Paul tell Timothy to use a little wine?", "a": "For his stomach's sake", "acc": ["stomach", "his stomach", "his often infirmities"], "w": ["For the feasts", "For his journeys", "For the poor"], "r": "1Ti.5.23" },
+    { "l": 1, "f": "god", "q": "'But godliness with contentment is great ___.'", "a": "Gain", "acc": ["gain"], "w": ["Peace", "Joy", "Wisdom"], "r": "1Ti.6.6" },
+    { "l": 1, "f": "god", "q": "What is the root of all evil?", "a": "The love of money", "acc": ["love of money", "the love of money"], "w": ["Money", "Pride", "Idleness"], "r": "1Ti.6.10", "x": "Not money itself, but the love of it." },
+    { "l": 2, "f": "god", "q": "'Fight the good fight of ___.'", "a": "Faith", "acc": ["faith"], "w": ["Hope", "Truth", "Love"], "r": "1Ti.6.12" }
+  ]
+}

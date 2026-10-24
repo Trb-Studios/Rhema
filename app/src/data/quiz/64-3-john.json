@@ -1,0 +1,15 @@
+{
+  "book": 64,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To whom is 3 John written?", "a": "Gaius", "acc": ["gaius"], "w": ["Titus", "Diotrephes", "Demetrius"], "r": "3Jn.1.1" },
+    { "l": 2, "f": "god", "q": "What does the elder wish for Gaius above all things?", "a": "That he prosper and be in health", "acc": ["prosper and be in health", "health"], "ty": 0, "w": ["That he become a bishop", "That he travel to Rome", "That he write a gospel"], "r": "3Jn.1.2" },
+    { "l": 1, "f": "god", "q": "'I have no greater joy than to hear that my children walk in ___.'", "a": "Truth", "acc": ["truth", "the truth"], "w": ["Peace", "Love", "Light"], "r": "3Jn.1.4" },
+    { "l": 2, "f": "story", "q": "For whom had Gaius done faithfully, receiving them?", "a": "The brethren, and strangers", "acc": ["the brethren", "brethren", "strangers"], "w": ["The Roman guard", "The priests", "The poor of Jerusalem"], "r": "3Jn.1.5" },
+    { "l": 2, "f": "story", "q": "Who 'loveth to have the preeminence'?", "a": "Diotrephes", "acc": ["diotrephes"], "w": ["Demetrius", "Gaius", "Alexander"], "r": "3Jn.1.9" },
+    { "l": 3, "f": "story", "q": "What did Diotrephes do to those who would receive the brethren?", "a": "Cast them out of the church", "acc": ["cast them out", "put them out of the church"], "ty": 0, "w": ["Praised them", "Fined them", "Ordained them"], "r": "3Jn.1.10" },
+    { "l": 2, "f": "god", "q": "'Follow not that which is evil, but that which is ___.'", "a": "Good", "acc": ["good"], "w": ["Old", "Easy", "Wise"], "r": "3Jn.1.11" },
+    { "l": 3, "f": "story", "q": "Who 'hath good report of all men, and of the truth itself'?", "a": "Demetrius", "acc": ["demetrius"], "w": ["Diotrephes", "Gaius", "Erastus"], "r": "3Jn.1.12" },
+    { "t": "match", "l": 3, "f": "story", "q": "Match each man in 3 John.", "pairs": [["Gaius", "Walks in the truth"], ["Diotrephes", "Loveth the preeminence"], ["Demetrius", "Good report of all men"]], "r": "3Jn.1.12" },
+    { "t": "tf", "l": 2, "f": "remember", "q": "3 John ends hoping to see Gaius shortly, and speak face to face.", "a": true, "r": "3Jn.1.14" }
+  ]
+}

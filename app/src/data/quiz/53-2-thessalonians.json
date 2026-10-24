@@ -1,0 +1,15 @@
+{
+  "book": 53,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "Which three send greeting at the start of 2 Thessalonians?", "a": "Paul, Silvanus, and Timotheus", "acc": ["paul silas and timothy", "paul silvanus and timothy"], "ty": 0, "w": ["Paul, Barnabas, and Mark", "Peter, James, and John", "Paul, Luke, and Titus"], "r": "2Th.1.1" },
+    { "l": 2, "f": "god", "q": "How will the Lord Jesus be revealed from heaven?", "a": "With his mighty angels, in flaming fire", "acc": ["in flaming fire", "with his mighty angels"], "ty": 0, "w": ["In a still small voice", "Hidden in a cloud of dust", "On a white ass"], "r": "2Th.1.7" },
+    { "l": 2, "f": "god", "q": "What must come first, before the day of Christ?", "a": "A falling away", "acc": ["falling away", "a falling away", "apostasy"], "w": ["A great flood", "The rebuilding of Babel", "A census"], "r": "2Th.2.3" },
+    { "l": 3, "f": "god", "q": "What is the man of sin also called?", "a": "The son of perdition", "acc": ["son of perdition"], "w": ["The son of Belial", "The king of Tyre", "The prince of Persia"], "r": "2Th.2.3" },
+    { "l": 3, "f": "god", "q": "With what will the Lord consume that Wicked?", "a": "The spirit of his mouth", "acc": ["spirit of his mouth", "his breath", "the brightness of his coming"], "w": ["A sword of iron", "A flood", "Hail"], "r": "2Th.2.8" },
+    { "l": 2, "f": "god", "q": "What were they to hold, which they had been taught by word or epistle?", "a": "The traditions", "acc": ["traditions", "the traditions"], "w": ["The law of Moses", "Their land", "Their peace"], "r": "2Th.2.15" },
+    { "l": 1, "f": "god", "q": "'But the Lord is ___, who shall stablish you, and keep you from evil.'", "a": "Faithful", "acc": ["faithful"], "w": ["Coming", "Mighty", "Near"], "r": "2Th.3.3" },
+    { "l": 1, "f": "remember", "q": "'If any would not work, neither should he ___.'", "a": "Eat", "acc": ["eat"], "w": ["Sleep", "Speak", "Pray"], "r": "2Th.3.10" },
+    { "l": 2, "f": "god", "q": "'But ye, brethren, be not weary in ___.'", "a": "Well doing", "acc": ["well doing", "welldoing", "doing good"], "w": ["Waiting", "Prayer", "Fasting"], "r": "2Th.3.13" },
+    { "l": 3, "f": "remember", "q": "How did Paul mark every letter as truly his?", "a": "The salutation with his own hand", "acc": ["his own hand", "his handwriting", "with mine own hand", "salutation with his own hand"], "ty": 0, "w": ["A seal of wax", "Silas signed it", "A drawing of a fish"], "r": "2Th.3.17" }
+  ]
+}

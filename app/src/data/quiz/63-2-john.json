@@ -1,0 +1,15 @@
+{
+  "book": 63,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "How does the writer of 2 John name himself?", "a": "The elder", "acc": ["elder", "the elder"], "w": ["The apostle", "The beloved", "The servant"], "r": "2Jn.1.1" },
+    { "l": 1, "f": "remember", "q": "To whom is 2 John addressed?", "a": "The elect lady and her children", "acc": ["the elect lady", "elect lady"], "w": ["Gaius", "Theophilus", "The church at Ephesus"], "r": "2Jn.1.1" },
+    { "l": 2, "f": "story", "q": "What did the elder rejoice to find some of her children doing?", "a": "Walking in truth", "acc": ["walking in truth", "walking in the truth"], "w": ["Keeping the feasts", "Preaching abroad", "Giving to the poor"], "r": "2Jn.1.4" },
+    { "l": 2, "f": "god", "q": "What commandment does the elder say they had from the beginning?", "a": "That we love one another", "acc": ["love one another"], "w": ["Keep the sabbath", "Be circumcised", "Go into all the world"], "r": "2Jn.1.5" },
+    { "l": 2, "f": "god", "q": "'And this is love, that we walk after his ___.'", "a": "Commandments", "acc": ["commandments"], "w": ["Steps", "Prophets", "Kingdom"], "r": "2Jn.1.6" },
+    { "l": 3, "f": "god", "q": "What do the many deceivers not confess about Jesus Christ?", "a": "That he is come in the flesh", "acc": ["come in the flesh", "that he came in the flesh"], "ty": 0, "w": ["That he will return", "That he was a prophet", "That he was baptized"], "r": "2Jn.1.7" },
+    { "l": 3, "f": "god", "q": "Why should they look to themselves?", "a": "That we lose not those things which we have wrought", "acc": ["so we don't lose what we worked for"], "ty": 0, "w": ["That they may be praised", "That they escape persecution", "That they grow rich"], "r": "2Jn.1.8" },
+    { "l": 2, "f": "god", "q": "What should they not do for one who brings not this doctrine?", "a": "Receive him into your house", "acc": ["receive him", "let him in", "receive him into your house"], "ty": 0, "w": ["Pray for him", "Speak with him at all", "Give him water"], "r": "2Jn.1.10" },
+    { "t": "tf", "l": 2, "f": "remember", "q": "The elder would rather speak face to face than write with paper and ink.", "a": true, "r": "2Jn.1.12", "x": "That our joy may be full." },
+    { "l": 3, "f": "remember", "q": "Who send greetings at the end of 2 John?", "a": "The children of thy elect sister", "acc": ["her sister's children", "children of thy elect sister"], "ty": 0, "w": ["Gaius and Demetrius", "Peter and Mark", "The saints of Caesar's household"], "r": "2Jn.1.13" }
+  ]
+}

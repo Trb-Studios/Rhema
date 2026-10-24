@@ -1,0 +1,25 @@
+{
+  "book": 58,
+  "questions": [
+    { "l": 2, "f": "god", "q": "How has God spoken to us in these last days?", "a": "By his Son", "acc": ["by his son", "his son", "through his son"], "w": ["By the prophets only", "By angels", "By the law"], "r": "Heb.1.2", "x": "Who in sundry times spake by the prophets, hath in these last days spoken unto us by his Son." },
+    { "l": 2, "f": "god", "q": "What does Hebrews 1 say the Son is better than?", "a": "The angels", "acc": ["angels", "the angels"], "w": ["The kings", "The priests of Rome", "The stars"], "r": "Heb.1.4" },
+    { "l": 2, "f": "god", "q": "In all points tempted like as we are, yet without what?", "a": "Sin", "acc": ["sin"], "w": ["Fear", "Pain", "Friends"], "r": "Heb.4.15" },
+    { "t": "fill", "l": 1, "f": "god", "q": "Hebrews 4 — complete it.", "text": "For the word of God is [quick], and powerful, and sharper than any twoedged [sword],", "w": ["true", "knife", "light"], "r": "Heb.4.12" },
+    { "l": 3, "f": "god", "q": "After whose order is Christ a priest for ever?", "a": "Melchisedec", "acc": ["melchisedec", "melchizedek", "melchisedek"], "w": ["Aaron", "Levi", "Zadok"], "r": "Heb.5.6", "x": "A priest not by descent from Levi, but by the power of an endless life." },
+    { "l": 3, "f": "remember", "q": "What was Melchisedec king of?", "a": "Salem", "acc": ["salem"], "w": ["Tyre", "Sodom", "Gerar"], "r": "Heb.7.1" },
+    { "l": 3, "f": "remember", "q": "Of what did Abraham give Melchisedec a tenth?", "a": "The spoils", "acc": ["spoils", "the spoils", "of all"], "w": ["His flocks", "His wheat", "His gold from Ur"], "r": "Heb.7.4" },
+    { "l": 2, "f": "god", "q": "Into what did Christ enter by his own blood, once?", "a": "The holy place", "acc": ["holy place", "the holy place", "heaven"], "w": ["The temple court", "Jerusalem", "The wilderness"], "r": "Heb.9.12" },
+    { "l": 2, "f": "god", "q": "Without shedding of blood, what is there not?", "a": "Remission", "acc": ["remission", "forgiveness"], "w": ["Worship", "Covenant", "Law"], "r": "Heb.9.22" },
+    { "l": 2, "f": "god", "q": "What was the law, according to Hebrews 10:1?", "a": "A shadow of good things to come", "acc": ["a shadow", "shadow"], "w": ["The very image of the things", "The end of all faith", "A curse forever"], "r": "Heb.10.1" },
+    { "t": "fill", "l": 1, "f": "god", "q": "Hebrews 11 — complete it.", "text": "Now [faith] is the substance of things hoped for, the evidence of things not [seen].", "w": ["hope", "known", "heard"], "r": "Heb.11.1" },
+    { "l": 2, "f": "god", "q": "'Without faith it is impossible to ___ him.'", "a": "Please", "acc": ["please"], "w": ["Know", "Find", "Serve"], "r": "Heb.11.6" },
+    { "l": 2, "f": "story", "q": "Who was translated that he should not see death?", "a": "Enoch", "acc": ["enoch"], "w": ["Noah", "Elijah", "Abel"], "r": "Heb.11.5" },
+    { "t": "order", "l": 3, "f": "story", "q": "Put these in the order of Hebrews 11's hall of faith.", "items": ["Abel", "Enoch", "Noah", "Abraham", "Moses", "Rahab"], "r": "Heb.11.31" },
+    { "l": 3, "f": "story", "q": "What did Moses choose rather than the pleasures of sin?", "a": "To suffer affliction with the people of God", "acc": ["to suffer affliction", "affliction with the people of god"], "ty": 0, "w": ["To rule Egypt", "To live in Midian", "To be called a prophet"], "r": "Heb.11.25" },
+    { "l": 2, "f": "god", "q": "What surrounds us, according to Hebrews 12:1?", "a": "A great cloud of witnesses", "acc": ["cloud of witnesses", "a cloud of witnesses", "a great cloud of witnesses"], "w": ["A host of angels", "A wall of fire", "The armies of Rome"], "r": "Heb.12.1" },
+    { "l": 2, "f": "god", "q": "Whom does the Lord chasten?", "a": "Whom he loveth", "acc": ["whom he loves", "those he loves", "whom he loveth"], "w": ["Only his enemies", "The Gentiles", "The proud alone"], "r": "Heb.12.6" },
+    { "l": 3, "f": "god", "q": "What is our God, says Hebrews 12:29?", "a": "A consuming fire", "acc": ["consuming fire", "a consuming fire"], "w": ["A still small voice", "A rock in the sea", "A hidden light"], "r": "Heb.12.29" },
+    { "l": 2, "f": "god", "q": "Some have entertained what unawares?", "a": "Angels", "acc": ["angels"], "w": ["Prophets", "Kings", "Enemies"], "r": "Heb.13.2" },
+    { "l": 1, "f": "god", "q": "'Jesus Christ the same yesterday, and to day, and for ___.'", "a": "Ever", "acc": ["ever", "forever"], "w": ["Tomorrow", "Us", "Israel"], "r": "Heb.13.8" }
+  ]
+}

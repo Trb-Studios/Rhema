@@ -1,0 +1,15 @@
+{
+  "book": 59,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To whom is the letter of James written?", "a": "The twelve tribes which are scattered abroad", "acc": ["the twelve tribes", "twelve tribes"], "ty": 0, "w": ["The church at Rome", "Theophilus", "The elect lady"], "r": "Jas.1.1" },
+    { "l": 1, "f": "god", "q": "How should we count it when we fall into divers temptations?", "a": "All joy", "acc": ["joy", "all joy"], "w": ["A curse", "A judgment", "A loss"], "r": "Jas.1.2" },
+    { "l": 2, "f": "god", "q": "If any of you lack wisdom, what should he do?", "a": "Ask of God", "acc": ["ask god", "ask of god", "ask"], "w": ["Read the law", "Go to the elders", "Wait in silence"], "r": "Jas.1.5" },
+    { "l": 2, "f": "god", "q": "'But be ye doers of the word, and not ___ only.'", "a": "Hearers", "acc": ["hearers"], "w": ["Readers", "Teachers", "Believers"], "r": "Jas.1.22" },
+    { "l": 2, "f": "god", "q": "'Faith, if it hath not works, is ___.'", "a": "Dead", "acc": ["dead"], "w": ["Weak", "Young", "Hidden"], "r": "Jas.2.17" },
+    { "l": 3, "f": "god", "q": "What do the devils also do, and tremble?", "a": "Believe", "acc": ["believe"], "w": ["Pray", "Fast", "Repent"], "r": "Jas.2.19" },
+    { "t": "match", "l": 3, "f": "story", "q": "Match each example James uses to his point.", "pairs": [["Abraham", "Justified by works when he offered Isaac"], ["Rahab", "Received the messengers"], ["Job", "Patience"], ["Elias", "Prayed that it might not rain"]], "r": "Jas.5.17" },
+    { "l": 2, "f": "god", "q": "What does James call the tongue?", "a": "A fire", "acc": ["fire", "a fire"], "w": ["A sword", "A key", "A lamp"], "r": "Jas.3.6" },
+    { "l": 2, "f": "god", "q": "'Resist the devil, and he will ___ from you.'", "a": "Flee", "acc": ["flee"], "w": ["Hide", "Turn", "Fall"], "r": "Jas.4.7" },
+    { "l": 3, "f": "god", "q": "What does James say your life is?", "a": "A vapour", "acc": ["vapour", "a vapour", "vapor", "a vapor", "a mist"], "w": ["A race", "A seed", "A song"], "r": "Jas.4.14", "x": "That appeareth for a little time, and then vanisheth away." }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "book": 57,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To whom is this short letter written?", "a": "Philemon", "acc": ["philemon"], "w": ["Timothy", "Titus", "Onesimus"], "r": "Phm.1.1" },
+    { "l": 1, "f": "story", "q": "For whom is Paul pleading?", "a": "Onesimus", "acc": ["onesimus"], "w": ["Archippus", "Demas", "Epaphras"], "r": "Phm.1.10" },
+    { "l": 2, "f": "story", "q": "What had Onesimus been to Philemon?", "a": "His servant", "acc": ["servant", "slave", "a servant", "his servant"], "w": ["His son", "His teacher", "His brother"], "r": "Phm.1.16" },
+    { "l": 2, "f": "story", "q": "How does Paul describe his own state as he writes?", "a": "A prisoner of Jesus Christ", "acc": ["prisoner", "a prisoner", "prisoner of jesus christ"], "w": ["A free man in Rome", "Sick at Miletum", "Shipwrecked at Melita"], "r": "Phm.1.9" },
+    { "l": 3, "f": "story", "q": "What does Onesimus' name play on, in verse 11?", "a": "Profitable", "acc": ["profitable", "useful"], "w": ["Faithful", "Free", "Beloved"], "r": "Phm.1.11", "x": "Once unprofitable, now profitable to thee and to me." },
+    { "l": 2, "f": "god", "q": "How should Philemon now receive Onesimus?", "a": "As a brother beloved", "acc": ["as a brother", "brother", "as a beloved brother"], "w": ["As a servant again", "As a stranger", "As a debtor"], "r": "Phm.1.16" },
+    { "l": 2, "f": "god", "q": "What does Paul offer if Onesimus owes Philemon anything?", "a": "Put that on mine account", "acc": ["put it on my account", "he will repay", "paul will pay"], "ty": 0, "w": ["Forget the debt", "Send him back to prison", "Ask the church to pay"], "r": "Phm.1.18" },
+    { "l": 3, "f": "remember", "q": "Who is Paul's 'fellowprisoner in Christ Jesus' in Philemon?", "a": "Epaphras", "acc": ["epaphras"], "w": ["Aristarchus", "Tychicus", "Luke"], "r": "Phm.1.23" },
+    { "l": 3, "f": "remember", "q": "Which fellowsoldier is greeted along with Philemon and Apphia?", "a": "Archippus", "acc": ["archippus"], "w": ["Epaphroditus", "Trophimus", "Erastus"], "r": "Phm.1.2" },
+    { "t": "tf", "l": 2, "f": "story", "q": "Paul asks Philemon to prepare him a lodging.", "a": true, "r": "Phm.1.22", "x": "He hoped to be released through their prayers." }
+  ]
+}

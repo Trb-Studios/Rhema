@@ -1,0 +1,15 @@
+{
+  "book": 62,
+  "questions": [
+    { "l": 2, "f": "god", "q": "'God is ___, and in him is no darkness at all.'", "a": "Light", "acc": ["light"], "w": ["Love", "Spirit", "Good"], "r": "1Jn.1.5" },
+    { "t": "fill", "l": 1, "f": "god", "q": "1 John 1 — complete it.", "text": "If we confess our [sins], he is faithful and just to forgive us our sins, and to cleanse us from all [unrighteousness].", "w": ["prayers", "sorrow", "fear"], "r": "1Jn.1.9" },
+    { "l": 2, "f": "god", "q": "Who is our advocate with the Father, if any man sin?", "a": "Jesus Christ the righteous", "acc": ["jesus", "jesus christ", "christ"], "w": ["Michael", "Moses", "The high priest"], "r": "1Jn.2.1" },
+    { "t": "order", "l": 3, "f": "god", "q": "Put the three things 'of the world' in John's order.", "items": ["The lust of the flesh", "The lust of the eyes", "The pride of life"], "r": "1Jn.2.16" },
+    { "l": 3, "f": "god", "q": "What does John call him that denieth the Father and the Son?", "a": "Antichrist", "acc": ["antichrist", "the antichrist"], "w": ["A Pharisee", "A heretic", "A Gentile"], "r": "1Jn.2.22" },
+    { "l": 2, "f": "god", "q": "What shall we be when he shall appear?", "a": "Like him", "acc": ["like him"], "w": ["Judged", "Angels", "Kings"], "r": "1Jn.3.2", "x": "For we shall see him as he is." },
+    { "l": 1, "f": "god", "q": "'God is ___.'", "a": "Love", "acc": ["love"], "w": ["Law", "Far", "Silent"], "r": "1Jn.4.8" },
+    { "l": 2, "f": "god", "q": "What does perfect love cast out?", "a": "Fear", "acc": ["fear"], "w": ["Sin", "Doubt", "Pride"], "r": "1Jn.4.18" },
+    { "l": 2, "f": "god", "q": "'We love him, because he first ___ us.'", "a": "Loved", "acc": ["loved"], "w": ["Chose", "Called", "Saved"], "r": "1Jn.4.19" },
+    { "l": 3, "f": "god", "q": "What does John's closing line warn against?", "a": "Idols", "acc": ["idols"], "w": ["Riches", "False brethren", "Strong drink"], "r": "1Jn.5.21", "x": "Little children, keep yourselves from idols." }
+  ]
+}

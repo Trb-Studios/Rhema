@@ -1,0 +1,25 @@
+{
+  "book": 66,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "On which island was John when he saw the Revelation?", "a": "Patmos", "acc": ["patmos"], "w": ["Crete", "Cyprus", "Melita"], "r": "Rev.1.9" },
+    { "l": 1, "f": "god", "q": "'I am ___ and Omega, the beginning and the ending.'", "a": "Alpha", "acc": ["alpha"], "w": ["Abba", "Amen", "Aleph"], "r": "Rev.1.8" },
+    { "l": 2, "f": "remember", "q": "To how many churches in Asia were the letters written?", "a": "Seven", "acc": ["7", "seven"], "w": ["Twelve", "Three", "Five"], "r": "Rev.1.11" },
+    { "t": "order", "l": 3, "f": "remember", "q": "Put the seven churches in the order they are addressed.", "items": ["Ephesus", "Smyrna", "Pergamos", "Thyatira", "Sardis", "Philadelphia", "Laodicea"], "r": "Rev.1.11" },
+    { "l": 2, "f": "god", "q": "What did Ephesus leave, says the Lord?", "a": "Their first love", "acc": ["first love", "thy first love", "their first love"], "w": ["Their city", "The law", "Their lampstand"], "r": "Rev.2.4" },
+    { "l": 2, "f": "god", "q": "Why will the Lord spue Laodicea out of his mouth?", "a": "They are lukewarm", "acc": ["lukewarm", "because they are lukewarm"], "w": ["They are poor", "They are few", "They are far away"], "r": "Rev.3.16" },
+    { "l": 1, "f": "god", "q": "'Behold, I stand at the door, and ___.'", "a": "Knock", "acc": ["knock"], "w": ["Wait", "Call", "Weep"], "r": "Rev.3.20" },
+    { "l": 2, "f": "god", "q": "What do the four beasts say day and night?", "a": "Holy, holy, holy, Lord God Almighty", "acc": ["holy holy holy"], "ty": 0, "w": ["Glory to the Lamb alone", "Come, Lord Jesus", "Worthy is the King of the earth"], "r": "Rev.4.8" },
+    { "l": 2, "f": "god", "q": "Who alone was found worthy to open the book and loose its seals?", "a": "The Lamb", "acc": ["lamb", "the lamb", "the lion of the tribe of juda", "jesus"], "w": ["Michael", "One of the elders", "John"], "r": "Rev.5.9" },
+    { "l": 3, "f": "remember", "q": "What colour was the horse of him whose name was Death?", "a": "Pale", "acc": ["pale"], "w": ["Red", "Black", "White"], "r": "Rev.6.8" },
+    { "t": "match", "l": 3, "f": "remember", "q": "Match each horse of the first four seals to its rider.", "pairs": [["White", "Had a bow and a crown"], ["Red", "Took peace from the earth"], ["Black", "Had a pair of balances"], ["Pale", "His name was Death"]], "r": "Rev.6.8" },
+    { "l": 2, "f": "remember", "q": "How many were sealed of all the tribes of Israel?", "a": "An hundred and forty and four thousand", "acc": ["144000", "144,000", "a hundred and forty four thousand"], "w": ["Twelve thousand", "Seven thousand", "Ten thousand times ten thousand"], "r": "Rev.7.4" },
+    { "l": 3, "f": "story", "q": "Who fought against the dragon and his angels in heaven?", "a": "Michael and his angels", "acc": ["michael"], "w": ["Gabriel and his angels", "The four beasts", "The twenty-four elders"], "r": "Rev.12.7" },
+    { "l": 2, "f": "remember", "q": "What is the number of the beast?", "a": "Six hundred threescore and six", "acc": ["666", "six hundred sixty six", "six hundred and sixty six"], "w": ["Seven hundred seventy and seven", "Twelve hundred and threescore", "Forty and two"], "r": "Rev.13.18" },
+    { "l": 3, "f": "remember", "q": "To what place were the kings gathered for the battle?", "a": "Armageddon", "acc": ["armageddon", "harmageddon"], "w": ["Babylon", "Jezreel", "The valley of Jehoshaphat"], "r": "Rev.16.16", "x": "Hebrew Har-Megiddo, the hill of Megiddo, where many of Israel's battles were fought." },
+    { "l": 2, "f": "god", "q": "What is the name written on the vesture of the rider on the white horse?", "a": "King of kings, and Lord of lords", "acc": ["king of kings", "king of kings and lord of lords"], "ty": 0, "w": ["The Lion of Judah", "Prince of Peace", "The Ancient of Days"], "r": "Rev.19.16" },
+    { "l": 2, "f": "god", "q": "For how long is Satan bound in the bottomless pit?", "a": "A thousand years", "acc": ["1000 years", "a thousand years", "thousand years", "1000"], "w": ["Seven years", "Forty years", "Three days"], "r": "Rev.20.2" },
+    { "l": 1, "f": "god", "q": "What shall God wipe away from their eyes?", "a": "All tears", "acc": ["tears", "all tears", "every tear"], "w": ["The sun", "Their sight", "The dust"], "r": "Rev.21.4", "x": "There shall be no more death, neither sorrow, nor crying, neither any more pain." },
+    { "l": 3, "f": "god", "q": "Of what is each gate of the new Jerusalem made?", "a": "One pearl", "acc": ["pearl", "a pearl", "one pearl"], "w": ["Gold", "Jasper", "Brass"], "r": "Rev.21.21" },
+    { "l": 2, "f": "god", "q": "What is on either side of the river of the water of life?", "a": "The tree of life", "acc": ["tree of life", "the tree of life"], "w": ["The temple", "The throne of David", "Twelve gates"], "r": "Rev.22.2", "x": "The tree lost in Genesis returns: its leaves are for the healing of the nations." }
+  ]
+}

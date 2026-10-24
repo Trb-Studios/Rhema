@@ -1,0 +1,15 @@
+{
+  "book": 56,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "On which island did Paul leave Titus?", "a": "Crete", "acc": ["crete"], "w": ["Cyprus", "Melita", "Patmos"], "r": "Tit.1.5" },
+    { "l": 2, "f": "remember", "q": "What was Titus to ordain in every city?", "a": "Elders", "acc": ["elders"], "w": ["Kings", "Levites", "Scribes"], "r": "Tit.1.5" },
+    { "l": 2, "f": "god", "q": "What does Titus 1:2 say God cannot do?", "a": "Lie", "acc": ["lie"], "w": ["Rest", "Forget", "Weep"], "r": "Tit.1.2" },
+    { "l": 3, "f": "remember", "q": "Who did 'one of themselves, a prophet' say were always liars?", "a": "The Cretians", "acc": ["cretians", "cretans", "the cretians"], "w": ["The Athenians", "The Galatians", "The Romans"], "r": "Tit.1.12", "x": "Paul quotes a Cretan poet against his own people: 'This witness is true.'" },
+    { "l": 2, "f": "god", "q": "Who should be teachers of good things, teaching the young women?", "a": "The aged women", "acc": ["aged women", "older women", "the aged women"], "w": ["The bishops", "The young men", "The deacons"], "r": "Tit.2.3" },
+    { "l": 1, "f": "god", "q": "What hath appeared to all men, bringing salvation?", "a": "The grace of God", "acc": ["grace", "the grace of god", "grace of god"], "w": ["The law of God", "A great star", "The temple"], "r": "Tit.2.11" },
+    { "l": 2, "f": "god", "q": "Christ gave himself to purify a people zealous of what?", "a": "Good works", "acc": ["good works"], "w": ["The law", "Their nation", "The temple"], "r": "Tit.2.14" },
+    { "l": 3, "f": "god", "q": "By what does God save us, says Titus 3:5?", "a": "The washing of regeneration", "acc": ["washing of regeneration", "regeneration", "his mercy"], "w": ["Works of righteousness", "Circumcision", "Sacrifices"], "r": "Tit.3.5", "x": "Not by works of righteousness which we have done, but according to his mercy." },
+    { "t": "tf", "l": 2, "f": "god", "q": "Titus is told to avoid foolish questions and genealogies.", "a": true, "r": "Tit.3.9", "x": "For they are unprofitable and vain." },
+    { "l": 3, "f": "remember", "q": "Where did Paul plan to winter?", "a": "Nicopolis", "acc": ["nicopolis"], "w": ["Corinth", "Antioch", "Troas"], "r": "Tit.3.12" }
+  ]
+}

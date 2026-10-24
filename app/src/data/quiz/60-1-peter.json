@@ -1,0 +1,15 @@
+{
+  "book": 60,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "Who wrote this letter?", "a": "Peter", "acc": ["peter"], "w": ["Paul", "James", "John"], "r": "1Pe.1.1" },
+    { "l": 2, "f": "god", "q": "To what kind of hope hath God begotten us again?", "a": "A lively hope", "acc": ["lively hope", "a living hope", "a lively hope"], "w": ["A hidden hope", "An earthly hope", "A small hope"], "r": "1Pe.1.3", "x": "By the resurrection of Jesus Christ from the dead." },
+    { "l": 2, "f": "god", "q": "'Be ye holy; for I am ___.'", "a": "Holy", "acc": ["holy"], "w": ["Lord", "Coming", "Near"], "r": "1Pe.1.16" },
+    { "l": 2, "f": "god", "q": "With what were you redeemed, not with silver and gold?", "a": "The precious blood of Christ", "acc": ["blood of christ", "the blood of christ", "the precious blood"], "w": ["The law", "Good works", "Temple offerings"], "r": "1Pe.1.19" },
+    { "l": 3, "f": "god", "q": "What does Peter call believers in 1 Peter 2:9?", "a": "A royal priesthood", "acc": ["royal priesthood", "a chosen generation", "a holy nation"], "w": ["A scattered tribe", "A kingdom of slaves", "A guild of elders"], "r": "1Pe.2.9" },
+    { "l": 2, "f": "god", "q": "'By whose ___ ye were healed.'", "a": "Stripes", "acc": ["stripes", "wounds"], "w": ["Words", "Tears", "Prayers"], "r": "1Pe.2.24" },
+    { "l": 3, "f": "story", "q": "How many souls were saved by water in the ark, says Peter?", "a": "Eight", "acc": ["8", "eight"], "w": ["Two", "Seven", "Twelve"], "r": "1Pe.3.20" },
+    { "l": 1, "f": "god", "q": "Charity shall cover what?", "a": "The multitude of sins", "acc": ["a multitude of sins", "multitude of sins", "sins"], "w": ["The poor", "Our shame", "The earth"], "r": "1Pe.4.8" },
+    { "l": 2, "f": "god", "q": "What should we cast upon him, for he careth for us?", "a": "All your care", "acc": ["care", "all your care", "cares", "anxiety"], "w": ["Your money", "Your sins only", "Your enemies"], "r": "1Pe.5.7" },
+    { "l": 2, "f": "god", "q": "Your adversary the devil walketh about as what?", "a": "A roaring lion", "acc": ["roaring lion", "a lion", "lion", "a roaring lion"], "w": ["A serpent", "A thief", "A wolf"], "r": "1Pe.5.8" }
+  ]
+}
