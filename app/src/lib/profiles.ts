@@ -113,7 +113,8 @@ const TIPNR_BOOKS = [
 ];
 
 export function parseRef(ref: string): { bookId: number; chapter: number; verse: number } | null {
-  const match = /^([1-3]?[A-Za-z]{2,3})\.(\d+)\.(\d+)$/.exec(ref);
+  // A range, "Gen.1.1-3", opens at its first verse.
+  const match = /^([1-3]?[A-Za-z]{2,3})\.(\d+)\.(\d+)(?:-\d+)?$/.exec(ref);
   if (!match) return null;
   const index = TIPNR_BOOKS.indexOf(match[1]);
   return index === -1
