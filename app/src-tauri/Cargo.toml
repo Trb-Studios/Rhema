@@ -1,6 +1,6 @@
 [package]
 name = "rhema"
-version = "0.1.0"
+version = "0.2.0"
 description = "Read the Bible cover to cover and remember it"
 edition = "2021"
 rust-version = "1.77"
