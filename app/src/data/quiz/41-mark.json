@@ -1,0 +1,25 @@
+{
+  "book": 41,
+  "questions": [
+    { "l": 1, "f": "story", "q": "Whose preaching in the wilderness opens Mark's Gospel?", "a": "John the Baptist", "acc": ["john", "john the baptist"], "w": ["Elijah", "Peter", "Herod"], "r": "Mrk.1.4" },
+    { "l": 2, "f": "story", "q": "What did John eat in the wilderness?", "a": "Locusts and wild honey", "acc": ["locusts and wild honey", "locusts and honey"], "w": ["Manna and quail", "Bread and fish", "Figs and dates"], "r": "Mrk.1.6" },
+    { "l": 2, "f": "story", "q": "What descended on Jesus like a dove at his baptism?", "a": "The Spirit", "acc": ["spirit", "the spirit", "holy spirit", "the holy ghost"], "w": ["An angel", "Fire", "A cloud"], "r": "Mrk.1.10" },
+    { "l": 2, "f": "story", "q": "Which four fishermen did Jesus first call?", "a": "Simon, Andrew, James and John", "ty": 0, "w": ["Matthew, Thomas, Philip and Judas", "Peter, Paul, Barnabas and Silas", "Levi, Simon, Thaddaeus and Bartholomew"], "r": "Mrk.1.19" },
+    { "l": 2, "f": "story", "q": "How did four men bring the man sick of the palsy to Jesus?", "a": "Through the roof", "acc": ["through the roof", "they uncovered the roof", "roof", "lowered him through the roof"], "w": ["Through a window", "By the back door", "At night in secret"], "r": "Mrk.2.4" },
+    { "l": 2, "f": "god", "q": "What did Jesus say first to the man sick of the palsy?", "a": "Son, thy sins be forgiven thee", "acc": ["your sins are forgiven", "thy sins be forgiven thee", "thy sins be forgiven"], "ty": 0, "w": ["Arise and walk", "Go show thyself to the priest", "What wilt thou?"], "r": "Mrk.2.5" },
+    { "l": 2, "f": "god", "q": "For whom did Jesus say the sabbath was made?", "a": "Man", "acc": ["man", "for man"], "w": ["The priests", "God alone", "The angels"], "r": "Mrk.2.27" },
+    { "l": 2, "f": "story", "q": "What did Jesus say to the wind and the sea?", "a": "Peace, be still", "acc": ["peace be still"], "w": ["Be gone", "Hear me", "Stop, in God's name"], "r": "Mrk.4.39" },
+    { "l": 2, "f": "story", "q": "Into what did the unclean spirits called Legion enter?", "a": "A herd of swine", "acc": ["pigs", "swine", "herd of swine", "a herd of pigs"], "w": ["A flock of sheep", "The tombs", "The sea birds"], "r": "Mrk.5.13" },
+    { "l": 2, "f": "story", "q": "What did Jesus say to the daughter of Jairus?", "a": "Talitha cumi", "acc": ["talitha cumi", "damsel arise", "little girl arise"], "w": ["Ephphatha", "Eloi, Eloi", "Maranatha"], "r": "Mrk.5.41" },
+    { "l": 2, "f": "story", "q": "How many men ate of the five loaves and two fishes?", "a": "Five thousand", "acc": ["5000", "five thousand", "about five thousand"], "w": ["Four thousand", "Twelve thousand", "Two thousand"], "r": "Mrk.6.44" },
+    { "l": 2, "f": "story", "q": "What does 'Ephphatha', said to the deaf man, mean?", "a": "Be opened", "acc": ["be opened"], "w": ["Be healed", "Hear me", "Arise"], "r": "Mrk.7.34" },
+    { "l": 2, "f": "god", "q": "The Son of man came not to be ministered unto, but to do what?", "a": "To minister, and to give his life a ransom for many", "ty": 0, "w": ["To rule the nations", "To judge the world", "To build the temple"], "r": "Mrk.10.45" },
+    { "l": 2, "f": "story", "q": "Which blind beggar cried, 'thou Son of David, have mercy on me'?", "a": "Bartimaeus", "acc": ["bartimaeus", "blind bartimaeus"], "w": ["Lazarus", "Zacchaeus", "Malchus"], "r": "Mrk.10.46" },
+    { "l": 2, "f": "story", "q": "What did the poor widow cast into the treasury?", "a": "Two mites", "acc": ["two mites", "2 mites", "mites"], "w": ["A talent", "A shekel", "Nothing"], "r": "Mrk.12.42" },
+    { "l": 2, "f": "god", "q": "Why did Jesus say the widow had given more than all the rest?", "a": "She cast in all that she had", "ty": 0, "w": ["Her coins were gold", "She was a priest's wife", "She gave openly"], "r": "Mrk.12.44" },
+    { "l": 2, "f": "story", "q": "Whom did they compel to bear Jesus' cross?", "a": "Simon a Cyrenian", "acc": ["simon of cyrene", "simon", "simon a cyrenian"], "w": ["Peter", "Joseph of Arimathaea", "Barabbas"], "r": "Mrk.15.21" },
+    { "l": 2, "f": "story", "q": "What did the centurion say when Jesus died?", "a": "Truly this man was the Son of God", "acc": ["this man was the son of god", "truly this man was the son of god"], "ty": 0, "w": ["He saved others", "Behold the man", "Crucify him"], "r": "Mrk.15.39" },
+    { "l": 2, "f": "story", "q": "Who brought sweet spices to anoint him, very early on the first day?", "a": "Mary Magdalene, Mary the mother of James, and Salome", "acc": ["the women", "mary magdalene"], "ty": 0, "w": ["Peter and John", "Joseph and Nicodemus", "The eleven"], "r": "Mrk.16.1" },
+    { "t": "tf", "l": 2, "f": "remember", "q": "Mark is the shortest of the four Gospels.", "a": true, "r": "Mrk.16.8", "x": "Sixteen chapters, moving quickly from scene to scene." }
+  ]
+}

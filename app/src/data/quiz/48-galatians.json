@@ -1,0 +1,15 @@
+{
+  "book": 48,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To which churches did Paul send this letter?", "a": "The churches of Galatia", "acc": ["galatia", "the galatians", "churches of galatia"], "w": ["Rome", "Corinth", "Ephesus"], "r": "Gal.1.2" },
+    { "l": 2, "f": "god", "q": "What does Paul say of anyone, even an angel, who preaches another gospel?", "a": "Let him be accursed", "acc": ["accursed", "let him be accursed"], "w": ["Let him be heard", "Let him be tested", "Let him be welcomed"], "r": "Gal.1.8" },
+    { "l": 3, "f": "story", "q": "Whom did Paul withstand to the face at Antioch?", "a": "Peter", "acc": ["peter", "cephas"], "w": ["James", "Barnabas", "John"], "r": "Gal.2.11", "x": "Peter had stopped eating with Gentiles when men came from James." },
+    { "t": "fill", "l": 2, "f": "god", "q": "Galatians 2 — complete it.", "text": "I am [crucified] with Christ: nevertheless I live; yet not I, but Christ liveth in [me]:", "w": ["baptized", "us", "heaven"], "r": "Gal.2.20" },
+    { "l": 2, "f": "god", "q": "What was the law to bring us unto Christ?", "a": "Our schoolmaster", "acc": ["schoolmaster", "a schoolmaster", "tutor", "guardian"], "w": ["Our saviour", "Our enemy", "Our master for ever"], "r": "Gal.3.24" },
+    { "l": 1, "f": "god", "q": "'There is neither Jew nor Greek... for ye are all ___ in Christ Jesus.'", "a": "One", "acc": ["one"], "w": ["Free", "Saints", "Kings"], "r": "Gal.3.28" },
+    { "l": 3, "f": "remember", "q": "Whom does Paul name as the bondwoman in his allegory of two covenants?", "a": "Agar", "acc": ["hagar", "agar"], "w": ["Sarah", "Keturah", "Bilhah"], "r": "Gal.4.24", "x": "Agar stands for mount Sinai and bondage; the freewoman for the Jerusalem above." },
+    { "t": "order", "l": 3, "f": "god", "q": "Put the fruit of the Spirit in Paul's order.", "items": ["Love", "Joy", "Peace", "Longsuffering", "Gentleness", "Goodness"], "r": "Gal.5.22" },
+    { "l": 1, "f": "god", "q": "'Whatsoever a man soweth, that shall he also ___.'", "a": "Reap", "acc": ["reap"], "w": ["Eat", "Sell", "Keep"], "r": "Gal.6.7" },
+    { "l": 2, "f": "god", "q": "In what alone will Paul glory?", "a": "The cross of our Lord Jesus Christ", "acc": ["the cross", "cross"], "w": ["His learning", "His circumcision", "His converts"], "r": "Gal.6.14" }
+  ]
+}

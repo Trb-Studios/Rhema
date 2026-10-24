@@ -1,0 +1,15 @@
+{
+  "book": 50,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To the saints in which city is this letter written?", "a": "Philippi", "w": ["Thessalonica", "Corinth", "Ephesus"], "r": "Php.1.1" },
+    { "l": 2, "f": "god", "q": "'For to me to live is Christ, and to die is ___.'", "a": "Gain", "acc": ["gain"], "w": ["Loss", "Rest", "Peace"], "r": "Php.1.21", "x": "Written from bonds, not knowing whether he would live or die." },
+    { "l": 2, "f": "god", "q": "What form did Christ take upon him, being made in the likeness of men?", "a": "The form of a servant", "acc": ["form of a servant", "a servant", "servant"], "w": ["The crown of David", "The robe of a priest", "The sword of a king"], "r": "Php.2.7" },
+    { "t": "order", "l": 3, "f": "god", "q": "Put Philippians 2's account of Christ in order.", "items": ["Being in the form of God", "Took the form of a servant", "Obedient unto death", "God highly exalted him", "Every knee should bow"], "r": "Php.2.10" },
+    { "l": 2, "f": "god", "q": "'Work out your own salvation with fear and ___.'", "a": "Trembling", "acc": ["trembling"], "w": ["Joy", "Prayer", "Patience"], "r": "Php.2.12" },
+    { "l": 3, "f": "remember", "q": "What does Paul count all things, for the excellency of the knowledge of Christ?", "a": "Loss", "acc": ["loss", "dung"], "w": ["Gain", "Gold", "Glory"], "r": "Php.3.8" },
+    { "l": 1, "f": "god", "q": "'Rejoice in the Lord ___: and again I say, Rejoice.'", "a": "Alway", "acc": ["alway", "always"], "w": ["Today", "Together", "Openly"], "r": "Php.4.4" },
+    { "t": "fill", "l": 1, "f": "god", "q": "Philippians 4 — complete it.", "text": "I can do all [things] through Christ which [strengtheneth] me.", "w": ["works", "loveth", "saveth"], "r": "Php.4.13" },
+    { "l": 2, "f": "god", "q": "What shall keep your hearts and minds through Christ Jesus?", "a": "The peace of God", "acc": ["peace of god", "the peace of god", "gods peace"], "w": ["The law", "Your friends", "The angels"], "r": "Php.4.7" },
+    { "l": 3, "f": "god", "q": "'My God shall supply all your need according to his ___ in glory.'", "a": "Riches", "acc": ["riches"], "w": ["Will", "Word", "Power"], "r": "Php.4.19" }
+  ]
+}

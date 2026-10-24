@@ -1,0 +1,25 @@
+{
+  "book": 44,
+  "questions": [
+    { "l": 1, "f": "story", "q": "What were the apostles to wait for in Jerusalem?", "a": "To be baptized with the Holy Ghost", "acc": ["holy ghost", "holy spirit", "the holy spirit", "the holy ghost"], "ty": 0, "w": ["A new king", "The fall of Rome", "Their families"], "r": "Act.1.5" },
+    { "l": 2, "f": "story", "q": "Upon whom did the lot fall to replace Judas?", "a": "Matthias", "w": ["Barsabas", "Stephen", "Barnabas"], "r": "Act.1.26" },
+    { "l": 2, "f": "story", "q": "On which day did the Holy Ghost come upon the disciples?", "a": "Pentecost", "acc": ["day of pentecost", "pentecost"], "w": ["Passover", "The sabbath", "Tabernacles"], "r": "Act.2.1" },
+    { "l": 2, "f": "story", "q": "What sat upon each of them at Pentecost?", "a": "Cloven tongues like as of fire", "acc": ["tongues of fire", "fire"], "ty": 0, "w": ["Doves", "Crowns", "Halos of light"], "r": "Act.2.3" },
+    { "l": 2, "f": "story", "q": "About how many souls were added that day?", "a": "Three thousand", "acc": ["3000", "three thousand"], "w": ["Five hundred", "Twelve", "Five thousand"], "r": "Act.2.41" },
+    { "l": 2, "f": "story", "q": "'Silver and gold have I none; but such as I have give I thee.' What did Peter give the lame man?", "a": "Healing in the name of Jesus Christ", "acc": ["healing", "rise up and walk"], "ty": 0, "w": ["Bread", "A coin", "A blessing only"], "r": "Act.3.6" },
+    { "l": 2, "f": "story", "q": "Which husband and wife lied about the price of their land?", "a": "Ananias and Sapphira", "acc": ["Sapphira and Ananias"], "w": ["Aquila and Priscilla", "Joseph and Mary", "Zacharias and Elisabeth"], "r": "Act.5.1" },
+    { "l": 2, "f": "story", "q": "Who saw the heavens opened as he was stoned?", "a": "Stephen", "w": ["James", "Philip", "Barnabas"], "r": "Act.7.59" },
+    { "l": 2, "f": "story", "q": "At whose feet did the witnesses lay down their clothes?", "a": "Saul's", "acc": ["saul", "sauls", "paul"], "w": ["Peter's", "Gamaliel's", "Barnabas'"], "r": "Act.7.58" },
+    { "l": 2, "f": "story", "q": "Whom did Philip baptize on the road to Gaza?", "a": "An eunuch of Ethiopia", "acc": ["ethiopian eunuch", "the ethiopian", "eunuch", "the eunuch"], "w": ["A Roman centurion", "A Pharisee", "A sorcerer"], "r": "Act.8.38" },
+    { "l": 1, "f": "story", "q": "Near which city did a light from heaven stop Saul?", "a": "Damascus", "w": ["Jerusalem", "Antioch", "Tarsus"], "r": "Act.9.3" },
+    { "l": 2, "f": "story", "q": "Who was sent to put his hands on Saul, that he might receive his sight?", "a": "Ananias", "w": ["Barnabas", "Peter", "Cornelius"], "r": "Act.9.17" },
+    { "l": 2, "f": "story", "q": "What did Peter see let down from heaven on the housetop?", "a": "A great sheet full of beasts", "acc": ["a sheet", "sheet", "a great sheet"], "ty": 0, "w": ["A ladder", "Four horsemen", "A burning city"], "r": "Act.10.11" },
+    { "l": 2, "f": "story", "q": "Which centurion of Caesarea sent for Peter?", "a": "Cornelius", "w": ["Julius", "Claudius Lysias", "Sergius Paulus"], "r": "Act.10.1" },
+    { "l": 2, "f": "remember", "q": "Where were the disciples first called Christians?", "a": "Antioch", "w": ["Jerusalem", "Rome", "Corinth"], "r": "Act.11.26" },
+    { "l": 2, "f": "story", "q": "Who brought Peter out of prison?", "a": "The angel of the Lord", "acc": ["an angel", "angel", "the angel"], "w": ["Rhoda", "James", "The jailer"], "r": "Act.12.7" },
+    { "l": 2, "f": "story", "q": "What were Paul and Silas doing at midnight in the prison at Philippi?", "a": "Praying and singing praises", "acc": ["singing", "praying and singing", "praying", "singing praises"], "ty": 0, "w": ["Sleeping", "Planning escape", "Writing letters"], "r": "Act.16.25" },
+    { "l": 2, "f": "god", "q": "'Believe on the Lord Jesus Christ, and...' — what did they tell the jailer?", "a": "Thou shalt be saved, and thy house", "acc": ["you will be saved", "thou shalt be saved"], "ty": 0, "w": ["Thou shalt be free", "Thou shalt be rich", "Thou shalt see God"], "r": "Act.16.31" },
+    { "l": 2, "f": "story", "q": "In which city did Paul find an altar TO THE UNKNOWN GOD?", "a": "Athens", "w": ["Corinth", "Ephesus", "Rome"], "r": "Act.17.23" },
+    { "l": 2, "f": "story", "q": "What happened to the ship carrying Paul toward Rome?", "a": "It broke apart, but all escaped safe to land", "ty": 0, "w": ["It reached Rome safely", "It sank with all hands", "It turned back to Caesarea"], "r": "Act.27.44" }
+  ]
+}

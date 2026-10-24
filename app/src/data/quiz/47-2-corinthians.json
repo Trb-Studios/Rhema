@@ -1,0 +1,25 @@
+{
+  "book": 47,
+  "questions": [
+    { "l": 3, "f": "god", "q": "What does Paul call God in 2 Corinthians 1:3?", "a": "The God of all comfort", "acc": ["god of all comfort", "the god of all comfort", "father of mercies"], "w": ["The God of battles", "The God of Israel only", "The God of the hills"], "r": "2Co.1.3" },
+    { "l": 2, "f": "god", "q": "Why does God comfort us in our tribulation?", "a": "That we may be able to comfort others", "acc": ["to comfort others"], "ty": 0, "w": ["To make us proud", "To end all trouble", "To reward the law"], "r": "2Co.1.4" },
+    { "l": 3, "f": "remember", "q": "What does Paul say the Corinthians are, written not with ink?", "a": "The epistle of Christ", "acc": ["a letter of christ", "epistle of christ", "our epistle", "letter"], "w": ["The temple of Moses", "The sons of Abraham", "The salt of the earth"], "r": "2Co.3.3" },
+    { "l": 2, "f": "god", "q": "'For the letter killeth, but the spirit giveth ___.'", "a": "Life", "acc": ["life"], "w": ["Law", "Light", "Peace"], "r": "2Co.3.6" },
+    { "l": 2, "f": "god", "q": "In what do we have this treasure?", "a": "Earthen vessels", "acc": ["earthen vessels", "clay jars", "jars of clay"], "w": ["Golden boxes", "The temple", "Heaven only"], "r": "2Co.4.7", "x": "That the excellency of the power may be of God, and not of us." },
+    { "l": 1, "f": "god", "q": "'For we walk by faith, not by ___.'", "a": "Sight", "acc": ["sight"], "w": ["Law", "Fear", "Works"], "r": "2Co.5.7" },
+    { "t": "fill", "l": 1, "f": "god", "q": "2 Corinthians 5 — complete it.", "text": "Therefore if any man be in Christ, he is a new [creature]: old things are passed [away];", "w": ["man", "over", "heart"], "r": "2Co.5.17" },
+    { "l": 2, "f": "god", "q": "What ministry has God given us?", "a": "The ministry of reconciliation", "acc": ["reconciliation", "ministry of reconciliation"], "w": ["The ministry of the law", "The ministry of judgment", "The ministry of the temple"], "r": "2Co.5.18" },
+    { "l": 2, "f": "god", "q": "'He hath made him to be sin for us, who knew no ___.'", "a": "Sin", "acc": ["sin"], "w": ["Law", "Fear", "Sorrow"], "r": "2Co.5.21" },
+    { "l": 2, "f": "god", "q": "Though he was rich, what did Christ become for your sakes?", "a": "Poor", "acc": ["poor"], "w": ["A king", "A priest", "A stranger"], "r": "2Co.8.9", "x": "That ye through his poverty might be rich." },
+    { "l": 1, "f": "god", "q": "What kind of giver does God love?", "a": "A cheerful giver", "acc": ["cheerful", "a cheerful giver", "cheerful giver"], "w": ["A rich giver", "A secret giver", "A regular giver"], "r": "2Co.9.7" },
+    { "l": 2, "f": "god", "q": "What did the Lord answer when Paul asked three times for the thorn to go?", "a": "My grace is sufficient for thee", "acc": ["my grace is sufficient"], "ty": 0, "w": ["It shall depart", "Be patient a year", "Pray once more"], "r": "2Co.12.9" },
+    { "l": 2, "f": "god", "q": "'For when I am weak, then am I ___.'", "a": "Strong", "acc": ["strong"], "w": ["Wise", "Safe", "Humble"], "r": "2Co.12.10" },
+    { "l": 2, "f": "remember", "q": "What was given Paul, lest he be exalted above measure?", "a": "A thorn in the flesh", "acc": ["thorn in the flesh", "a thorn"], "w": ["A crown", "A prison", "A vision"], "r": "2Co.12.7" },
+    { "l": 3, "f": "story", "q": "How did Paul escape the governor at Damascus?", "a": "Let down in a basket through a window by the wall", "acc": ["in a basket", "basket"], "ty": 0, "w": ["By ship", "Disguised as a soldier", "On horseback by night"], "r": "2Co.11.33" },
+    { "t": "match", "l": 3, "f": "story", "q": "Match each of Paul's sufferings to how often it happened.", "pairs": [["Forty stripes save one", "Five times"], ["Stoned", "Once"], ["Shipwrecked", "Thrice"], ["A night and a day", "In the deep"]], "r": "2Co.11.25" },
+    { "l": 3, "f": "remember", "q": "To which heaven was the man in Christ caught up?", "a": "The third heaven", "acc": ["third heaven", "the third heaven", "paradise"], "w": ["The seventh heaven", "The first heaven", "The new Jerusalem"], "r": "2Co.12.2" },
+    { "l": 2, "f": "god", "q": "Into what is Satan himself transformed?", "a": "An angel of light", "acc": ["an angel of light", "angel of light"], "w": ["A lion", "A serpent", "A king"], "r": "2Co.11.14" },
+    { "l": 2, "f": "god", "q": "'Be ye not unequally ___ together with unbelievers.'", "a": "Yoked", "acc": ["yoked"], "w": ["Bound", "Seated", "Married"], "r": "2Co.6.14" },
+    { "l": 1, "f": "god", "q": "'The grace of the Lord Jesus Christ, and the love of God, and the communion of the ___.'", "a": "Holy Ghost", "acc": ["holy ghost", "holy spirit"], "w": ["Saints", "Church", "Apostles"], "r": "2Co.13.14" }
+  ]
+}

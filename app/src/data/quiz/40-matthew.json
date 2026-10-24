@@ -1,0 +1,25 @@
+{
+  "book": 40,
+  "questions": [
+    { "l": 1, "f": "story", "q": "With whom does Matthew begin the generations of Jesus Christ?", "a": "Abraham", "w": ["Adam", "David", "Noah"], "r": "Mat.1.2" },
+    { "l": 1, "f": "story", "q": "Who came from the east to Jerusalem, following a star?", "a": "Wise men", "acc": ["the wise men", "magi", "wise men"], "w": ["Shepherds", "Priests", "Roman soldiers"], "r": "Mat.2.1" },
+    { "l": 2, "f": "story", "q": "What gifts did the wise men present?", "a": "Gold, frankincense and myrrh", "acc": ["gold frankincense and myrrh"], "ty": 0, "w": ["Bread, wine and oil", "Silver, gold and pearls", "Lambs, doves and grain"], "r": "Mat.2.11" },
+    { "l": 2, "f": "story", "q": "Where did Joseph take the young child to escape Herod?", "a": "Egypt", "w": ["Nazareth", "Babylon", "Damascus"], "r": "Mat.2.14" },
+    { "t": "fill", "l": 2, "f": "god", "q": "The first beatitude — complete it.", "text": "Blessed are the [poor] in spirit: for theirs is the kingdom of [heaven].", "w": ["meek", "God", "earth"], "r": "Mat.5.3" },
+    { "l": 2, "f": "remember", "q": "Where did Jesus teach the sermon of Matthew 5 to 7?", "a": "On a mountain", "acc": ["mountain", "on a mountain", "the mount", "a mountain"], "w": ["In the temple", "In a boat", "In a synagogue"], "r": "Mat.5.1" },
+    { "l": 2, "f": "god", "q": "What does Jesus call his disciples in Matthew 5?", "a": "The salt of the earth and the light of the world", "ty": 0, "w": ["The kings of the earth", "The sons of Abraham", "The stones of the temple"], "r": "Mat.5.14" },
+    { "l": 2, "f": "god", "q": "What did Jesus say to do for your enemies?", "a": "Love them", "acc": ["love them", "love your enemies", "pray for them", "love"], "w": ["Avoid them", "Curse them", "Forget them"], "r": "Mat.5.44" },
+    { "l": 2, "f": "god", "q": "How does the prayer Jesus taught begin?", "a": "Our Father which art in heaven", "acc": ["our father", "our father which art in heaven"], "ty": 0, "w": ["Hear, O Israel", "Holy, holy, holy", "Blessed art thou"], "r": "Mat.6.9" },
+    { "l": 2, "f": "god", "q": "What did Jesus say to seek first?", "a": "The kingdom of God, and his righteousness", "acc": ["the kingdom of god", "kingdom of god", "gods kingdom"], "ty": 0, "w": ["Riches", "The favour of men", "Long life"], "r": "Mat.6.33" },
+    { "l": 2, "f": "story", "q": "Upon what did the wise man build his house?", "a": "A rock", "acc": ["rock", "the rock", "a rock"], "w": ["Sand", "A hill", "Wood"], "r": "Mat.7.24" },
+    { "l": 2, "f": "story", "q": "Which man at the receipt of custom did Jesus call to follow him?", "a": "Matthew", "w": ["Zacchaeus", "Nathanael", "Simon"], "r": "Mat.9.9" },
+    { "l": 2, "f": "story", "q": "'Thou art the ___, the Son of the living God,' said Peter.", "a": "Christ", "acc": ["christ", "messiah"], "w": ["Prophet", "King of Israel", "Teacher"], "r": "Mat.16.16" },
+    { "l": 2, "f": "story", "q": "Who appeared talking with Jesus at the transfiguration?", "a": "Moses and Elias", "acc": ["moses and elijah", "moses and elias"], "w": ["Abraham and David", "Isaiah and Jeremiah", "Enoch and Noah"], "r": "Mat.17.3" },
+    { "l": 2, "f": "god", "q": "How often did Jesus tell Peter to forgive?", "a": "Seventy times seven", "acc": ["seventy times seven", "490", "until seventy times seven"], "w": ["Seven times", "Three times", "Once"], "r": "Mat.18.22" },
+    { "l": 2, "f": "god", "q": "What did Jesus call the first and great commandment?", "a": "Love the Lord thy God with all thy heart", "ty": 0, "w": ["Keep the sabbath", "Honour thy parents", "Love thy neighbour"], "r": "Mat.22.37" },
+    { "l": 2, "f": "story", "q": "For how much did Judas covenant to betray Jesus?", "a": "Thirty pieces of silver", "acc": ["30 pieces of silver", "thirty pieces of silver", "thirty"], "w": ["A talent of gold", "Fifty shekels", "Ten pence"], "r": "Mat.26.15" },
+    { "l": 2, "f": "story", "q": "How many times did Peter deny Jesus before the cock crew?", "a": "Three", "acc": ["3", "thrice", "three times"], "w": ["Once", "Twice", "Seven"], "r": "Mat.26.75" },
+    { "t": "fill", "l": 2, "f": "god", "q": "The great commission — complete it.", "text": "Go ye therefore, and teach all [nations], baptizing them in the name of the Father, and of the [Son], and of the Holy Ghost:", "w": ["Jews", "prophets", "Lord"], "r": "Mat.28.19" },
+    { "t": "order", "l": 3, "f": "story", "q": "Put these in the order Matthew tells them.", "items": ["The wise men visit", "The sermon on the mount", "Peter confesses the Christ", "The transfiguration", "The last supper", "The resurrection"], "r": "Mat.28.6" }
+  ]
+}

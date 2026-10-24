@@ -1,0 +1,15 @@
+{
+  "book": 51,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To the saints in which city is this letter written?", "a": "Colosse", "acc": ["colosse", "colossae", "colossians"], "w": ["Corinth", "Laodicea", "Philippi"], "r": "Col.1.2" },
+    { "l": 2, "f": "god", "q": "Whose image is the Son, says Colossians 1:15?", "a": "The image of the invisible God", "acc": ["image of the invisible god", "image of god", "god's"], "ty": 0, "w": ["A great angel's", "A prophet like Moses'", "A servant of the law's"], "r": "Col.1.15" },
+    { "l": 3, "f": "god", "q": "'And he is before all things, and by him all things ___.'", "a": "Consist", "acc": ["consist", "hold together"], "w": ["End", "Begin", "Rest"], "r": "Col.1.17" },
+    { "l": 2, "f": "god", "q": "What is 'Christ in you'?", "a": "The hope of glory", "acc": ["hope of glory", "the hope of glory"], "w": ["The law of life", "A new rule", "A distant king"], "r": "Col.1.27" },
+    { "l": 3, "f": "god", "q": "What dwelleth in Christ bodily?", "a": "All the fulness of the Godhead", "acc": ["fulness of the godhead", "the fullness of god", "the fulness of the godhead"], "ty": 0, "w": ["The spirit of Moses", "The law", "A portion of God"], "r": "Col.2.9", "x": "Paul's answer to teachers offering a fuller wisdom elsewhere." },
+    { "l": 1, "f": "god", "q": "'Set your affection on things ___, not on things on the earth.'", "a": "Above", "acc": ["above"], "w": ["Holy", "Hidden", "Eternal"], "r": "Col.3.2" },
+    { "l": 2, "f": "god", "q": "What should be put on above all things, the bond of perfectness?", "a": "Charity", "acc": ["charity", "love"], "w": ["Armour", "Fine linen", "Humility"], "r": "Col.3.14" },
+    { "l": 1, "f": "remember", "q": "'Whatsoever ye do, do it heartily, as to the ___.'", "a": "Lord", "acc": ["lord", "the lord"], "w": ["King", "Master", "Church"], "r": "Col.3.23" },
+    { "t": "match", "l": 3, "f": "remember", "q": "Match each name in Colossians 4 to how Paul describes him.", "pairs": [["Luke", "The beloved physician"], ["Aristarchus", "My fellowprisoner"], ["Onesimus", "Who is one of you"], ["Marcus", "Sister's son to Barnabas"]], "r": "Col.4.14" },
+    { "l": 3, "f": "remember", "q": "Which church were they also to read this letter to?", "a": "Laodicea", "acc": ["laodicea", "the laodiceans"], "w": ["Ephesus", "Smyrna", "Hierapolis"], "r": "Col.4.16" }
+  ]
+}

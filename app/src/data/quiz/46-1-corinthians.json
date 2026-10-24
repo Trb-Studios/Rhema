@@ -1,0 +1,25 @@
+{
+  "book": 46,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To which church is this letter written?", "a": "Corinth", "acc": ["corinth", "the corinthians", "the church at corinth"], "w": ["Rome", "Ephesus", "Philippi"], "r": "1Co.1.2" },
+    { "l": 2, "f": "story", "q": "What were the Corinthians saying that divided them?", "a": "I am of Paul; and I of Apollos; and I of Cephas", "ty": 0, "w": ["I am of Moses; I of Elijah", "I am of James; I of Jude", "I am of Andrew; I of Philip"], "r": "1Co.1.12" },
+    { "l": 2, "f": "god", "q": "What is the preaching of the cross to them that perish?", "a": "Foolishness", "acc": ["foolishness"], "w": ["Wisdom", "Power", "Law"], "r": "1Co.1.18", "x": "But unto us which are saved it is the power of God." },
+    { "l": 2, "f": "god", "q": "What did Paul determine to know among them?", "a": "Jesus Christ, and him crucified", "acc": ["jesus christ", "christ crucified", "christ", "jesus"], "w": ["The wisdom of the Greeks", "The law of Moses", "The ways of Caesar"], "r": "1Co.2.2" },
+    { "l": 1, "f": "remember", "q": "'I have planted, Apollos watered; but ___ gave the increase.'", "a": "God", "acc": ["god"], "w": ["Peter", "The church", "The rain"], "r": "1Co.3.6" },
+    { "l": 3, "f": "god", "q": "What does Paul call Christ in 1 Corinthians 5:7?", "a": "Our passover", "acc": ["passover", "our passover"], "w": ["Our high priest", "Our lawgiver", "Our temple"], "r": "1Co.5.7", "x": "Purge out the old leaven: the feast imagery points to Christ's sacrifice." },
+    { "l": 2, "f": "god", "q": "What does Paul say your body is?", "a": "The temple of the Holy Ghost", "acc": ["temple of the holy ghost", "temple", "the temple of the holy spirit"], "w": ["A prison", "A tent", "A house of clay"], "r": "1Co.6.19" },
+    { "l": 2, "f": "god", "q": "'For ye are bought with a ___.'", "a": "Price", "acc": ["price"], "w": ["Sacrifice", "Promise", "Word"], "r": "1Co.6.20" },
+    { "l": 3, "f": "remember", "q": "Why did Paul become all things to all men?", "a": "That he might by all means save some", "ty": 0, "w": ["That he might be rich", "That he might be praised", "That he might rule"], "r": "1Co.9.22" },
+    { "l": 2, "f": "god", "q": "What will God make with every temptation?", "a": "A way to escape", "acc": ["a way of escape", "way to escape", "a way out", "a way to escape"], "w": ["A punishment", "Silence", "A further test"], "r": "1Co.10.13" },
+    { "l": 2, "f": "remember", "q": "What did the Lord say of the bread, as Paul delivered it to them?", "a": "This is my body, which is broken for you", "ty": 0, "w": ["This is the law", "This is manna", "This is the passover"], "r": "1Co.11.24" },
+    { "l": 2, "f": "god", "q": "What does Paul call the church in 1 Corinthians 12?", "a": "The body of Christ", "acc": ["body", "a body", "the body of christ"], "w": ["A temple of stone", "A kingdom of priests", "A vine"], "r": "1Co.12.27" },
+    { "t": "fill", "l": 1, "f": "god", "q": "1 Corinthians 13 — complete it.", "text": "Charity suffereth [long], and is [kind];", "w": ["much", "gentle", "patient"], "r": "1Co.13.4" },
+    { "l": 1, "f": "god", "q": "Which is the greatest of faith, hope and charity?", "a": "Charity", "acc": ["charity", "love"], "w": ["Faith", "Hope", "All equal"], "r": "1Co.13.13", "x": "The King James says charity where many later translations say love." },
+    { "t": "match", "l": 3, "f": "remember", "q": "Match each subject to its chapter.", "pairs": [["The Lord's supper", "1 Corinthians 11"], ["Spiritual gifts", "1 Corinthians 12"], ["Charity", "1 Corinthians 13"], ["The resurrection", "1 Corinthians 15"]], "r": "1Co.15.4" },
+    { "l": 2, "f": "god", "q": "What does Paul say follows if Christ be not risen?", "a": "Our preaching is vain, and your faith is also vain", "ty": 0, "w": ["Nothing changes", "It was only a vision", "Only the apostles are affected"], "r": "1Co.15.14" },
+    { "l": 3, "f": "remember", "q": "To how many brethren at once did the risen Christ appear?", "a": "Above five hundred", "acc": ["500", "five hundred", "over five hundred"], "w": ["Twelve", "Seventy", "Three thousand"], "r": "1Co.15.6", "x": "Paul notes most were still alive, so could be asked." },
+    { "l": 1, "f": "god", "q": "'O death, where is thy ___?'", "a": "Sting", "acc": ["sting"], "w": ["Power", "Shadow", "Hope"], "r": "1Co.15.55" },
+    { "l": 2, "f": "god", "q": "'For as in Adam all die, even so in Christ shall all be made ___.'", "a": "Alive", "acc": ["alive"], "w": ["Rich", "Equal", "Holy"], "r": "1Co.15.22" },
+    { "l": 3, "f": "remember", "q": "When were they to lay by their gifts for the saints?", "a": "Upon the first day of the week", "acc": ["first day of the week", "sunday"], "ty": 0, "w": ["On the sabbath", "At the passover", "At the new moon"], "r": "1Co.16.2" }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "book": 45,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To whom did Paul write this letter?", "a": "The saints at Rome", "acc": ["rome", "the romans", "the church in rome", "saints in rome"], "w": ["The Corinthians", "The Galatians", "Timothy"], "r": "Rom.1.7" },
+    { "l": 1, "f": "god", "q": "Of what does Paul say he is not ashamed?", "a": "The gospel of Christ", "acc": ["the gospel", "gospel", "the gospel of christ"], "w": ["His past", "His chains", "The law"], "r": "Rom.1.16", "x": "For it is the power of God unto salvation to every one that believeth." },
+    { "t": "order", "l": 3, "f": "remember", "q": "Put these in the order Romans takes them up.", "items": ["All have sinned", "Abraham believed God", "Dead to sin, alive unto God", "No condemnation in Christ Jesus", "The olive tree and its branches", "A living sacrifice"], "r": "Rom.12.1" },
+    { "t": "fill", "l": 1, "f": "god", "q": "Romans 3 — complete it.", "text": "For all have [sinned], and come short of the [glory] of God;", "w": ["fallen", "love", "law"], "r": "Rom.3.23" },
+    { "l": 2, "f": "god", "q": "How is a man justified, says Romans 3:28?", "a": "By faith without the deeds of the law", "acc": ["by faith", "faith"], "ty": 0, "w": ["By keeping the law", "By circumcision", "By good works"], "r": "Rom.3.28" },
+    { "l": 2, "f": "remember", "q": "Whose faith is Paul's great example in Romans 4?", "a": "Abraham's", "acc": ["abraham", "abrahams"], "w": ["Moses'", "David's", "Elijah's"], "r": "Rom.4.3", "x": "Abraham believed God, and it was counted unto him for righteousness." },
+    { "l": 2, "f": "god", "q": "How did God commend his love toward us, while we were yet sinners?", "a": "Christ died for us", "acc": ["christ died for us"], "w": ["He forgot our sins", "We obeyed the law", "Angels pleaded for us"], "r": "Rom.5.8" },
+    { "l": 3, "f": "god", "q": "Romans 5 calls one man 'the figure of him that was to come'. Who?", "a": "Adam", "acc": ["adam"], "w": ["Abraham", "Moses", "Melchisedec"], "r": "Rom.5.14", "x": "By one man sin entered the world; by one man, Christ, the free gift came to many." },
+    { "t": "fill", "l": 1, "f": "god", "q": "Romans 6 — complete it.", "text": "For the wages of sin is [death]; but the [gift] of God is eternal life through Jesus Christ our Lord.", "w": ["sorrow", "law", "reward"], "r": "Rom.6.23" },
+    { "l": 2, "f": "god", "q": "'There is therefore now no ___ to them which are in Christ Jesus.'", "a": "Condemnation", "acc": ["condemnation"], "w": ["Sorrow", "Law", "Death"], "r": "Rom.8.1" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Romans 8 — complete it.", "text": "And we know that all things work together for [good] to them that love God, to them who are the called according to his [purpose].", "w": ["glory", "law", "will"], "r": "Rom.8.28" },
+    { "l": 1, "f": "god", "q": "What shall be able to separate us from the love of God in Christ?", "a": "Nothing", "acc": ["nothing", "nothing can", "none"], "w": ["Death", "Sin", "Persecution"], "r": "Rom.8.39" },
+    { "l": 2, "f": "god", "q": "'If God be for us, who can be ___ us?'", "a": "Against", "acc": ["against"], "w": ["Before", "Beside", "Above"], "r": "Rom.8.31" },
+    { "l": 2, "f": "god", "q": "If thou confess with thy mouth the Lord Jesus and believe God raised him from the dead, what then?", "a": "Thou shalt be saved", "acc": ["you will be saved", "thou shalt be saved", "saved"], "w": ["Thou shalt be rich", "Thou shalt be a prophet", "Thou shalt never suffer"], "r": "Rom.10.9" },
+    { "l": 3, "f": "god", "q": "How does faith come, says Romans 10:17?", "a": "By hearing, and hearing by the word of God", "acc": ["by hearing", "hearing"], "ty": 0, "w": ["By seeing miracles", "By keeping the law", "By birth"], "r": "Rom.10.17" },
+    { "l": 3, "f": "god", "q": "Into what tree are the Gentiles grafted in Romans 11?", "a": "The olive tree", "acc": ["olive", "olive tree", "an olive tree"], "w": ["The fig tree", "The vine", "The cedar"], "r": "Rom.11.17", "x": "A wild olive grafted among the natural branches: a warning against boasting." },
+    { "t": "fill", "l": 2, "f": "god", "q": "Romans 12 — complete it.", "text": "that ye present your bodies a [living] sacrifice, holy, acceptable unto God, which is your reasonable [service].", "w": ["perfect", "worship", "burnt"], "r": "Rom.12.1" },
+    { "l": 2, "f": "god", "q": "'Be not overcome of evil, but overcome evil with ___.'", "a": "Good", "acc": ["good"], "w": ["Strength", "Silence", "Law"], "r": "Rom.12.21" },
+    { "l": 2, "f": "remember", "q": "Love is the fulfilling of what?", "a": "The law", "acc": ["the law", "law"], "w": ["The prophets", "Our hopes", "Faith"], "r": "Rom.13.10" },
+    { "l": 3, "f": "remember", "q": "Which servant of the church at Cenchrea does Paul commend?", "a": "Phebe", "acc": ["phebe", "phoebe"], "w": ["Priscilla", "Lydia", "Dorcas"], "r": "Rom.16.1", "x": "She very likely carried the letter to Rome." }
+  ]
+}

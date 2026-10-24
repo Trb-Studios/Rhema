@@ -1,0 +1,25 @@
+{
+  "book": 42,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To whom did Luke write his Gospel?", "a": "Theophilus", "w": ["Timothy", "Titus", "Philemon"], "r": "Luk.1.3" },
+    { "l": 2, "f": "story", "q": "Which priest was told his wife would bear a son named John?", "a": "Zacharias", "acc": ["zechariah", "zacharias"], "w": ["Simeon", "Eli", "Joseph"], "r": "Luk.1.13" },
+    { "l": 2, "f": "story", "q": "Which angel was sent to Mary in Nazareth?", "a": "Gabriel", "w": ["Michael", "Raphael", "Uriel"], "r": "Luk.1.26" },
+    { "t": "fill", "l": 2, "f": "god", "q": "Gabriel to Mary — complete it.", "text": "For with [God] nothing shall be [impossible].", "w": ["man", "hidden", "difficult"], "r": "Luk.1.37" },
+    { "l": 1, "f": "story", "q": "Where did Mary lay her firstborn son?", "a": "In a manger", "acc": ["manger", "a manger"], "w": ["In a cradle", "In the temple", "In an inn's room"], "r": "Luk.2.7" },
+    { "l": 1, "f": "story", "q": "To whom did the angel first bring the good tidings?", "a": "Shepherds", "acc": ["shepherds", "the shepherds"], "w": ["Wise men", "Priests", "Herod"], "r": "Luk.2.8" },
+    { "l": 2, "f": "story", "q": "Who took the child in his arms and said, 'Lord, now lettest thou thy servant depart in peace'?", "a": "Simeon", "w": ["Zacharias", "Joseph", "Eli"], "r": "Luk.2.29" },
+    { "l": 2, "f": "story", "q": "Where was the boy Jesus found after three days?", "a": "In the temple, among the doctors", "acc": ["temple", "in the temple"], "ty": 0, "w": ["In Nazareth", "In the wilderness", "At the Jordan"], "r": "Luk.2.46" },
+    { "l": 2, "f": "god", "q": "Who did the lawyer say was neighbour to him that fell among thieves?", "a": "He that shewed mercy on him", "acc": ["the samaritan", "samaritan", "the good samaritan", "he that shewed mercy"], "ty": 0, "w": ["The priest", "The Levite", "The innkeeper"], "r": "Luk.10.37" },
+    { "l": 2, "f": "story", "q": "Which sister sat at Jesus' feet and heard his word?", "a": "Mary", "w": ["Martha", "Salome", "Joanna"], "r": "Luk.10.39" },
+    { "l": 2, "f": "story", "q": "What was the prodigal son sent into the fields to feed?", "a": "Swine", "acc": ["pigs", "swine"], "w": ["Sheep", "Goats", "Camels"], "r": "Luk.15.15" },
+    { "l": 2, "f": "god", "q": "What did the father do when he saw his son a great way off?", "a": "Ran, fell on his neck and kissed him", "ty": 0, "w": ["Locked the gate", "Sent a servant to scold him", "Waited inside"], "r": "Luk.15.20" },
+    { "l": 2, "f": "story", "q": "What three lost things are found in Luke 15?", "a": "A sheep, a piece of silver and a son", "ty": 0, "w": ["A ring, a robe and a calf", "A lamb, a pearl and a daughter", "A key, a purse and a servant"], "r": "Luk.15.8" },
+    { "l": 2, "f": "story", "q": "Which beggar lay full of sores at the rich man's gate?", "a": "Lazarus", "w": ["Bartimaeus", "Zacchaeus", "Simon"], "r": "Luk.16.20" },
+    { "l": 2, "f": "story", "q": "Of the lepers cleansed, how many returned to give thanks?", "a": "One of ten", "acc": ["one", "1", "one of ten"], "w": ["Two of seven", "None of twelve", "All ten"], "r": "Luk.17.17" },
+    { "l": 2, "f": "story", "q": "Which chief publican climbed a sycomore tree to see Jesus?", "a": "Zacchaeus", "w": ["Matthew", "Levi", "Bartimaeus"], "r": "Luk.19.4" },
+    { "l": 2, "f": "god", "q": "'For the Son of man is come to seek and to save that which was ___.'", "a": "Lost", "acc": ["lost"], "w": ["Poor", "Sick", "Righteous"], "r": "Luk.19.10" },
+    { "l": 2, "f": "story", "q": "What did Jesus say to the thief who asked to be remembered?", "a": "To day shalt thou be with me in paradise", "acc": ["today you will be with me in paradise"], "ty": 0, "w": ["Thy sins are forgiven", "Go in peace", "Remember me"], "r": "Luk.23.43" },
+    { "l": 2, "f": "story", "q": "On the road to which village did two disciples meet the risen Jesus?", "a": "Emmaus", "w": ["Bethany", "Nain", "Cana"], "r": "Luk.24.13" },
+    { "l": 2, "f": "story", "q": "How was Jesus known to the two at Emmaus?", "a": "In breaking of bread", "acc": ["breaking bread", "when he broke the bread", "breaking of bread", "in the breaking of bread"], "w": ["By his voice", "By his wounds", "By a sign in the sky"], "r": "Luk.24.35" }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "book": 43,
+  "questions": [
+    { "t": "fill", "l": 1, "f": "god", "q": "John's opening — complete it.", "text": "In the beginning was the [Word], and the Word was with God, and the Word was [God].", "w": ["Light", "law", "good"], "r": "Jhn.1.1" },
+    { "l": 2, "f": "god", "q": "What did John the Baptist call Jesus when he saw him coming?", "a": "The Lamb of God", "acc": ["lamb of god", "the lamb of god"], "w": ["The Son of David", "The Prophet", "Rabbi"], "r": "Jhn.1.29" },
+    { "l": 1, "f": "story", "q": "What was the beginning of miracles, in Cana of Galilee?", "a": "Water made wine", "acc": ["water into wine", "turned water into wine", "water to wine", "water made wine"], "w": ["Healing a blind man", "Walking on water", "Feeding five thousand"], "r": "Jhn.2.9" },
+    { "l": 2, "f": "story", "q": "Which ruler of the Jews came to Jesus by night?", "a": "Nicodemus", "w": ["Joseph of Arimathaea", "Lazarus", "Thomas"], "r": "Jhn.3.2" },
+    { "t": "fill", "l": 1, "f": "god", "q": "John 3:16 — complete it.", "text": "For God so loved the [world], that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting [life].", "w": ["church", "glory", "peace"], "r": "Jhn.3.16" },
+    { "l": 2, "f": "story", "q": "Where did Jesus sit and talk with the woman of Samaria?", "a": "Jacob's well", "acc": ["at a well", "jacob's well", "the well", "a well", "jacobs well"], "w": ["The temple", "Her house", "The synagogue"], "r": "Jhn.4.6" },
+    { "l": 2, "f": "god", "q": "What did Jesus offer to give the woman of Samaria?", "a": "Living water", "acc": ["living water", "water of life"], "w": ["Bread", "Gold", "A new husband"], "r": "Jhn.4.10" },
+    { "l": 2, "f": "story", "q": "How long had the man by the pool of Bethesda had his infirmity?", "a": "Thirty and eight years", "acc": ["38 years", "thirty eight years", "38"], "w": ["Twelve years", "Forty years", "Eighteen years"], "r": "Jhn.5.5" },
+    { "t": "match", "l": 3, "f": "god", "q": "Match each 'I am' to its chapter.", "pairs": [["The bread of life", "John 6"], ["The light of the world", "John 8"], ["The good shepherd", "John 10"], ["The resurrection, and the life", "John 11"]], "r": "Jhn.11.25" },
+    { "l": 2, "f": "story", "q": "Whom did Jesus call out of the grave after four days?", "a": "Lazarus", "w": ["Jairus' daughter", "The widow's son", "Dorcas"], "r": "Jhn.11.43" },
+    { "l": 1, "f": "remember", "q": "What is the shortest verse in the Bible?", "a": "Jesus wept", "acc": ["jesus wept"], "w": ["God is love", "Pray without ceasing", "Rejoice evermore"], "r": "Jhn.11.35" },
+    { "l": 2, "f": "story", "q": "What did Jesus do for his disciples at supper in John 13?", "a": "Washed their feet", "acc": ["washed their feet", "washed feet", "washed the disciples feet"], "w": ["Anointed their heads", "Gave them new robes", "Blessed their children"], "r": "Jhn.13.5" },
+    { "t": "fill", "l": 2, "f": "god", "q": "John 14 — complete it.", "text": "I am the [way], the truth, and the [life]: no man cometh unto the Father, but by me.", "w": ["door", "light", "bread"], "r": "Jhn.14.6" },
+    { "l": 2, "f": "god", "q": "What does Jesus call himself in John 15?", "a": "The true vine", "acc": ["vine", "the vine", "the true vine"], "w": ["The good shepherd", "The door", "The bread of life"], "r": "Jhn.15.1" },
+    { "l": 2, "f": "story", "q": "Who drew a sword and cut off the right ear of Malchus?", "a": "Simon Peter", "acc": ["peter", "simon peter"], "w": ["John", "Judas", "Thomas"], "r": "Jhn.18.10" },
+    { "l": 2, "f": "story", "q": "'What is ___?' asked Pilate.", "a": "Truth", "acc": ["truth"], "w": ["Sin", "Love", "Faith"], "r": "Jhn.18.38" },
+    { "l": 2, "f": "story", "q": "What did Jesus say before he gave up the ghost, in John?", "a": "It is finished", "acc": ["it is finished"], "w": ["Father, forgive them", "I thirst", "Into thy hands"], "r": "Jhn.19.30" },
+    { "l": 2, "f": "story", "q": "Whom did Mary Magdalene suppose the risen Jesus to be?", "a": "The gardener", "acc": ["gardener", "the gardener"], "w": ["An angel", "Peter", "A soldier"], "r": "Jhn.20.15" },
+    { "l": 2, "f": "story", "q": "Which disciple said, 'My Lord and my God'?", "a": "Thomas", "w": ["Peter", "John", "Andrew"], "r": "Jhn.20.28" },
+    { "l": 2, "f": "story", "q": "What did Jesus ask Peter three times by the sea of Tiberias?", "a": "Lovest thou me?", "acc": ["do you love me", "lovest thou me"], "w": ["Where wast thou?", "Wilt thou fish?", "Whom say ye that I am?"], "r": "Jhn.21.17" }
+  ]
+}

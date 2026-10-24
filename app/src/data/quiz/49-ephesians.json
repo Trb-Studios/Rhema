@@ -1,0 +1,15 @@
+{
+  "book": 49,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "To the saints in which city is this letter addressed?", "a": "Ephesus", "acc": ["ephesus", "ephesians"], "w": ["Corinth", "Rome", "Colosse"], "r": "Eph.1.1" },
+    { "t": "fill", "l": 1, "f": "god", "q": "Ephesians 2 — complete it.", "text": "For by [grace] are ye saved through [faith];", "w": ["works", "law", "love"], "r": "Eph.2.8" },
+    { "l": 2, "f": "god", "q": "Why is salvation not of works?", "a": "Lest any man should boast", "acc": ["so no one can boast", "lest any man should boast"], "ty": 0, "w": ["Because works are evil", "Because the law ended", "Because God forgot"], "r": "Eph.2.9" },
+    { "l": 3, "f": "god", "q": "What has Christ broken down between Jew and Gentile?", "a": "The middle wall of partition", "acc": ["wall", "the dividing wall", "middle wall of partition", "the wall"], "w": ["The temple", "The law of Rome", "The gates of Jerusalem"], "r": "Eph.2.14", "x": "He is our peace, making of twain one new man." },
+    { "l": 2, "f": "god", "q": "'One Lord, one faith, one ___.'", "a": "Baptism", "acc": ["baptism"], "w": ["Church", "Book", "Hope"], "r": "Eph.4.5" },
+    { "l": 1, "f": "remember", "q": "What should not go down upon your wrath?", "a": "The sun", "acc": ["sun", "the sun"], "w": ["The night", "Your guard", "Your voice"], "r": "Eph.4.26" },
+    { "l": 2, "f": "god", "q": "How are we to forgive one another?", "a": "Even as God for Christ's sake hath forgiven you", "acc": ["as god forgave you", "as god has forgiven you", "as christ forgave you"], "ty": 0, "w": ["Seven times and no more", "Only when asked", "As the law allows"], "r": "Eph.4.32" },
+    { "l": 2, "f": "god", "q": "How are husbands to love their wives?", "a": "Even as Christ also loved the church", "acc": ["as christ loved the church"], "ty": 0, "w": ["As they love their goods", "As the law commands", "As their fathers did"], "r": "Eph.5.25" },
+    { "t": "match", "l": 3, "f": "god", "q": "Match each piece of the armour of God.", "pairs": [["Loins girt about with", "Truth"], ["The breastplate of", "Righteousness"], ["The shield of", "Faith"], ["The helmet of", "Salvation"], ["The sword of the Spirit", "The word of God"]], "r": "Eph.6.17" },
+    { "l": 3, "f": "god", "q": "Against whom do we wrestle, not flesh and blood?", "a": "Principalities and powers", "acc": ["principalities", "spiritual wickedness", "principalities and powers"], "ty": 0, "w": ["Rome", "Our neighbours", "The Pharisees"], "r": "Eph.6.12" }
+  ]
+}
