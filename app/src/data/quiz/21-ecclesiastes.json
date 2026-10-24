@@ -1,0 +1,25 @@
+{
+  "book": 21,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "Who calls himself 'the Preacher, the son of David, king in Jerusalem'?", "a": "Solomon", "acc": ["the preacher", "solomon"], "w": ["David", "Rehoboam", "Hezekiah"], "r": "Ecc.1.1", "x": "Traditionally taken to be Solomon." },
+    { "t": "fill", "l": 1, "f": "remember", "q": "The Preacher's refrain — complete it.", "text": "[Vanity] of vanities, saith the Preacher, vanity of vanities; all is [vanity].", "w": ["Wisdom", "folly", "dust"], "r": "Ecc.1.2" },
+    { "l": 2, "f": "remember", "q": "What is there no ___ under the sun?", "a": "New thing", "acc": ["nothing new", "new thing", "no new thing"], "w": ["Rest", "Joy", "Wisdom"], "r": "Ecc.1.9" },
+    { "l": 2, "f": "remember", "q": "'To every thing there is a ___.'", "a": "Season", "acc": ["season"], "w": ["Reason", "Price", "Ending"], "r": "Ecc.3.1" },
+    { "l": 2, "f": "god", "q": "What has God set in men's hearts, says Ecclesiastes 3:11?", "a": "The world", "acc": ["eternity", "the world"], "w": ["Fear", "Greed", "Wisdom"], "r": "Ecc.3.11", "x": "The King James says 'the world'; many translate it 'eternity'." },
+    { "l": 2, "f": "remember", "q": "Which is better, says Ecclesiastes 4:9?", "a": "Two than one", "acc": ["two", "two are better than one"], "w": ["One than two", "Three than two", "None at all"], "r": "Ecc.4.9" },
+    { "l": 2, "f": "remember", "q": "'A threefold cord is not ___ broken.'", "a": "Quickly", "acc": ["quickly"], "w": ["Easily", "Ever", "Soon"], "r": "Ecc.4.12" },
+    { "l": 2, "f": "god", "q": "Before God, how many should your words be?", "a": "Few", "acc": ["few", "let thy words be few", "let your words be few"], "w": ["Many", "Loud", "Repeated"], "r": "Ecc.5.2" },
+    { "l": 2, "f": "remember", "q": "He that loveth silver shall not be satisfied with what?", "a": "Silver", "acc": ["silver"], "w": ["Gold", "Bread", "Land"], "r": "Ecc.5.10" },
+    { "l": 2, "f": "remember", "q": "'A good name is better than precious ___.'", "a": "Ointment", "acc": ["ointment"], "w": ["Gold", "Stones", "Wine"], "r": "Ecc.7.1" },
+    { "l": 2, "f": "remember", "q": "'The race is not to the swift, nor the battle to the ___.'", "a": "Strong", "acc": ["strong"], "w": ["Brave", "Many", "King"], "r": "Ecc.9.11" },
+    { "l": 2, "f": "remember", "q": "'Whatsoever thy hand findeth to do, do it with thy ___.'", "a": "Might", "acc": ["might"], "w": ["Friends", "Heart", "Wealth"], "r": "Ecc.9.10" },
+    { "l": 2, "f": "god", "q": "'Cast thy bread upon the waters: for thou shalt find it after many ___.'", "a": "Days", "acc": ["days"], "w": ["Years", "Waves", "Friends"], "r": "Ecc.11.1" },
+    { "l": 2, "f": "god", "q": "When should you remember your Creator?", "a": "In the days of thy youth", "acc": ["in your youth", "youth", "days of thy youth", "while you are young"], "w": ["In old age", "On the sabbath", "At death"], "r": "Ecc.12.1" },
+    { "l": 2, "f": "remember", "q": "At death, where do the dust and the spirit go?", "a": "The dust to the earth, the spirit to God", "ty": 0, "w": ["The body to the sea, the soul to the stars", "Nothing returns anywhere", "The spirit to the earth, the dust to God"], "r": "Ecc.12.7" },
+    { "t": "fill", "l": 2, "f": "god", "q": "The conclusion of the whole matter — complete it.", "text": "Fear [God], and keep his [commandments]: for this is the whole duty of man.", "w": ["kings", "ways", "law"], "r": "Ecc.12.13" },
+    { "l": 2, "f": "god", "q": "What will God bring into judgment?", "a": "Every work, with every secret thing", "ty": 0, "w": ["Only great sins", "Only the king's works", "Nothing at all"], "r": "Ecc.12.14" },
+    { "l": 2, "f": "remember", "q": "'Of making many books there is no ___.'", "a": "End", "acc": ["end"], "w": ["Use", "Joy", "Point"], "r": "Ecc.12.12" },
+    { "t": "tf", "l": 2, "f": "remember", "q": "Looking on all his labour under the sun, the Preacher called it vanity and vexation of spirit.", "a": true, "r": "Ecc.2.11" },
+    { "t": "match", "l": 3, "f": "remember", "q": "Match each time to its pair in Ecclesiastes 3.", "pairs": [["A time to be born", "A time to die"], ["A time to weep", "A time to laugh"], ["A time to keep silence", "A time to speak"], ["A time of war", "A time of peace"]], "r": "Ecc.3.8" }
+  ]
+}

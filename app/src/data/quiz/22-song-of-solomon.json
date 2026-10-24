@@ -1,0 +1,15 @@
+{
+  "book": 22,
+  "questions": [
+    { "l": 1, "f": "remember", "q": "Whose song does the book call itself?", "a": "Solomon's", "acc": ["solomon", "solomons"], "w": ["David's", "Moses'", "Asaph's"], "r": "Sng.1.1" },
+    { "l": 2, "f": "remember", "q": "What does the beloved call herself in chapter 2?", "a": "The rose of Sharon", "acc": ["rose of sharon", "the rose of sharon", "lily of the valleys"], "w": ["The cedar of Lebanon", "The vine of Engedi", "The dove of Zion"], "r": "Sng.2.1" },
+    { "l": 2, "f": "remember", "q": "'His banner over me was ___.'", "a": "Love", "acc": ["love", "his love"], "w": ["War", "Victory", "Peace"], "r": "Sng.2.4" },
+    { "l": 2, "f": "remember", "q": "What spoils the vines?", "a": "The little foxes", "acc": ["little foxes", "foxes"], "w": ["The locusts", "The wild boar", "The north wind"], "r": "Sng.2.15" },
+    { "t": "fill", "l": 2, "f": "remember", "q": "Song 2 — complete it.", "text": "My [beloved] is mine, and I am [his]:", "w": ["king", "friend", "yours"], "r": "Sng.2.16" },
+    { "l": 2, "f": "remember", "q": "'Many waters cannot quench ___.'", "a": "Love", "acc": ["love"], "w": ["Fire", "Thirst", "Hope"], "r": "Sng.8.7" },
+    { "l": 2, "f": "remember", "q": "'For love is strong as ___.'", "a": "Death", "acc": ["death"], "w": ["Iron", "A lion", "The sea"], "r": "Sng.8.6" },
+    { "l": 2, "f": "remember", "q": "Until when are the daughters of Jerusalem charged not to stir up love?", "a": "Till he please", "acc": ["till he please", "until it please", "until it pleases"], "w": ["Till the morning", "Till the harvest", "Till the king comes"], "r": "Sng.2.7" },
+    { "l": 2, "f": "remember", "q": "In Song 2, what is past and what is come?", "a": "The winter is past, and the time of singing is come", "ty": 0, "w": ["The night is past and the dawn is come", "The war is past and peace is come", "The harvest is past and the rain is come"], "r": "Sng.2.11" },
+    { "t": "tf", "l": 2, "f": "god", "q": "The name of God appears often in the Song of Solomon.", "a": false, "r": "Sng.8.6", "x": "Like Esther, the Song never names God outright. Many read it as a picture of God's love for his people." }
+  ]
+}
