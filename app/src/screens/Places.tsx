@@ -84,9 +84,26 @@ export function Places({ route }: { route: Route }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-      <ScreenHeader icon={<PlaceIcon size={15} />} crumbs={place ? ['Places', place.name] : ['Places']} />
-      <div style={{ flex: 1, minHeight: 0, display: 'grid', gridTemplateColumns: 'minmax(280px, 340px) minmax(0, 1fr)' }}>
-        <aside style={{ display: 'flex', flexDirection: 'column', minHeight: 0, borderRight: '1px solid var(--line-default)' }}>
+      <ScreenHeader
+        icon={<PlaceIcon size={15} />}
+        crumbs={place ? ['Places', place.name] : ['Places']}
+      />
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          display: 'grid',
+          gridTemplateColumns: 'minmax(280px, 340px) minmax(0, 1fr)',
+        }}
+      >
+        <aside
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: 0,
+            borderRight: '1px solid var(--line-default)',
+          }}
+        >
           <div style={{ padding: '14px 14px 10px' }}>
             <label
               style={{
@@ -107,7 +124,14 @@ export function Places({ route }: { route: Route }) {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search a place — try Bethel or Jordan"
-                style={{ flex: 1, border: 0, outline: 'none', background: 'transparent', fontSize: 14, color: 'var(--text-primary)' }}
+                style={{
+                  flex: 1,
+                  border: 0,
+                  outline: 'none',
+                  background: 'transparent',
+                  fontSize: 14,
+                  color: 'var(--text-primary)',
+                }}
               />
             </label>
             <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 10 }}>
@@ -135,14 +159,22 @@ export function Places({ route }: { route: Route }) {
             </div>
           </div>
           <div style={{ flex: 1, overflowY: 'auto', padding: '0 8px 16px' }}>
-            {!subjects && <p style={{ padding: 14, color: 'var(--text-faint)', fontSize: 13 }}>Gathering places…</p>}
+            {!subjects && (
+              <p style={{ padding: 14, color: 'var(--text-faint)', fontSize: 13 }}>
+                Gathering places…
+              </p>
+            )}
             {subjects && results.length === 0 && (
-              <p style={{ padding: 14, color: 'var(--text-faint)', fontSize: 13 }}>No place by that name.</p>
+              <p style={{ padding: 14, color: 'var(--text-faint)', fontSize: 13 }}>
+                No place by that name.
+              </p>
             )}
             {results.map((entry) => {
               const profile = profiles?.places[entry.id];
               const active = entry.id === selected;
-              const namesakes = results.filter((other) => fold(other.name) === fold(entry.name)).length;
+              const namesakes = results.filter(
+                (other) => fold(other.name) === fold(entry.name),
+              ).length;
               return (
                 <motion.button
                   key={entry.id}
@@ -162,15 +194,33 @@ export function Places({ route }: { route: Route }) {
                     boxShadow: active ? 'inset 0 1px 0 var(--glass-highlight)' : 'none',
                   }}
                 >
-                  <Picture image={profile?.photo} name={entry.name} kind="place" size={34} rounded={9} />
+                  <Picture
+                    image={profile?.photo}
+                    name={entry.name}
+                    kind="place"
+                    size={34}
+                    rounded={9}
+                  />
                   <span style={{ flex: 1, minWidth: 0 }}>
                     <span style={{ display: 'block', fontWeight: 600, fontSize: 13.5 }}>
                       {entry.name}
                       {namesakes > 1 && (
-                        <span style={{ color: 'var(--text-faint)', fontWeight: 500 }}> · {titleHint(profile?.title) || 'one of several'}</span>
+                        <span style={{ color: 'var(--text-faint)', fontWeight: 500 }}>
+                          {' '}
+                          · {titleHint(profile?.title) || 'one of several'}
+                        </span>
                       )}
                     </span>
-                    <span style={{ display: 'block', fontSize: 12, color: 'var(--text-faint)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <span
+                      style={{
+                        display: 'block',
+                        fontSize: 12,
+                        color: 'var(--text-faint)',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
                       {profile?.modern ? `Today: ${profile.modern.name}` : entry.area || ' '}
                     </span>
                   </span>
@@ -193,7 +243,13 @@ export function Places({ route }: { route: Route }) {
                 exit={{ opacity: 0, transition: { duration: 0.1 } }}
                 transition={transition('smooth')}
               >
-                <PlaceView place={place} subjects={subjects} profiles={profiles} books={books} onOpen={select} />
+                <PlaceView
+                  place={place}
+                  subjects={subjects}
+                  profiles={profiles}
+                  books={books}
+                  onOpen={select}
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -242,36 +298,68 @@ function PlaceView({
             pointerEvents: 'none',
           }}
         />
-        <div style={{ position: 'absolute', left: 24, right: 24, bottom: 20, color: profile?.photo ? '#f3efe7' : 'var(--text-primary)' }}>
-          <div className="eyebrow" style={{ color: profile?.photo ? 'rgba(243,239,231,0.75)' : 'var(--mark-place)' }}>
-            {profile?.kind ? profile.kind.replace(/^\w/, (letter) => letter.toUpperCase()) : 'Place'}
+        <div
+          style={{
+            position: 'absolute',
+            left: 24,
+            right: 24,
+            bottom: 20,
+            color: profile?.photo ? '#f3efe7' : 'var(--text-primary)',
+          }}
+        >
+          <div
+            className="eyebrow"
+            style={{ color: profile?.photo ? 'rgba(243,239,231,0.75)' : 'var(--mark-place)' }}
+          >
+            {profile?.kind
+              ? profile.kind.replace(/^\w/, (letter) => letter.toUpperCase())
+              : 'Place'}
           </div>
           <h1 style={{ fontSize: 46, lineHeight: 1.05, marginTop: 4 }}>{place.name}</h1>
           {titleHint(profile?.title) && (
-            <div style={{ marginTop: 4, fontSize: 14, opacity: 0.8 }}>{titleHint(profile?.title)}</div>
+            <div style={{ marginTop: 4, fontSize: 14, opacity: 0.8 }}>
+              {titleHint(profile?.title)}
+            </div>
           )}
         </div>
       </div>
       {profile?.photo && (
         <div style={{ marginTop: 8 }}>
-          <Credit image={profile.photo} label={profile.photo.description ? profile.photo.description : 'Photograph'} />
+          <Credit
+            image={profile.photo}
+            label={profile.photo.description ? profile.photo.description : 'Photograph'}
+          />
         </div>
       )}
 
       {/* Where it is now */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, marginTop: 20 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: 12,
+          marginTop: 20,
+        }}
+      >
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...transition('smooth'), delay: 0.04 }}
-          style={{ padding: 18, borderRadius: 14, border: '1px solid var(--line-default)', background: 'var(--bg-card)' }}
+          style={{
+            padding: 18,
+            borderRadius: 14,
+            border: '1px solid var(--line-default)',
+            background: 'var(--bg-card)',
+          }}
         >
           <div className="eyebrow" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <GlobeIcon size={13} /> Where it is now
           </div>
           {profile?.modern ? (
             <>
-              <div style={{ font: '400 26px var(--font-display)', marginTop: 8 }}>{profile.modern.name}</div>
+              <div style={{ font: '400 26px var(--font-display)', marginTop: 8 }}>
+                {profile.modern.name}
+              </div>
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
                 <Chip tone={CONFIDENCE_TONE[profile.modern.confidence]}>
                   Identification {profile.modern.confidence}
@@ -279,23 +367,42 @@ function PlaceView({
                 {profile.modern.type && <Chip>{profile.modern.type}</Chip>}
               </div>
               {profile.modern.precision && (
-                <p style={{ marginTop: 10, fontSize: 12.5, color: 'var(--text-secondary)' }}>{profile.modern.precision}</p>
+                <p style={{ marginTop: 10, fontSize: 12.5, color: 'var(--text-secondary)' }}>
+                  {profile.modern.precision}
+                </p>
               )}
               {profile.alternatives && profile.alternatives.length > 0 && (
-                <p style={{ marginTop: 8, fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                <p
+                  style={{
+                    marginTop: 8,
+                    fontSize: 12.5,
+                    color: 'var(--text-secondary)',
+                    lineHeight: 1.6,
+                  }}
+                >
                   Also proposed:{' '}
                   {profile.alternatives.map((alt) => `${alt.name} (${alt.confidence})`).join(', ')}
                 </p>
               )}
               {profile.lonlat && (
-                <p className="tabular" style={{ marginTop: 8, fontSize: 11.5, color: 'var(--text-faint)' }}>
+                <p
+                  className="tabular"
+                  style={{ marginTop: 8, fontSize: 11.5, color: 'var(--text-faint)' }}
+                >
                   {Math.abs(profile.lonlat[1]).toFixed(3)}°{profile.lonlat[1] >= 0 ? 'N' : 'S'},{' '}
                   {Math.abs(profile.lonlat[0]).toFixed(3)}°{profile.lonlat[0] >= 0 ? 'E' : 'W'}
                 </p>
               )}
             </>
           ) : (
-            <p style={{ marginTop: 10, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+            <p
+              style={{
+                marginTop: 10,
+                fontSize: 13.5,
+                color: 'var(--text-secondary)',
+                lineHeight: 1.6,
+              }}
+            >
               No one has identified where this was with any confidence.
             </p>
           )}
@@ -305,7 +412,12 @@ function PlaceView({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...transition('smooth'), delay: 0.08 }}
-          style={{ padding: 18, borderRadius: 14, border: '1px solid var(--line-default)', background: 'var(--bg-card)' }}
+          style={{
+            padding: 18,
+            borderRadius: 14,
+            border: '1px solid var(--line-default)',
+            background: 'var(--bg-card)',
+          }}
         >
           <div className="eyebrow">In Scripture</div>
           <div style={{ font: '400 26px var(--font-display)', marginTop: 8 }}>
@@ -313,14 +425,17 @@ function PlaceView({
           </div>
           {profile?.fromJerusalem && (
             <p style={{ marginTop: 8, fontSize: 13.5, color: 'var(--text-secondary)' }}>
-              About {profile.fromJerusalem.km.toLocaleString()} km {profile.fromJerusalem.dir} of Jerusalem
+              About {profile.fromJerusalem.km.toLocaleString()} km {profile.fromJerusalem.dir} of
+              Jerusalem
             </p>
           )}
           {first && firstBook && (
             <motion.button
               whileTap={{ scale: 0.97 }}
               transition={spring.snappy}
-              onClick={() => navigate({ screen: 'read', bookId: first[0], chapter: first[1], verse: first[2] })}
+              onClick={() =>
+                navigate({ screen: 'read', bookId: first[0], chapter: first[1], verse: first[2] })
+              }
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -344,9 +459,26 @@ function PlaceView({
 
       {/* Its neighbours */}
       {profile?.near && profile.near.length > 0 && profile.lonlat && profiles && (
-        <Section title="Around it" aside="Biblical places nearest, by straight-line distance" delay={0.1}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 1fr)', gap: 14, alignItems: 'stretch' }}>
-            <NeighbourMap place={place} profile={profile} profiles={profiles} subjects={subjects} onOpen={onOpen} />
+        <Section
+          title="Around it"
+          aside="Biblical places nearest, by straight-line distance"
+          delay={0.1}
+        >
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 1fr)',
+              gap: 14,
+              alignItems: 'stretch',
+            }}
+          >
+            <NeighbourMap
+              place={place}
+              profile={profile}
+              profiles={profiles}
+              subjects={subjects}
+              onOpen={onOpen}
+            />
             <div style={{ display: 'grid', gap: 6, alignContent: 'start' }}>
               {profile.near.map((near, index) => (
                 <motion.button
@@ -370,8 +502,13 @@ function PlaceView({
                   <span style={{ color: 'var(--mark-place)', display: 'grid' }}>
                     <PlaceIcon size={15} />
                   </span>
-                  <span style={{ flex: 1, fontWeight: 600, fontSize: 13 }}>{subjects.get(near.id)?.name ?? near.id.split('@')[0]}</span>
-                  <span className="tabular" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                  <span style={{ flex: 1, fontWeight: 600, fontSize: 13 }}>
+                    {subjects.get(near.id)?.name ?? near.id.split('@')[0]}
+                  </span>
+                  <span
+                    className="tabular"
+                    style={{ fontSize: 12, color: 'var(--text-secondary)' }}
+                  >
                     {near.km < 10 ? near.km.toFixed(1) : Math.round(near.km)} km {near.dir}
                   </span>
                 </motion.button>
@@ -385,7 +522,10 @@ function PlaceView({
         <Section title="About the place" aside="Easton's Bible Dictionary, 1897" delay={0.14}>
           <div style={{ display: 'grid', gap: 12 }}>
             {profile.bio.map((paragraph, index) => (
-              <p key={index} style={{ fontFamily: 'var(--font-display)', fontSize: 17, lineHeight: 1.7 }}>
+              <p
+                key={index}
+                style={{ fontFamily: 'var(--font-display)', fontSize: 17, lineHeight: 1.7 }}
+              >
                 {paragraph}
               </p>
             ))}
@@ -396,7 +536,11 @@ function PlaceView({
       {place.total > 0 && (
         <Section
           title="Where it appears"
-          aside={place.total > place.where.length ? `first ${place.where.length} of ${place.total}` : undefined}
+          aside={
+            place.total > place.where.length
+              ? `first ${place.where.length} of ${place.total}`
+              : undefined
+          }
           delay={0.18}
         >
           <VerseChips where={place.where} books={books} />
@@ -429,12 +573,15 @@ function NeighbourMap({
     .map((near) => ({ id: near.id, at: profiles.places[near.id]?.lonlat }))
     .filter((point): point is { id: string; at: [number, number] } => Boolean(point.at));
 
-  const jerusalemId = [...subjects.values()].find((subject) => subject.kind === 'place' && subject.name === 'Jerusalem')?.id;
+  const jerusalemId = [...subjects.values()].find(
+    (subject) => subject.kind === 'place' && subject.name === 'Jerusalem',
+  )?.id;
   const jerusalem = jerusalemId ? profiles.places[jerusalemId]?.lonlat : undefined;
 
   // Equirectangular around the place, scaled so the farthest neighbour sits near the edge.
   const cos = Math.cos((centre[1] * Math.PI) / 180);
-  const project = ([lon, lat]: [number, number]) => [(lon - centre[0]) * cos, lat - centre[1]] as const;
+  const project = ([lon, lat]: [number, number]) =>
+    [(lon - centre[0]) * cos, lat - centre[1]] as const;
   const reach = Math.max(0.02, ...points.map((point) => Math.hypot(...project(point.at))));
   const size = 300;
   const scale = (size / 2 - 34) / reach;
@@ -457,17 +604,33 @@ function NeighbourMap({
     const w = name.length * 5.9;
     const tries = [y - 9, y + 17, y - 22, y + 30, y - 35, y + 43];
     const clear = (ty: number) =>
-      placed.every((other) => Math.abs(other.y - ty) > 12 || Math.abs(other.x - x) > (other.w + w) / 2 + 4);
+      placed.every(
+        (other) => Math.abs(other.y - ty) > 12 || Math.abs(other.x - x) > (other.w + w) / 2 + 4,
+      );
     const ty = tries.find(clear) ?? tries[0];
     placed.push({ x, y: ty, w });
     labels.set(point.id, { x, y: ty });
   }
   const jerusalemInFrame =
-    jerusalemPoint && jerusalemPoint[0] > 8 && jerusalemPoint[0] < size - 8 && jerusalemPoint[1] > 8 && jerusalemPoint[1] < size - 8;
+    jerusalemPoint &&
+    jerusalemPoint[0] > 8 &&
+    jerusalemPoint[0] < size - 8 &&
+    jerusalemPoint[1] > 8 &&
+    jerusalemPoint[1] < size - 8;
 
   return (
-    <div style={{ borderRadius: 14, border: '1px solid var(--line-default)', background: 'var(--bg-card)', overflow: 'hidden' }}>
-      <svg viewBox={`0 0 ${size} ${size}`} style={{ display: 'block', width: '100%', height: 'auto' }}>
+    <div
+      style={{
+        borderRadius: 14,
+        border: '1px solid var(--line-default)',
+        background: 'var(--bg-card)',
+        overflow: 'hidden',
+      }}
+    >
+      <svg
+        viewBox={`0 0 ${size} ${size}`}
+        style={{ display: 'block', width: '100%', height: 'auto' }}
+      >
         <defs>
           <radialGradient id="map-glow">
             <stop offset="0%" stopColor="var(--mark-place)" stopOpacity="0.22" />
@@ -475,9 +638,26 @@ function NeighbourMap({
           </radialGradient>
         </defs>
         {[0.33, 0.66, 1].map((ring) => (
-          <circle key={ring} cx={size / 2} cy={size / 2} r={(size / 2 - 34) * ring} fill="none" stroke="var(--line-default)" strokeDasharray="2 4" />
+          <circle
+            key={ring}
+            cx={size / 2}
+            cy={size / 2}
+            r={(size / 2 - 34) * ring}
+            fill="none"
+            stroke="var(--line-default)"
+            strokeDasharray="2 4"
+          />
         ))}
-        <text x={size / 2} y={14} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-faint)">N</text>
+        <text
+          x={size / 2}
+          y={14}
+          textAnchor="middle"
+          fontSize="10"
+          fontWeight="700"
+          fill="var(--text-faint)"
+        >
+          N
+        </text>
         <circle cx={size / 2} cy={size / 2} r={40} fill="url(#map-glow)" />
         {points.map((point, index) => {
           const [x, y] = toScreen(point.at);
@@ -490,8 +670,22 @@ function NeighbourMap({
               style={{ cursor: 'default' }}
               onClick={() => onOpen(point.id)}
             >
-              <line x1={size / 2} y1={size / 2} x2={x} y2={y} stroke="var(--line-strong)" strokeWidth="1" />
-              <circle cx={x} cy={y} r={4.5} fill="var(--bg-card)" stroke="var(--mark-place)" strokeWidth="1.6" />
+              <line
+                x1={size / 2}
+                y1={size / 2}
+                x2={x}
+                y2={y}
+                stroke="var(--line-strong)"
+                strokeWidth="1"
+              />
+              <circle
+                cx={x}
+                cy={y}
+                r={4.5}
+                fill="var(--bg-card)"
+                stroke="var(--mark-place)"
+                strokeWidth="1.6"
+              />
               <text
                 x={labels.get(point.id)?.x ?? x}
                 y={labels.get(point.id)?.y ?? y - 9}
@@ -510,8 +704,22 @@ function NeighbourMap({
         })}
         {jerusalemInFrame && jerusalemPoint && (
           <g>
-            <rect x={jerusalemPoint[0] - 4} y={jerusalemPoint[1] - 4} width={8} height={8} rotate={45} fill="var(--main-fill)" />
-            <text x={jerusalemPoint[0]} y={jerusalemPoint[1] + 16} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-tan)">
+            <rect
+              x={jerusalemPoint[0] - 4}
+              y={jerusalemPoint[1] - 4}
+              width={8}
+              height={8}
+              rotate={45}
+              fill="var(--main-fill)"
+            />
+            <text
+              x={jerusalemPoint[0]}
+              y={jerusalemPoint[1] + 16}
+              textAnchor="middle"
+              fontSize="10"
+              fontWeight="700"
+              fill="var(--text-tan)"
+            >
               Jerusalem
             </text>
           </g>
@@ -525,7 +733,14 @@ function NeighbourMap({
           animate={{ scale: 1 }}
           transition={spring.bouncy}
         />
-        <text x={size / 2} y={size / 2 + 22} textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-primary)">
+        <text
+          x={size / 2}
+          y={size / 2 + 22}
+          textAnchor="middle"
+          fontSize="12"
+          fontWeight="700"
+          fill="var(--text-primary)"
+        >
           {place.name}
         </text>
       </svg>

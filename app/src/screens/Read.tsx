@@ -33,13 +33,7 @@ import { copy as toClipboard, format as formatVerse } from '../lib/copy';
 import { matches, registerCommands } from '../lib/commands';
 import type { Command } from '../lib/commands';
 import type { Route } from '../lib/nav';
-import {
-  navigate,
-  noteRecentBook,
-  openPalette,
-  replaceRoute,
-  setReaderEdition,
-} from '../lib/nav';
+import { navigate, noteRecentBook, openPalette, replaceRoute, setReaderEdition } from '../lib/nav';
 import { WordPopover } from '../components/WordPopover';
 import { Review } from '../components/Review';
 import { Plan } from '../components/Plan';
@@ -160,10 +154,13 @@ export function Read({ route }: { route: Route }) {
   }, [route.nonce, all.length]);
 
   // A sheet closing hands the sidebar back to the reader itself.
-  const closeSheet = useCallback((close: () => void) => {
-    close();
-    if (route.sheet) replaceRoute({ screen: 'read' });
-  }, [route.sheet]);
+  const closeSheet = useCallback(
+    (close: () => void) => {
+      close();
+      if (route.sheet) replaceRoute({ screen: 'read' });
+    },
+    [route.sheet],
+  );
 
   useEffect(() => {
     if (book) noteRecentBook(book.id);
@@ -854,7 +851,12 @@ export function Read({ route }: { route: Route }) {
                         id,
                         text: phrase.text,
                         colour: phrase.colour,
-                        rect: { left: rect.left, top: rect.top, width: rect.width, bottom: rect.bottom },
+                        rect: {
+                          left: rect.left,
+                          top: rect.top,
+                          width: rect.width,
+                          bottom: rect.bottom,
+                        },
                       });
                     }}
                   />
@@ -1250,7 +1252,8 @@ function Pill({
         background: active ? 'var(--good-tint)' : 'transparent',
         color: active ? 'var(--good)' : 'var(--text-secondary)',
         border: `1px solid ${active ? 'color-mix(in srgb, var(--good) 35%, transparent)' : 'var(--line-default)'}`,
-        transition: 'background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast)',
+        transition:
+          'background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast)',
       }}
     >
       {children}

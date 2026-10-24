@@ -1,126 +1,137 @@
 # Where we are
 
-Written 23 October 2026. Read this first when picking the project back up.
+Written 23 October 2026, at v0.2. Read this first when picking the project back up.
 
 ## What works today
 
-Rhema is one screen: Scripture in the middle, a notepad beside it, and everything else
-behind a button so nothing competes with the text.
+Rhema is dark first, with a tan accent: a Linear-style sidebar on the left, Scripture in
+the middle, and a Raycast-style command palette (Ctrl K) that reaches everything.
+
+**Getting around**
+
+- **Sidebar** with Today, Read, People, Places, Quiz, Notebook and Highlights, plus the
+  books read most recently. Ctrl 1–7 jump between them, Ctrl \ collapses it, Alt ← goes
+  back.
+- **Command palette.** Type a passage (`jn 3 16`), a person, a place, a command or any
+  words in the text. Tab changes scope; the right side previews the result before it is
+  opened.
 
 **Reading**
 
 - **The full KJV**, bundled and offline: 66 books, 1,189 chapters, 789,634 words.
-- **Hebrew and Greek as editions you switch to**, not as words injected into the
-  English. The Old Testament reads in the Westminster Leningrad Codex, the New in the
-  SBL Greek New Testament, each numbered as its own tradition numbers it.
-- **An introduction to every book** — time, author, place and background — giving the
-  traditional view and the main scholarly alternative without choosing between them.
-- **Cross-references**: 193,436 of them across 29,324 verses, strongest first, each
-  shown with its own words beside the passage rather than as an address to look up.
-- **Search** across any edition, ignoring vowel points and accents so Hebrew and Greek
-  can be searched as typed.
-- Arrow keys turn chapters, crossing from one book into the next.
+- **Hebrew and Greek the way greekbible.com does it.** Switch the edition and the
+  chapter reads in the original — the Westminster Leningrad Codex or the SBL Greek New
+  Testament — with the King James line beneath each verse. Hovering any word shows its
+  dictionary form, meaning and parsing; clicking opens the full word study.
+- **An introduction to every book**, cross-references (193,436 of them), search across
+  any edition, and arrow keys to turn chapters.
 
 **Marking up**
 
-- **People and places marked in the text**, as individuals rather than as names: 3,027
-  people and 924 places. Blue for people, red for places. Clicking one opens a card with
-  who they were, their family — each relative openable in turn, which is the genealogy —
-  and every verse that names them. Mary the mother of Jesus and Mary Magdalene are
-  different people, and Peter is also Simon, Simeon, Cephas and Bar-Jona.
-- **Word study.** Clicking a Hebrew or Greek word gives its dictionary form, what it
-  means, how it is parsed, and every other place it occurs. Counts were checked against
-  published concordances: H7225 51 times, H430 2,600, λόγος 330, ἀγάπη 116.
-- **Highlights** in any of the 30 colours, on any verse.
-- **A notepad per chapter**, saved as you type.
-- **Saved verses**, kept by reference so they can be read back in any edition.
+- **Highlights on any words**, not just whole verses: select a phrase and pick one of 9
+  quick colours or 30 in all. The Highlights screen gathers them by book, filterable by
+  colour.
+- **Sticky notes per book.** Paper notes pinned to a book, optionally to a verse, that
+  stay with the book rather than the chapter.
+- **One notebook for everything.** A single running document across all books that never
+  resets per chapter, with an outline and "add heading for this passage". Notes written
+  per chapter in v0.1 were moved into it once, under their own headings.
+- **People and places marked in the text**, opening a card with a portrait or photo.
+
+**People and places**
+
+- **A People tab.** Search any name. 3,027 people, every verse that names each, and for
+  2,678 of them a fuller record: Easton's entry, family, and years where known. 166 have
+  a painting or famous portrait,
+  the rest marked "No portrait known" rather than given an invented face.
+- **One name, several people.** Searching James shows each James separately — the son
+  of Zebedee, the son of Alphaeus, the Lord's brother — each with what tells him apart
+  and his passages. Where tradition makes two into one (James the less, Judas not
+  Iscariot and Thaddaeus, Bartholomew and Nathanael, and 13 others), a note explains the
+  case for and against instead of merging them.
+- **A Places tab.** 924 places, 878 located: where each is now, how confident that
+  identification is, the alternatives, how far it lies from Jerusalem, a small map of
+  its biblical neighbours, and a photograph for 604 of them.
 
 **Remembering, which is the point of the app**
 
-- **Spaced review** over saved verses, scheduled by SM-2: a verse comes back just before
-  it would be forgotten, and the gap grows each time it is remembered. Two modes —
-  Recall, which gives the reference, and Memorise, which gives the verse as first
-  letters.
-- **A reading plan as actual days.** Pick a pace and it says what to read today, how long
-  it takes, how far through you are, how many days behind or ahead, and the date the pace
-  you are actually keeping would finish on.
-- **A quiz on any book**, generated from the text: the wording of a verse, whereabouts
-  in the book something happens, and who is named in it. No model is involved, so no
-  question can invent a verse or misattribute a saying.
-- **Marking chapters read**, which feeds progress and a streak.
+- **The quiz is a game now.** Every book has its own written questions — 50 for long
+  books, 20 under 30 chapters, 10 under 10: 1,380 in all — on the story, what it shows
+  of God, and what to remember. Three levels:
+  - **Easy**: multiple choice, no clock.
+  - **Medium**: mostly multiple choice, a minute a question, about one in three typed,
+    with spelling forgiven.
+  - **Hard**: typed answers, putting events in order, matching, and filling in verses.
+
+  Points, a streak multiplier, lives, stars per book, a best score, and a results screen
+  that goes through what was missed with the verse. **Flashcards** flip for study
+  without scoring.
+
+- **Spaced review** over saved verses (SM-2), a **reading plan** in actual days, and
+  marking chapters read for progress and the streak — unchanged from v0.1.
 
 **Keeping it**
 
-- **Backup and restore** to a plain JSON file, with a choice of replacing what is here or
-  merging two machines together.
-- **An installer that updates itself**, built on every push and published to a permanent
-  download link.
+- **Backup and restore** to a plain JSON file, now including highlights, sticky notes,
+  the notebook and quiz scores.
+- **An installer that updates itself**, built on every push.
 
 ## Decisions worth remembering
 
-- **The reading plan schedules by words, not chapters.** Psalm 117 is 33 words and Psalm
-  119 is 2,423, so an even number of chapters is a wildly uneven amount of reading. Days
-  are filled towards a running total rather than a daily quota, so rounding cannot
-  accumulate: a 365-day plan ends on Revelation 22 on day 365.
-- **Today's reading starts from the first unread chapter, not from the calendar.** A
-  reader who misses a fortnight comes back to where they are, not to a backlog they will
-  never face. Being behind is reported; catching up is offered, never imposed.
-- **Dates are local, never UTC.** `toISOString().slice(0, 10)` gives the UTC date, which
-  west of Greenwich rolls over mid-afternoon: an evening's reading was credited to
-  tomorrow and streaks broke while they were being kept. Everything dated goes through
-  `lib/dates.ts`.
-- **Shared state goes through `lib/store.ts`.** Three separate bugs came from components
-  each keeping their own copy: saving a verse never reached the panel, the plan and the
-  reader disagreed about what was read, and the notepad overwrote every note with a stale
-  copy when the window closed. Anything two components read belongs in the store.
-- **The KJV edition was changed mid-project.** The first source rendered the divine name
-  as "Lord" in ordinary case in all but 6 verses, and spelled places as "Beth–el" with a
-  dash so names never matched. The edition now in use keeps LORD in 5,621 verses.
-- **Highlights are keyed by book, chapter and verse together.** Keying on the verse number
-  alone put one mark on Genesis 1:3 and John 3:3 at once.
-- **Every claim about a name is checked against the King James text before it is kept.**
-  A name is recorded only where one of its spellings is actually printed in that verse,
-  and only where the text capitalises it — without that last rule the Negev, which the
-  dataset calls South, marked the word "south" in "toward the south". 28,426 of 31,718
-  claims survive; the rest are mostly places the King James spells differently, and are
-  dropped rather than marked on the wrong word.
-- **Where one spelling means two people, the card asks which.** About one marked verse
-  in 250 — the two Marys of John 19:25, the two Harans of Genesis 11:31 — and picking
-  one would be a guess presented as a fact.
-- **The descriptions written by an AI are not used.** The names dataset carries longer
-  prose written by a model in 2024 and since adapted. Someone studying Scripture should
-  not be shown a machine's account of a person as though it were the scholarship, and
-  this app cannot check it. The one-line descriptions shown are built from the
-  structured fields.
-- **The quiz is generated from the text, not by a model,** for the same reason: a
-  question drawn from the actual words cannot invent a verse or attribute a saying to
-  the wrong person, and the app shows the verse either way.
-- **Notes, highlights, settings and progress live on the device** for now, and move to
-  the person's account when sign-in lands. Backup is the stopgap.
+- **Some text is now written with AI, and says so.** The quiz questions and the notes on
+  disputed identities were written with AI and carry the gold sparkle wherever they
+  appear. Biographies stay Easton's Bible Dictionary (public domain) and are labelled as
+  such. This reverses v0.1's rule against AI prose, by choice.
+- **Every quiz question is held to the text.** `npm run quiz:check` confirms each
+  reference exists, each quoted fill-in matches the King James word for word, each book
+  has exactly the number of questions its length calls for, and each question has what
+  its kind needs. CI runs it.
+- **Typed answers forgive spelling but not near-misses.** Answers are compared after
+  normalising case, punctuation, "the" and number words ("seventy and five" is 75), within
+  an edit distance that grows with length. Answers of four letters or fewer must be exact,
+  and an answer closer to a wrong option than to the right one is marked wrong, so
+  "Saul" never passes for "Paul".
+- **People are matched to Theographic by verses, not names.** Two people called James
+  share a name but not their verses; scoring overlap (Jaccard) one-to-one within a name
+  stopped the lesser James taking the apostle's record.
+- **Pictures are bundled, not fetched.** Wikimedia Commons images, chosen through
+  Wikidata, filtered to licences that allow reuse, at 330 px, credited on each picture.
+  About 28 MB, so the People and Places tabs work with no connection.
+- **Three animation rules came out of real bugs.**
+  - A framer-motion `layoutId` inside an exiting `AnimatePresence` stalls the exit and
+    left screens blank, so tab pills use `SlidingHighlight`, which measures instead.
+  - Popovers render through `Portal`, because a transformed ancestor shifts fixed
+    positioning by the sidebar's width.
+  - The shell uses `overflow: clip`, so `scrollIntoView` cannot slide the whole window
+    sideways.
+- **Dates are local, never UTC**, through `lib/dates.ts`. **Shared state goes through
+  `lib/store.ts`.** Both still hold; see v0.1's reasons in the git history of this file.
+- **Highlights are keyed by book, chapter and verse together**, and phrase highlights add
+  character offsets within the verse.
+- **Every claim about a name is checked against the King James text before it is kept**,
+  and where one spelling in a verse could mean two people, the card asks which.
 
 ## Tests
 
-`npm test` runs 142 tests over the logic where a wrong number would be invisible in the
-interface: the plan scheduling, the review intervals, the streak, the dates, the
-backup merge rules, the names parser, the cross-references and the quiz generator. The plan tests schedule the real 789,634-word text rather than a
-fixture, because the whole argument for scheduling by words is how uneven the real
-chapters are.
+`npm test` runs 252 tests. They cover the logic where a wrong number would be invisible:
+plan scheduling, review intervals, the streak, dates, backup merge rules, names, cross
+references, phrase highlights, quiz rounds, lenient answer matching, and that every bank
+holds exactly the right number of questions. `npm run quiz:check` checks the quiz text
+itself against the KJV.
 
 ## Next, in order
 
-1. Pictures for the people, which needs a fetch at runtime on a machine that can reach
-   Wikimedia. Nothing in this container can.
-2. Sign-in, so notes and highlights follow the person between machines, with 2FA by
+1. Sign-in, so notes and highlights follow the person between machines, with 2FA by
    email and Google as an option.
-3. AI chapter overviews, once there is a server to hold the key.
-4. Other translations. Only the KJV is public domain; NIV, ESV, NLT, NKJV and CSB each
+2. AI chapter overviews, once there is a server to hold the key.
+3. Other translations. Only the KJV is public domain; NIV, ESV, NLT, NKJV and CSB each
    need permission from their publisher. See `docs/data-licenses.md`.
 
 ## Known gaps
 
-- **The app has never been run on Windows.** Everything has been exercised as a web build
-  and in CI. The installer builds; nobody has installed it.
-- Builds are unsigned until `TAURI_SIGNING_PRIVATE_KEY` is added to the repository
-  secrets, so an installed copy cannot update itself yet. See `docs/releasing.md`.
-- Comments from other readers on a book, chapter or verse need a server and accounts;
-  nothing is built.
+- Builds from CI are unsigned until `TAURI_SIGNING_PRIVATE_KEY` is added to the
+  repository secrets, so an installed copy cannot update itself yet. See
+  `docs/releasing.md`.
+- About 350 people have no Theographic match, so their profile is the one-line
+  description only.
+- Comments from other readers need a server and accounts; nothing is built.

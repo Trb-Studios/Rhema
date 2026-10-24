@@ -63,7 +63,9 @@ export function Results({
   return (
     <div style={{ position: 'relative', height: '100%', overflowY: 'auto' }}>
       <Confetti fire={fire} />
-      <div style={{ maxWidth: 720, margin: '0 auto', padding: '48px 24px 64px', textAlign: 'center' }}>
+      <div
+        style={{ maxWidth: 720, margin: '0 auto', padding: '48px 24px 64px', textAlign: 'center' }}
+      >
         <motion.div
           initial={{ scale: 0.4, opacity: 0, rotate: result.finished ? -12 : 0 }}
           animate={{ scale: 1, opacity: 1, rotate: 0 }}
@@ -79,7 +81,9 @@ export function Results({
               ? 'radial-gradient(circle at 30% 25%, #f6dc8c, var(--ai-sparkle) 55%, #b98a1f)'
               : 'var(--bad-tint)',
             color: result.finished ? '#3d2c06' : 'var(--bad)',
-            boxShadow: result.finished ? '0 18px 50px color-mix(in srgb, var(--ai-sparkle) 35%, transparent)' : 'none',
+            boxShadow: result.finished
+              ? '0 18px 50px color-mix(in srgb, var(--ai-sparkle) 35%, transparent)'
+              : 'none',
           }}
         >
           {result.finished ? <TrophyIcon size={46} tint="#fff3c4" /> : <HeartIcon size={44} />}
@@ -117,7 +121,10 @@ export function Results({
                   fontSize: 44,
                   lineHeight: 1,
                   color: star <= stars ? 'var(--ai-sparkle)' : 'var(--bg-selected)',
-                  filter: star <= stars ? 'drop-shadow(0 6px 14px color-mix(in srgb, var(--ai-sparkle) 45%, transparent))' : 'none',
+                  filter:
+                    star <= stars
+                      ? 'drop-shadow(0 6px 14px color-mix(in srgb, var(--ai-sparkle) 45%, transparent))'
+                      : 'none',
                 }}
               >
                 ★
@@ -126,7 +133,9 @@ export function Results({
           </div>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginTop: 26 }}>
+        <div
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginTop: 26 }}
+        >
           <Stat label="Score">
             <motion.span>{text}</motion.span>
             {isBest && result.score > 0 && (
@@ -134,7 +143,13 @@ export function Results({
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ ...spring.bouncy, delay: 1.2 }}
-                style={{ display: 'block', fontSize: 11, fontWeight: 800, color: 'var(--ai-sparkle)', letterSpacing: '0.08em' }}
+                style={{
+                  display: 'block',
+                  fontSize: 11,
+                  fontWeight: 800,
+                  color: 'var(--ai-sparkle)',
+                  letterSpacing: '0.08em',
+                }}
               >
                 NEW BEST
               </motion.span>
@@ -144,14 +159,29 @@ export function Results({
           <Stat label="Best run">{result.bestStreak} in a row</Stat>
         </div>
         {!isBest && best > 0 && (
-          <p className="tabular" style={{ marginTop: 10, fontSize: 12.5, color: 'var(--text-faint)' }}>
+          <p
+            className="tabular"
+            style={{ marginTop: 10, fontSize: 12.5, color: 'var(--text-faint)' }}
+          >
             Your best on {level}: {best.toLocaleString()}
           </p>
         )}
 
-        <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 26, flexWrap: 'wrap' }}>
-          <Button primary onClick={onAgain}>Play again</Button>
-          {result.finished && next && stars >= 2 && <Button onClick={() => onLevel(next)}>Try {next}</Button>}
+        <div
+          style={{
+            display: 'flex',
+            gap: 10,
+            justifyContent: 'center',
+            marginTop: 26,
+            flexWrap: 'wrap',
+          }}
+        >
+          <Button primary onClick={onAgain}>
+            Play again
+          </Button>
+          {result.finished && next && stars >= 2 && (
+            <Button onClick={() => onLevel(next)}>Try {next}</Button>
+          )}
           <Button onClick={onDone}>Back to {book.name}</Button>
         </div>
 
@@ -163,7 +193,9 @@ export function Results({
             <div style={{ display: 'grid', gap: 8 }}>
               {result.missed.map((asked, index) => {
                 const at = parseRef(asked.question.r);
-                const refBook = at ? books.find((candidate) => candidate.id === at.bookId) : undefined;
+                const refBook = at
+                  ? books.find((candidate) => candidate.id === at.bookId)
+                  : undefined;
                 const answer =
                   typeof asked.question.a === 'string'
                     ? asked.question.a
@@ -171,25 +203,36 @@ export function Results({
                       ? asked.question.a
                         ? 'True'
                         : 'False'
-                      : asked.question.items?.join(' → ') ??
+                      : (asked.question.items?.join(' → ') ??
                         asked.question.pairs?.map(([a, b]) => `${a}: ${b}`).join(', ') ??
                         asked.question.text?.replace(/\[([^\]]+)\]/g, '$1') ??
-                        '';
+                        '');
                 return (
                   <motion.div
                     key={asked.question.id}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ ...transition('smooth'), delay: 0.5 + index * 0.04 }}
-                    style={{ padding: '12px 14px', borderRadius: 12, border: '1px solid var(--line-default)', background: 'var(--bg-card)' }}
+                    style={{
+                      padding: '12px 14px',
+                      borderRadius: 12,
+                      border: '1px solid var(--line-default)',
+                      background: 'var(--bg-card)',
+                    }}
                   >
                     <div style={{ fontWeight: 600, fontSize: 14 }}>{asked.question.q}</div>
-                    <div style={{ marginTop: 4, fontSize: 13.5, color: 'var(--good)' }}>{answer}</div>
+                    <div style={{ marginTop: 4, fontSize: 13.5, color: 'var(--good)' }}>
+                      {answer}
+                    </div>
                     {at && refBook && (
                       <button
                         onClick={() => navigate({ screen: 'read', ...at })}
                         className="tabular"
-                        style={{ marginTop: 6, font: '650 12px var(--font-ui)', color: 'var(--text-tan)' }}
+                        style={{
+                          marginTop: 6,
+                          font: '650 12px var(--font-ui)',
+                          color: 'var(--text-tan)',
+                        }}
                       >
                         Read {refBook.name} {at.chapter}:{at.verse} →
                       </button>
@@ -207,7 +250,14 @@ export function Results({
 
 function Stat({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div style={{ padding: '14px 12px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--line-default)' }}>
+    <div
+      style={{
+        padding: '14px 12px',
+        borderRadius: 14,
+        background: 'var(--bg-card)',
+        border: '1px solid var(--line-default)',
+      }}
+    >
       <div className="eyebrow">{label}</div>
       <div className="tabular" style={{ marginTop: 6, font: '400 28px var(--font-display)' }}>
         {children}
@@ -216,7 +266,15 @@ function Stat({ label, children }: { label: string; children: React.ReactNode })
   );
 }
 
-function Button({ children, onClick, primary }: { children: React.ReactNode; onClick: () => void; primary?: boolean }) {
+function Button({
+  children,
+  onClick,
+  primary,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  primary?: boolean;
+}) {
   return (
     <motion.button
       whileHover={{ y: -2 }}

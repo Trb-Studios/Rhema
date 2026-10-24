@@ -135,24 +135,34 @@ export function MarkPopover({
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 6 }}>
-              <Picture
-                image={showing ? (person ? profiles?.people[showing]?.portrait : profiles?.places[showing]?.photo) : undefined}
-                name={label}
-                kind={person ? 'person' : 'place'}
-                size={46}
-                rounded={11}
-              />
-              <div style={{ minWidth: 0 }}>
-                <h3 style={{ fontSize: 20 }}>{label}</h3>
-                {showing && (titleHint(profiles?.people[showing]?.title ?? profiles?.places[showing]?.title) ||
-                  (!person && profiles?.places[showing]?.modern)) && (
-                  <div style={{ fontSize: 12.5, color: 'var(--text-secondary)' }}>
-                    {titleHint(profiles?.people[showing]?.title ?? profiles?.places[showing]?.title) ||
-                      `Today: ${profiles?.places[showing]?.modern?.name}`}
-                  </div>
-                )}
+                <Picture
+                  image={
+                    showing
+                      ? person
+                        ? profiles?.people[showing]?.portrait
+                        : profiles?.places[showing]?.photo
+                      : undefined
+                  }
+                  name={label}
+                  kind={person ? 'person' : 'place'}
+                  size={46}
+                  rounded={11}
+                />
+                <div style={{ minWidth: 0 }}>
+                  <h3 style={{ fontSize: 20 }}>{label}</h3>
+                  {showing &&
+                    (titleHint(
+                      profiles?.people[showing]?.title ?? profiles?.places[showing]?.title,
+                    ) ||
+                      (!person && profiles?.places[showing]?.modern)) && (
+                      <div style={{ fontSize: 12.5, color: 'var(--text-secondary)' }}>
+                        {titleHint(
+                          profiles?.people[showing]?.title ?? profiles?.places[showing]?.title,
+                        ) || `Today: ${profiles?.places[showing]?.modern?.name}`}
+                      </div>
+                    )}
+                </div>
               </div>
-            </div>
 
               {/* The word on the page, when the text spells the name another way. */}
               {anchored.ids.includes(showing ?? '') &&

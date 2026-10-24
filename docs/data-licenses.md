@@ -40,7 +40,13 @@ Every dataset, its licence, and its status is in
   (CC BY 4.0) both require attribution. Credits go in the app's About screen.
 - **Theographic Bible Metadata** (CC BY-SA 4.0) carries ShareAlike. That applies to the
   dataset and anything derived from it, not to the app's own code. Keep derived data
-  separable so the obligation stays where it belongs.
+  separable so the obligation stays where it belongs. `profiles.json` is that derived
+  data, and is built separately from the app.
+- **Easton's Bible Dictionary** (1897), reached through Theographic, is public domain.
+- **Portraits and place photographs** come from Wikimedia Commons, each under its own
+  licence. The build keeps only images whose licence allows reuse, and every picture
+  shows its artist or photographer and licence beneath it. Works under CC BY-SA keep
+  that licence; the app does not relicense them.
 
 ## The KJV outside the United States
 

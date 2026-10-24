@@ -54,14 +54,24 @@ export function ScreenHeader({
           <ArrowIcon dir="left" size={16} />
         </motion.button>
       </Tip>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, minWidth: 0, marginLeft: 4 }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          fontSize: 13,
+          minWidth: 0,
+          marginLeft: 4,
+        }}
+      >
         <span style={{ color: 'var(--text-tan)', display: 'grid' }}>{icon}</span>
         {crumbs.map((crumb, index) => (
           <span key={index} style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
             {index > 0 && <span style={{ color: 'var(--text-faint)' }}>›</span>}
             <span
               style={{
-                color: index === crumbs.length - 1 ? 'var(--text-primary)' : 'var(--text-secondary)',
+                color:
+                  index === crumbs.length - 1 ? 'var(--text-primary)' : 'var(--text-secondary)',
                 fontWeight: index === crumbs.length - 1 ? 600 : 500,
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',

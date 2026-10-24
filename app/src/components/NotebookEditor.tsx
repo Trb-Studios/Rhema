@@ -57,7 +57,8 @@ export const NotebookEditor = forwardRef<
     const at = element ? element.selectionStart : text.length;
     const beforeText = text.slice(0, at);
     const afterText = text.slice(at);
-    const lead = beforeText && !beforeText.endsWith('\n\n') ? (beforeText.endsWith('\n') ? '\n' : '\n\n') : '';
+    const lead =
+      beforeText && !beforeText.endsWith('\n\n') ? (beforeText.endsWith('\n') ? '\n' : '\n\n') : '';
     const heading = `${lead}## ${passage}\n`;
     const next = beforeText + heading + afterText;
     write(next);
@@ -117,7 +118,9 @@ export const NotebookEditor = forwardRef<
               justifyContent: 'flex-end',
             }}
           >
-            {saved === 'saving' ? 'Saving…' : saved === 'saved' ? (
+            {saved === 'saving' ? (
+              'Saving…'
+            ) : saved === 'saved' ? (
               <>
                 <CheckIcon size={13} tint="var(--good)" />
                 Saved

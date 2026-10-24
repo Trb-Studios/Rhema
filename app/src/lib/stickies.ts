@@ -71,9 +71,7 @@ export function useStickies(bookId: number) {
       setAll((current) => ({
         ...current,
         [bookId]: (current[bookId] ?? []).map((sticky) =>
-          sticky.id === id
-            ? { ...sticky, ...changes, updated: new Date().toISOString() }
-            : sticky,
+          sticky.id === id ? { ...sticky, ...changes, updated: new Date().toISOString() } : sticky,
         ),
       }));
     },

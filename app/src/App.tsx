@@ -15,13 +15,7 @@ import { useSettings } from './lib/settings';
 import type { Command } from './lib/commands';
 import { matches } from './lib/commands';
 import type { Screen } from './lib/nav';
-import {
-  goBack,
-  navigate,
-  openPalette,
-  useRoute,
-  useSidebarCollapsed,
-} from './lib/nav';
+import { goBack, navigate, openPalette, useRoute, useSidebarCollapsed } from './lib/nav';
 import { transition } from './lib/motion';
 import {
   BookIcon,
@@ -60,15 +54,94 @@ export default function App() {
 
   const globalCommands: Command[] = useMemo(
     () => [
-      { id: 'go-today', title: 'Today', hint: 'The verse of the day and where you stopped', group: 'Go', shortcut: 'Mod+1', icon: <HomeIcon size={15} />, keywords: 'home start', run: () => navigate({ screen: 'today' }) },
-      { id: 'go-read', title: 'Read', hint: 'Back to the text where you left it', group: 'Go', shortcut: 'Mod+2', icon: <BookIcon size={15} />, keywords: 'bible text', run: () => navigate({ screen: 'read' }) },
-      { id: 'go-people', title: 'People', hint: 'Everyone in Scripture, with their family and every verse', group: 'Go', shortcut: 'Mod+3', icon: <PeopleIcon size={15} />, keywords: 'names characters who', run: () => navigate({ screen: 'people' }) },
-      { id: 'go-places', title: 'Places', hint: 'Where it happened, and where it is now', group: 'Go', shortcut: 'Mod+4', icon: <PlaceIcon size={15} />, keywords: 'map where geography', run: () => navigate({ screen: 'places' }) },
-      { id: 'go-quiz', title: 'Quiz', hint: 'Flashcards and a three-level quiz on any book', group: 'Study', shortcut: 'Mod+5', icon: <TargetIcon size={15} />, keywords: 'test game questions flashcards', run: () => navigate({ screen: 'quiz' }) },
-      { id: 'go-notebook', title: 'Notebook', hint: 'One notebook for the whole Bible', group: 'Keep', shortcut: 'Mod+6', icon: <NotebookIcon size={15} />, keywords: 'notes journal write', run: () => navigate({ screen: 'notebook' }) },
-      { id: 'go-highlights', title: 'Highlights', hint: 'Every phrase and verse you have marked', group: 'Keep', shortcut: 'Mod+7', icon: <HighlightIcon size={15} />, keywords: 'marked colours', run: () => navigate({ screen: 'highlights' }) },
-      { id: 'theme', title: settings.theme === 'light' ? 'Switch to dark' : 'Switch to light', group: 'View', shortcut: 'Mod+Shift+D', icon: <MoonIcon size={15} />, keywords: 'theme appearance night', run: () => update('theme', settings.theme === 'light' ? 'dark' : 'light') },
-      { id: 'sidebar', title: collapsed ? 'Expand the sidebar' : 'Collapse the sidebar', group: 'View', shortcut: 'Mod+\\', icon: <SidebarIcon size={15} />, keywords: 'sidebar rail navigation', run: () => setCollapsed(!collapsed) },
+      {
+        id: 'go-today',
+        title: 'Today',
+        hint: 'The verse of the day and where you stopped',
+        group: 'Go',
+        shortcut: 'Mod+1',
+        icon: <HomeIcon size={15} />,
+        keywords: 'home start',
+        run: () => navigate({ screen: 'today' }),
+      },
+      {
+        id: 'go-read',
+        title: 'Read',
+        hint: 'Back to the text where you left it',
+        group: 'Go',
+        shortcut: 'Mod+2',
+        icon: <BookIcon size={15} />,
+        keywords: 'bible text',
+        run: () => navigate({ screen: 'read' }),
+      },
+      {
+        id: 'go-people',
+        title: 'People',
+        hint: 'Everyone in Scripture, with their family and every verse',
+        group: 'Go',
+        shortcut: 'Mod+3',
+        icon: <PeopleIcon size={15} />,
+        keywords: 'names characters who',
+        run: () => navigate({ screen: 'people' }),
+      },
+      {
+        id: 'go-places',
+        title: 'Places',
+        hint: 'Where it happened, and where it is now',
+        group: 'Go',
+        shortcut: 'Mod+4',
+        icon: <PlaceIcon size={15} />,
+        keywords: 'map where geography',
+        run: () => navigate({ screen: 'places' }),
+      },
+      {
+        id: 'go-quiz',
+        title: 'Quiz',
+        hint: 'Flashcards and a three-level quiz on any book',
+        group: 'Study',
+        shortcut: 'Mod+5',
+        icon: <TargetIcon size={15} />,
+        keywords: 'test game questions flashcards',
+        run: () => navigate({ screen: 'quiz' }),
+      },
+      {
+        id: 'go-notebook',
+        title: 'Notebook',
+        hint: 'One notebook for the whole Bible',
+        group: 'Keep',
+        shortcut: 'Mod+6',
+        icon: <NotebookIcon size={15} />,
+        keywords: 'notes journal write',
+        run: () => navigate({ screen: 'notebook' }),
+      },
+      {
+        id: 'go-highlights',
+        title: 'Highlights',
+        hint: 'Every phrase and verse you have marked',
+        group: 'Keep',
+        shortcut: 'Mod+7',
+        icon: <HighlightIcon size={15} />,
+        keywords: 'marked colours',
+        run: () => navigate({ screen: 'highlights' }),
+      },
+      {
+        id: 'theme',
+        title: settings.theme === 'light' ? 'Switch to dark' : 'Switch to light',
+        group: 'View',
+        shortcut: 'Mod+Shift+D',
+        icon: <MoonIcon size={15} />,
+        keywords: 'theme appearance night',
+        run: () => update('theme', settings.theme === 'light' ? 'dark' : 'light'),
+      },
+      {
+        id: 'sidebar',
+        title: collapsed ? 'Expand the sidebar' : 'Collapse the sidebar',
+        group: 'View',
+        shortcut: 'Mod+\\',
+        icon: <SidebarIcon size={15} />,
+        keywords: 'sidebar rail navigation',
+        run: () => setCollapsed(!collapsed),
+      },
     ],
     [settings.theme, update, collapsed, setCollapsed],
   );

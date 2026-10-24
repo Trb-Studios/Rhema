@@ -106,9 +106,7 @@ export function Highlights() {
         remove: () => clear(at.bookId, at.chapter, at.verse),
       });
     }
-    return out.sort(
-      (a, b) => a.bookId - b.bookId || a.chapter - b.chapter || a.verse - b.verse,
-    );
+    return out.sort((a, b) => a.bookId - b.bookId || a.chapter - b.chapter || a.verse - b.verse);
   }, [phrases, marks, verseText, removePhrase, clear]);
 
   const shown = entries.filter((entry) => {
@@ -117,7 +115,8 @@ export function Highlights() {
       const from = FAMILIES.find((candidate) => candidate.id === family)!.from;
       if (entry.colour < from || entry.colour >= from + 10) return false;
     }
-    if (query.trim() && !entry.text.toLowerCase().includes(query.trim().toLowerCase())) return false;
+    if (query.trim() && !entry.text.toLowerCase().includes(query.trim().toLowerCase()))
+      return false;
     return true;
   });
 
@@ -134,17 +133,34 @@ export function Highlights() {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
       <ScreenHeader icon={<HighlightIcon size={15} />} crumbs={['Highlights']} />
       <div style={{ flex: 1, overflowY: 'auto' }}>
-        <div style={{ maxWidth: 860, margin: '0 auto', padding: '30px clamp(16px, 4vw, 40px) 64px' }}>
+        <div
+          style={{ maxWidth: 860, margin: '0 auto', padding: '30px clamp(16px, 4vw, 40px) 64px' }}
+        >
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
             <h1 style={{ fontSize: 34 }}>Highlights</h1>
             <span className="tabular" style={{ color: 'var(--text-secondary)', fontSize: 13 }}>
-              {entries.length} marked · {phrases.length} phrases · {Object.keys(marks).length} whole verses
+              {entries.length} marked · {phrases.length} phrases · {Object.keys(marks).length} whole
+              verses
             </span>
           </div>
 
           {/* Filters */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 18, flexWrap: 'wrap' }}>
-            <Chip active={!family && colour === null} onClick={() => { setFamily(null); setColour(null); }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              marginTop: 18,
+              flexWrap: 'wrap',
+            }}
+          >
+            <Chip
+              active={!family && colour === null}
+              onClick={() => {
+                setFamily(null);
+                setColour(null);
+              }}
+            >
               All colours
             </Chip>
             {FAMILIES.map((entry) => (
@@ -180,13 +196,27 @@ export function Highlights() {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Find in your highlights"
-                style={{ flex: 1, border: 0, outline: 'none', background: 'transparent', fontSize: 13, color: 'var(--text-primary)' }}
+                style={{
+                  flex: 1,
+                  border: 0,
+                  outline: 'none',
+                  background: 'transparent',
+                  fontSize: 13,
+                  color: 'var(--text-primary)',
+                }}
               />
             </label>
           </div>
 
           {/* Every colour, with the ones in use stronger */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(30, 1fr)', gap: 4, marginTop: 14 }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(30, 1fr)',
+              gap: 4,
+              marginTop: 14,
+            }}
+          >
             {HIGHLIGHTS.map((highlight) => (
               <motion.button
                 key={highlight.index}
@@ -204,7 +234,9 @@ export function Highlights() {
                   background: highlight.colour,
                   opacity: used.has(highlight.index) ? 1 : 0.25,
                   boxShadow:
-                    colour === highlight.index ? '0 0 0 2px var(--bg-page), 0 0 0 3.5px var(--text-primary)' : 'none',
+                    colour === highlight.index
+                      ? '0 0 0 2px var(--bg-page), 0 0 0 3.5px var(--text-primary)'
+                      : 'none',
                 }}
               />
             ))}
@@ -230,9 +262,14 @@ export function Highlights() {
               const book = books.find((candidate) => candidate.id === bookId);
               return (
                 <section key={bookId} style={{ marginTop: 30 }}>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
+                  <div
+                    style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}
+                  >
                     <h2 style={{ fontSize: 22 }}>{book?.name ?? `Book ${bookId}`}</h2>
-                    <span className="tabular" style={{ color: 'var(--text-faint)', fontSize: 12.5 }}>
+                    <span
+                      className="tabular"
+                      style={{ color: 'var(--text-faint)', fontSize: 12.5 }}
+                    >
                       {list.length}
                     </span>
                   </div>
@@ -245,7 +282,10 @@ export function Highlights() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, x: -20, height: 0, marginBottom: -8 }}
-                          transition={{ ...transition('smooth'), delay: Math.min(groupIndex * 0.04 + index * 0.025, 0.5) }}
+                          transition={{
+                            ...transition('smooth'),
+                            delay: Math.min(groupIndex * 0.04 + index * 0.025, 0.5),
+                          }}
                           className="highlight-row"
                           style={{
                             position: 'relative',
@@ -268,12 +308,23 @@ export function Highlights() {
                           />
                           <button
                             onClick={() =>
-                              navigate({ screen: 'read', bookId: entry.bookId, chapter: entry.chapter, verse: entry.verse })
+                              navigate({
+                                screen: 'read',
+                                bookId: entry.bookId,
+                                chapter: entry.chapter,
+                                verse: entry.verse,
+                              })
                             }
                             style={{ flex: 1, minWidth: 0, textAlign: 'start' }}
                           >
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                              <span className="tabular" style={{ font: '600 12.5px var(--font-ui)', color: 'var(--text-tan)' }}>
+                              <span
+                                className="tabular"
+                                style={{
+                                  font: '600 12.5px var(--font-ui)',
+                                  color: 'var(--text-tan)',
+                                }}
+                              >
                                 {book?.name} {entry.chapter}:{entry.verse}
                                 {entry.lastVerse !== entry.verse ? `–${entry.lastVerse}` : ''}
                               </span>
@@ -285,7 +336,8 @@ export function Highlights() {
                                   color: 'var(--text-faint)',
                                 }}
                               >
-                                {entry.kind === 'phrase' ? 'Phrase' : 'Verse'} · {HIGHLIGHTS[entry.colour]?.name}
+                                {entry.kind === 'phrase' ? 'Phrase' : 'Verse'} ·{' '}
+                                {HIGHLIGHTS[entry.colour]?.name}
                               </span>
                             </div>
                             <p

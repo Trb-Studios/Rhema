@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import { AnimatePresence, Reorder, animate, motion, useMotionValue, useTransform } from 'framer-motion';
+import {
+  AnimatePresence,
+  Reorder,
+  animate,
+  motion,
+  useMotionValue,
+  useTransform,
+} from 'framer-motion';
 import type { Book } from '../../lib/bible';
 import { chapter as loadChapter } from '../../lib/bible';
 import type { Asked, Level } from '../../lib/quizbank';
@@ -21,7 +28,11 @@ export type RoundResult = {
 
 type Outcome = { correct: boolean; points: number; timedOut?: boolean };
 
-const FOCUS_LABEL = { story: 'The story', god: 'What it shows of God', remember: 'Worth remembering' };
+const FOCUS_LABEL = {
+  story: 'The story',
+  god: 'What it shows of God',
+  remember: 'Worth remembering',
+};
 
 /**
  * One round of the quiz, question by question.
@@ -68,7 +79,8 @@ export function Play({
   const answer = useCallback(
     (correct: boolean, timedOut = false) => {
       if (outcome || !asked) return;
-      const secondsLeft = limit === null ? null : Math.max(0, limit - (Date.now() - startedAt.current) / 1000);
+      const secondsLeft =
+        limit === null ? null : Math.max(0, limit - (Date.now() - startedAt.current) / 1000);
       if (correct) {
         const points = pointsFor(level, secondsLeft, streak);
         setScore((value) => value + points);
@@ -137,13 +149,28 @@ export function Play({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
       {/* The heads-up bar: progress, lives, streak, score, clock. */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 22px', borderBottom: '1px solid var(--line-default)' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 14,
+          padding: '14px 22px',
+          borderBottom: '1px solid var(--line-default)',
+        }}
+      >
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={onQuit}
           aria-label="Leave the quiz"
           className="row-hover"
-          style={{ width: 30, height: 30, borderRadius: 8, display: 'grid', placeItems: 'center', color: 'var(--text-secondary)' }}
+          style={{
+            width: 30,
+            height: 30,
+            borderRadius: 8,
+            display: 'grid',
+            placeItems: 'center',
+            color: 'var(--text-secondary)',
+          }}
         >
           <CloseIcon size={16} />
         </motion.button>
@@ -172,7 +199,11 @@ export function Play({
           {Array.from({ length: LIVES[level] }, (_, at) => (
             <motion.span
               key={at}
-              animate={at < lives ? { scale: 1, opacity: 1, rotate: 0 } : { scale: 0.7, opacity: 0.25, rotate: -18 }}
+              animate={
+                at < lives
+                  ? { scale: 1, opacity: 1, rotate: 0 }
+                  : { scale: 0.7, opacity: 0.25, rotate: -18 }
+              }
               transition={spring.bouncy}
               style={{ color: 'var(--bad)', display: 'grid' }}
             >
@@ -209,7 +240,16 @@ export function Play({
         <Counter value={score} />
       </div>
 
-      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', display: 'grid', placeItems: 'start center', padding: '34px 22px 40px' }}>
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: 'auto',
+          display: 'grid',
+          placeItems: 'start center',
+          padding: '34px 22px 40px',
+        }}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -221,7 +261,9 @@ export function Play({
           >
             <motion.div
               key={shake}
-              animate={shake && outcome && !outcome.correct ? { x: [0, -12, 11, -7, 6, -3, 0] } : { x: 0 }}
+              animate={
+                shake && outcome && !outcome.correct ? { x: [0, -12, 11, -7, 6, -3, 0] } : { x: 0 }
+              }
               transition={{ duration: 0.45 }}
             >
               <QuestionCard
@@ -237,7 +279,15 @@ export function Play({
 
             <AnimatePresence>
               {outcome && (
-                <Feedback key="feedback" asked={asked} outcome={outcome} books={books} book={book} onNext={next} last={index >= round.length - 1 || lives <= 0} />
+                <Feedback
+                  key="feedback"
+                  asked={asked}
+                  outcome={outcome}
+                  books={books}
+                  book={book}
+                  onNext={next}
+                  last={index >= round.length - 1 || lives <= 0}
+                />
               )}
             </AnimatePresence>
           </motion.div>
@@ -266,7 +316,12 @@ function Counter({ value }: { value: number }) {
       animate={{ scale: 1 }}
       transition={spring.bouncy}
       className="tabular"
-      style={{ minWidth: 72, textAlign: 'end', font: '700 18px var(--font-ui)', color: 'var(--text-primary)' }}
+      style={{
+        minWidth: 72,
+        textAlign: 'end',
+        font: '700 18px var(--font-ui)',
+        color: 'var(--text-primary)',
+      }}
     >
       <motion.span>{text}</motion.span>
     </motion.span>
@@ -286,7 +341,14 @@ function TimerRing({ left, limit }: { left: number; limit: number }) {
       aria-label={`${Math.ceil(left)} seconds left`}
     >
       <svg width="44" height="44" viewBox="0 0 44 44">
-        <circle cx="22" cy="22" r={radius} fill="none" stroke="var(--bg-selected)" strokeWidth="4" />
+        <circle
+          cx="22"
+          cy="22"
+          r={radius}
+          fill="none"
+          stroke="var(--bg-selected)"
+          strokeWidth="4"
+        />
         <circle
           cx="22"
           cy="22"
@@ -354,7 +416,9 @@ function QuestionCard({
         <span className="eyebrow">
           Question {number} of {total}
         </span>
-        <span style={{ fontSize: 11.5, color: 'var(--text-faint)' }}>· {FOCUS_LABEL[asked.question.f]}</span>
+        <span style={{ fontSize: 11.5, color: 'var(--text-faint)' }}>
+          · {FOCUS_LABEL[asked.question.f]}
+        </span>
         <span style={{ display: 'grid' }} title="Written with AI">
           <SparkleIcon size={13} />
         </span>
@@ -502,7 +566,15 @@ function TrueFalse({
           key={String(value)}
           hotkey={String(at + 1)}
           delay={at * 0.05}
-          state={!outcome ? 'idle' : value === asked.answer ? 'right' : value === picked ? 'wrong' : 'dim'}
+          state={
+            !outcome
+              ? 'idle'
+              : value === asked.answer
+                ? 'right'
+                : value === picked
+                  ? 'wrong'
+                  : 'dim'
+          }
           onClick={outcome ? undefined : () => pick(value)}
         >
           {value ? 'True' : 'False'}
@@ -577,9 +649,15 @@ function Typed({
         )}
       </div>
       {outcome && !outcome.correct && (
-        <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} style={{ marginTop: 10, fontSize: 14 }}>
+        <motion.p
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{ marginTop: 10, fontSize: 14 }}
+        >
           The answer is <strong style={{ color: 'var(--good)' }}>{asked.answer}</strong>
-          {value.trim() && <span style={{ color: 'var(--text-faint)' }}> — you wrote “{value.trim()}”</span>}
+          {value.trim() && (
+            <span style={{ color: 'var(--text-faint)' }}> — you wrote “{value.trim()}”</span>
+          )}
         </motion.p>
       )}
     </div>
@@ -598,8 +676,15 @@ function Order({
   const [items, setItems] = useState(asked.shuffled);
   return (
     <div>
-      <p style={{ fontSize: 12.5, color: 'var(--text-faint)', marginBottom: 10 }}>Drag into order, first at the top.</p>
-      <Reorder.Group axis="y" values={items} onReorder={outcome ? () => {} : setItems} style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 8 }}>
+      <p style={{ fontSize: 12.5, color: 'var(--text-faint)', marginBottom: 10 }}>
+        Drag into order, first at the top.
+      </p>
+      <Reorder.Group
+        axis="y"
+        values={items}
+        onReorder={outcome ? () => {} : setItems}
+        style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 8 }}
+      >
         {items.map((item, at) => {
           const placed = outcome ? (asked.items[at] === item ? 'right' : 'wrong') : 'idle';
           return (
@@ -615,7 +700,12 @@ function Order({
                 gap: 12,
                 padding: '12px 14px',
                 borderRadius: 12,
-                background: placed === 'right' ? 'var(--good-tint)' : placed === 'wrong' ? 'var(--bad-tint)' : 'var(--bg-sunken)',
+                background:
+                  placed === 'right'
+                    ? 'var(--good-tint)'
+                    : placed === 'wrong'
+                      ? 'var(--bad-tint)'
+                      : 'var(--bg-sunken)',
                 border: `1.5px solid ${placed === 'right' ? 'var(--good)' : placed === 'wrong' ? 'var(--bad)' : 'var(--line-default)'}`,
                 fontSize: 15,
                 fontWeight: 600,
@@ -623,18 +713,37 @@ function Order({
                 position: 'relative',
               }}
             >
-              <span className="tabular" style={{ width: 22, height: 22, borderRadius: 7, display: 'grid', placeItems: 'center', background: 'var(--bg-selected)', fontSize: 12 }}>
+              <span
+                className="tabular"
+                style={{
+                  width: 22,
+                  height: 22,
+                  borderRadius: 7,
+                  display: 'grid',
+                  placeItems: 'center',
+                  background: 'var(--bg-selected)',
+                  fontSize: 12,
+                }}
+              >
                 {at + 1}
               </span>
               <span style={{ flex: 1 }}>{item}</span>
-              <span aria-hidden="true" style={{ color: 'var(--text-faint)', letterSpacing: 1 }}>⋮⋮</span>
+              <span aria-hidden="true" style={{ color: 'var(--text-faint)', letterSpacing: 1 }}>
+                ⋮⋮
+              </span>
             </Reorder.Item>
           );
         })}
       </Reorder.Group>
-      {!outcome && <CheckButton onClick={() => onAnswer(items.every((item, at) => item === asked.items[at]))} />}
+      {!outcome && (
+        <CheckButton
+          onClick={() => onAnswer(items.every((item, at) => item === asked.items[at]))}
+        />
+      )}
       {outcome && !outcome.correct && (
-        <p style={{ marginTop: 12, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+        <p
+          style={{ marginTop: 12, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}
+        >
           In order: {asked.items.map((item, at) => `${at + 1}. ${item}`).join('  ·  ')}
         </p>
       )}
@@ -678,7 +787,11 @@ function Match({
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
         <div style={{ display: 'grid', gap: 8 }}>
           {lefts.map((leftSide) => {
-            const state = outcome ? (links[leftSide] === correct[leftSide] ? 'right' : 'wrong') : 'idle';
+            const state = outcome
+              ? links[leftSide] === correct[leftSide]
+                ? 'right'
+                : 'wrong'
+              : 'idle';
             return (
               <motion.button
                 key={leftSide}
@@ -690,14 +803,31 @@ function Match({
                   textAlign: 'start',
                   fontWeight: 650,
                   fontSize: 14,
-                  background: state === 'right' ? 'var(--good-tint)' : state === 'wrong' ? 'var(--bad-tint)' : chosen === leftSide ? 'var(--bg-selected)' : 'var(--bg-sunken)',
+                  background:
+                    state === 'right'
+                      ? 'var(--good-tint)'
+                      : state === 'wrong'
+                        ? 'var(--bad-tint)'
+                        : chosen === leftSide
+                          ? 'var(--bg-selected)'
+                          : 'var(--bg-sunken)',
                   border: `1.5px solid ${state === 'right' ? 'var(--good)' : state === 'wrong' ? 'var(--bad)' : chosen === leftSide ? 'var(--main-fill)' : 'var(--line-default)'}`,
                 }}
               >
                 {leftSide}
-                <span style={{ display: 'block', fontSize: 12, fontWeight: 500, color: 'var(--text-secondary)', minHeight: 16 }}>
+                <span
+                  style={{
+                    display: 'block',
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: 'var(--text-secondary)',
+                    minHeight: 16,
+                  }}
+                >
                   {links[leftSide] ? `→ ${links[leftSide]}` : ''}
-                  {outcome && links[leftSide] !== correct[leftSide] ? `  (${correct[leftSide]})` : ''}
+                  {outcome && links[leftSide] !== correct[leftSide]
+                    ? `  (${correct[leftSide]})`
+                    : ''}
                 </span>
               </motion.button>
             );
@@ -767,7 +897,11 @@ function Fill({
           blankIndex += 1;
           const index = blankIndex;
           const filled = slots[index];
-          const state = outcome ? (filled?.toLowerCase() === part.blank.toLowerCase() ? 'right' : 'wrong') : 'idle';
+          const state = outcome
+            ? filled?.toLowerCase() === part.blank.toLowerCase()
+              ? 'right'
+              : 'wrong'
+            : 'idle';
           return (
             <motion.button
               key={at}
@@ -782,13 +916,22 @@ function Fill({
                 font: 'inherit',
                 lineHeight: 1.6,
                 verticalAlign: 'baseline',
-                background: state === 'right' ? 'var(--good-tint)' : state === 'wrong' ? 'var(--bad-tint)' : filled ? 'var(--bg-selected)' : 'transparent',
+                background:
+                  state === 'right'
+                    ? 'var(--good-tint)'
+                    : state === 'wrong'
+                      ? 'var(--bad-tint)'
+                      : filled
+                        ? 'var(--bg-selected)'
+                        : 'transparent',
                 border: `1.5px ${filled ? 'solid' : 'dashed'} ${state === 'right' ? 'var(--good)' : state === 'wrong' ? 'var(--bad)' : 'var(--line-strong)'}`,
                 color: state === 'wrong' ? 'var(--bad)' : 'inherit',
               }}
             >
               {filled ?? ' '}
-              {outcome && state === 'wrong' && <span style={{ color: 'var(--good)', fontSize: '0.8em' }}> {part.blank}</span>}
+              {outcome && state === 'wrong' && (
+                <span style={{ color: 'var(--good)', fontSize: '0.8em' }}> {part.blank}</span>
+              )}
             </motion.button>
           );
         })}
@@ -824,7 +967,11 @@ function Fill({
         <CheckButton
           disabled={slots.some((slot) => slot === null)}
           onClick={() =>
-            onAnswer(slots.every((slot, index) => slot?.toLowerCase() === blanks[index].blank.toLowerCase()))
+            onAnswer(
+              slots.every(
+                (slot, index) => slot?.toLowerCase() === blanks[index].blank.toLowerCase(),
+              ),
+            )
           }
         />
       )}
@@ -871,7 +1018,7 @@ function Feedback({
 }) {
   const [verse, setVerse] = useState<string | null>(null);
   const at = parseRef(asked.question.r);
-  const refBook = at ? books.find((candidate) => candidate.id === at.bookId) ?? book : book;
+  const refBook = at ? (books.find((candidate) => candidate.id === at.bookId) ?? book) : book;
 
   useEffect(() => {
     if (!at || !refBook) return;
@@ -895,7 +1042,9 @@ function Feedback({
         marginTop: 14,
         padding: '18px 22px',
         borderRadius: 16,
-        background: outcome.correct ? 'color-mix(in srgb, var(--good) 9%, var(--bg-card))' : 'color-mix(in srgb, var(--bad) 8%, var(--bg-card))',
+        background: outcome.correct
+          ? 'color-mix(in srgb, var(--good) 9%, var(--bg-card))'
+          : 'color-mix(in srgb, var(--bad) 8%, var(--bg-card))',
         border: `1px solid color-mix(in srgb, ${outcome.correct ? 'var(--good)' : 'var(--bad)'} 35%, transparent)`,
       }}
     >
@@ -909,7 +1058,11 @@ function Feedback({
           {outcome.correct ? <CheckIcon size={26} tint="var(--good)" /> : <CloseIcon size={26} />}
         </motion.span>
         <strong style={{ fontSize: 18 }}>
-          {outcome.correct ? pick(['Correct!', 'Well done!', 'Exactly right.', 'Yes!']) : outcome.timedOut ? 'Out of time' : 'Not quite'}
+          {outcome.correct
+            ? pick(['Correct!', 'Well done!', 'Exactly right.', 'Yes!'])
+            : outcome.timedOut
+              ? 'Out of time'
+              : 'Not quite'}
         </strong>
         {outcome.correct && (
           <motion.span
@@ -917,7 +1070,13 @@ function Feedback({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={spring.bouncy}
             className="tabular"
-            style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--status-pending-text)', fontWeight: 800 }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              color: 'var(--status-pending-text)',
+              fontWeight: 800,
+            }}
           >
             <BoltIcon size={16} tint="var(--warn)" />+{outcome.points}
           </motion.span>
@@ -940,7 +1099,12 @@ function Feedback({
           }}
         >
           {last ? 'See results' : 'Next'}
-          <kbd className="kbd" style={{ background: 'transparent', borderColor: 'rgba(0,0,0,0.2)', color: 'inherit' }}>↵</kbd>
+          <kbd
+            className="kbd"
+            style={{ background: 'transparent', borderColor: 'rgba(0,0,0,0.2)', color: 'inherit' }}
+          >
+            ↵
+          </kbd>
         </motion.button>
       </div>
       {!outcome.correct && asked.as === 'choice' && (
@@ -950,17 +1114,34 @@ function Feedback({
       )}
       {!outcome.correct && asked.as === 'tf' && (
         <p style={{ marginTop: 10, fontSize: 14 }}>
-          That statement is <strong style={{ color: 'var(--good)' }}>{asked.answer ? 'true' : 'false'}</strong>.
+          That statement is{' '}
+          <strong style={{ color: 'var(--good)' }}>{asked.answer ? 'true' : 'false'}</strong>.
         </p>
       )}
-      {asked.question.x && <p style={{ marginTop: 10, fontSize: 14, lineHeight: 1.6, color: 'var(--text-secondary)' }}>{asked.question.x}</p>}
+      {asked.question.x && (
+        <p style={{ marginTop: 10, fontSize: 14, lineHeight: 1.6, color: 'var(--text-secondary)' }}>
+          {asked.question.x}
+        </p>
+      )}
       {at && refBook && (
         <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--line-default)' }}>
-          <span className="tabular" style={{ font: '650 12px var(--font-ui)', color: 'var(--text-tan)' }}>
+          <span
+            className="tabular"
+            style={{ font: '650 12px var(--font-ui)', color: 'var(--text-tan)' }}
+          >
             {refBook.name} {at.chapter}:{at.verse}
           </span>
           {verse && (
-            <p style={{ marginTop: 4, fontFamily: 'var(--font-display)', fontSize: 16, lineHeight: 1.6 }}>{verse}</p>
+            <p
+              style={{
+                marginTop: 4,
+                fontFamily: 'var(--font-display)',
+                fontSize: 16,
+                lineHeight: 1.6,
+              }}
+            >
+              {verse}
+            </p>
           )}
         </div>
       )}

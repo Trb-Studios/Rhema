@@ -92,7 +92,10 @@ export function shortSenses(edition: EditionId, definition: string): string {
     if (stop !== -1) text = text.slice(0, stop);
   }
 
-  text = text.replace(/\s+/g, ' ').replace(/[\s,.:]+$/, '').trim();
+  text = text
+    .replace(/\s+/g, ' ')
+    .replace(/[\s,.:]+$/, '')
+    .trim();
   return text.length > 64 ? '' : text;
 }
 

@@ -124,7 +124,14 @@ export function QuizScreen({ route }: { route: Route }) {
                   replaceRoute({ screen: 'quiz' });
                 }}
                 className="row-hover"
-                style={{ height: 30, padding: '0 10px', borderRadius: 7, fontSize: 12.5, fontWeight: 600, color: 'var(--text-secondary)' }}
+                style={{
+                  height: 30,
+                  padding: '0 10px',
+                  borderRadius: 7,
+                  fontSize: 12.5,
+                  fontWeight: 600,
+                  color: 'var(--text-secondary)',
+                }}
               >
                 All books
               </motion.button>
@@ -166,7 +173,14 @@ export function QuizScreen({ route }: { route: Route }) {
               <Flashcards book={book} books={books} bank={bank} onQuit={() => setPhase('book')} />
             )}
             {phase === 'play' && book && (
-              <Play book={book} books={books} level={level} round={round} onFinish={finish} onQuit={() => setPhase('book')} />
+              <Play
+                book={book}
+                books={books}
+                level={level}
+                round={round}
+                onFinish={finish}
+                onQuit={() => setPhase('book')}
+              />
             )}
             {phase === 'results' && book && result && (
               <Results
@@ -209,7 +223,9 @@ function BookGrid({
 
   return (
     <div style={{ height: '100%', overflowY: 'auto' }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '34px clamp(16px, 4vw, 40px) 64px' }}>
+      <div
+        style={{ maxWidth: 1080, margin: '0 auto', padding: '34px clamp(16px, 4vw, 40px) 64px' }}
+      >
         <div
           style={{
             position: 'relative',
@@ -226,9 +242,16 @@ function BookGrid({
             <SparkleIcon size={13} title="Questions written with AI" />
           </div>
           <h1 style={{ fontSize: 40, marginTop: 6 }}>Know the book. Then prove it.</h1>
-          <p style={{ marginTop: 8, maxWidth: '60ch', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            Every book has its own questions on the story it tells, what it shows of God, and what is
-            worth remembering. Study them as flashcards, then take them on at three levels.
+          <p
+            style={{
+              marginTop: 8,
+              maxWidth: '60ch',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.6,
+            }}
+          >
+            Every book has its own questions on the story it tells, what it shows of God, and what
+            is worth remembering. Study them as flashcards, then take them on at three levels.
           </p>
           {suggested && (
             <motion.button
@@ -257,7 +280,13 @@ function BookGrid({
         {sections.map(([title, list], sectionIndex) => (
           <section key={title} style={{ marginTop: 30 }}>
             <h2 style={{ fontSize: 22, marginBottom: 12 }}>{title}</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10 }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+                gap: 10,
+              }}
+            >
               {list.map((book, index) => {
                 const ready = available.has(book.id);
                 const stars = starsOf(book.id);
@@ -266,7 +295,10 @@ function BookGrid({
                     key={book.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ ...transition('smooth'), delay: Math.min(0.5, sectionIndex * 0.08 + index * 0.012) }}
+                    transition={{
+                      ...transition('smooth'),
+                      delay: Math.min(0.5, sectionIndex * 0.08 + index * 0.012),
+                    }}
                     whileHover={ready ? { y: -3 } : undefined}
                     whileTap={ready ? { scale: 0.97 } : undefined}
                     onClick={() => ready && onOpen(book)}
@@ -283,16 +315,31 @@ function BookGrid({
                     }}
                   >
                     <div style={{ font: '400 18px var(--font-display)' }}>{book.name}</div>
-                    <div className="tabular" style={{ marginTop: 4, fontSize: 11.5, color: 'var(--text-faint)' }}>
+                    <div
+                      className="tabular"
+                      style={{ marginTop: 4, fontSize: 11.5, color: 'var(--text-faint)' }}
+                    >
                       {expectedCount(book.chapters)} questions
                     </div>
                     <div style={{ marginTop: 8, display: 'flex', gap: 2 }}>
                       {[1, 2, 3].map((star) => (
-                        <span key={star} style={{ fontSize: 14, color: star <= stars ? 'var(--ai-sparkle)' : 'var(--bg-selected)' }}>
+                        <span
+                          key={star}
+                          style={{
+                            fontSize: 14,
+                            color: star <= stars ? 'var(--ai-sparkle)' : 'var(--bg-selected)',
+                          }}
+                        >
                           ★
                         </span>
                       ))}
-                      {!ready && <span style={{ marginLeft: 'auto', fontSize: 10.5, color: 'var(--text-faint)' }}>Coming</span>}
+                      {!ready && (
+                        <span
+                          style={{ marginLeft: 'auto', fontSize: 10.5, color: 'var(--text-faint)' }}
+                        >
+                          Coming
+                        </span>
+                      )}
                     </div>
                   </motion.button>
                 );
@@ -336,7 +383,16 @@ function BookSetup({
           <div style={{ flex: 1, minWidth: 260 }}>
             <div className="eyebrow">Quiz</div>
             <h1 style={{ fontSize: 48, lineHeight: 1.05, marginTop: 4 }}>{book.name}</h1>
-            <div style={{ display: 'flex', gap: 14, marginTop: 10, fontSize: 13, color: 'var(--text-secondary)', flexWrap: 'wrap' }}>
+            <div
+              style={{
+                display: 'flex',
+                gap: 14,
+                marginTop: 10,
+                fontSize: 13,
+                color: 'var(--text-secondary)',
+                flexWrap: 'wrap',
+              }}
+            >
               <span className="tabular">{bank.length} questions</span>
               <span>· {counts.story} on the story</span>
               <span>· {counts.god} on God</span>
@@ -373,12 +429,31 @@ function BookSetup({
               'radial-gradient(400px 160px at 100% 0%, color-mix(in srgb, var(--violet) 18%, transparent), transparent 70%), var(--bg-card)',
           }}
         >
-          <span style={{ width: 54, height: 54, borderRadius: 16, display: 'grid', placeItems: 'center', background: 'var(--violet-tint)', color: 'var(--violet)' }}>
+          <span
+            style={{
+              width: 54,
+              height: 54,
+              borderRadius: 16,
+              display: 'grid',
+              placeItems: 'center',
+              background: 'var(--violet-tint)',
+              color: 'var(--violet)',
+            }}
+          >
             <CardsIcon size={28} tint="var(--violet)" />
           </span>
           <span style={{ flex: 1 }}>
-            <span style={{ display: 'block', font: '400 24px var(--font-display)' }}>Flashcards</span>
-            <span style={{ display: 'block', marginTop: 2, fontSize: 13.5, color: 'var(--text-secondary)' }}>
+            <span style={{ display: 'block', font: '400 24px var(--font-display)' }}>
+              Flashcards
+            </span>
+            <span
+              style={{
+                display: 'block',
+                marginTop: 2,
+                fontSize: 13.5,
+                color: 'var(--text-secondary)',
+              }}
+            >
               Every question as a card. Turn it over, then keep it or see it again.
             </span>
           </span>
@@ -389,7 +464,15 @@ function BookSetup({
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 30 }}>
           <h2 style={{ fontSize: 22 }}>Quiz</h2>
           <span style={{ flex: 1 }} />
-          <div style={{ display: 'flex', padding: 2, borderRadius: 9, background: 'var(--bg-sunken)', border: '1px solid var(--line-default)' }}>
+          <div
+            style={{
+              display: 'flex',
+              padding: 2,
+              borderRadius: 9,
+              background: 'var(--bg-sunken)',
+              border: '1px solid var(--line-default)',
+            }}
+          >
             {(
               [
                 ['quick', `Quick · ${Math.min(10, bank.length)}`],
@@ -416,7 +499,14 @@ function BookSetup({
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, marginTop: 14 }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: 12,
+            marginTop: 14,
+          }}
+        >
           {LEVELS.map((entry, index) => {
             const record = scores[keyOf(book.id, entry.id)];
             return (
@@ -439,29 +529,82 @@ function BookSetup({
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ width: 10, height: 10, borderRadius: 99, background: entry.tone, boxShadow: `0 0 12px ${entry.tone}` }} />
+                  <span
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 99,
+                      background: entry.tone,
+                      boxShadow: `0 0 12px ${entry.tone}`,
+                    }}
+                  />
                   <span className="eyebrow" style={{ color: entry.tone }}>
                     {entry.tag}
                   </span>
                 </div>
-                <div style={{ font: '400 30px var(--font-display)', marginTop: 8 }}>{entry.name}</div>
+                <div style={{ font: '400 30px var(--font-display)', marginTop: 8 }}>
+                  {entry.name}
+                </div>
                 <div style={{ display: 'grid', gap: 6, marginTop: 12 }}>
                   {entry.lines.map((line, lineIndex) => (
-                    <span key={line} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-secondary)' }}>
-                      {lineIndex === 0 ? <TargetIcon size={14} /> : lineIndex === 1 ? <ClockIcon size={14} /> : <HeartIcon size={14} />}
+                    <span
+                      key={line}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        fontSize: 13,
+                        color: 'var(--text-secondary)',
+                      }}
+                    >
+                      {lineIndex === 0 ? (
+                        <TargetIcon size={14} />
+                      ) : lineIndex === 1 ? (
+                        <ClockIcon size={14} />
+                      ) : (
+                        <HeartIcon size={14} />
+                      )}
                       {lineIndex === 2 ? `${LIVES[entry.id]} lives` : line}
                     </span>
                   ))}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 16, paddingTop: 12, borderTop: '1px solid var(--line-default)' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    marginTop: 16,
+                    paddingTop: 12,
+                    borderTop: '1px solid var(--line-default)',
+                  }}
+                >
                   <span style={{ display: 'flex', gap: 1 }}>
                     {[1, 2, 3].map((star) => (
-                      <span key={star} style={{ fontSize: 14, color: star <= (record?.stars ?? 0) ? 'var(--ai-sparkle)' : 'var(--bg-selected)' }}>
+                      <span
+                        key={star}
+                        style={{
+                          fontSize: 14,
+                          color:
+                            star <= (record?.stars ?? 0)
+                              ? 'var(--ai-sparkle)'
+                              : 'var(--bg-selected)',
+                        }}
+                      >
                         ★
                       </span>
                     ))}
                   </span>
-                  <span className="tabular" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: 'var(--text-faint)' }}>
+                  <span
+                    className="tabular"
+                    style={{
+                      marginLeft: 'auto',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 5,
+                      fontSize: 12,
+                      color: 'var(--text-faint)',
+                    }}
+                  >
                     <TrophyIcon size={13} />
                     {record ? record.best.toLocaleString() : 'Not played'}
                   </span>

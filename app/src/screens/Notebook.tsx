@@ -35,11 +35,15 @@ export function Notebook() {
 
   const outline = useMemo(() => outlineOf(text), [text]);
   const lastBook = books.find((book) => book.id === (progress.last?.bookId ?? recent[0]));
-  const passage = lastBook && progress.last ? `${lastBook.name} ${progress.last.chapter}` : undefined;
+  const passage =
+    lastBook && progress.last ? `${lastBook.name} ${progress.last.chapter}` : undefined;
 
   const stickyBooks = Object.entries(stickies)
     .map(([bookId, list]) => ({ book: books.find((book) => book.id === Number(bookId)), list }))
-    .filter((entry): entry is { book: Book; list: typeof entry.list } => Boolean(entry.book) && entry.list.length > 0)
+    .filter(
+      (entry): entry is { book: Book; list: typeof entry.list } =>
+        Boolean(entry.book) && entry.list.length > 0,
+    )
     .sort((a, b) => a.book.id - b.book.id);
 
   return (
@@ -55,12 +59,25 @@ export function Notebook() {
         }}
       >
         {/* Outline */}
-        <aside style={{ borderRight: '1px solid var(--line-faint)', padding: '22px 14px', overflowY: 'auto' }}>
+        <aside
+          style={{
+            borderRight: '1px solid var(--line-faint)',
+            padding: '22px 14px',
+            overflowY: 'auto',
+          }}
+        >
           <div className="eyebrow" style={{ padding: '0 8px 8px' }}>
             Outline
           </div>
           {outline.length === 0 ? (
-            <p style={{ padding: '0 8px', fontSize: 12.5, lineHeight: 1.6, color: 'var(--text-faint)' }}>
+            <p
+              style={{
+                padding: '0 8px',
+                fontSize: 12.5,
+                lineHeight: 1.6,
+                color: 'var(--text-faint)',
+              }}
+            >
               Headings you write appear here. Start a line with ## to make one.
             </p>
           ) : (
@@ -93,8 +110,25 @@ export function Notebook() {
         </aside>
 
         {/* The page */}
-        <section style={{ minHeight: 0, display: 'flex', flexDirection: 'column', padding: '26px clamp(16px, 4vw, 48px) 24px' }}>
-          <div style={{ maxWidth: 780, width: '100%', margin: '0 auto', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+        <section
+          style={{
+            minHeight: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '26px clamp(16px, 4vw, 48px) 24px',
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 780,
+              width: '100%',
+              margin: '0 auto',
+              flex: 1,
+              minHeight: 0,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             <h1 style={{ fontSize: 34, marginBottom: 4 }}>Notebook</h1>
             <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 18 }}>
               One notebook for the whole Bible. It is the same one beside the text in the reader.
@@ -104,13 +138,29 @@ export function Notebook() {
         </section>
 
         {/* Every book's sticky notes */}
-        <aside style={{ borderLeft: '1px solid var(--line-faint)', padding: '22px 16px', overflowY: 'auto' }}>
-          <div className="eyebrow" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 4px 10px' }}>
+        <aside
+          style={{
+            borderLeft: '1px solid var(--line-faint)',
+            padding: '22px 16px',
+            overflowY: 'auto',
+          }}
+        >
+          <div
+            className="eyebrow"
+            style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 4px 10px' }}
+          >
             <StickyIcon size={13} />
             Sticky notes
           </div>
           {stickyBooks.length === 0 ? (
-            <p style={{ padding: '0 4px', fontSize: 12.5, lineHeight: 1.6, color: 'var(--text-faint)' }}>
+            <p
+              style={{
+                padding: '0 4px',
+                fontSize: 12.5,
+                lineHeight: 1.6,
+                color: 'var(--text-faint)',
+              }}
+            >
               Sticky notes you leave in any book are gathered here.
             </p>
           ) : (
@@ -166,10 +216,14 @@ export function Notebook() {
                             color: sticky.text ? 'var(--text-primary)' : 'var(--text-faint)',
                           }}
                         >
-                          {sticky.text || (sticky.anchor?.quote ? `“${sticky.anchor.quote}”` : 'Empty note')}
+                          {sticky.text ||
+                            (sticky.anchor?.quote ? `“${sticky.anchor.quote}”` : 'Empty note')}
                         </span>
                         {sticky.anchor && (
-                          <span className="tabular" style={{ fontSize: 11, color: 'var(--text-faint)' }}>
+                          <span
+                            className="tabular"
+                            style={{ fontSize: 11, color: 'var(--text-faint)' }}
+                          >
                             {book.name} {sticky.anchor.chapter}
                             {sticky.anchor.verse ? `:${sticky.anchor.verse}` : ''}
                           </span>

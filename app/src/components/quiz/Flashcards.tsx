@@ -72,13 +72,28 @@ export function Flashcards({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 22px', borderBottom: '1px solid var(--line-default)' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 14,
+          padding: '14px 22px',
+          borderBottom: '1px solid var(--line-default)',
+        }}
+      >
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={onQuit}
           aria-label="Leave the flashcards"
           className="row-hover"
-          style={{ width: 30, height: 30, borderRadius: 8, display: 'grid', placeItems: 'center', color: 'var(--text-secondary)' }}
+          style={{
+            width: 30,
+            height: 30,
+            borderRadius: 8,
+            display: 'grid',
+            placeItems: 'center',
+            color: 'var(--text-secondary)',
+          }}
         >
           <CloseIcon size={16} />
         </motion.button>
@@ -87,7 +102,15 @@ export function Flashcards({
         <span className="tabular" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
           {known} known · {deck.length} to go
         </span>
-        <div style={{ width: 160, height: 6, borderRadius: 6, background: 'var(--bg-selected)', overflow: 'hidden' }}>
+        <div
+          style={{
+            width: 160,
+            height: 6,
+            borderRadius: 6,
+            background: 'var(--bg-selected)',
+            overflow: 'hidden',
+          }}
+        >
           <motion.div
             animate={{ width: `${(known / Math.max(1, bank.length)) * 100}%` }}
             transition={transition('smooth')}
@@ -96,7 +119,16 @@ export function Flashcards({
         </div>
       </div>
 
-      <div style={{ flex: 1, minHeight: 0, display: 'grid', placeItems: 'center', padding: 24, perspective: 1400 }}>
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          display: 'grid',
+          placeItems: 'center',
+          padding: 24,
+          perspective: 1400,
+        }}
+      >
         <AnimatePresence mode="popLayout" custom={direction}>
           {card ? (
             <motion.div
@@ -104,7 +136,12 @@ export function Flashcards({
               custom={direction}
               initial={{ opacity: 0, y: 30, rotate: direction * 2, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
-              exit={{ opacity: 0, x: direction * 320, rotate: direction * 10, transition: { duration: 0.28 } }}
+              exit={{
+                opacity: 0,
+                x: direction * 320,
+                rotate: direction * 10,
+                transition: { duration: 0.28 },
+              }}
               transition={transition('smooth')}
               style={{ width: 'min(620px, 100%)' }}
             >
@@ -112,7 +149,12 @@ export function Flashcards({
                 onClick={() => setFlipped((value) => !value)}
                 animate={{ rotateY: flipped ? 180 : 0 }}
                 transition={{ type: 'spring', stiffness: 220, damping: 24 }}
-                style={{ position: 'relative', height: 360, transformStyle: 'preserve-3d', cursor: 'pointer' }}
+                style={{
+                  position: 'relative',
+                  height: 360,
+                  transformStyle: 'preserve-3d',
+                  cursor: 'pointer',
+                }}
               >
                 {/* Front */}
                 <div
@@ -135,7 +177,9 @@ export function Flashcards({
                     <span className="eyebrow">Question</span>
                     <SparkleIcon size={13} title="Written with AI" />
                   </div>
-                  <div style={{ flex: 1, display: 'grid', placeItems: 'center', textAlign: 'center' }}>
+                  <div
+                    style={{ flex: 1, display: 'grid', placeItems: 'center', textAlign: 'center' }}
+                  >
                     <h2 style={{ fontSize: 28, lineHeight: 1.3 }}>{card.q}</h2>
                   </div>
                   <div style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text-faint)' }}>
@@ -163,12 +207,36 @@ export function Flashcards({
                   <span className="eyebrow" style={{ color: 'var(--good)' }}>
                     Answer
                   </span>
-                  <p style={{ marginTop: 8, fontSize: 13.5, color: 'var(--text-faint)', lineHeight: 1.5 }}>{card.q}</p>
-                  <div style={{ flex: 1, display: 'grid', placeItems: 'center', textAlign: 'center' }}>
+                  <p
+                    style={{
+                      marginTop: 8,
+                      fontSize: 13.5,
+                      color: 'var(--text-faint)',
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {card.q}
+                  </p>
+                  <div
+                    style={{ flex: 1, display: 'grid', placeItems: 'center', textAlign: 'center' }}
+                  >
                     <div>
-                      <div style={{ font: '400 30px/1.3 var(--font-display)', whiteSpace: 'pre-line' }}>{answerOf(card)}</div>
+                      <div
+                        style={{ font: '400 30px/1.3 var(--font-display)', whiteSpace: 'pre-line' }}
+                      >
+                        {answerOf(card)}
+                      </div>
                       {card.x && (
-                        <p style={{ marginTop: 14, fontSize: 14, lineHeight: 1.6, color: 'var(--text-secondary)' }}>{card.x}</p>
+                        <p
+                          style={{
+                            marginTop: 14,
+                            fontSize: 14,
+                            lineHeight: 1.6,
+                            color: 'var(--text-secondary)',
+                          }}
+                        >
+                          {card.x}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -179,7 +247,11 @@ export function Flashcards({
                         navigate({ screen: 'read', ...at });
                       }}
                       className="tabular"
-                      style={{ alignSelf: 'center', font: '650 12.5px var(--font-ui)', color: 'var(--text-tan)' }}
+                      style={{
+                        alignSelf: 'center',
+                        font: '650 12.5px var(--font-ui)',
+                        color: 'var(--text-tan)',
+                      }}
                     >
                       {refBook.name} {at.chapter}:{at.verse} →
                     </button>
@@ -228,7 +300,8 @@ export function Flashcards({
                         fontWeight: 700,
                       }}
                     >
-                      Know it <CheckIcon size={16} tint="var(--good)" /> <kbd className="kbd">2</kbd>
+                      Know it <CheckIcon size={16} tint="var(--good)" />{' '}
+                      <kbd className="kbd">2</kbd>
                     </motion.button>
                   </motion.div>
                 )}
@@ -250,7 +323,15 @@ export function Flashcards({
               <motion.button
                 whileTap={{ scale: 0.96 }}
                 onClick={onQuit}
-                style={{ marginTop: 18, height: 42, padding: '0 20px', borderRadius: 12, background: 'var(--main-fill)', color: 'var(--main-on)', fontWeight: 700 }}
+                style={{
+                  marginTop: 18,
+                  height: 42,
+                  padding: '0 20px',
+                  borderRadius: 12,
+                  background: 'var(--main-fill)',
+                  color: 'var(--main-on)',
+                  fontWeight: 700,
+                }}
               >
                 Back to {book.name}
               </motion.button>

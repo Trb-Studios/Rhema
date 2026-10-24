@@ -14,14 +14,7 @@ import { useCallback } from 'react';
 import { createStore, useStore } from './store';
 import type { EditionId } from './editions';
 
-export type Screen =
-  | 'today'
-  | 'read'
-  | 'people'
-  | 'places'
-  | 'quiz'
-  | 'notebook'
-  | 'highlights';
+export type Screen = 'today' | 'read' | 'people' | 'places' | 'quiz' | 'notebook' | 'highlights';
 
 /** A panel or sheet the reader can be asked to open on arrival. */
 export type ReaderSheet = 'review' | 'library' | 'plan';

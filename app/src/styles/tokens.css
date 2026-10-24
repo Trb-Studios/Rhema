@@ -1,4 +1,5 @@
-/* Rhema style tokens v0.2 — dark first, tan accent. Mirrors design/tokens.json. */
+/* Rhema style tokens v0.2 — dark first, tan accent. Mirrors design/tokens.json;
+   design/tokens.css is a copy of this file. */
 
 /* Dark is the default. Light applies when chosen, or when the system asks for it and
    nothing has been chosen. */
@@ -82,7 +83,8 @@
 
   --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
   --shadow-shell: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 18px 48px rgba(0, 0, 0, 0.5);
-  --shadow-pop: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 24px 70px rgba(0, 0, 0, 0.6),
+  --shadow-pop:
+    0 0 0 1px rgba(255, 255, 255, 0.05), 0 24px 70px rgba(0, 0, 0, 0.6),
     0 2px 6px rgba(0, 0, 0, 0.4);
 
   --dur-instant: 90ms;
@@ -139,7 +141,7 @@
   --ai-sparkle: #d9a52c;
   --today-bg: #e8e4f8;
 
-  --good: #1f8f5c;
+  --good: #187a4e;
   --good-tint: #e1f3e9;
   --bad: #c9373c;
   --bad-tint: #fbe5e5;
@@ -160,7 +162,8 @@
 
   --shadow-raised: 0 1px 2px rgba(55, 46, 31, 0.05), 0 8px 24px rgba(55, 46, 31, 0.07);
   --shadow-shell: 0 1px 2px rgba(55, 46, 31, 0.04), 0 16px 48px rgba(55, 46, 31, 0.1);
-  --shadow-pop: 0 0 0 1px rgba(55, 46, 31, 0.06), 0 24px 60px rgba(55, 46, 31, 0.16),
+  --shadow-pop:
+    0 0 0 1px rgba(55, 46, 31, 0.06), 0 24px 60px rgba(55, 46, 31, 0.16),
     0 2px 6px rgba(55, 46, 31, 0.06);
 
   color-scheme: light;
@@ -200,7 +203,7 @@
     --status-done-text: #2e5b45;
     --ai-sparkle: #d9a52c;
     --today-bg: #e8e4f8;
-    --good: #1f8f5c;
+    --good: #187a4e;
     --good-tint: #e1f3e9;
     --bad: #c9373c;
     --bad-tint: #fbe5e5;
@@ -218,7 +221,8 @@
     --kbd-text: #6b655c;
     --shadow-raised: 0 1px 2px rgba(55, 46, 31, 0.05), 0 8px 24px rgba(55, 46, 31, 0.07);
     --shadow-shell: 0 1px 2px rgba(55, 46, 31, 0.04), 0 16px 48px rgba(55, 46, 31, 0.1);
-    --shadow-pop: 0 0 0 1px rgba(55, 46, 31, 0.06), 0 24px 60px rgba(55, 46, 31, 0.16),
+    --shadow-pop:
+      0 0 0 1px rgba(55, 46, 31, 0.06), 0 24px 60px rgba(55, 46, 31, 0.16),
       0 2px 6px rgba(55, 46, 31, 0.06);
     color-scheme: light;
   }

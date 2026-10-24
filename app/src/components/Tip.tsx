@@ -31,8 +31,7 @@ export function Tip({
           left: '50%',
           translate: '-50% 0',
         };
-  const from =
-    side === 'right' ? { x: -4, y: 0 } : { x: 0, y: side === 'bottom' ? -3 : 3 };
+  const from = side === 'right' ? { x: -4, y: 0 } : { x: 0, y: side === 'bottom' ? -3 : 3 };
 
   const [shown, setShown] = useState(false);
   const timer = useRef<number | undefined>(undefined);

@@ -62,7 +62,9 @@ export function useQuizScores() {
     (bookId: number) =>
       Math.max(
         0,
-        ...(['easy', 'medium', 'hard'] as Level[]).map((level) => scores[keyOf(bookId, level)]?.stars ?? 0),
+        ...(['easy', 'medium', 'hard'] as Level[]).map(
+          (level) => scores[keyOf(bookId, level)]?.stars ?? 0,
+        ),
       ),
     [scores],
   );

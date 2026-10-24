@@ -4,13 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { Book } from '../lib/bible';
 import { books as loadBooks } from '../lib/bible';
 import type { Screen } from '../lib/nav';
-import {
-  navigate,
-  openPalette,
-  useRecentBooks,
-  useRoute,
-  useSidebarCollapsed,
-} from '../lib/nav';
+import { navigate, openPalette, useRecentBooks, useRoute, useSidebarCollapsed } from '../lib/nav';
 import { useProgress, streakOf } from '../lib/progress';
 import { useReview } from '../lib/review';
 import { useSettings } from '../lib/settings';
@@ -208,8 +202,7 @@ export function Sidebar() {
             borderRadius: 7,
             display: 'grid',
             placeItems: 'center',
-            background:
-              'linear-gradient(145deg, var(--tan-400), var(--tan-600))',
+            background: 'linear-gradient(145deg, var(--tan-400), var(--tan-600))',
             color: 'var(--main-on)',
             fontFamily: 'var(--font-display)',
             fontSize: 15,
@@ -383,15 +376,7 @@ export function Sidebar() {
   );
 }
 
-function Group({
-  title,
-  items,
-  collapsed,
-}: {
-  title?: string;
-  items: Item[];
-  collapsed: boolean;
-}) {
+function Group({ title, items, collapsed }: { title?: string; items: Item[]; collapsed: boolean }) {
   return (
     <div style={{ marginTop: title ? 14 : 0 }}>
       {title &&

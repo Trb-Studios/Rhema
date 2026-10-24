@@ -146,7 +146,11 @@ export function Review({ open, onClose }: { open: boolean; onClose: () => void }
                 <SlidingHighlight
                   container={modeGroup}
                   activeKey={mode}
-                  style={{ borderRadius: 7, background: 'var(--bg-selected)', boxShadow: 'inset 0 1px 0 var(--glass-highlight)' }}
+                  style={{
+                    borderRadius: 7,
+                    background: 'var(--bg-selected)',
+                    boxShadow: 'inset 0 1px 0 var(--glass-highlight)',
+                  }}
                 />
                 {(
                   [

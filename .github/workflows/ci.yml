@@ -45,6 +45,8 @@ jobs:
         run: npm run check
       - name: Tests
         run: npm test
+      - name: Quiz banks against the KJV
+        run: npm run quiz:check
       - name: Build
         run: npm run build:web --workspace app
 

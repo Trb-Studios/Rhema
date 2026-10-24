@@ -2,13 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Command } from '../lib/commands';
-import {
-  keyLabel,
-  matchBook,
-  parseReference,
-  rank,
-  useRegisteredCommands,
-} from '../lib/commands';
+import { keyLabel, matchBook, parseReference, rank, useRegisteredCommands } from '../lib/commands';
 import type { Book, Verse } from '../lib/bible';
 import { books as loadBooks, chapter as loadChapter } from '../lib/bible';
 import { search, around } from '../lib/search';
@@ -190,7 +184,12 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
         {
           label: 'Open passage',
           run: () =>
-            navigate({ screen: 'read', bookId: row.book.id, chapter: row.chapter, verse: row.verse }),
+            navigate({
+              screen: 'read',
+              bookId: row.book.id,
+              chapter: row.chapter,
+              verse: row.verse,
+            }),
         },
         { label: 'Copy reference', shortcut: 'Mod+C', run: () => void toClipboard(label) },
       ];
@@ -212,7 +211,12 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
               {
                 label: 'Read where first named',
                 run: () =>
-                  navigate({ screen: 'read', bookId: first[0], chapter: first[1], verse: first[2] }),
+                  navigate({
+                    screen: 'read',
+                    bookId: first[0],
+                    chapter: first[1],
+                    verse: first[2],
+                  }),
               },
             ]
           : []),
@@ -222,7 +226,8 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
     return [
       {
         label: 'Open in place',
-        run: () => navigate({ screen: 'read', bookId: hit.bookId, chapter: hit.chapter, verse: hit.verse }),
+        run: () =>
+          navigate({ screen: 'read', bookId: hit.bookId, chapter: hit.chapter, verse: hit.verse }),
       },
       {
         label: 'Copy verse',
@@ -468,7 +473,11 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
                   <motion.span
                     aria-hidden="true"
                     initial={false}
-                    animate={{ y: highlight.top, height: highlight.height, opacity: highlight.height ? 1 : 0 }}
+                    animate={{
+                      y: highlight.top,
+                      height: highlight.height,
+                      opacity: highlight.height ? 1 : 0,
+                    }}
                     transition={spring.snappy}
                     style={{
                       position: 'absolute',
@@ -483,7 +492,14 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
                   />
                 )}
                 {rows.length === 0 && (
-                  <p style={{ padding: 16, color: 'var(--text-faint)', fontSize: 13, lineHeight: 1.6 }}>
+                  <p
+                    style={{
+                      padding: 16,
+                      color: 'var(--text-faint)',
+                      fontSize: 13,
+                      lineHeight: 1.6,
+                    }}
+                  >
                     {query.trim()
                       ? `Nothing matches “${query.trim()}”.`
                       : 'Try “john 3:16”, “James”, “lamp unto my feet”, or “quiz”.'}
@@ -508,7 +524,10 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
                   return (
                     <div key={rowKey(row, index)}>
                       {heading && (
-                        <div className="eyebrow" style={{ padding: '10px 10px 5px', fontSize: 10.5 }}>
+                        <div
+                          className="eyebrow"
+                          style={{ padding: '10px 10px 5px', fontSize: 10.5 }}
+                        >
                           {heading}
                         </div>
                       )}
@@ -527,11 +546,24 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
                           borderRadius: 8,
                         }}
                       >
-                        <span style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10, width: '100%', minWidth: 0 }}>
+                        <span
+                          style={{
+                            position: 'relative',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 10,
+                            width: '100%',
+                            minWidth: 0,
+                          }}
+                        >
                           <RowIcon row={row} />
                           <RowText row={row} />
                           {row.kind === 'command' && row.command.on && (
-                            <span style={{ fontSize: 11, color: 'var(--text-tan)', fontWeight: 600 }}>On</span>
+                            <span
+                              style={{ fontSize: 11, color: 'var(--text-tan)', fontWeight: 600 }}
+                            >
+                              On
+                            </span>
                           )}
                           {row.kind === 'command' && row.command.shortcut && (
                             <kbd className="kbd">{keyLabel(row.command.shortcut)}</kbd>
@@ -588,14 +620,18 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
               >
                 R
               </span>
-              <span style={{ color: 'var(--text-faint)' }}>
-                Tab to change what is searched
-              </span>
+              <span style={{ color: 'var(--text-faint)' }}>Tab to change what is searched</span>
               <span style={{ flex: 1 }} />
               {primary && (
                 <button
                   onClick={() => run(primary)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-primary)', fontWeight: 600 }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    color: 'var(--text-primary)',
+                    fontWeight: 600,
+                  }}
                 >
                   {primary.label}
                   <kbd className="kbd">↵</kbd>
@@ -724,7 +760,16 @@ function RowText({ row }: { row: Row }) {
 
   return (
     <span style={{ minWidth: 0, flex: 1 }}>
-      <span style={{ display: 'block', fontWeight: 600, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+      <span
+        style={{
+          display: 'block',
+          fontWeight: 600,
+          fontSize: 13,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+      >
         {title}
       </span>
       {sub && (
@@ -746,7 +791,15 @@ function RowText({ row }: { row: Row }) {
 }
 
 /** What the highlighted row leads to, shown before it is chosen. */
-function Preview({ row, edition, books }: { row: Row | undefined; edition: EditionId; books: Book[] }) {
+function Preview({
+  row,
+  edition,
+  books,
+}: {
+  row: Row | undefined;
+  edition: EditionId;
+  books: Book[];
+}) {
   const [verses, setVerses] = useState<Verse[] | null>(null);
 
   useEffect(() => {
@@ -761,7 +814,15 @@ function Preview({ row, edition, books }: { row: Row | undefined; edition: Editi
 
   if (!row) {
     return (
-      <div style={{ height: '100%', display: 'grid', placeItems: 'center', color: 'var(--text-faint)', fontSize: 13 }}>
+      <div
+        style={{
+          height: '100%',
+          display: 'grid',
+          placeItems: 'center',
+          color: 'var(--text-faint)',
+          fontSize: 13,
+        }}
+      >
         Nothing selected
       </div>
     );
@@ -788,9 +849,20 @@ function Preview({ row, edition, books }: { row: Row | undefined; edition: Editi
           {shown.map((verse) => (
             <span
               key={verse.number}
-              style={{ color: row.verse && verse.number !== row.verse ? 'var(--text-faint)' : 'var(--text-primary)' }}
+              style={{
+                color:
+                  row.verse && verse.number !== row.verse
+                    ? 'var(--text-faint)'
+                    : 'var(--text-primary)',
+              }}
             >
-              <sup style={{ font: '600 10px var(--font-ui)', color: 'var(--text-faint)', marginRight: 3 }}>
+              <sup
+                style={{
+                  font: '600 10px var(--font-ui)',
+                  color: 'var(--text-faint)',
+                  marginRight: 3,
+                }}
+              >
                 {verse.number}
               </sup>
               {verse.text}{' '}
@@ -815,9 +887,19 @@ function Preview({ row, edition, books }: { row: Row | undefined; edition: Editi
           ['Edition', editionById(edition).title],
         ]}
       >
-        <p dir={editionById(edition).direction} style={{ fontFamily: 'var(--font-display)', fontSize: 17, lineHeight: 1.65 }}>
+        <p
+          dir={editionById(edition).direction}
+          style={{ fontFamily: 'var(--font-display)', fontSize: 17, lineHeight: 1.65 }}
+        >
           {before}
-          <mark style={{ background: 'color-mix(in srgb, var(--main-fill) 40%, transparent)', color: 'inherit', borderRadius: 3, padding: '0 1px' }}>
+          <mark
+            style={{
+              background: 'color-mix(in srgb, var(--main-fill) 40%, transparent)',
+              color: 'inherit',
+              borderRadius: 3,
+              padding: '0 1px',
+            }}
+          >
             {match}
           </mark>
           {after}
@@ -836,13 +918,22 @@ function Preview({ row, edition, books }: { row: Row | undefined; edition: Editi
         title={subject.name}
         subtitle={row.descriptor}
         info={[
-          ['Named in', `${subject.total.toLocaleString()} ${subject.total === 1 ? 'verse' : 'verses'}`],
-          ...(firstBook && first ? [['First named', `${firstBook.name} ${first[1]}:${first[2]}`] as [string, string]] : []),
+          [
+            'Named in',
+            `${subject.total.toLocaleString()} ${subject.total === 1 ? 'verse' : 'verses'}`,
+          ],
+          ...(firstBook && first
+            ? [['First named', `${firstBook.name} ${first[1]}:${first[2]}`] as [string, string]]
+            : []),
           ...(subject.tribe ? [['Tribe', subject.tribe] as [string, string]] : []),
           ...(subject.area ? [['Region', subject.area] as [string, string]] : []),
         ]}
       >
-        {subject.summary && <p style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--text-secondary)' }}>{subject.summary}</p>}
+        {subject.summary && (
+          <p style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--text-secondary)' }}>
+            {subject.summary}
+          </p>
+        )}
       </PreviewFrame>
     );
   }
@@ -852,12 +943,20 @@ function Preview({ row, edition, books }: { row: Row | undefined; edition: Editi
       eyebrow={row.command.group}
       title={row.command.title}
       info={[
-        ...(row.command.shortcut ? [['Shortcut', keyLabel(row.command.shortcut)] as [string, string]] : []),
+        ...(row.command.shortcut
+          ? [['Shortcut', keyLabel(row.command.shortcut)] as [string, string]]
+          : []),
         ['Group', row.command.group],
-        ...(row.command.on !== undefined ? [['State', row.command.on ? 'On' : 'Off'] as [string, string]] : []),
+        ...(row.command.on !== undefined
+          ? [['State', row.command.on ? 'On' : 'Off'] as [string, string]]
+          : []),
       ]}
     >
-      {row.command.hint && <p style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--text-secondary)' }}>{row.command.hint}</p>}
+      {row.command.hint && (
+        <p style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--text-secondary)' }}>
+          {row.command.hint}
+        </p>
+      )}
     </PreviewFrame>
   );
 }
@@ -880,11 +979,24 @@ function PreviewFrame({
       <div style={{ padding: '22px 22px 18px', flex: 1 }}>
         <div className="eyebrow">{eyebrow}</div>
         <h2 style={{ fontSize: 26, marginTop: 6, lineHeight: 1.15 }}>{title}</h2>
-        {subtitle && <div style={{ marginTop: 4, color: 'var(--text-secondary)', fontSize: 13 }}>{subtitle}</div>}
+        {subtitle && (
+          <div style={{ marginTop: 4, color: 'var(--text-secondary)', fontSize: 13 }}>
+            {subtitle}
+          </div>
+        )}
         <div style={{ marginTop: 14 }}>{children}</div>
       </div>
       <div style={{ borderTop: '1px solid var(--glass-border)', padding: '12px 22px 14px' }}>
-        <div style={{ fontWeight: 600, fontSize: 12.5, marginBottom: 6, color: 'var(--text-secondary)' }}>Information</div>
+        <div
+          style={{
+            fontWeight: 600,
+            fontSize: 12.5,
+            marginBottom: 6,
+            color: 'var(--text-secondary)',
+          }}
+        >
+          Information
+        </div>
         {info.map(([label, value]) => (
           <div
             key={label}
@@ -898,7 +1010,9 @@ function PreviewFrame({
             }}
           >
             <span style={{ color: 'var(--text-faint)' }}>{label}</span>
-            <span className="tabular" style={{ fontWeight: 600, textAlign: 'end' }}>{value}</span>
+            <span className="tabular" style={{ fontWeight: 600, textAlign: 'end' }}>
+              {value}
+            </span>
           </div>
         ))}
       </div>

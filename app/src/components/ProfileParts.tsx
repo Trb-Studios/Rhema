@@ -70,15 +70,34 @@ export function Picture({
       aria-label={kind === 'person' ? 'No portrait known' : 'No photograph'}
     >
       {small ? (
-        <span style={{ font: `500 ${Math.round((size as number) * 0.42)}px var(--font-display)`, color: 'var(--text-secondary)' }}>
+        <span
+          style={{
+            font: `500 ${Math.round((size as number) * 0.42)}px var(--font-display)`,
+            color: 'var(--text-secondary)',
+          }}
+        >
           {name.slice(0, 1)}
         </span>
       ) : (
-        <div style={{ display: 'grid', justifyItems: 'center', gap: 10, padding: 16, textAlign: 'center' }}>
+        <div
+          style={{
+            display: 'grid',
+            justifyItems: 'center',
+            gap: 10,
+            padding: 16,
+            textAlign: 'center',
+          }}
+        >
           <span style={{ opacity: 0.55 }}>
             {kind === 'person' ? <PersonIcon size={44} /> : <PlaceIcon size={44} />}
           </span>
-          <span style={{ font: '600 11px var(--font-ui)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <span
+            style={{
+              font: '600 11px var(--font-ui)',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+            }}
+          >
             {kind === 'person' ? 'No portrait known' : 'No photograph'}
           </span>
         </div>
@@ -106,17 +125,30 @@ export function Section({
       style={{ marginTop: 28 }}
     >
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
-        <h3 className="eyebrow" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-ui)' }}>
+        <h3
+          className="eyebrow"
+          style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-ui)' }}
+        >
           {title}
         </h3>
-        {aside && <span style={{ marginLeft: 'auto', fontSize: 11.5, color: 'var(--text-faint)' }}>{aside}</span>}
+        {aside && (
+          <span style={{ marginLeft: 'auto', fontSize: 11.5, color: 'var(--text-faint)' }}>
+            {aside}
+          </span>
+        )}
       </div>
       {children}
     </motion.section>
   );
 }
 
-export function Chip({ children, tone }: { children: ReactNode; tone?: 'name' | 'place' | 'good' | 'warn' }) {
+export function Chip({
+  children,
+  tone,
+}: {
+  children: ReactNode;
+  tone?: 'name' | 'place' | 'good' | 'warn';
+}) {
   const colours = {
     name: ['var(--mark-name-tint)', 'var(--mark-name)'],
     place: ['var(--mark-place-tint)', 'var(--mark-place)'],
@@ -166,7 +198,15 @@ export function VerseChips({
         const book = books.find((candidate) => candidate.id === bookId);
         return (
           <div key={bookId} style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
-            <span style={{ width: 110, flex: 'none', fontSize: 12.5, fontWeight: 600, color: 'var(--text-secondary)' }}>
+            <span
+              style={{
+                width: 110,
+                flex: 'none',
+                fontSize: 12.5,
+                fontWeight: 600,
+                color: 'var(--text-secondary)',
+              }}
+            >
               {book?.name ?? `Book ${bookId}`}
             </span>
             <span style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
@@ -228,7 +268,16 @@ export function DisputeCard({
         </span>
         <div style={{ flex: 1 }}>
           <div style={{ fontWeight: 650, fontSize: 14 }}>{dispute.title}</div>
-          <p style={{ marginTop: 6, fontSize: 13.5, lineHeight: 1.65, color: 'var(--text-secondary)' }}>{dispute.note}</p>
+          <p
+            style={{
+              marginTop: 6,
+              fontSize: 13.5,
+              lineHeight: 1.65,
+              color: 'var(--text-secondary)',
+            }}
+          >
+            {dispute.note}
+          </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 10 }}>
             {dispute.people
               .filter((id) => id !== current)

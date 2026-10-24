@@ -149,7 +149,14 @@ export function SidePanel({
                         color: tab === id ? 'var(--text-primary)' : 'var(--text-faint)',
                       }}
                     >
-                      <span style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 5 }}>
+                      <span
+                        style={{
+                          position: 'relative',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 5,
+                        }}
+                      >
                         <Icon size={14} />
                         {label}
                         {id === 'saved' && saved.length > 0 && (
@@ -197,7 +204,15 @@ export function SidePanel({
                   }
                 />
               ) : tab === 'notebook' ? (
-                <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: 14 }}>
+                <div
+                  style={{
+                    flex: 1,
+                    minHeight: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    marginTop: 14,
+                  }}
+                >
                   <NotebookEditor
                     compact
                     passage={`${book.name} ${chapter}${verse ? `:${verse}` : ''}`}

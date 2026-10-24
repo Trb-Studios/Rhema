@@ -11,7 +11,14 @@ import type { Route } from '../lib/nav';
 import { navigate, replaceRoute } from '../lib/nav';
 import { spring, transition } from '../lib/motion';
 import { ScreenHeader } from '../components/ScreenHeader';
-import { Chip, Credit, DisputeCard, Picture, Section, VerseChips } from '../components/ProfileParts';
+import {
+  Chip,
+  Credit,
+  DisputeCard,
+  Picture,
+  Section,
+  VerseChips,
+} from '../components/ProfileParts';
 import { BookIcon, PeopleIcon, SearchIcon } from '../components/Icons';
 
 type Filter = 'all' | 'men' | 'women' | 'groups' | 'portraits';
@@ -66,7 +73,8 @@ export function People({ route }: { route: Route }) {
 
   const titleOf = (id: string) => profiles?.people[id]?.title;
   const describe = (subject: Subject) =>
-    titleHint(titleOf(subject.id), subject.name) || (subjects ? descriptorOf(subject, subjects, books) : '');
+    titleHint(titleOf(subject.id), subject.name) ||
+    (subjects ? descriptorOf(subject, subjects, books) : '');
 
   const results = useMemo(() => {
     if (!subjects) return [];
@@ -108,9 +116,23 @@ export function People({ route }: { route: Route }) {
         icon={<PeopleIcon size={15} />}
         crumbs={subject ? ['People', subject.name] : ['People']}
       />
-      <div style={{ flex: 1, minHeight: 0, display: 'grid', gridTemplateColumns: 'minmax(280px, 340px) minmax(0, 1fr)' }}>
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          display: 'grid',
+          gridTemplateColumns: 'minmax(280px, 340px) minmax(0, 1fr)',
+        }}
+      >
         {/* List */}
-        <aside style={{ display: 'flex', flexDirection: 'column', minHeight: 0, borderRight: '1px solid var(--line-default)' }}>
+        <aside
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: 0,
+            borderRight: '1px solid var(--line-default)',
+          }}
+        >
           <div style={{ padding: '14px 14px 10px' }}>
             <label
               style={{
@@ -131,7 +153,14 @@ export function People({ route }: { route: Route }) {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search any name — try James or Mary"
-                style={{ flex: 1, border: 0, outline: 'none', background: 'transparent', fontSize: 14, color: 'var(--text-primary)' }}
+                style={{
+                  flex: 1,
+                  border: 0,
+                  outline: 'none',
+                  background: 'transparent',
+                  fontSize: 14,
+                  color: 'var(--text-primary)',
+                }}
               />
             </label>
             <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 10 }}>
@@ -159,12 +188,21 @@ export function People({ route }: { route: Route }) {
             </div>
           </div>
           <div style={{ flex: 1, overflowY: 'auto', padding: '0 8px 16px' }}>
-            {!subjects && <p style={{ padding: 14, color: 'var(--text-faint)', fontSize: 13 }}>Gathering everyone…</p>}
+            {!subjects && (
+              <p style={{ padding: 14, color: 'var(--text-faint)', fontSize: 13 }}>
+                Gathering everyone…
+              </p>
+            )}
             {subjects && results.length === 0 && (
-              <p style={{ padding: 14, color: 'var(--text-faint)', fontSize: 13 }}>No one by that name.</p>
+              <p style={{ padding: 14, color: 'var(--text-faint)', fontSize: 13 }}>
+                No one by that name.
+              </p>
             )}
             {results.map((group, groupIndex) => (
-              <div key={fold(group[0].name) + groupIndex} style={{ marginTop: group.length > 1 ? 8 : 0 }}>
+              <div
+                key={fold(group[0].name) + groupIndex}
+                style={{ marginTop: group.length > 1 ? 8 : 0 }}
+              >
                 {group.length > 1 && (
                   <div
                     style={{
@@ -176,7 +214,9 @@ export function People({ route }: { route: Route }) {
                       color: 'var(--text-faint)',
                     }}
                   >
-                    <span style={{ fontWeight: 650, color: 'var(--text-secondary)' }}>{group[0].name}</span>
+                    <span style={{ fontWeight: 650, color: 'var(--text-secondary)' }}>
+                      {group[0].name}
+                    </span>
                     <span>· {group.length} different people</span>
                   </div>
                 )}
@@ -258,7 +298,13 @@ function PersonRow({
         boxShadow: active ? 'inset 0 1px 0 var(--glass-highlight)' : 'none',
       }}
     >
-      <Picture image={profiles?.people[person.id]?.portrait} name={person.name} kind="person" size={34} rounded={9} />
+      <Picture
+        image={profiles?.people[person.id]?.portrait}
+        name={person.name}
+        kind="person"
+        size={34}
+        rounded={9}
+      />
       <span style={{ flex: 1, minWidth: 0 }}>
         <span style={{ display: 'block', fontWeight: 600, fontSize: 13.5 }}>{person.name}</span>
         <span
@@ -303,19 +349,31 @@ function PersonProfileView({
   const firstBook = first ? books.find((book) => book.id === first[0]) : undefined;
   const nameOf = (id: string) => subjects.get(id)?.name ?? nameOfId(id);
   const label =
-    person.type === 'Group' ? 'People' : person.type === 'Supernatural' ? 'Divine or spiritual' : 'Person';
+    person.type === 'Group'
+      ? 'People'
+      : person.type === 'Supernatural'
+        ? 'Divine or spiritual'
+        : 'Person';
 
   return (
     <div style={{ maxWidth: 860, margin: '0 auto', padding: '32px clamp(18px, 4vw, 44px) 72px' }}>
       {/* Hero */}
       <div style={{ display: 'flex', gap: 26, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        <Picture image={profile?.portrait} name={person.name} kind="person" size={196} rounded={20} />
+        <Picture
+          image={profile?.portrait}
+          name={person.name}
+          kind="person"
+          size={196}
+          rounded={20}
+        />
         <div style={{ flex: 1, minWidth: 240 }}>
           <div className="eyebrow" style={{ color: 'var(--mark-name)' }}>
             {label}
           </div>
           <h1 style={{ fontSize: 46, lineHeight: 1.05, marginTop: 6 }}>{person.name}</h1>
-          <div style={{ marginTop: 6, fontSize: 15, color: 'var(--text-secondary)' }}>{describe(person)}</div>
+          <div style={{ marginTop: 6, fontSize: 15, color: 'var(--text-secondary)' }}>
+            {describe(person)}
+          </div>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 14 }}>
             {person.type === 'Male' && <Chip>Man</Chip>}
             {person.type === 'Female' && <Chip>Woman</Chip>}
@@ -334,7 +392,9 @@ function PersonProfileView({
             <motion.button
               whileTap={{ scale: 0.97 }}
               transition={spring.snappy}
-              onClick={() => navigate({ screen: 'read', bookId: first[0], chapter: first[1], verse: first[2] })}
+              onClick={() =>
+                navigate({ screen: 'read', bookId: first[0], chapter: first[1], verse: first[2] })
+              }
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -363,9 +423,19 @@ function PersonProfileView({
 
       {/* Same name, different person */}
       {(others.length > 0 || disputes.length > 0) && (
-        <Section title="Same name, different people" aside={others.length ? `${others.length + 1} called ${person.name}` : undefined} delay={0.04}>
+        <Section
+          title="Same name, different people"
+          aside={others.length ? `${others.length + 1} called ${person.name}` : undefined}
+          delay={0.04}
+        >
           {others.length > 0 && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 8 }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))',
+                gap: 8,
+              }}
+            >
               {others.slice(0, 12).map((other) => {
                 const at = other.where[0];
                 const book = at ? books.find((candidate) => candidate.id === at[0]) : undefined;
@@ -387,13 +457,26 @@ function PersonProfileView({
                       background: 'var(--bg-card)',
                     }}
                   >
-                    <Picture image={profiles?.people[other.id]?.portrait} name={other.name} kind="person" size={38} rounded={10} />
+                    <Picture
+                      image={profiles?.people[other.id]?.portrait}
+                      name={other.name}
+                      kind="person"
+                      size={38}
+                      rounded={10}
+                    />
                     <span style={{ minWidth: 0 }}>
                       <span style={{ display: 'block', fontWeight: 650, fontSize: 13 }}>
-                        {other.name} <span style={{ color: 'var(--text-faint)', fontWeight: 500 }}>· {describe(other) || 'no other detail'}</span>
+                        {other.name}{' '}
+                        <span style={{ color: 'var(--text-faint)', fontWeight: 500 }}>
+                          · {describe(other) || 'no other detail'}
+                        </span>
                       </span>
-                      <span className="tabular" style={{ display: 'block', fontSize: 11.5, color: 'var(--text-faint)' }}>
-                        {book && at ? `${book.name} ${at[1]}:${at[2]}` : ''} · {other.total} {other.total === 1 ? 'verse' : 'verses'}
+                      <span
+                        className="tabular"
+                        style={{ display: 'block', fontSize: 11.5, color: 'var(--text-faint)' }}
+                      >
+                        {book && at ? `${book.name} ${at[1]}:${at[2]}` : ''} · {other.total}{' '}
+                        {other.total === 1 ? 'verse' : 'verses'}
                       </span>
                     </span>
                   </motion.button>
@@ -423,7 +506,10 @@ function PersonProfileView({
         <Section title="Who they were" aside="Easton's Bible Dictionary, 1897" delay={0.08}>
           <div style={{ display: 'grid', gap: 12 }}>
             {profile.bio.map((paragraph, index) => (
-              <p key={index} style={{ fontFamily: 'var(--font-display)', fontSize: 17, lineHeight: 1.7 }}>
+              <p
+                key={index}
+                style={{ fontFamily: 'var(--font-display)', fontSize: 17, lineHeight: 1.7 }}
+              >
                 {paragraph}
               </p>
             ))}
@@ -437,7 +523,9 @@ function PersonProfileView({
       )}
       {!profile?.bio && person.summary && (
         <Section title="Who they were" delay={0.08}>
-          <p style={{ fontFamily: 'var(--font-display)', fontSize: 17, lineHeight: 1.7 }}>{person.summary}</p>
+          <p style={{ fontFamily: 'var(--font-display)', fontSize: 17, lineHeight: 1.7 }}>
+            {person.summary}
+          </p>
         </Section>
       )}
 
@@ -448,7 +536,11 @@ function PersonProfileView({
       {person.total > 0 && (
         <Section
           title="Where they appear"
-          aside={person.total > person.where.length ? `first ${person.where.length} of ${person.total}` : undefined}
+          aside={
+            person.total > person.where.length
+              ? `first ${person.where.length} of ${person.total}`
+              : undefined
+          }
           delay={0.16}
         >
           <VerseChips where={person.where} books={books} />
@@ -493,7 +585,9 @@ function FamilyTree({
         {rows.map(([label, list]) =>
           list.length === 0 ? null : (
             <div key={label}>
-              <div style={{ fontSize: 11.5, color: 'var(--text-faint)', marginBottom: 6 }}>{label}</div>
+              <div style={{ fontSize: 11.5, color: 'var(--text-faint)', marginBottom: 6 }}>
+                {label}
+              </div>
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {list.slice(0, 24).map(({ id, note }, index) => {
                   const known = subjects.get(id);
@@ -520,9 +614,21 @@ function FamilyTree({
                         fontWeight: 600,
                       }}
                     >
-                      <Picture image={profiles?.people[id]?.portrait} name={known?.name ?? nameOfId(id)} kind="person" size={26} rounded={99} />
+                      <Picture
+                        image={profiles?.people[id]?.portrait}
+                        name={known?.name ?? nameOfId(id)}
+                        kind="person"
+                        size={26}
+                        rounded={99}
+                      />
                       {known?.name ?? nameOfId(id)}
-                      {note && <span style={{ fontSize: 10.5, color: 'var(--text-faint)', fontWeight: 500 }}>({note})</span>}
+                      {note && (
+                        <span
+                          style={{ fontSize: 10.5, color: 'var(--text-faint)', fontWeight: 500 }}
+                        >
+                          ({note})
+                        </span>
+                      )}
                     </motion.button>
                   );
                 })}

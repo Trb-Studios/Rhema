@@ -11,6 +11,9 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
+    // Cargo writes thousands of files under src-tauri/target while building; watching
+    // them crashes the dev server on Windows when a build script is locked (EBUSY).
+    watch: { ignored: ['**/src-tauri/**'] },
   },
   build: {
     outDir: 'dist',

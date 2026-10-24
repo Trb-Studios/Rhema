@@ -218,7 +218,10 @@ describe('merging two devices', () => {
 
   it('keeps the better quiz score for each book and level', () => {
     put('rhema.quiz', { '1:easy': { best: 900 }, '2:hard': { best: 100 } });
-    apply(backupOf({ 'rhema.quiz': { '1:easy': { best: 400 }, '2:hard': { best: 700 } } }), 'merge');
+    apply(
+      backupOf({ 'rhema.quiz': { '1:easy': { best: 400 }, '2:hard': { best: 700 } } }),
+      'merge',
+    );
     expect(read('rhema.quiz')).toEqual({ '1:easy': { best: 900 }, '2:hard': { best: 700 } });
   });
 

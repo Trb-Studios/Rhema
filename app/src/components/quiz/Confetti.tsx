@@ -51,7 +51,8 @@ export function Confetti({ fire }: { fire: number }) {
         context.rotate(piece.spin);
         context.globalAlpha = Math.max(0, 1 - frame / 150);
         context.fillStyle = piece.colour;
-        if (piece.shape === 0) context.fillRect(-piece.size / 2, -piece.size / 4, piece.size, piece.size / 2);
+        if (piece.shape === 0)
+          context.fillRect(-piece.size / 2, -piece.size / 4, piece.size, piece.size / 2);
         else if (piece.shape === 1) {
           context.beginPath();
           context.arc(0, 0, piece.size / 3, 0, Math.PI * 2);
@@ -76,7 +77,14 @@ export function Confetti({ fire }: { fire: number }) {
     <canvas
       ref={canvas}
       aria-hidden="true"
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 5 }}
+      style={{
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: 5,
+      }}
     />
   );
 }

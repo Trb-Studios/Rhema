@@ -53,9 +53,24 @@ describe('rounds', () => {
     q({ id: 'c', l: 3, a: 'Goshen', w: ['Zoan', 'Pithom', 'Rameses'] }),
     q({ id: 'd', t: 'tf', a: true }),
     q({ id: 'e', t: 'order', l: 3, items: ['One', 'Two', 'Three'] }),
-    q({ id: 'f', t: 'match', l: 3, pairs: [['A', '1'], ['B', '2'], ['C', '3']] }),
+    q({
+      id: 'f',
+      t: 'match',
+      l: 3,
+      pairs: [
+        ['A', '1'],
+        ['B', '2'],
+        ['C', '3'],
+      ],
+    }),
     q({ id: 'g', t: 'fill', l: 3, text: 'In the [beginning] God [created]', w: ['end'] }),
-    q({ id: 'h', l: 2, a: 'A ladder reaching to heaven', ty: 0, w: ['A bush', 'A cloud', 'A sea'] }),
+    q({
+      id: 'h',
+      l: 2,
+      a: 'A ladder reaching to heaven',
+      ty: 0,
+      w: ['A bush', 'A cloud', 'A sea'],
+    }),
   ];
 
   it('asks Easy entirely as multiple choice or true-or-false', () => {
@@ -97,9 +112,9 @@ describe('rounds', () => {
 
 /** Chapters per book, Genesis to Revelation, to check each bank is the right size. */
 const CHAPTERS = [
-  50, 40, 27, 36, 34, 24, 21, 4, 31, 24, 22, 25, 29, 36, 10, 13, 10, 42, 150, 31, 12, 8, 66, 52,
-  5, 48, 12, 14, 3, 9, 1, 4, 7, 3, 3, 3, 2, 14, 4, 28, 16, 24, 21, 28, 16, 16, 13, 6, 6, 4, 4, 5,
-  3, 6, 4, 3, 1, 13, 5, 5, 3, 5, 1, 1, 1, 22,
+  50, 40, 27, 36, 34, 24, 21, 4, 31, 24, 22, 25, 29, 36, 10, 13, 10, 42, 150, 31, 12, 8, 66, 52, 5,
+  48, 12, 14, 3, 9, 1, 4, 7, 3, 3, 3, 2, 14, 4, 28, 16, 24, 21, 28, 16, 16, 13, 6, 6, 4, 4, 5, 3, 6,
+  4, 3, 1, 13, 5, 5, 3, 5, 1, 1, 1, 22,
 ];
 
 describe('the banks', () => {

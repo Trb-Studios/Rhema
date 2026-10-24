@@ -130,12 +130,22 @@ function askAs(question: Question, as: Asked['as'], random: () => number): Asked
     return { as, question, options, answer: question.a };
   }
   if (as === 'typed' && typeof question.a === 'string') {
-    return { as, question, answer: question.a, accept: question.acc ?? [], wrong: question.w ?? [] };
+    return {
+      as,
+      question,
+      answer: question.a,
+      accept: question.acc ?? [],
+      wrong: question.w ?? [],
+    };
   }
   if (as === 'order' && question.items?.length) {
     let shuffled = shuffle(question.items, random);
     // Never hand over the answer already in order.
-    for (let tries = 0; tries < 5 && shuffled.every((item, index) => item === question.items![index]); tries += 1) {
+    for (
+      let tries = 0;
+      tries < 5 && shuffled.every((item, index) => item === question.items![index]);
+      tries += 1
+    ) {
       shuffled = shuffle(question.items, random);
     }
     return { as, question, items: question.items, shuffled };
@@ -164,7 +174,12 @@ function askAs(question: Question, as: Asked['as'], random: () => number): Asked
         parts.push(piece);
       }
     }
-    return { as, question, parts, tiles: shuffle([...blanks, ...(question.w ?? []).slice(0, 3)], random) };
+    return {
+      as,
+      question,
+      parts,
+      tiles: shuffle([...blanks, ...(question.w ?? []).slice(0, 3)], random),
+    };
   }
   return null;
 }
@@ -183,8 +198,12 @@ export function buildRound(bank: Question[], level: Level, length: number, seed:
 
   let pool: Question[];
   if (level === 'easy') {
-    const easier = order.filter((question) => question.l <= 2 && !INTERACTIVE.includes(question.t ?? 'choice'));
-    const rest = order.filter((question) => question.l === 3 && !INTERACTIVE.includes(question.t ?? 'choice'));
+    const easier = order.filter(
+      (question) => question.l <= 2 && !INTERACTIVE.includes(question.t ?? 'choice'),
+    );
+    const rest = order.filter(
+      (question) => question.l === 3 && !INTERACTIVE.includes(question.t ?? 'choice'),
+    );
     pool = [...easier, ...rest];
   } else if (level === 'medium') {
     pool = order.filter((question) => question.t !== 'order' && question.t !== 'match');
@@ -202,15 +221,20 @@ export function buildRound(bank: Question[], level: Level, length: number, seed:
 
     if (kind === 'tf') asked = askAs(question, 'tf', random);
     else if (INTERACTIVE.includes(kind)) {
-      if (level === 'hard' || (level === 'medium' && kind === 'fill')) asked = askAs(question, kind, random);
+      if (level === 'hard' || (level === 'medium' && kind === 'fill'))
+        asked = askAs(question, kind, random);
     } else if (level === 'easy') {
       asked = askAs(question, 'choice', random);
     } else if (level === 'medium') {
       // About one in three typed, starting from the third: Medium opens with a choice.
-      const wantTyped = typeable(question) && (kind === 'typed' || typedSoFar < Math.floor((out.length + 1) / 3));
-      asked = askAs(question, wantTyped ? 'typed' : 'choice', random) ?? askAs(question, 'typed', random);
+      const wantTyped =
+        typeable(question) && (kind === 'typed' || typedSoFar < Math.floor((out.length + 1) / 3));
+      asked =
+        askAs(question, wantTyped ? 'typed' : 'choice', random) ?? askAs(question, 'typed', random);
     } else {
-      asked = typeable(question) ? askAs(question, 'typed', random) : askAs(question, 'choice', random);
+      asked = typeable(question)
+        ? askAs(question, 'typed', random)
+        : askAs(question, 'choice', random);
     }
 
     if (!asked) asked = askAs(question, 'choice', random);
@@ -229,11 +253,39 @@ export function timeFor(level: Level, asked: Asked): number | null {
 }
 
 const NUMBERS: Record<string, string> = {
-  one: '1', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8',
-  nine: '9', ten: '10', eleven: '11', twelve: '12', thirteen: '13', fourteen: '14',
-  fifteen: '15', sixteen: '16', seventeen: '17', eighteen: '18', nineteen: '19', twenty: '20',
-  thirty: '30', forty: '40', fifty: '50', sixty: '60', seventy: '70', hundred: '100',
-  thousand: '1000', first: '1', second: '2', third: '3', fourth: '4', fifth: '5', sixth: '6',
+  one: '1',
+  two: '2',
+  three: '3',
+  four: '4',
+  five: '5',
+  six: '6',
+  seven: '7',
+  eight: '8',
+  nine: '9',
+  ten: '10',
+  eleven: '11',
+  twelve: '12',
+  thirteen: '13',
+  fourteen: '14',
+  fifteen: '15',
+  sixteen: '16',
+  seventeen: '17',
+  eighteen: '18',
+  nineteen: '19',
+  twenty: '20',
+  thirty: '30',
+  forty: '40',
+  fifty: '50',
+  sixty: '60',
+  seventy: '70',
+  hundred: '100',
+  thousand: '1000',
+  first: '1',
+  second: '2',
+  third: '3',
+  fourth: '4',
+  fifth: '5',
+  sixth: '6',
   seventh: '7',
 };
 
@@ -250,7 +302,11 @@ export function normalise(text: string): string {
     .replace(/&/g, ' and ')
     .replace(/[^a-z0-9\s]/g, ' ')
     .split(/\s+/)
-    .filter((word) => word && !['the', 'a', 'an', 'of', 'to', 'mount', 'mt', 'king', 'saint', 'st'].includes(word))
+    .filter(
+      (word) =>
+        word &&
+        !['the', 'a', 'an', 'of', 'to', 'mount', 'mt', 'king', 'saint', 'st'].includes(word),
+    )
     .map((word) => NUMBERS[word] ?? word);
   // "seventy five" and "seventy and five", as the King James writes it, are 75.
   const out: string[] = [];

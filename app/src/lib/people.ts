@@ -32,11 +32,7 @@ export function withEverydayNames(
 }
 
 export function fold(text: string): string {
-  return text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .trim();
+  return text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
 }
 
 /**
@@ -109,7 +105,11 @@ export function descriptorOf(
   };
 
   if (subject.kind === 'place') {
-    return subject.area || (subject.near && subject.near !== subject.name ? subject.near : '') || firstBook();
+    return (
+      subject.area ||
+      (subject.near && subject.near !== subject.name ? subject.near : '') ||
+      firstBook()
+    );
   }
 
   if (subject.type === 'Group') return subject.tribe ? `people of ${subject.tribe}` : 'a people';

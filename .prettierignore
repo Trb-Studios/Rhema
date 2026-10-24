@@ -1,0 +1,3 @@
+# Quiz banks keep one question per line so a book reads as a list. `npm run quiz:check`
+# validates them instead.
+app/src/data/quiz/

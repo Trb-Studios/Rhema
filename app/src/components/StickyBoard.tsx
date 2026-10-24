@@ -69,7 +69,12 @@ export function StickyBoard({
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ marginTop: 36, textAlign: 'center', color: 'var(--text-secondary)', padding: '0 18px' }}
+            style={{
+              marginTop: 36,
+              textAlign: 'center',
+              color: 'var(--text-secondary)',
+              padding: '0 18px',
+            }}
           >
             <span style={{ display: 'inline-grid', color: 'var(--text-tan)' }}>
               <StickyIcon size={30} />
@@ -80,7 +85,14 @@ export function StickyBoard({
             </p>
           </motion.div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, alignItems: 'start' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: 12,
+              alignItems: 'start',
+            }}
+          >
             <AnimatePresence initial={false}>
               {list.map((sticky) => (
                 <StickyNote

@@ -94,6 +94,11 @@ describe('hover meanings', () => {
   });
 
   it('gives nothing rather than a paragraph', () => {
-    expect(shortSenses('greek', 'Of that by which the inward thought is expressed in many ways and many forms and many more words than fit')).toBe('');
+    expect(
+      shortSenses(
+        'greek',
+        'Of that by which the inward thought is expressed in many ways and many forms and many more words than fit',
+      ),
+    ).toBe('');
   });
 });
