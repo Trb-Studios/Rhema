@@ -17,7 +17,8 @@ import { editionById } from '../lib/editions';
 import type { EditionId } from '../lib/editions';
 import type { Subject } from '../lib/marks';
 import { allSubjects } from '../lib/marks';
-import { descriptorOf, searchSubjects } from '../lib/people';
+import { descriptorOf, searchSubjects, withEverydayNames } from '../lib/people';
+import { loadProfiles } from '../lib/profiles';
 import { navigate, usePalette, useReaderEdition } from '../lib/nav';
 import { copy as toClipboard } from '../lib/copy';
 import { spring, transition } from '../lib/motion';
@@ -93,7 +94,9 @@ export function CommandPalette({ globalCommands }: { globalCommands: Command[] }
     void loadBooks()
       .then(setBooks)
       .catch(() => {});
-    void allSubjects().then(setSubjects);
+    void Promise.all([allSubjects(), loadProfiles()]).then(([found, profiles]) =>
+      setSubjects(withEverydayNames(found, profiles)),
+    );
     const frame = requestAnimationFrame(() => input.current?.focus());
     return () => cancelAnimationFrame(frame);
   }, [open]);

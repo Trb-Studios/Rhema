@@ -11,6 +11,25 @@
 
 import type { Book } from './bible';
 import type { Subject } from './marks';
+import type { Profiles } from './profiles';
+
+/**
+ * Everyone, under the names a reader would look for them by. TIPNR files a few people
+ * under a later name — Jacob as Israel — so where the profile knows the everyday name,
+ * that is the one searched and shown.
+ */
+export function withEverydayNames(
+  subjects: Map<string, Subject>,
+  profiles: Profiles | null,
+): Map<string, Subject> {
+  if (!profiles) return subjects;
+  const out = new Map<string, Subject>();
+  for (const [id, subject] of subjects) {
+    const name = profiles.people[id]?.name;
+    out.set(id, name ? { ...subject, name } : subject);
+  }
+  return out;
+}
 
 export function fold(text: string): string {
   return text

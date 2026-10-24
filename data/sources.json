@@ -49,10 +49,29 @@
     {
       "id": "openbible-geo",
       "name": "OpenBible.info geocoding",
-      "provides": "Coordinates for biblical places and the verses that mention them",
-      "licence": "Creative Commons Attribution 4.0",
-      "status": "planned",
-      "homepage": "https://www.openbible.info/geo/"
+      "provides": "Where each place is now, how confident the identification is, coordinates, and a photograph of the site",
+      "licence": "Creative Commons Attribution 4.0 for the data; each photograph under its own licence",
+      "status": "ready",
+      "homepage": "https://github.com/openbibleinfo/Bible-Geocoding-Data",
+      "notes": "Matched to TIPNR's places by the verses they share, or by TIPNR's own identifier where OpenBible records it. Photographs marked 'copyright' are never used; the rest are downloaded once at build time, credited on each profile, and bundled so they work offline."
+    },
+    {
+      "id": "theographic",
+      "name": "Theographic Bible Metadata",
+      "provides": "For each person and place, the paragraph of Easton's Bible Dictionary (1897, public domain) about that individual, a disambiguated title, other names, and estimated dates",
+      "licence": "Creative Commons Attribution-ShareAlike 4.0",
+      "status": "ready",
+      "homepage": "https://github.com/robertrouse/theographic-bible-metadata",
+      "notes": "Matched to TIPNR's individuals by the share of verses they have in common, one to one within a name, so the thirty Zechariahs each get their own entry rather than the prophet's. Share-alike applies to the derived profiles file."
+    },
+    {
+      "id": "wikimedia-portraits",
+      "name": "Wikidata and Wikimedia Commons",
+      "provides": "Portraits of well-known people, chosen in data/portraits.json",
+      "licence": "Public domain or Creative Commons, per image",
+      "status": "ready",
+      "homepage": "https://commons.wikimedia.org",
+      "notes": "Each chosen person's English Wikipedia article is followed to its Wikidata item and the image Wikidata gives (P18). Only freely licensed images are kept, with the artist and licence shown on the profile. Anyone without one shows 'No portrait known'."
     },
     {
       "id": "tsk",

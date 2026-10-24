@@ -3,6 +3,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { Relative, Subject } from '../lib/marks';
 import { allSubjects, nameOfId } from '../lib/marks';
 import { popoverVariants, transition } from '../lib/motion';
+import type { Profiles } from '../lib/profiles';
+import { loadProfiles, titleHint } from '../lib/profiles';
+import { navigate } from '../lib/nav';
+import { Picture } from './ProfileParts';
 import { Portal } from './Portal';
 
 export type Anchored = {
@@ -33,12 +37,14 @@ export function MarkPopover({
   onOpenVerse: (bookId: number, chapter: number) => void;
 }) {
   const [subjects, setSubjects] = useState<Map<string, Subject> | null>(null);
+  const [profiles, setProfiles] = useState<Profiles | null>(null);
   const [showing, setShowing] = useState<string | null>(null);
 
   useEffect(() => {
     if (anchored) {
       setShowing(anchored.ids[0] ?? null);
       void allSubjects().then(setSubjects);
+      void loadProfiles().then(setProfiles);
     }
   }, [anchored]);
 
@@ -128,7 +134,25 @@ export function MarkPopover({
                 {describe(subject)}
               </div>
 
-              <h3 style={{ fontSize: 20, marginTop: 4 }}>{label}</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 6 }}>
+              <Picture
+                image={showing ? (person ? profiles?.people[showing]?.portrait : profiles?.places[showing]?.photo) : undefined}
+                name={label}
+                kind={person ? 'person' : 'place'}
+                size={46}
+                rounded={11}
+              />
+              <div style={{ minWidth: 0 }}>
+                <h3 style={{ fontSize: 20 }}>{label}</h3>
+                {showing && (titleHint(profiles?.people[showing]?.title ?? profiles?.places[showing]?.title) ||
+                  (!person && profiles?.places[showing]?.modern)) && (
+                  <div style={{ fontSize: 12.5, color: 'var(--text-secondary)' }}>
+                    {titleHint(profiles?.people[showing]?.title ?? profiles?.places[showing]?.title) ||
+                      `Today: ${profiles?.places[showing]?.modern?.name}`}
+                  </div>
+                )}
+              </div>
+            </div>
 
               {/* The word on the page, when the text spells the name another way. */}
               {anchored.ids.includes(showing ?? '') &&
@@ -200,6 +224,29 @@ export function MarkPopover({
                   <Family subject={subject} subjects={subjects} onOpen={setShowing} />
 
                   <Appearances subject={subject} onOpenVerse={onOpenVerse} />
+
+                  <button
+                    onClick={() => {
+                      onClose();
+                      navigate({ screen: person ? 'people' : 'places', subject: subject.id });
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 6,
+                      width: '100%',
+                      height: 32,
+                      marginTop: 14,
+                      borderRadius: 8,
+                      background: 'var(--main-fill)',
+                      color: 'var(--main-on)',
+                      fontWeight: 650,
+                      fontSize: 12.5,
+                    }}
+                  >
+                    Open full profile
+                  </button>
                 </>
               )}
 

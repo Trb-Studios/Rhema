@@ -30,6 +30,7 @@ import { TIPNR, parseNames } from './names.mjs';
 import { splitHeading } from './acrostic.mjs';
 import { buildDaily } from './build-daily.mjs';
 import { CROSS_REFERENCES, parseCrossRefs } from './crossrefs.mjs';
+import { buildProfiles } from './profiles.mjs';
 import { createWriteStream } from 'node:fs';
 import { mkdir, readFile, writeFile, copyFile, stat, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -693,6 +694,8 @@ async function exportForWeb() {
 
   const daily = await buildDaily(DB, join(APP_SRC, 'lib', 'daily.generated.ts'));
   say(`  chose ${daily} verses for the start screen`);
+
+  await buildProfiles({ dbPath: DB, raw: RAW, web: WEB, data: DATA, fetchOnce, say });
 }
 
 /**
